@@ -1,0 +1,55 @@
+package ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.aplication;
+
+
+import ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.aplication.interfaces.BookingRepository;
+import ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.aplication.interfaces.FlightRepository;
+import ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.model.Booking;
+import ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.model.Flight;
+import ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.model.Route;
+import ec.software.engineer.architecture.hexagonal.example.domainmodel.domain.model.User;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+public class FlightService {
+  private final FlightRepository flightRepository;
+  private final BookingRepository bookingRepository;
+
+  public FlightService(FlightRepository flightRepository, BookingRepository bookingRepository) {
+    this.flightRepository = flightRepository;
+    this.bookingRepository = bookingRepository;
+  }
+
+  public List<Flight> search(Route route, LocalDate departureDate, int passengers) {
+
+    // Validate search criteria
+    if (!route.isValid() || departureDate == null) {
+      throw new IllegalArgumentException("Search criteria are invalid.");
+    }
+
+    // Perform search based on the given parameters
+    List<Flight> flights = flightRepository.search(route, departureDate);
+
+    // Filter out flights that are full
+    flights = flights.stream()
+        .filter(flight -> flight.isAvailable(passengers))
+        .collect(Collectors.toList());
+
+    return flights;
+  }
+
+  public Booking bookFlight(User user, Flight flight, int passengers) {
+    if (!flight.isAvailable(passengers)) {
+      throw new IllegalArgumentException("The selected flight is not available for the given number of passengers.");
+    }
+
+    String bookingId = UUID.randomUUID().toString();
+    Booking booking = new Booking(bookingId, user, flight, passengers);
+    flight.addBooking(booking);
+
+    bookingRepository.save(booking);
+
+    return booking;
+  }
+}
