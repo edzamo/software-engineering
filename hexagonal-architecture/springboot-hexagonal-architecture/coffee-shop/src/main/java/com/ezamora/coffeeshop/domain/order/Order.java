@@ -1,16 +1,20 @@
-package com.ezamora.coffeeshop.domain.model;
-
-import java.util.List;
-import java.util.UUID;
+package com.ezamora.coffeeshop.domain.order;
 
 import com.ezamora.coffeeshop.domain.enums.Location;
 import com.ezamora.coffeeshop.domain.enums.Status;
-import lombok.Getter;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Collections;
+import java.util.UUID;
 
-@Getter
 public class Order {
 
     private UUID id = UUID.randomUUID();
@@ -30,8 +34,20 @@ public class Order {
         this.status = status;
     }
 
+    public UUID getId() {
+        return this.id;
+    }
+
+    public Location getLocation() {
+        return this.location;
+    }
+
     public List<LineItem> getItems() {
         return Collections.unmodifiableList(this.items);
+    }
+
+    public Status getStatus() {
+        return this.status;
     }
 
     public boolean canBeCancelled() {
@@ -39,10 +55,7 @@ public class Order {
     }
 
     public BigDecimal getCost() {
-        return items.stream()
-                .map(LineItem::getCost)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+        return items.stream().map(LineItem::getCost).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
     public Order update(Order order) {

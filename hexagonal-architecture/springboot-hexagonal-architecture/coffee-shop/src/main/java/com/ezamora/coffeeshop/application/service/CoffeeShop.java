@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import com.ezamora.coffeeshop.application.in.OrderingCoffee;
 import com.ezamora.coffeeshop.application.out.Orders;
 import com.ezamora.coffeeshop.application.out.Payments;
-import com.ezamora.coffeeshop.domain.model.Order;
-import com.ezamora.coffeeshop.domain.model.payment.CreditCard;
-import com.ezamora.coffeeshop.domain.model.payment.Payment;
-import com.ezamora.coffeeshop.domain.model.payment.Receipt;
+import com.ezamora.coffeeshop.domain.order.Order;
+import com.ezamora.coffeeshop.domain.payment.CreditCard;
+import com.ezamora.coffeeshop.domain.payment.Payment;
+import com.ezamora.coffeeshop.domain.payment.Receipt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

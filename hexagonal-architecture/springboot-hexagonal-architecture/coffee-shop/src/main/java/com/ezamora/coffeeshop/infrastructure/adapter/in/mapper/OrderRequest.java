@@ -3,7 +3,7 @@ package com.ezamora.coffeeshop.infrastructure.adapter.in.mapper;
 import java.util.List;
 
 import com.ezamora.coffeeshop.domain.enums.Location;
-import com.ezamora.coffeeshop.domain.model.Order;
+import com.ezamora.coffeeshop.domain.order.Order;
 
 public record OrderRequest(Location location, List<LineItemRequest> items) {
 

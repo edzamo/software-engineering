@@ -1,4 +1,4 @@
-package com.ezamora.coffeeshop.domain.model.payment;
+package com.ezamora.coffeeshop.domain.payment;
 
 import java.time.LocalDate;
 import java.util.UUID;

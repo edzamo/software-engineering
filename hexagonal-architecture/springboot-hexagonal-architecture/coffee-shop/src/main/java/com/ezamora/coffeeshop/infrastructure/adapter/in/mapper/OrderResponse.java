@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.ezamora.coffeeshop.domain.enums.Location;
-import com.ezamora.coffeeshop.domain.model.Order;
+import com.ezamora.coffeeshop.domain.order.Order;
 
 public record OrderResponse(Location location, List<LineItemResponse> items, BigDecimal cost) {
 

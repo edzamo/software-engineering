@@ -1,11 +1,11 @@
-package com.ezamora.coffeeshop.infrastructure.adapter.out.persistence.payments;
+package com.ezamora.coffeeshop.infrastructure.adapter.out.persistence.payment;
 
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.ezamora.coffeeshop.application.out.Payments;
-import com.ezamora.coffeeshop.domain.model.payment.Payment;
+import com.ezamora.coffeeshop.domain.payment.Payment;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

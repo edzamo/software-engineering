@@ -1,4 +1,4 @@
-package com.ezamora.coffeeshop.domain.model;
+package com.ezamora.coffeeshop.domain.order;
 
 import java.math.BigDecimal;
 

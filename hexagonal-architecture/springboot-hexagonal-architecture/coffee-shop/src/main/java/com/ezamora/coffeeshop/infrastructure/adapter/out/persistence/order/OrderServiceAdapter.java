@@ -1,4 +1,4 @@
-package com.ezamora.coffeeshop.infrastructure.adapter.out.persistence.orders;
+package com.ezamora.coffeeshop.infrastructure.adapter.out.persistence.order;
 
 import java.util.UUID;
 
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezamora.coffeeshop.application.out.OrderNotFound;
 import com.ezamora.coffeeshop.application.out.Orders;
-import com.ezamora.coffeeshop.domain.model.Order;
+import com.ezamora.coffeeshop.domain.order.Order;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
