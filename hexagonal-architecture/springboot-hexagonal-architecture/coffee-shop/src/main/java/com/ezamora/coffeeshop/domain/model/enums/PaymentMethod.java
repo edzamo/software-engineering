@@ -1,4 +1,4 @@
-package com.ezamora.coffeeshop.domain.payment;
+package com.ezamora.coffeeshop.domain.model.enums;
 
 public enum PaymentMethod {
 

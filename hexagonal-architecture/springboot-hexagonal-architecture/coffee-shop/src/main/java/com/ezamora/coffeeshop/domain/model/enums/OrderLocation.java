@@ -1,4 +1,4 @@
-package com.ezamora.coffeeshop.domain.order;
+package com.ezamora.coffeeshop.domain.model.enums;
 
 public enum OrderLocation {
 

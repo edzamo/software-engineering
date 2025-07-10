@@ -31,71 +31,66 @@ src/
 ├── main/
 │   ├── java/
 │   │   └── com/yourcompany/yourapp/
-│   │       ├── application/                                 // Lógica de aplicación (casos de uso)
+│   │       ├── application/                         # Casos de uso
 │   │       │   └── service/
-│   │       │       └── CreateOrderService.java              // Servicio que orquesta la creación de órdenes
+│   │       │       └── CreateOrderService.java
 │   │
-│   │       ├── domain/                                      // Lógica del dominio (modelo puro, sin frameworks)
+│   │       ├── domain/                              # Modelo puro (sin frameworks)
 │   │       │   ├── model/
-│   │       │   │   ├── Order.java                           // Entidad del dominio
-│   │       │   │   └── Product.java                         // Value Object
+│   │       │   │   ├── Order.java                   # Entidad del dominio
+│   │       │   │   └── OrderLocation.java           # Enum del dominio
 │   │       │   └── repository/
-│   │       │       └── OrderRepository.java                 // Puerto de salida (interfaz para persistencia)
+│   │       │       └── OrderRepository.java         # Puerto de salida (interfaz)
 │   │
-│   │       ├── infrastructure/                              // Capa de infraestructura (adaptadores, configuración)
+│   │       ├── infrastructure/                      # Adaptadores y config
 │   │       │   ├── adapter/
 │   │       │   │   ├── in/
 │   │       │   │   │   └── rest/
-│   │       │   │   │       └── OrderController.java         // Adaptador de entrada: controlador REST
+│   │       │   │   │       └── OrderController.java # Adaptador de entrada
 │   │       │   │   └── out/
 │   │       │   │       ├── persistence/
-│   │       │   │       │   ├── JpaOrderRepository.java      // Implementación del repositorio usando JPA
-│   │       │   │       │   └── OrderEntity.java             // Entidad JPA (mapeo a DB)
+│   │       │   │       │   ├── entity/
+│   │       │   │       │   │   ├── OrderEntity.java       # Entidad JPA
+│   │       │   │       │   │   └── OrderLocationEntity.java # Enum para persistencia (si es necesario)
+│   │       │   │       │   ├── mapper/
+│   │       │   │       │   │   └── OrderEntityMapper.java  # MapStruct: OrderEntity <-> Order
+│   │       │   │       │   └── JpaOrderRepository.java     # Implementación JPA del puerto
 │   │       │   │       └── client/
-│   │       │   │           └── ProductApiClient.java        // Cliente HTTP para obtener productos desde otro servicio
+│   │       │   │           └── ProductApiClient.java       # Cliente HTTP externo
 │   │       │   └── config/
-│   │       │       ├── SwaggerConfig.java                   // Configuración de Swagger/OpenAPI
-│   │       │       └── WebSecurityConfig.java               // Configuración de seguridad con Spring Security
+│   │       │       ├── SwaggerConfig.java
+│   │       │       └── WebSecurityConfig.java
 │   │
-│   │       └── YourAppApplication.java                      // Clase principal con @SpringBootApplication
+│   │       └── YourAppApplication.java              # Clase principal @SpringBootApplication
 │
 │   └── resources/
-│       ├── application.yml                                  // Archivo de configuración principal
-│       ├── application-dev.yml                              // Configuración para entorno de desarrollo
-│       ├── static/                                           // Archivos estáticos (solo si es web MVC)
-│       ├── templates/                                        // Plantillas Thymeleaf u otras (si aplica)
-│       └── banner.txt                                        // Banner de inicio de Spring Boot (opcional)
+│       ├── application.yml                          # Config principal
+│       ├── application-dev.yml                      # Config dev
+│       ├── application-prod.yml                     # Config prod
+│       ├── static/
+│       ├── templates/
+│       └── banner.txt
 │
 ├── test/
 │   ├── java/
 │   │   └── com/yourcompany/yourapp/
 │   │       ├── application/
-│   │       │   └── service/
-│   │       │       └── CreateOrderServiceTest.java          // Test del servicio de aplicación
 │   │       ├── domain/
-│   │       │   └── model/
-│   │       │       └── OrderTest.java                       // Test de lógica de dominio
 │   │       └── infrastructure/
-│   │           └── adapter/
-│   │               ├── in/
-│   │               │   └── rest/
-│   │               │       └── OrderControllerTest.java     // Test del controlador REST
-│   │               └── out/
-│   │                   └── persistence/
-│   │                       └── JpaOrderRepositoryTest.java  // Test de la implementación JPA
 │   └── resources/
-│       └── test-application.yml                             // Configuración para entorno de test
+│       └── test-application.yml
 │
-├── build.gradle                                              // Build script del módulo raíz
-├── settings.gradle                                           // Incluye los módulos del proyecto
-├── gradle.properties                                         // Propiedades del proyecto (versiones, etc.)
-├── gradlew                                                   // Wrapper script Unix
-├── gradlew.bat                                               // Wrapper script Windows
-├── gradle/
-│   └── wrapper/                                              // Archivos del wrapper de Gradle
-│       ├── gradle-wrapper.jar
-│       └── gradle-wrapper.properties
-
+├── build.gradle.kts                                 # o build.gradle
+├── settings.gradle.kts                              # o settings.gradle
+├── gradle.properties
+├── Dockerfile                                       # Docker para empaquetado del microservicio
+├── docker-compose.yml                               # Para levantar base de datos y dependencias
+├── .dockerignore
+├── .gitignore
+└── gradle/
+    └── wrapper/
+        ├── gradle-wrapper.jar
+        └── gradle-wrapper.properties
 ```
 
 ---

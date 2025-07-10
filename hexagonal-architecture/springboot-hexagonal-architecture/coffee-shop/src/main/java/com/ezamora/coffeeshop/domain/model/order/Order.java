@@ -1,7 +1,4 @@
-package com.ezamora.coffeeshop.domain.order;
-
-import com.ezamora.coffeeshop.domain.enums.Location;
-import com.ezamora.coffeeshop.domain.enums.Status;
+package com.ezamora.coffeeshop.domain.model.order;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,9 +12,12 @@ import java.util.List;
 import java.util.Collections;
 import java.util.UUID;
 
+import com.ezamora.coffeeshop.domain.model.enums.Location;
+import com.ezamora.coffeeshop.domain.model.enums.Status;
+
 public class Order {
 
-    private UUID id = UUID.randomUUID();
+    private UUID id ;
     private final Location location;
     private final List<LineItem> items;
     private Status status = Status.PAYMENT_EXPECTED;

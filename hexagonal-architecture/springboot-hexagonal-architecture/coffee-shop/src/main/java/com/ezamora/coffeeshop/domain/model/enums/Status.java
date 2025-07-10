@@ -1,4 +1,4 @@
-package com.ezamora.coffeeshop.domain.enums;
+package com.ezamora.coffeeshop.domain.model.enums;
 
 public enum Status {
     PAYMENT_EXPECTED,
