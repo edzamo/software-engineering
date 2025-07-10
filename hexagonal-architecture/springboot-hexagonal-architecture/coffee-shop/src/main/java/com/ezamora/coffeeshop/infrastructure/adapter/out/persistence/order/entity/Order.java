@@ -2,6 +2,7 @@ package com.ezamora.coffeeshop.infrastructure.adapter.out.persistence.order.enti
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,8 +39,8 @@ public class Order {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @Convert(converter = UUIDConverter.class)
     private UUID uuid;
-
 
     @Column(name = "order_date", nullable = false)
     private LocalDateTime orderDate;
@@ -56,7 +57,7 @@ public class Order {
     private OrderLocation location;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<OrderItem> items = new ArrayList<>();
+    private List<OrderItem> items;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Payment payment;
