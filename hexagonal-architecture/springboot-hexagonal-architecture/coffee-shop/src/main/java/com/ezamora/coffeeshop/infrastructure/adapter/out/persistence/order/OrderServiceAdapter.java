@@ -28,11 +28,9 @@ public class OrderServiceAdapter implements Orders {
 
     @Override
     public Order save(Order order) {
-        // Mapea el objeto de dominio a una entidad de persistencia.
+       
         var newEntityState = OrderMapper.toEntity(order);
 
-        // Si el objeto de dominio tiene un ID, es una actualización. Debemos encontrar
-        // la entidad existente para preservar su clave primaria de BD (Long).
         if (order.getId() != null) {
             var existingEntity = orderRepository.findByUuid(order.getId())
                     .orElseThrow(() -> new OrderNotFound("Cannot update an order that does not exist: " + order.getId()));

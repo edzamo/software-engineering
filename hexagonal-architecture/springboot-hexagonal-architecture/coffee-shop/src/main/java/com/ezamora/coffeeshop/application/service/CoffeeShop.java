@@ -26,8 +26,6 @@ public class CoffeeShop implements OrderingCoffee {
 
     @Override
     public Order placeOrder(Order order) {
-      //  log.info("Placing order: {}", order);
-
         return orders.save(order);
     }
 
