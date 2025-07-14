@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezamora.coffeeshop.application.in.PreparingCoffee;
 import com.ezamora.coffeeshop.application.out.Orders;
-import com.ezamora.coffeeshop.domain.order.Order;
+import com.ezamora.coffeeshop.domain.model.order.Order;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

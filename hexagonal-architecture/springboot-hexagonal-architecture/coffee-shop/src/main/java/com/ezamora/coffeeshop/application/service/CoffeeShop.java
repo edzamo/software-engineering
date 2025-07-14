@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import com.ezamora.coffeeshop.application.in.OrderingCoffee;
 import com.ezamora.coffeeshop.application.out.Orders;
 import com.ezamora.coffeeshop.application.out.Payments;
-import com.ezamora.coffeeshop.domain.order.Order;
-import com.ezamora.coffeeshop.domain.payment.CreditCard;
-import com.ezamora.coffeeshop.domain.payment.Payment;
-import com.ezamora.coffeeshop.domain.payment.Receipt;
+import com.ezamora.coffeeshop.domain.model.order.Order;
+import com.ezamora.coffeeshop.domain.model.payment.CreditCard;
+import com.ezamora.coffeeshop.domain.model.payment.Payment;
+import com.ezamora.coffeeshop.domain.model.payment.Receipt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +26,6 @@ public class CoffeeShop implements OrderingCoffee {
 
     @Override
     public Order placeOrder(Order order) {
-        log.info("Placing order: {}", order);
-
         return orders.save(order);
     }
 
@@ -70,6 +68,15 @@ public class CoffeeShop implements OrderingCoffee {
         var order = orders.findOrderById(orderId);
 
         return orders.save(order.markTaken());
+    }
+
+
+    @Override
+    public Order findOrderById(UUID orderId) {
+        log.info("Finding service order with ID: {}", orderId);
+        var order = orders.findOrderById(orderId);
+
+        return order;
     }
 
 }
