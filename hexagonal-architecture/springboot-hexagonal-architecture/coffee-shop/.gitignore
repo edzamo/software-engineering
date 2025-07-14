@@ -1,22 +1,25 @@
+# Gradle
+.gradle/
 /build/
 /bin/
 /out/
-.gradle/
+
+# IDE
 .idea/
-/*.iml
-*.log
+*.iml
+.vscode/
+
+# Build artifacts
 *.class
 *.jar
 *.war
+
+# Log files
+*.log
+
+# Local files
 *.db
 .env
-.DS_Store
-.vscode/
 
-# Gradle Wrapper files
-gradlew
-gradlew.bat
-gradle/
-gradle/wrapper/
-/bin/gradle-wrapper.jar
-/bin/main/
+# OS generated files
+.DS_Store
