@@ -1,4 +1,5 @@
 /build/
+/bin/
 /out/
 .gradle/
 .idea/
@@ -11,3 +12,11 @@
 .env
 .DS_Store
 .vscode/
+
+# Gradle Wrapper files
+gradlew
+gradlew.bat
+gradle/
+gradle/wrapper/
+/bin/gradle-wrapper.jar
+/bin/main/
