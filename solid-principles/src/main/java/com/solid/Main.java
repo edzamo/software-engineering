@@ -1,5 +1,7 @@
 package com.solid;
 
+import com.solid.principle.dip.DipMain;
+import com.solid.principle.lsp.LspMain;
 import com.solid.principle.ocp.OcpMain;
 import com.solid.principle.srp.SrpMain;
 
@@ -9,6 +11,8 @@ public class Main {
 
         SrpMain.main();
         OcpMain.main();
+        LspMain.main();
+        DipMain.main();
         
     }
 }
