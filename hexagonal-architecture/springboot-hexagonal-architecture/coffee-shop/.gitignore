@@ -1,12 +1,25 @@
-/build/
-/out/
+# Gradle
 .gradle/
+/build/
+/bin/
+/out/
+
+# IDE
 .idea/
-/*.iml
-*.log
+*.iml
+.vscode/
+
+# Build artifacts
 *.class
 *.jar
 *.war
+
+# Log files
+*.log
+
+# Local files
 *.db
 .env
+
+# OS generated files
 .DS_Store
