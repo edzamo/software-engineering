@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+out/
+
+# macOS
+.DS_Store
+
+# Build files
+*.class
+*.jar
+*.war
+*.ear
+target/
+
+# Log files
+*.log
+
+# Temporary files
+*~
+*.tmp
