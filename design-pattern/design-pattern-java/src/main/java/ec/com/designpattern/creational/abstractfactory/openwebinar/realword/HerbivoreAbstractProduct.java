@@ -1,0 +1,11 @@
+package ec.com.designpattern.creational.abstractfactory.openwebinar.realword;
+
+/**
+ * 
+ * AbstractProduct (Herbivore, Carnivore) declara una interfaz para un tipo de
+ * objeto de producto
+ */
+
+public interface HerbivoreAbstractProduct {
+
+}

@@ -1,0 +1,15 @@
+package ec.com.designpattern.creational.builder.platzi;
+
+import ec.com.designpattern.creational.builder.platzi.enums.AvailableColors;
+import ec.com.designpattern.creational.builder.platzi.enums.CarCatalogs;
+import ec.com.designpattern.creational.builder.platzi.enums.EditionsTypes;
+
+public interface CarProductionBuilder {
+
+  void setAirBags(int howMany);
+  void setColor(AvailableColors color);
+  void setEdition(EditionsTypes edition);
+  void setModel(CarCatalogs catalog);
+  void resetProductionLine ();
+
+}
