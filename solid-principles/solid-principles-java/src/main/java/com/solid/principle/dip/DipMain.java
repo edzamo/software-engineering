@@ -5,6 +5,8 @@ import com.solid.principle.dip.example.good.FileCSVExport;
 import com.solid.principle.dip.example.good.FileDocxExport;
 import com.solid.principle.dip.example.good.FilePDFExport;
 import com.solid.principle.dip.example.good.FinalThesis;
+import com.solid.principle.dip.example3.good.Company;
+import com.solid.principle.dip.example3.good.factory.EmployeeMemoryPersistenceFactory;
 
 public class DipMain {
     
@@ -27,5 +29,11 @@ public class DipMain {
         csvExport.exportCSV();
         
         System.out.println("All exports completed successfully!");
+
+        System.out.println("Example 3");
+  
+      Company company = new Company(new EmployeeMemoryPersistenceFactory());
+      System.out.println("company: " + company);
+
     }
 }
