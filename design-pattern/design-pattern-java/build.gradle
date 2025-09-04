@@ -1,0 +1,59 @@
+plugins {
+    // Aplica el plugin de Java para soportar compilación y empaquetado de código Java.
+    id 'java'
+    // Aplica el plugin de aplicación para poder ejecutar el proyecto.
+    id 'application'
+}
+
+// Define el grupo y la versión del proyecto.
+group = 'ec.com.designpattern'
+version = '1.0.0-SNAPSHOT'
+
+// Configura el proyecto para usar Java 21.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+// Configura la clase principal de la aplicación.
+application {
+    mainClass = 'ec.com.designpattern.Main'
+}
+
+// Define los repositorios desde donde se descargarán las dependencias.
+repositories {
+    // Maven Central es el repositorio más común para artefactos de Java.
+    mavenCentral()
+}
+
+// Define las dependencias del proyecto.
+dependencies {
+    // Lombok para reducir el código boilerplate (getters, setters, constructores, etc.).
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    // Jackson for CSV and JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.17.0'
+
+
+    // Logging with Log4j
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+
+    // SLF4J for logging
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation 'org.slf4j:slf4j-simple:2.0.7'
+
+    // JUnit 5 (Jupiter) para las pruebas unitarias.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+}
+
+// Configura la tarea de pruebas para usar la plataforma de JUnit 5.
+test {
+    useJUnitPlatform()
+}
