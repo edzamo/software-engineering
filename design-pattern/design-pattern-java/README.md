@@ -2,6 +2,95 @@
 
 This project provides examples of various design patterns implemented in Java. The patterns are categorized into Creational, Structural, and Behavioral patterns.
 
+## A Quick Introduction to UML
+
+UML (Unified Modeling Language) is a standardized modeling language used to visualize, specify, construct, and document the artifacts of a software system. It is a graphical language that helps in describing and designing software systems.
+
+### Key Concepts of UML:
+
+*   **Diagrams:** UML includes various diagrams to represent different aspects of a system. The most common ones are:
+    *   **Class Diagram:** Describes the structure of a system by showing the system's classes, their attributes, operations (or methods), and the relationships among objects.
+    *   **Use Case Diagram:** Shows how users interact with the system.
+    *   **Sequence Diagram:** Shows how objects communicate with each other in terms of a time sequence.
+    *   **Activity Diagram:** Describes the flow of control in a system.
+*   **Relationships:** UML defines several types of relationships between classes:
+    *   **Association:** A structural relationship that describes a set of links, which are connections among objects.
+    *   **Aggregation:** A special type of association that represents a "part-of" or "has-a" relationship.
+    *   **Composition:** A strong type of aggregation where the "part" object cannot exist without the "whole" object.
+    *   **Inheritance (or Generalization):** A relationship between a general class (the superclass or parent) and a more specific class (the subclass or child).
+    *   **Dependency:** A relationship in which one element, the client, depends on another element, the supplier.
+
+### UML Relationship Diagrams
+
+Here are some examples of UML relationship diagrams using ASCII art:
+
+**Association:**
+```
++-----------+     +-----------+
+|  ClassA   |-----|  ClassB   |
++-----------+     +-----------+
+```
+
+**Aggregation:**
+```
++-----------+<>---+-----------+
+|  ClassA   |     |  ClassB   |
++-----------+     +-----------+
+```
+
+**Composition:**
+```
++-----------+<*>--+-----------+
+|  ClassA   |     |  ClassB   |
++-----------+     +-----------+
+```
+
+**Inheritance:**
+```
++-----------+     +-----------+
+|  Superclass   |-----|  Subclass   |
++-----------+     +-----------+
+      ^
+      |
++-----------+
+|  Subclass   |
++-----------+
+```
+
+**Dependency:**
+```
++-----------+     +-----------+
+|  Client   |----->|  Service  |
++-----------+     +-----------+
+```
+
+### UML Class Diagram Example
+
+Here is an example of a class diagram:
+```
++-----------------+
+|      Animal     |
++-----------------+
+| -name: String   |
++-----------------+
+| +getName(): String |
+| +setName(name: String): void |
+| +makeSound(): void |
++-----------------+
+        ^
+        |
++-----------------+
+|       Dog       |
++-----------------+
+| -breed: String  |
++-----------------+
+| +getBreed(): String |
+| +setBreed(breed: String): void |
+| +makeSound(): void |
+| +wagTail(): void |
++-----------------+
+```
+
 ## Creational Patterns
 
 Creational design patterns are concerned with the process of object creation. They provide ways to create objects while hiding the creation logic, rather than instantiating objects directly using the `new` operator. This gives the program more flexibility in deciding which objects need to be created for a given use case.
@@ -33,7 +122,7 @@ Creational design patterns are concerned with the process of object creation. Th
 [Director] -> [Builder] <- [ConcreteBuilder]
                  ^                ^
                  |                |
-                 +-----> [Product] <----+ 
+                 +-----> [Product] <+---- 
 ```
 
 **Implementation:** The `creational/builder` package contains several examples of the Builder pattern. The `guru` example shows how to build different types of cars using a `DirectorDealership` and a `CarBuilder`.
