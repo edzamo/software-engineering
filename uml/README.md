@@ -8,33 +8,34 @@ UML, or Unified Modeling Language, is a standardized modeling language used in s
 
 ---
 
-## Key OOP Concepts in UML
+## Key OOP Concepts and UML Notation
 
-### 1. Inheritance
+Here are some of the fundamental relationships between classes in OOP, along with their standard UML notation.
 
-Inheritance is a mechanism where a new class (subclass or derived class) inherits attributes and methods from an existing class (superclass or base class). It represents an "is-a" relationship.
+### Herencia (Inheritance)
+- **Relación:** Una clase (subclase) hereda propiedades y comportamientos de otra (superclase). Representa una relación "es un".
+- **Notación UML:** Línea sólida con una flecha de triángulo hueco que apunta a la superclase.
+- **Ejemplo:** `Animal <|-- Perro` (Perro hereda de Animal).
 
-**Example Diagram:**
+### Asociación (Association)
+- **Relación:** Describe una conexión entre clases. Es la relación más general.
+- **Notación UML:** Línea sólida entre clases.
+- **Ejemplo:** `Persona -- Direccion` (Persona vive en una Dirección).
 
-A `Car` is a type of `Vehicle`. The `Car` class inherits from the `Vehicle` class.
+### Agregación (Aggregation)
+- **Relación:** Una forma especializada de asociación que representa una relación "tiene un" donde las clases tienen ciclos de vida independientes.
+- **Notación UML:** Línea sólida con un rombo hueco en el lado del contenedor.
+- **Ejemplo:** `Universidad o-- Facultad` (La Universidad tiene Facultades).
 
-```mermaid
-classDiagram
-  Vehicle <|-- Car
-```
+### Composición (Composition)
+- **Relación:** Una forma fuerte de agregación donde el ciclo de vida de la clase contenida depende de la clase contenedora. Representa una relación "es parte de".
+- **Notación UML:** Línea sólida con un rombo relleno en el lado del contenedor.
+- **Ejemplo:** `Casa *-- Habitacion` (La Casa está compuesta por Habitaciones).
 
-### 2. Composition
-
-Composition is a restricted form of aggregation where two entities are highly dependent on each other. It represents a "part-of" relationship. The composed object cannot exist without the other entity.
-
-**Example Diagram:**
-
-A `Car` has an `Engine`. The `Engine` is part of the `Car` and cannot exist independently.
-
-```mermaid
-classDiagram
-  Car *-- Engine
-```
+### Dependencia (Dependency)
+- **Relación:** Ocurre cuando un cambio en una clase puede afectar a otra clase, sin que haya una relación estructural directa.
+- **Notación UML:** Línea discontinua con una flecha abierta.
+- **Ejemplo:** `Controlador ..> Servicio` (El Controlador depende del Servicio).
 
 ## Project Class Diagram
 
