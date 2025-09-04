@@ -1,4 +1,4 @@
-package ec.com.designpattern.creational.abstractfactory;
+package ec.com.designpattern.creational.abstractfactory.openwebinar;
 
 public class RhinoSedanCar implements RhinoCar{
 
