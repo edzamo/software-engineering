@@ -112,28 +112,28 @@ This diagram shows the sequence of interactions between objects as defined in th
 sequenceDiagram
     participant Main
     participant Library
-    participant "book1:BookPrinted"
-    participant "book2:BookDigital"
-    participant "user:User"
+    participant book1 as BookPrinted
+    participant book2 as BookDigital
+    participant user as User
 
     Main->>Library: addBook(book1)
     Main->>Library: addBook(book2)
 
     Main->>Library: showBooks()
     activate Library
-    Library->>"book1:BookPrinted": showInfo()
-    Library->>"book2:BookDigital": showInfo()
+    Library->>book1: showInfo()
+    Library->>book2: showInfo()
     deactivate Library
 
-    Main->>"user:User": borrowBook(book1)
-    activate "user:User"
-    "user:User"->>"book1:BookPrinted": getTitle()
-    "user:User"->>"book1:BookPrinted": getAuthor()
-    deactivate "user:User"
+    Main->>user: borrowBook(book1)
+    activate user
+    user->>book1: getTitle()
+    user->>book1: getAuthor()
+    deactivate user
     
-    Main->>"user:User": borrowBook(book2)
-    activate "user:User"
-    "user:User"->>"book2:BookDigital": getTitle()
-    "user:User"->>"book2:BookDigital": getAuthor()
-    deactivate "user:User"
+    Main->>user: borrowBook(book2)
+    activate user
+    user->>book2: getTitle()
+    user->>book2: getAuthor()
+    deactivate user
 ```
