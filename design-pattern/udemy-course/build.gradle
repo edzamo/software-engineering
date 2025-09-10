@@ -1,0 +1,41 @@
+plugins {
+    // Aplica el plugin de Java para compilar código fuente de Java.
+    id 'java'
+
+    // Aplica el plugin de aplicación para crear un ejecutable.
+    id 'application'
+}
+
+group = 'ec.com.designpattern.udemy'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    // Usa el repositorio central de Maven para buscar dependencias.
+    mavenCentral()
+}
+
+java {
+    // Configura el proyecto para usar Java 20.
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+application {
+    // Define la clase principal para la aplicación.
+    mainClass = 'ec.com.designpattern.udemy.course.Main'
+}
+
+dependencies {
+    // Dependencia para Lombok (se usa en tiempo de compilación y para el procesador de anotaciones).
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    // Dependencias para JUnit 5 para las pruebas unitarias.
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    // Habilita el soporte para la plataforma JUnit 5 en las pruebas.
+    useJUnitPlatform()
+}

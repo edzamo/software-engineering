@@ -1,0 +1,117 @@
+# Design Patterns in Java
+
+This project is a hands-on exploration of common software design patterns, implemented in Java 21 with Gradle.
+
+## What Are Design Patterns?
+
+In software engineering, a **design pattern** is a general, reusable solution to a commonly occurring problem within a given context in software design. It is not a finished design that can be transformed directly into source or machine code. Rather, it is a description or template for how to solve a problem that can be used in many different situations.
+
+Design patterns are formalized best practices that a programmer can use to solve common problems when designing an application or system. They can speed up the development process by providing tested, proven development paradigms.
+
+Reusing design patterns helps to prevent subtle issues that can cause major problems and improves code readability for coders and architects who are familiar with the patterns.
+
+This repository will cover various patterns, providing clear examples and explanations for each one.
+
+### Herencia (Inheritance)
+- **Relación:** Una clase (subclase) hereda propiedades y comportamientos de otra (superclase). Representa una relación "es un".
+- **Notación UML:** Línea sólida con una flecha de triángulo hueco que apunta a la superclase.
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Animal <|-- Perro
+  ```
+
+### Asociación (Association)
+- **Relación:** Describe una conexión entre clases. Es la relación más general.
+- **Notación UML:** Línea sólida entre clases.
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Persona -- Direccion
+  ```
+
+### Agregación (Aggregation)
+- **Relación:** Una forma especializada de asociación que representa una relación "tiene un" donde las clases tienen ciclos de vida independientes.
+- **Notación UML:** Línea sólida con un rombo hueco en el lado del contenedor.
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Universidad o-- Facultad
+  ```
+
+### Composición (Composition)
+- **Relación:** Una forma fuerte de agregación donde el ciclo de vida de la clase contenida depende de la clase contenedora. Representa una relación "es parte de".
+- **Notación UML:** Línea sólida con un rombo relleno en el lado del contenedor.
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Casa *-- Habitacion
+  ```
+
+### Dependencia (Dependency)
+- **Relación:** Ocurre cuando un cambio en una clase puede afectar a otra clase, sin que haya una relación estructural directa.
+- **Notación UML:** Línea discontinua con una flecha abierta.
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Controlador ..> Servicio
+  ```
+
+## Summary of UML Line Notations
+
+Here is a quick visual summary of the lines used for different relationships in UML Class Diagrams:
+
+| Relationship      | Line Style                  | Description                                      |
+| ----------------- | --------------------------- | ------------------------------------------------ |
+| **Inheritance**   | `-----------|>`             | Solid line with a hollow triangle arrow          |
+| **Association**   | `-----------------`         | Solid line                                       |
+| **Aggregation**   | `<>----------------`        | Solid line with a hollow diamond                 |
+| **Composition**   | `<+>---------------`        | Solid line with a filled diamond                 |
+| **Dependency**    | `.. .. .. .. .. >`          | Dashed line with an open arrow                   |
+
+## Project Class Diagram
+
+Here is the UML class diagram for the implemented Java code:
+
+```mermaid
+classDiagram
+    class Book {
+        <<abstract>>
+        -title: String
+        -author: Author
+        +showInfo()*
+        +getTitle(): String
+        +getAuthor(): Author
+    }
+
+    class BookPrinted {
+        -page: int
+        +showInfo()
+    }
+
+    class BookDigital {
+        -format: String
+        +showInfo()
+    }
+
+    class Author {
+        -name: String
+    }
+
+    class User {
+        -name: String
+        +borrowBook(Book)
+    }
+
+    class Library {
+        -books: List~Book~
+        +addBook(Book)
+        +showBooks()
+    }
+
+    Book <|-- BookPrinted
+    Book <|-- BookDigital
+    Book "1" -- "1" Author : has a
+    Library "1" o-- "*" Book : contains
+    User ..> Book : borrows
+```
