@@ -1,0 +1,37 @@
+# Archivos y directorios generados por Gradle
+# Estos se crean durante el proceso de compilación y no deben ser versionados.
+.gradle
+build/
+
+# Archivos de caché y específicos del sistema operativo generados por Gradle
+gradle-app.setting
+
+# Archivos generados por IDEs
+
+## Visual Studio Code
+# Configuraciones locales del espacio de trabajo.
+.vscode/
+
+## IntelliJ IDEA (común en proyectos Java)
+.idea/
+*.iml
+*.iws
+
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+
+# Archivos generados por el sistema operativo macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Archivos compilados de Java y logs
+*.class
+*.log
+*.jar
+*.war
+*.ear
