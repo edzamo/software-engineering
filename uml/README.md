@@ -15,27 +15,47 @@ Here are some of the fundamental relationships between classes in OOP, along wit
 ### Herencia (Inheritance)
 - **Relación:** Una clase (subclase) hereda propiedades y comportamientos de otra (superclase). Representa una relación "es un".
 - **Notación UML:** Línea sólida con una flecha de triángulo hueco que apunta a la superclase.
-- **Ejemplo:** `Animal <|-- Perro` (Perro hereda de Animal).
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Animal <|-- Perro
+  ```
 
 ### Asociación (Association)
 - **Relación:** Describe una conexión entre clases. Es la relación más general.
 - **Notación UML:** Línea sólida entre clases.
-- **Ejemplo:** `Persona -- Direccion` (Persona vive en una Dirección).
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Persona -- Direccion
+  ```
 
 ### Agregación (Aggregation)
 - **Relación:** Una forma especializada de asociación que representa una relación "tiene un" donde las clases tienen ciclos de vida independientes.
 - **Notación UML:** Línea sólida con un rombo hueco en el lado del contenedor.
-- **Ejemplo:** `Universidad o-- Facultad` (La Universidad tiene Facultades).
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Universidad o-- Facultad
+  ```
 
 ### Composición (Composition)
 - **Relación:** Una forma fuerte de agregación donde el ciclo de vida de la clase contenida depende de la clase contenedora. Representa una relación "es parte de".
 - **Notación UML:** Línea sólida con un rombo relleno en el lado del contenedor.
-- **Ejemplo:** `Casa *-- Habitacion` (La Casa está compuesta por Habitaciones).
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Casa *-- Habitacion
+  ```
 
 ### Dependencia (Dependency)
 - **Relación:** Ocurre cuando un cambio en una clase puede afectar a otra clase, sin que haya una relación estructural directa.
 - **Notación UML:** Línea discontinua con una flecha abierta.
-- **Ejemplo:** `Controlador ..> Servicio` (El Controlador depende del Servicio).
+- **Ejemplo:**
+  ```mermaid
+  classDiagram
+    Controlador ..> Servicio
+  ```
 
 ## Project Class Diagram
 
@@ -92,28 +112,28 @@ This diagram shows the sequence of interactions between objects as defined in th
 sequenceDiagram
     participant Main
     participant Library
-    participant "book1:BookPrinted"
-    participant "book2:BookDigital"
-    participant "user:User"
+    participant book1 as BookPrinted
+    participant book2 as BookDigital
+    participant user as User
 
     Main->>Library: addBook(book1)
     Main->>Library: addBook(book2)
 
     Main->>Library: showBooks()
     activate Library
-    Library->>"book1:BookPrinted": showInfo()
-    Library->>"book2:BookDigital": showInfo()
+    Library->>book1: showInfo()
+    Library->>book2: showInfo()
     deactivate Library
 
-    Main->>"user:User": borrowBook(book1)
-    activate "user:User"
-    "user:User"->>"book1:BookPrinted": getTitle()
-    "user:User"->>"book1:BookPrinted": getAuthor()
-    deactivate "user:User"
+    Main->>user: borrowBook(book1)
+    activate user
+    user->>book1: getTitle()
+    user->>book1: getAuthor()
+    deactivate user
     
-    Main->>"user:User": borrowBook(book2)
-    activate "user:User"
-    "user:User"->>"book2:BookDigital": getTitle()
-    "user:User"->>"book2:BookDigital": getAuthor()
-    deactivate "user:User"
+    Main->>user: borrowBook(book2)
+    activate user
+    user->>book2: getTitle()
+    user->>book2: getAuthor()
+    deactivate user
 ```
