@@ -52,8 +52,6 @@ classDiagram
     Payment <|.. GooglePayment
     Payment <|.. PaypalPayment
 ```
-|
-
 🔹 Simple explanation with a real-world example
 
 Imagine you work at a bank:
