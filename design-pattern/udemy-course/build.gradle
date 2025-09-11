@@ -22,7 +22,7 @@ java {
 
 application {
     // Define la clase principal para la aplicación.
-    mainClass = 'ec.com.designpattern.udemy.course.Main'
+    mainClass = 'ec.com.pattern.Main'
 }
 
 dependencies {

@@ -69,49 +69,58 @@ Here is a quick visual summary of the lines used for different relationships in 
 | **Composition**   | `<+>---------------`        | Solid line with a filled diamond                 |
 | **Dependency**    | `.. .. .. .. .. >`          | Dashed line with an open arrow                   |
 
-## Project Class Diagram
 
-Here is the UML class diagram for the implemented Java code:
+## Creational Patterns: Factory Method
+
+The Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.
+
+### How to Use It
+
+This pattern is used when a class cannot anticipate the class of objects it must create. The Factory Method pattern suggests that you replace direct object construction calls (using the `new` operator) with calls to a special *factory* method.
+
+In the provided example (`ec.com.pattern.creational.factorymethod.payment`), we have a simple implementation of a factory for creating different types of payments.
+
+1.  **Product Interface (`Payment`):** An interface that defines the operations of the objects the factory will create. In this case, it's the `doPayment()` method.
+2.  **Concrete Products (`CardPayment`, `GooglePayment`, `PaypalPayment`):** These are the concrete classes that implement the `Payment` interface.
+3.  **Factory (`PaymentFactory`):** This class contains a static method `buildPayment()` that, based on a `TypePayment` enum, returns a concrete instance of a `Payment`. The client code calls this method to get a payment object without having to know the specific implementation details.
+
+### Class Diagram (Payment Example)
+
+Here is the UML class diagram for the payment example:
 
 ```mermaid
 classDiagram
-    class Book {
-        <<abstract>>
-        -title: String
-        -author: Author
-        +showInfo()*
-        +getTitle(): String
-        +getAuthor(): Author
+    class PaymentFactory {
+        +buildPayment(TypePayment): Payment
     }
 
-    class BookPrinted {
-        -page: int
-        +showInfo()
+    class TypePayment {
+        <<enumeration>>
+        CARD
+        GOOGLE
+        PAYPAL
     }
 
-    class BookDigital {
-        -format: String
-        +showInfo()
+    class Payment {
+        <<interface>>
+        +doPayment()
     }
 
-    class Author {
-        -name: String
+    class CardPayment {
+        +doPayment()
     }
 
-    class User {
-        -name: String
-        +borrowBook(Book)
+    class GooglePayment {
+        +doPayment()
     }
 
-    class Library {
-        -books: List~Book~
-        +addBook(Book)
-        +showBooks()
+    class PaypalPayment {
+        +doPayment()
     }
 
-    Book <|-- BookPrinted
-    Book <|-- BookDigital
-    Book "1" -- "1" Author : has a
-    Library "1" o-- "*" Book : contains
-    User ..> Book : borrows
+    PaymentFactory ..> Payment : creates
+    PaymentFactory ..> TypePayment : uses
+    Payment <|.. CardPayment
+    Payment <|.. GooglePayment
+    Payment <|.. PaypalPayment
 ```
