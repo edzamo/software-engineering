@@ -12,6 +12,28 @@ Reusing design patterns helps to prevent subtle issues that can cause major prob
 
 This repository will cover various patterns, providing clear examples and explanations for each one.
 
+## Design Pattern Categories
+
+This repository is organized into the main categories of design patterns. Each category will have its own detailed `README` file with explanations and diagrams for the patterns it contains.
+
+### Creational Patterns
+
+These patterns deal with object creation mechanisms, trying to create objects in a manner suitable to the situation.
+
+For more detailed information on the creational patterns implemented in this project, please see the [Creational Patterns README](./src/main/java/ec/com/pattern/creational/factorymethod/README-CREATIONAL.md).
+
+### Structural Patterns
+
+These patterns explain how to assemble objects and classes into larger structures, while keeping these structures flexible and efficient.
+
+*(More information will be added here)*
+
+### Behavioral Patterns
+
+These patterns are concerned with algorithms and the assignment of responsibilities between objects.
+
+*(More information will be added here)*
+
 ### Herencia (Inheritance)
 - **Relación:** Una clase (subclase) hereda propiedades y comportamientos de otra (superclase). Representa una relación "es un".
 - **Notación UML:** Línea sólida con una flecha de triángulo hueco que apunta a la superclase.
