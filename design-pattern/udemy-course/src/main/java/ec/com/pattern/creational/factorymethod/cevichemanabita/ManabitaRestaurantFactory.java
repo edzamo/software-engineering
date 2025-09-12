@@ -4,7 +4,7 @@ package ec.com.pattern.creational.factorymethod.cevichemanabita;
  * Concrete Creator.
  * Implements the factory method to return an instance of a ConcreteProduct.
  */
-public class ManabitaRestaurant extends Restaurant {
+public class ManabitaRestaurantFactory extends Restaurant {
 
     @Override
     protected Ceviche createCeviche(CevicheType type) {
@@ -15,6 +15,8 @@ public class ManabitaRestaurant extends Restaurant {
                 return new ShrimpCeviche();
             case MIXED:
                 return new MixedCeviche();
+            case JIPIJAPA_FISH:
+                return new JipijapaCeviche();
             default:
                 throw new IllegalArgumentException("Ceviche type not available: " + type);
         }
