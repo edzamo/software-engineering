@@ -18,9 +18,9 @@ This repository is organized into the main categories of design patterns. Each c
 
 ### Creational Patterns
 
-These patterns deal with object creation mechanisms, trying to create objects in a manner suitable to the situation.
+These patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code. They help make a system independent of how its objects are created, composed, and represented.
 
-For more detailed information on the creational patterns implemented in this project, please see the [Creational Patterns README](./src/main/java/ec/com/pattern/creational/factorymethod/README-FACTORY-METHOD.md).
+For detailed information on the creational patterns implemented in this project, such as **Factory Method** and **Abstract Factory**, please see the [Creational Patterns README](./src/main/java/ec/com/pattern/creational/abstractfactory/README-CREATIONAL.md).
 
 ### Structural Patterns
 
