@@ -67,19 +67,6 @@ Imagina que trabajas en un banco:
 
 ---
 
-### ¿Cómo se usa la fábrica?
-
-El código que necesita un objeto de pago (el "cliente") ya no tiene que saber cómo crear un `CardPayment` o un `GooglePayment`. Simplemente le pide a la fábrica el tipo que necesita y trabaja con la interfaz `Payment`.
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        // El cliente solo pide el tipo de pago que quiere
-        Payment payment = PaymentFactory.buildPayment(TypePayment.CARD);
-        payment.doPayment(); // Salida: Making payment with Card
-    }
-}
-```
 ### 👉 En resumen:
 
 Este diagrama muestra un patrón Factory donde una fábrica centraliza la creación de diferentes tipos de pago, usando un `enum` para decidir qué clase concreta instanciar.
@@ -95,11 +82,6 @@ Imagina que estamos montando el software para una picantería en Portoviejo. En 
 Aquí es donde el Factory Method brilla.
 
 ---
-
-### 💻 Código Fuente del Ejemplo
-
-Puedes encontrar todo el código de este ejemplo en la carpeta del proyecto en GitHub:
-*   **Ver el código del ejemplo del Ceviche Manabita**
 
 ## Estructura de archivos (ejemplo)
 ```
@@ -117,3 +99,4 @@ src/
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zdnotww7icwoit72376r.png)
 
 
+https://dev.to/edzamo/desmitificando-el-patron-factory-method-con-un-toque-manabita-1a67
