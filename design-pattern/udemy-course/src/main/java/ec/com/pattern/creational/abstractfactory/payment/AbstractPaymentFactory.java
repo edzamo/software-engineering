@@ -1,5 +1,5 @@
 package ec.com.pattern.creational.abstractfactory.payment;
 
-public interface AbstracFactory<T> {
+public interface AbstractPaymentFactory<T> {
     T create(String type);
 }

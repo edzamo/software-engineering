@@ -7,6 +7,7 @@ In simple terms, they deal with object creation mechanisms, trying to create obj
 This document covers the following creational patterns:
 1.  **Factory Method**
 2.  **Abstract Factory**
+3.  **Builder**
 
 ---
 
