@@ -22,6 +22,7 @@ public class Main {
 
         factoryMethodPatternExample();
         abstractFactoryPatternExample();
+        builderPatternExample();
 
     }
 
@@ -58,5 +59,19 @@ public class Main {
         System.out.println(chair.sitOn());
         System.out.println(chair.hasLargeLegs());
 
+    }
+
+    private  static void builderPatternExample() {
+        System.out.println("\n");
+        System.out.println("Builder Pattern Example :");
+
+        ec.com.pattern.creational.builder.Card card = new ec.com.pattern.creational.builder.Card.Builder()
+                .setCardNumber("1234 5678 9012 3456")
+                .setCardHolder("John Doe")
+                .setExpirationDate("12/25")
+                .setCvv("123")
+                .build();
+
+        System.out.println(card);
     }
 }
