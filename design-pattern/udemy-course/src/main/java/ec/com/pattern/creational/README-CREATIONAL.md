@@ -7,7 +7,6 @@ In simple terms, they deal with object creation mechanisms, trying to create obj
 This document covers the following creational patterns:
 1.  **Factory Method**
 2.  **Abstract Factory**
-3.  **Builder**
 
 ---
 
@@ -159,3 +158,63 @@ Imagine you're furnishing your house and you want everything to match a certain 
 5.  In the sofa department, you ask for a "Modern" style sofa, and you get a `ModernSofa`.
 
 You get matching furniture pieces without having to know the specific manufacturing details. The store and its departments (the factories) handle the creation process for you.
+
+---
+
+### 3. Builder
+
+El patrón Builder es un patrón de diseño creacional que te permite construir objetos complejos paso a paso. El patrón te permite producir diferentes tipos y representaciones de un objeto usando el mismo código de construcción. Separa la construcción de un objeto complejo de su representación, de modo que el mismo proceso de construcción pueda crear diferentes representaciones.
+
+### Cómo trabaja esto
+
+Este patrón es especialmente útil cuando un objeto tiene muchos parámetros de configuración, algunos de los cuales pueden ser opcionales. En lugar de usar constructores con una larga lista de parámetros (constructores telescópicos), el patrón Builder simplifica la creación de objetos.
+
+En el ejemplo proporcionado (`ec.com.pattern.creational.builder.Card`), se implementa el patrón Builder para crear un objeto `Card` inmutable.
+
+1.  **Producto (`Card`):** Es el objeto complejo que se está construyendo. Tiene un constructor privado que solo acepta un objeto `Builder`. Esto obliga a que la creación se realice exclusivamente a través del builder. Sus atributos son `final` para garantizar la inmutabilidad.
+2.  **Builder (`Card.Builder`):** Es una clase anidada estática dentro de `Card`. Contiene los mismos campos que la clase `Card` para almacenar la configuración paso a paso.
+3.  **Métodos de construcción (`set...`):** La clase `Builder` tiene métodos fluidos (que devuelven `this`) para configurar cada uno de los atributos del objeto. Esto permite encadenar llamadas de una manera legible (ej: `new Card.Builder().setCardNumber(...).setCardHolder(...)`).
+4.  **Método `build()`:** Este método, dentro de la clase `Builder`, invoca al constructor privado de `Card`, pasándose a sí mismo como argumento. Finalmente, devuelve el objeto `Card` ya construido y configurado.
+
+### Diagrama de Clases (Ejemplo de Tarjeta)
+
+Aquí está el diagrama de clases UML para el ejemplo de `Card`:
+
+```mermaid
+classDiagram
+    class Card {
+        -final String cardNumber
+        -final String cardHolder
+        -final String expirationDate
+        -final String cvv
+        -Card(Builder builder)
+        +toString(): String
+    }
+
+    class Builder {
+        <<static inner>>
+        -String cardNumber
+        -String cardHolder
+        -String expirationDate
+        -String cvv
+        +setCardNumber(String): Builder
+        +setCardHolder(String): Builder
+        +setExpirationDate(String): Builder
+        +setCvv(String): Builder
+        +build(): Card
+    }
+
+    Card "1" *-- "1" Builder : builds
+```
+
+🔹 **Explicación simple con un ejemplo del mundo real**
+
+Imagina que estás pidiendo una pizza personalizada:
+
+1.  Empiezas con una base de pizza vacía (creas una instancia de `Pizza.Builder`).
+2.  Le dices al chef qué ingredientes agregar, uno por uno: "añade queso", "añade pepperoni", "añade champiñones" (llamas a los métodos `addCheese()`, `addPepperoni()`, `addMushrooms()`).
+3.  Cada vez que añades un ingrediente, el chef sigue trabajando sobre la misma pizza que está preparando.
+4.  Cuando has terminado de elegir, le dices al chef "¡Listo!" (llamas al método `build()`).
+5.  El chef mete la pizza al horno y te entrega el producto final, listo para comer.
+
+El `Builder` te permite construir el objeto (`Pizza` o `Card`) de forma flexible y legible, sin necesidad de un constructor con un sinfín de parámetros.
