@@ -163,22 +163,22 @@ You get matching furniture pieces without having to know the specific manufactur
 
 ### 3. Builder
 
-El patrón Builder es un patrón de diseño creacional que te permite construir objetos complejos paso a paso. El patrón te permite producir diferentes tipos y representaciones de un objeto usando el mismo código de construcción. Separa la construcción de un objeto complejo de su representación, de modo que el mismo proceso de construcción pueda crear diferentes representaciones.
+The Builder pattern is a creational design pattern that lets you construct complex objects step by step. The pattern allows you to produce different types and representations of an object using the same construction code. It separates the construction of a complex object from its representation, so that the same construction process can create different representations.
 
-### Cómo trabaja esto
+### How It Works
 
-Este patrón es especialmente útil cuando un objeto tiene muchos parámetros de configuración, algunos de los cuales pueden ser opcionales. En lugar de usar constructores con una larga lista de parámetros (constructores telescópicos), el patrón Builder simplifica la creación de objetos.
+This pattern is especially useful when an object has many configuration parameters, some of which may be optional. Instead of using constructors with a long list of parameters (telescoping constructors), the Builder pattern simplifies object creation.
 
-En el ejemplo proporcionado (`ec.com.pattern.creational.builder.Card`), se implementa el patrón Builder para crear un objeto `Card` inmutable.
+In the provided example (`ec.com.pattern.creational.builder.Card`), the Builder pattern is implemented to create an immutable `Card` object.
 
-1.  **Producto (`Card`):** Es el objeto complejo que se está construyendo. Tiene un constructor privado que solo acepta un objeto `Builder`. Esto obliga a que la creación se realice exclusivamente a través del builder. Sus atributos son `final` para garantizar la inmutabilidad.
-2.  **Builder (`Card.Builder`):** Es una clase anidada estática dentro de `Card`. Contiene los mismos campos que la clase `Card` para almacenar la configuración paso a paso.
-3.  **Métodos de construcción (`set...`):** La clase `Builder` tiene métodos fluidos (que devuelven `this`) para configurar cada uno de los atributos del objeto. Esto permite encadenar llamadas de una manera legible (ej: `new Card.Builder().setCardNumber(...).setCardHolder(...)`).
-4.  **Método `build()`:** Este método, dentro de la clase `Builder`, invoca al constructor privado de `Card`, pasándose a sí mismo como argumento. Finalmente, devuelve el objeto `Card` ya construido y configurado.
+1.  **Product (`Card`):** This is the complex object being built. It has a private constructor that only accepts a `Builder` object. This forces creation to be done exclusively through the builder. Its attributes are `final` to ensure immutability.
+2.  **Builder (`Card.Builder`):** This is a static nested class inside `Card`. It contains the same fields as the `Card` class to store the configuration step by step.
+3.  **Construction Methods (`set...`):** The `Builder` class has fluent methods (that return `this`) to configure each of the object's attributes. This allows for chaining calls in a readable way (e.g., `new Card.Builder().setCardNumber(...).setCardHolder(...)`).
+4.  **`build()` Method:** This method, inside the `Builder` class, invokes the private constructor of `Card`, passing itself as an argument. Finally, it returns the fully constructed and configured `Card` object.
 
-### Diagrama de Clases (Ejemplo de Tarjeta)
+### Class Diagram (Card Example)
 
-Aquí está el diagrama de clases UML para el ejemplo de `Card`:
+Here is the UML class diagram for the `Card` example:
 
 ```mermaid
 classDiagram
