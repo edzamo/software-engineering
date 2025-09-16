@@ -1,13 +1,13 @@
-package ec.com.pattern.creational.abstractfactory.payment.concreteFactory;
+package ec.com.pattern.creational.abstractfactory.payment.concretefactory;
 
-import ec.com.pattern.creational.abstractfactory.payment.AbstracFactory;
+import ec.com.pattern.creational.abstractfactory.payment.AbstractPaymentFactory;
 import ec.com.pattern.creational.abstractfactory.payment.concrete.Card;
 import ec.com.pattern.creational.abstractfactory.payment.concrete.impl.MasterCard;
 import ec.com.pattern.creational.abstractfactory.payment.concrete.impl.Visa;      
 
 
 
-public class CardFactory implements AbstracFactory<Card> {
+public class CardFactory implements AbstractPaymentFactory<Card> {
 
     @Override
     public Card create(String type) {
