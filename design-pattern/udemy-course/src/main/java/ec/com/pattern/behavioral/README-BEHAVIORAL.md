@@ -70,7 +70,6 @@ Imagine you apply for a credit card at a bank:
 
 ⸻
 
-👉 In summary:
-This diagram shows a Factory pattern with polymorphism, where a factory centralizes the creation of different payment types, using an enum to decide which concrete class to instantiate.
+👉 In summary: This diagram shows a Chain of Responsibility pattern, where a request is passed along a chain of handlers. The ServiceDesk sends the request to the first handler (BasicSupport). If it cannot resolve it, the request is forwarded to SpecializedTechnical, and if still unresolved, it is escalated to ExpertTechnician. All handlers implement the same ApproveServiceDeskChain interface, ensuring flexibility and dynamic request routing.
 
 ---
