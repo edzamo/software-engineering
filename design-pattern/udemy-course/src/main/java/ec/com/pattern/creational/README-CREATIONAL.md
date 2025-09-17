@@ -207,14 +207,114 @@ classDiagram
     Card "1" *-- "1" Builder : builds
 ```
 
+🔹 **Simple explanation with a real-world example**
+
+Imagine you are ordering a custom pizza:
+
+1.  You start with an empty pizza base (you create an instance of `Pizza.Builder`).
+2.  You tell the chef which toppings to add, one by one: "add cheese," "add pepperoni," "add mushrooms" (you call the `addCheese()`, `addPepperoni()`, `addMushrooms()` methods).
+3.  Each time you add a topping, the chef continues to work on the same pizza being prepared.
+4.  When you're done choosing, you tell the chef, "Ready!" (you call the `build()` method).
+5.  The chef puts the pizza in the oven and gives you the final product, ready to eat.
+
+The `Builder` allows you to construct the object (`Pizza` or `Card`) in a flexible and readable way, without needing a constructor with endless parameters.
+
+
+### 4. Prototype
+
+The Prototype pattern is a creational design pattern that lets you copy existing objects without making your code dependent on their classes. Instead of creating an object from scratch, you create a new instance by cloning an existing one.
+
+This pattern is useful when the cost of creating an object is higher than cloning it, or when you want to avoid the complexity of direct instantiation.
+
+### How It Works
+
+The pattern is based on the idea of having a "prototype" object that can be cloned to produce new objects.
+
+In the provided example (`ec.com.pattern.creational.prototype`), a prototype registry for credit cards is implemented.
+
+1.  **Prototype Interface (`PrototypeCard`):** Defines an interface that extends Java's `Cloneable` and declares a `clone()` method. All objects that can be cloned must implement this interface.
+2.  **Concrete Prototypes (`Visa`, `Amex`):** These are the classes that implement the `PrototypeCard` interface. They provide the implementation of the `clone()` method, which usually calls `super.clone()` to create a shallow copy of the object.
+3.  **Prototype Registry (`PrototypeFactory`):** This class acts as a central registry. It maintains a `Map` of pre-initialized prototypes. When a client requests a new object, the factory looks up the corresponding prototype, clones it, and returns the copy. This avoids the need to instantiate objects with `new` every time.
+
+### Class Diagram (Card Example)
+
+```mermaid
+classDiagram
+    class PrototypeFactory {
+        -static Map<String, PrototypeCard> protoTypes
+        +getInstance(String type): PrototypeCard
+    }
+
+    class PrototypeCard {
+        <<interface>>
+        +clone(): Object
+    }
+
+    class Visa {
+        -String name
+        +clone(): Object
+    }
+
+    class Amex {
+        -String name
+        +clone(): Object
+    }
+
+    PrototypeFactory ..> PrototypeCard : creates (by cloning)
+    PrototypeCard <|.. Visa
+    PrototypeCard <|.. Amex
+```
+
 🔹 **Explicación simple con un ejemplo del mundo real**
 
-Imagina que estás pidiendo una pizza personalizada:
+Imagina que trabajas en una imprenta y tienes plantillas maestras para diferentes tipos de tarjetas de presentación (una para "Ejecutivo", otra para "Creativo").
 
-1.  Empiezas con una base de pizza vacía (creas una instancia de `Pizza.Builder`).
-2.  Le dices al chef qué ingredientes agregar, uno por uno: "añade queso", "añade pepperoni", "añade champiñones" (llamas a los métodos `addCheese()`, `addPepperoni()`, `addMushrooms()`).
-3.  Cada vez que añades un ingrediente, el chef sigue trabajando sobre la misma pizza que está preparando.
-4.  Cuando has terminado de elegir, le dices al chef "¡Listo!" (llamas al método `build()`).
-5.  El chef mete la pizza al horno y te entrega el producto final, listo para comer.
+1.  Un cliente llega y pide 50 tarjetas de estilo "Ejecutivo".
+2.  En lugar de diseñar cada tarjeta desde cero, tomas la plantilla maestra "Ejecutivo" (el prototipo).
+3.  Clonas esa plantilla 50 veces, y luego solo personalizas los detalles (nombre, teléfono) en cada copia.
 
-El `Builder` te permite construir el objeto (`Pizza` o `Card`) de forma flexible y legible, sin necesidad de un constructor con un sinfín de parámetros.
+El `PrototypeFactory` es como el archivador donde guardas tus plantillas maestras. El método `getInstance()` es el proceso de tomar una plantilla, fotocopiarla (`clone()`) y entregar la copia.
+
+---
+
+### 5. Singleton
+
+The Singleton pattern is a creational design pattern that ensures a class has only one instance, while providing a global access point to this instance. It's one of the most well-known patterns, but should be used with caution as it can introduce global state into an application.
+
+This pattern is useful for managing shared resources, such as a database connection, a logger, or a configuration manager.
+
+### How It Works
+
+To implement the Singleton pattern, you make the class responsible for its own creation and lifecycle.
+
+In the provided example (`ec.com.pattern.creational.singleton.Card`), the pattern is implemented as follows:
+
+1.  **Private Constructor:** The class has a `private` constructor (`private Card()`). This prevents other classes from creating new instances of the Singleton using the `new` operator.
+2.  **Static Instance:** The class holds a `private static final` instance of itself. This instance is created "eagerly" when the class is loaded by the Java Virtual Machine (JVM), which is an inherently thread-safe approach.
+3.  **Global Access Method:** A `public static` method (e.g., `getINSTANCE()`) is provided to act as a global access point. Any time this method is called, it returns the single, pre-existing instance.
+
+### Class Diagram (Card Example)
+
+```mermaid
+classDiagram
+    class Card {
+        -static final Card INSTANCE
+        -String name
+        -Card()
+        +static getINSTANCE(): Card
+    }
+```
+
+The diagram shows that the `Card` class contains a static reference to itself and provides a static method to get that instance. The private constructor ensures no other instances can be created from outside.
+
+🔹 **Simple explanation with a real-world example**
+
+Imagine the government of a country.
+
+1.  There can only be **one** official government at any given time. You can't just create a new one whenever you want. This is enforced by the "constitution" (the private constructor).
+2.  The government itself exists as a single entity within the country (the static instance).
+3.  When anyone needs to interact with the government (e.g., to pay taxes or get a passport), they go through official channels to reach the *same* single government body (the `getInstance()` method).
+
+No matter how many citizens or agencies try to "get the government," they all end up interacting with the one and only instance.
+
+**Note on Thread Safety:** The example uses "eager initialization," which is a simple and thread-safe way to implement a Singleton. Other methods like "double-checked locking" or using an `enum` also exist for more complex scenarios (like lazy initialization in a multithreaded context).
