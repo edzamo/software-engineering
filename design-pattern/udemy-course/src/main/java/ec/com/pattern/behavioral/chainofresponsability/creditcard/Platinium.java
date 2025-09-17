@@ -1,4 +1,4 @@
-package ec.com.pattern.behavioral.chainofresponsability;
+package ec.com.pattern.behavioral.chainofresponsability.creditcard;
 
 public class Platinium implements ApproveLoanChain {
         

@@ -1,6 +1,7 @@
 package ec.com.pattern.behavioral;
 
-import ec.com.pattern.behavioral.chainofresponsability.Card;
+import ec.com.pattern.behavioral.chainofresponsability.creditcard.Card;
+import ec.com.pattern.behavioral.chainofresponsability.servicedesk.ServiceDesk;
 
 public class BehavioralPattern {
 
@@ -8,19 +9,31 @@ public class BehavioralPattern {
         System.out.println("=======+====== Behavioral Design Patterns ========");
         System.out.println("\nBehavioral Design Patterns Examples");
 
-        chainOfResponsabilityExample();
+        chainOfResponsabilityCreditCard();
+        chainOfResponsabilityServiceDesk();
 
         System.out.println("\nEnd of Behavioral Design Patterns Examples");
     }
 
-    private static void chainOfResponsabilityExample() {
+    private static void chainOfResponsabilityCreditCard() {
         System.out.println("\nChain of Responsability Pattern Example :");
 
         Card card = new Card();
         card.crediCardRequest(20000);    
 
 
-        System.out.println("End of Chain of Responsability Pattern Example");
+    
     }
+
+
+    private static void chainOfResponsabilityServiceDesk() {
+        System.out.println("\nChain of Responsability Pattern Example :");
+
+        ServiceDesk serviceDesk = new ServiceDesk();
+        serviceDesk.serviceDeskRequest("Basic Support");
+
+    }
+
+
 
 }
