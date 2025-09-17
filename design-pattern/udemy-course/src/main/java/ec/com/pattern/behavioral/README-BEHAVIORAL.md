@@ -62,14 +62,11 @@ classDiagram
 ```
 🔹 Simple explanation with a real-world example
 
-Imagine you work at a bank:
-    1. The customer chooses to pay with a card, Google Pay, or PayPal.
-    2. The factory (PaymentFactory) receives that information (the TypePayment enum).
-    3. The factory creates the appropriate object:
-        • If it's CARD → returns CardPayment.
-        • If it's GOOGLE → returns GooglePayment.
-        • If it's PAYPAL → returns PaypalPayment.
-    4. The system calls doPayment() regardless of the payment type, because all classes implement the Payment interface.
+Imagine you apply for a credit card at a bank:
+	1.	The request goes first to the Gold Approver (approves up to $10,000).
+	2.	If it exceeds that, it moves to the Platinum Approver (approves $10,001–$50,000).
+	3.	If still higher, it moves to the Black Approver (approves above $50,000).
+	4.	The customer only submits once; the system automatically passes the request through the chain until the right approver handles it.
 
 ⸻
 
