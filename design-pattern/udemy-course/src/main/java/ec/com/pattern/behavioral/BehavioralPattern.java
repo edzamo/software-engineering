@@ -2,6 +2,14 @@ package ec.com.pattern.behavioral;
 
 import ec.com.pattern.behavioral.chainofresponsability.creditcard.Card;
 import ec.com.pattern.behavioral.chainofresponsability.servicedesk.ServiceDesk;
+import ec.com.pattern.behavioral.command.cook.BurgerOrder;
+import ec.com.pattern.behavioral.command.cook.Chef;
+import ec.com.pattern.behavioral.command.cook.Order;
+import ec.com.pattern.behavioral.command.cook.PastaOrder;
+import ec.com.pattern.behavioral.command.cook.WaiterInvoker;
+import ec.com.pattern.behavioral.command.credicardstatus.CrediCardInvoker;
+import ec.com.pattern.behavioral.command.credicardstatus.CreditActiveCommand;
+import ec.com.pattern.behavioral.command.credicardstatus.CreditCard;
 
 public class BehavioralPattern {
 
@@ -11,6 +19,9 @@ public class BehavioralPattern {
 
         chainOfResponsabilityCreditCard();
         chainOfResponsabilityServiceDesk();
+        commandPattern();
+        commandPatternCook();
+
 
         System.out.println("\nEnd of Behavioral Design Patterns Examples");
     }
@@ -34,6 +45,38 @@ public class BehavioralPattern {
 
     }
 
+    private static void commandPattern() {
+        System.out.println("\nCommand Pattern Example :");
+        CreditCard creditCard = new CreditCard();
+        CreditCard creditCardDesactive= new CreditCard();
+
+        CrediCardInvoker invoker = new CrediCardInvoker();
+        invoker.setCommand(new CreditActiveCommand(creditCard));
+        invoker.run();
+        System.out.println("-------------------");
+        invoker.setCommand(new CreditActiveCommand(creditCardDesactive));
+        invoker.run();
+    }
+
+        private  static void commandPatternCook() {
+
+        System.out.println("\nCommand Pattern Cook Example :");
+        Chef chef = new Chef();
+        WaiterInvoker waiter = new WaiterInvoker();
+
+        System.out.println("Customer: I'd like a burger.");
+        Order burgerOrder = new BurgerOrder(chef);
+        waiter.takeOrder(burgerOrder);
+
+        System.out.println("\nCustomer: And my friend would like pasta.");
+        Order pastaOrder = new PastaOrder(chef);
+        waiter.takeOrder(pastaOrder);
+
+        // The waiter goes to the kitchen and gives the orders to the chef
+        waiter.placeOrders();
+
+        System.out.println("\nWaiter: Here is your meal!");
+    }
 
 
 }
