@@ -138,3 +138,65 @@ Imagine a friendly waiter (`WaiterInvoker`) taking your order at a restaurant.
 This setup allows for great flexibility. You can queue orders, log them, or even cancel them without the chef or waiter needing to change how they work.
 
 ---
+
+### 3. Iterator
+
+The **Iterator** is a behavioral design pattern that lets you traverse elements of a collection without exposing its underlying representation (like a list, stack, tree, etc.). It provides a way to access the elements of an aggregate object sequentially without exposing its internal structure.
+
+### How It Works
+
+The main idea of the Iterator pattern is to extract the traversal behavior of a collection into a separate object called an *iterator*.
+
+In the provided example (`ec.com.pattern.behavioral.iteractor`), we have an implementation for iterating over a collection of `Card` objects.
+
+1.  **Iterator Interface (`Iterator`):** This interface declares the operations for traversal, such as `hasNext()` to check if there are more elements and `next()` to retrieve the next element.
+2.  **Aggregate Interface (`List`):** This interface declares a method for getting an iterator, like `iterator()`.
+3.  **Concrete Iterator (`CardIterator`):** This class implements the `Iterator` interface and keeps track of the current position in the traversal of a specific collection. It is coupled with the `CardList`.
+4.  **Concrete Aggregate (`CardList`):** This class implements the `List` interface. It returns a new instance of the `CardIterator` when the `iterator()` method is called, giving the client a way to traverse its internal `Card` array.
+5.  **Client:** The client gets an iterator object from the collection and uses it to access the elements. This way, the client code doesn't depend on the concrete classes of the collection.
+
+### Class Diagram (Card Iterator Example)
+
+Here is the UML class diagram for the card iterator example:
+
+```mermaid
+classDiagram
+    class List {
+        <<interface>>
+        +iterator(): Iterator
+    }
+    class Iterator {
+        <<interface>>
+        +hasNext(): boolean
+        +next(): Object
+    }
+    class CardList {
+        -Card[] cards
+        +iterator(): Iterator
+    }
+    class CardIterator {
+        -Card[] cards
+        -int position
+        +hasNext(): boolean
+        +next(): Object
+    }
+    class Card {
+      -String type
+    }
+
+    List <|.. CardList
+    Iterator <|.. CardIterator
+    CardList ..> CardIterator : creates
+    CardIterator ..> Card : iterates over
+```
+
+🔹 **Simple explanation with a real-world example**
+
+Think of a TV remote control.
+
+1.  Your TV has a collection of channels (the `CardList`).
+2.  The remote control is your `Iterator`.
+3.  You can use the "next channel" and "previous channel" buttons (`next()` method) to go through the channels one by one. You don't need to know how the TV stores the channels or tunes into them.
+4.  You can also check if you've reached the last channel (`hasNext()` method).
+
+The remote control (Iterator) provides a simple, universal interface to interact with the TV's channels (the collection), hiding the complex internal details.

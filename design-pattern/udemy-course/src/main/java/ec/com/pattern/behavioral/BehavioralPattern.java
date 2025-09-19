@@ -1,5 +1,7 @@
 package ec.com.pattern.behavioral;
 
+import java.util.List;
+
 import ec.com.pattern.behavioral.chainofresponsability.creditcard.Card;
 import ec.com.pattern.behavioral.chainofresponsability.servicedesk.ServiceDesk;
 import ec.com.pattern.behavioral.command.cook.BurgerOrder;
@@ -21,6 +23,7 @@ public class BehavioralPattern {
         chainOfResponsabilityServiceDesk();
         commandPattern();
         commandPatternCook();
+        iteratorPattern();
 
 
         System.out.println("\nEnd of Behavioral Design Patterns Examples");
@@ -78,5 +81,26 @@ public class BehavioralPattern {
         System.out.println("\nWaiter: Here is your meal!");
     }
 
+
+private static void iteratorPattern() {
+    System.out.println("\nIterator Pattern Example :");
+ec.com.pattern.behavioral.iteractor.Card[] cards = new ec.com.pattern.behavioral.iteractor.Card[5];
+    cards[0] = new ec.com.pattern.behavioral.iteractor.Card("Card 1");
+    cards[1] = new ec.com.pattern.behavioral.iteractor.Card("Card 2");
+    cards[2] = new ec.com.pattern.behavioral.iteractor.Card("Card 3");
+    cards[3] = new ec.com.pattern.behavioral.iteractor.Card("Card 4");
+    cards[4] = new ec.com.pattern.behavioral.iteractor.Card("Card 5");
+
+    ec.com.pattern.behavioral.iteractor.List list = new ec.com.pattern.behavioral.iteractor.CardList(cards);
+    ec.com.pattern.behavioral.iteractor.Iterator iterator = list.iterator();
+
+    while (iterator.hasNext()) {
+        ec.com.pattern.behavioral.iteractor.Card tarjeta= (ec.com.pattern.behavioral.iteractor.Card) iterator.next();
+         System.out.println(tarjeta.getType());
+    }
+
+    
+   
+    }
 
 }
