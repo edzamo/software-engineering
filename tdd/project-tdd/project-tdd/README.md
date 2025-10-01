@@ -36,3 +36,34 @@ Adopting TDD offers several significant benefits:
 *   **Living Documentation:** The tests themselves act as a form of documentation, clearly describing how the system is supposed to work.
 *   **Reduces Bugs:** Writing tests first helps catch bugs early in the development process, making them easier and less costly to fix.
 *   **Drives Development:** The failing tests guide your development process, ensuring you only write code that is necessary to meet the requirements.
+
+## TDD and the 3 A's (Arrange, Act, Assert)
+
+The "Arrange, Act, Assert" (AAA) is a pattern for organizing your tests to make them more readable and understandable. Each test should be divided into these three distinct sections:
+
+*   **Arrange:** Set up the test. This is where you initialize objects, mock dependencies, and prepare the input data for the system under test.
+*   **Act:** Perform the action. In this step, you invoke the method or function you are testing.
+*   **Assert:** Verify the outcome. Here, you check if the result of the action is what you expected.
+
+### Example
+
+Here is a simple JavaScript example using the Jest testing framework:
+
+```javascript
+// A simple function to test
+const sum = (a, b) => a + b;
+
+describe('sum', () => {
+  it('should return the sum of two numbers', () => {
+    // Arrange
+    const num1 = 5;
+    const num2 = 10;
+
+    // Act
+    const result = sum(num1, num2);
+
+    // Assert
+    expect(result).toBe(15);
+  });
+});
+```
