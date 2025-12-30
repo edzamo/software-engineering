@@ -235,7 +235,7 @@ docs/api/
 
 # Asegurar que la documentación se incluya
 !*.md
-!DOCUMENTACION.md
+!documentacion.md
 
 # Asegurar que los archivos de configuración del proyecto se incluyan
 !build.gradle
