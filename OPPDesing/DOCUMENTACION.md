@@ -105,9 +105,9 @@ classDiagram
         +int getAge()
         +void sleep()
         +void displayInfo()
-        +{abstract} void makeSound()
-        +{abstract} void move()
-        +{abstract} String getType()
+        +void makeSound()*
+        +void move()*
+        +String getType()*
     }
     
     class Dog {
@@ -130,8 +130,10 @@ classDiagram
         +void setIndoor(boolean indoor)
     }
     
-Animal <|-- Dog : extends
-Animal <|-- Cat : extends
+    Animal <|-- Dog : extends
+    Animal <|-- Cat : extends
+    
+    note for Animal "Métodos marcados con * son abstractos"
 ```
 
 ### Diagrama de Clases - Encapsulación (BankAccount)
@@ -285,7 +287,7 @@ classDiagram
 - **`#`**: Modificador `protected` (accesible en la clase y subclases)
 - **`-`**: Modificador `private` (accesible solo en la clase)
 - **`+`**: Modificador `public` (accesible desde cualquier lugar)
-- **`{abstract}`**: Método abstracto (debe ser implementado)
+- **`*` al final del método**: Indica método abstracto (debe ser implementado)
 - **`<|--`**: Relación de herencia (extends)
 
 ---
@@ -1433,21 +1435,50 @@ public class OrderService {
 #### Ejemplo 1: Alta Cohesión + Bajo Acoplamiento ✅
 
 ```java
-// ✅ ALTA COHESIÓN: Todos los métodos manejan emails
-public class EmailService {
-    public void sendEmail(String to, String subject, String body) { ... }
-    public void validateEmail(String email) { ... }
-    public void formatEmailBody(String body) { ... }
+// ✅ INTERFAZ: Define el contrato sin implementación (Bajo Acoplamiento)
+public interface IEmailService {
+    void sendEmail(String to, String subject, String body);
+    void validateEmail(String email);
+    void formatEmailBody(String body);
 }
 
-// ✅ BAJO ACOPLAMIENTO: Solo depende de String (datos primitivos)
+// ✅ ALTA COHESIÓN: Todos los métodos manejan emails
+// Implementación concreta de la interfaz
+public class EmailService implements IEmailService {
+    @Override
+    public void sendEmail(String to, String subject, String body) { 
+        // Implementación específica
+    }
+    
+    @Override
+    public void validateEmail(String email) { 
+        // Implementación específica
+    }
+    
+    @Override
+    public void formatEmailBody(String body) { 
+        // Implementación específica
+    }
+}
+
+// ✅ BAJO ACOPLAMIENTO: Depende de la interfaz, no de la implementación concreta
 public class UserService {
-    private EmailService emailService; // Depende de interfaz/abstracción
+    private IEmailService emailService; // Depende de la INTERFAZ, no de la clase
+    
+    // Inyección de dependencia: recibe la interfaz
+    public UserService(IEmailService emailService) {
+        this.emailService = emailService;
+    }
     
     public void registerUser(String email) {
         emailService.sendEmail(email, "Welcome", "Thanks for joining!");
     }
 }
+
+// Uso: Puedes cambiar la implementación sin afectar UserService
+UserService userService = new UserService(new EmailService());
+// O usar otra implementación:
+// UserService userService = new UserService(new MockEmailService());
 ```
 
 #### Ejemplo 2: Baja Cohesión + Alto Acoplamiento ❌
