@@ -28,6 +28,7 @@ Este proyecto es una colección de ejemplos prácticos que demuestran los princi
 2. [📦 Encapsulación (Encapsulation)](#2-encapsulación-encapsulation)
 3. [🔍 Abstracción (Abstraction)](#3-abstracción-abstraction)
 4. [🧩 Descomposición (Decomposition)](#4-descomposición-decomposition)
+- [🔀 Separación de Responsabilidades (Separation of Concerns)](#separación-de-responsabilidades-separation-of-concerns)
 5. [🔺 Generalización (Generalization)](#5-generalización-generalization)
 
 ### 🎨 Diagramas y Relaciones UML
@@ -924,6 +925,24 @@ La **descomposición** es el proceso de dividir un problema complejo en partes m
 - **Mantenibilidad**: Fácil de mantener y modificar
 - **Testabilidad**: Componentes probables de forma independiente
 - **Colaboración**: Múltiples desarrolladores pueden trabajar en paralelo
+
+---
+
+### 🔀 Separación de Responsabilidades (Separation of Concerns)
+
+Separation of concerns is a design principle that helps us organize complex problems by breaking them down into smaller, manageable parts. Imagine a supermarket: it has different departments for butchering meat, baking bread, and stocking shelves. Each department focuses on its specific task, making the whole operation run smoothly. In software design, we do something similar by dividing a program into different sections, each responsible for a specific function. This way, we can tackle each part without getting overwhelmed by the entire problem.
+
+For example, think about a smartphone. It can take photos, make calls, and send messages. Instead of putting all these functions into one big class, we can create separate classes for the camera and the phone. This allows us to change or improve one part without affecting the others. By using separation of concerns, we create a system that is flexible, reusable, and easier to maintain, just like how a well-organized supermarket serves its customers efficiently.
+
+**Implementation in this project:** See `src/main/java/ec/com/desing/oop/separationOfConcerns` for example classes: `Camera.java`, `FirstGenCamera.java`, `Phone.java`, `SmartPhone.java`, `TraditionalPhone.java`.
+
+**¿Necesitas más explicaciones?** Are there any other concepts within the content that you need an explanation for?
+
+**Follow-up suggestions:** If you want to continue exploring this topic, try one of these follow-up questions:
+
+- How would you refactor the phone and camera classes to use interfaces?
+- How to apply dependency inversion here?
+- How to test separation of concerns using unit tests?
 
 ---
 
