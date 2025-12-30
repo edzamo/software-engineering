@@ -1210,11 +1210,295 @@ for (Animal animal : animals) {
 
 ---
 
+---
+
+## 🔗 Cohesión y Acoplamiento
+
+### Cohesión (Cohesion)
+
+#### ¿Qué es la Cohesión?
+
+La **cohesión** mide qué tan relacionadas y enfocadas están las responsabilidades dentro de una clase o módulo. Una clase con **alta cohesión** tiene métodos y atributos que trabajan juntos para un propósito común y bien definido.
+
+#### Tipos de Cohesión (de mejor a peor):
+
+1. **Cohesión Funcional** ✅ (Mejor)
+   - Todos los elementos trabajan juntos para una sola función
+   - Ejemplo: Clase `Calculator` con métodos matemáticos
+
+2. **Cohesión Secuencial**
+   - Los elementos procesan datos en secuencia
+   - Ejemplo: Clase que lee, procesa y escribe datos
+
+3. **Cohesión Comunicacional**
+   - Los elementos operan sobre los mismos datos
+   - Ejemplo: Clase que maneja un archivo (abrir, leer, cerrar)
+
+4. **Cohesión Procedimental**
+   - Los elementos están relacionados por el orden de ejecución
+   - Ejemplo: Clase con pasos de un proceso
+
+5. **Cohesión Temporal**
+   - Los elementos se ejecutan al mismo tiempo
+   - Ejemplo: Clase que inicializa múltiples componentes
+
+6. **Cohesión Lógica**
+   - Los elementos están relacionados lógicamente pero no funcionalmente
+   - Ejemplo: Clase que maneja diferentes tipos de utilidades
+
+7. **Cohesión Casual** ❌ (Peor)
+   - Los elementos no tienen relación clara
+   - Ejemplo: Clase que hace muchas cosas sin relación
+
+#### Ejemplo: Alta Cohesión ✅
+
+```java
+// ✅ ALTA COHESIÓN: Todos los métodos están relacionados con operaciones bancarias
+public class BankAccount {
+    private String accountNumber;
+    private double balance;
+    
+    public void deposit(double amount) { ... }
+    public void withdraw(double amount) { ... }
+    public void transfer(BankAccount target, double amount) { ... }
+    public double getBalance() { ... }
+    // Todos los métodos trabajan juntos para un propósito: manejar una cuenta bancaria
+}
+```
+
+#### Ejemplo: Baja Cohesión ❌
+
+```java
+// ❌ BAJA COHESIÓN: La clase hace demasiadas cosas sin relación
+public class Utility {
+    public void sendEmail() { ... }
+    public void calculateTax() { ... }
+    public void formatDate() { ... }
+    public void validatePassword() { ... }
+    // Estos métodos no tienen relación entre sí - deberían estar en clases separadas
+}
+```
+
+#### Ventajas de Alta Cohesión:
+
+- ✅ **Fácil de entender**: La clase tiene un propósito claro
+- ✅ **Fácil de mantener**: Cambios afectan solo una responsabilidad
+- ✅ **Reutilizable**: Clases enfocadas son más fáciles de reutilizar
+- ✅ **Testeable**: Más fácil escribir pruebas unitarias
+
+---
+
+### Acoplamiento (Coupling)
+
+#### ¿Qué es el Acoplamiento?
+
+El **acoplamiento** mide qué tan dependiente es una clase de otras clases. **Bajo acoplamiento** significa que una clase tiene pocas dependencias y puede funcionar de forma relativamente independiente.
+
+#### Tipos de Acoplamiento (de mejor a peor):
+
+1. **Sin Acoplamiento** ✅ (Ideal)
+   - No hay dependencias entre módulos
+
+2. **Acoplamiento por Datos**
+   - Los módulos comparten solo datos primitivos
+   - Ejemplo: Método que recibe `int`, `String`, etc.
+
+3. **Acoplamiento por Estructura**
+   - Los módulos comparten estructuras de datos
+   - Ejemplo: Compartir un objeto `Person`
+
+4. **Acoplamiento por Control**
+   - Un módulo controla el flujo de otro
+   - Ejemplo: Pasar flags o parámetros de control
+
+5. **Acoplamiento Externo**
+   - Los módulos dependen de interfaces externas
+   - Ejemplo: Depender de APIs externas
+
+6. **Acoplamiento Común**
+   - Los módulos comparten datos globales
+   - Ejemplo: Variables globales compartidas
+
+7. **Acoplamiento por Contenido** ❌ (Peor)
+   - Un módulo modifica directamente el contenido de otro
+   - Ejemplo: Acceder a atributos privados de otra clase
+
+#### Ejemplo: Bajo Acoplamiento ✅
+
+```java
+// ✅ BAJO ACOPLAMIENTO: Usa interfaces, no implementaciones concretas
+public class OrderService {
+    private PaymentProcessor paymentProcessor; // Interfaz, no clase concreta
+    
+    public OrderService(PaymentProcessor processor) {
+        this.paymentProcessor = processor; // Inyección de dependencia
+    }
+    
+    public void processOrder(Order order) {
+        paymentProcessor.process(order.getAmount()); // Solo depende de la interfaz
+    }
+}
+
+// Puede usar cualquier implementación de PaymentProcessor
+interface PaymentProcessor {
+    void process(double amount);
+}
+```
+
+#### Ejemplo: Alto Acoplamiento ❌
+
+```java
+// ❌ ALTO ACOPLAMIENTO: Depende de implementaciones concretas
+public class OrderService {
+    private CreditCardProcessor processor; // Depende de clase concreta
+    
+    public OrderService() {
+        this.processor = new CreditCardProcessor(); // Crea dependencia directa
+    }
+    
+    public void processOrder(Order order) {
+        processor.chargeCard(order.getAmount()); // Método específico de CreditCardProcessor
+    }
+}
+
+// Si cambia CreditCardProcessor, OrderService se rompe
+```
+
+#### Ventajas de Bajo Acoplamiento:
+
+- ✅ **Flexibilidad**: Fácil cambiar implementaciones
+- ✅ **Mantenibilidad**: Cambios en una clase no afectan otras
+- ✅ **Testeable**: Fácil crear mocks y stubs
+- ✅ **Reutilizable**: Clases independientes son más reutilizables
+
+---
+
+### Relación entre Cohesión y Acoplamiento
+
+| Cohesión | Acoplamiento | Resultado |
+|----------|--------------|-----------|
+| **Alta** ✅ | **Bajo** ✅ | **Ideal** - Clases bien diseñadas |
+| Alta ✅ | Alto ❌ | Bueno pero difícil de cambiar |
+| Baja ❌ | Bajo ✅ | Flexible pero difícil de entender |
+| Baja ❌ | Alto ❌ | **Peor** - Código difícil de mantener |
+
+**Regla de oro:** Buscar **alta cohesión** y **bajo acoplamiento**.
+
+---
+
+### Ejemplos Rápidos
+
+#### Ejemplo 1: Alta Cohesión + Bajo Acoplamiento ✅
+
+```java
+// ✅ ALTA COHESIÓN: Todos los métodos manejan emails
+public class EmailService {
+    public void sendEmail(String to, String subject, String body) { ... }
+    public void validateEmail(String email) { ... }
+    public void formatEmailBody(String body) { ... }
+}
+
+// ✅ BAJO ACOPLAMIENTO: Solo depende de String (datos primitivos)
+public class UserService {
+    private EmailService emailService; // Depende de interfaz/abstracción
+    
+    public void registerUser(String email) {
+        emailService.sendEmail(email, "Welcome", "Thanks for joining!");
+    }
+}
+```
+
+#### Ejemplo 2: Baja Cohesión + Alto Acoplamiento ❌
+
+```java
+// ❌ BAJA COHESIÓN: Hace demasiadas cosas
+public class Utility {
+    public void sendEmail() { ... }
+    public void calculateTax() { ... }
+    public void formatDate() { ... }
+    public void processPayment() { ... }
+}
+
+// ❌ ALTO ACOPLAMIENTO: Depende de implementación concreta
+public class OrderService {
+    private Utility utility = new Utility(); // Dependencia directa
+    
+    public void processOrder() {
+        utility.processPayment(); // Si Utility cambia, esto se rompe
+        utility.sendEmail(); // Demasiadas responsabilidades
+    }
+}
+```
+
+#### Ejemplo 3: Mejorando el Diseño
+
+```java
+// ❌ ANTES: Baja cohesión, alto acoplamiento
+public class OrderProcessor {
+    public void processOrder(Order order) {
+        // Calcula impuestos
+        double tax = order.getAmount() * 0.15;
+        
+        // Procesa pago
+        CreditCardProcessor processor = new CreditCardProcessor();
+        processor.charge(order.getAmount() + tax);
+        
+        // Envía email
+        EmailService email = new EmailService();
+        email.send(order.getCustomerEmail(), "Order confirmed");
+        
+        // Guarda en base de datos
+        Database.save(order);
+    }
+}
+
+// ✅ DESPUÉS: Alta cohesión, bajo acoplamiento
+public class OrderProcessor {
+    private TaxCalculator taxCalculator;
+    private PaymentProcessor paymentProcessor;
+    private EmailService emailService;
+    private OrderRepository orderRepository;
+    
+    public OrderProcessor(TaxCalculator tax, PaymentProcessor payment,
+                          EmailService email, OrderRepository repository) {
+        this.taxCalculator = tax;
+        this.paymentProcessor = payment;
+        this.emailService = email;
+        this.orderRepository = repository;
+    }
+    
+    public void processOrder(Order order) {
+        double tax = taxCalculator.calculate(order);
+        paymentProcessor.process(order.getAmount() + tax);
+        emailService.sendConfirmation(order);
+        orderRepository.save(order);
+    }
+}
+```
+
+---
+
+### Resumen - Ayuda Memoria
+
+| Concepto | Objetivo | Cómo Lograrlo |
+|----------|----------|---------------|
+| **Cohesión** | Alta ✅ | Una clase = una responsabilidad |
+| **Acoplamiento** | Bajo ✅ | Usar interfaces, inyección de dependencias |
+| **Regla de Oro** | Alta cohesión + Bajo acoplamiento | Clases enfocadas e independientes |
+
+**Preguntas para evaluar:**
+
+1. **Cohesión:** ¿Todos los métodos de la clase trabajan para el mismo propósito?
+2. **Acoplamiento:** ¿La clase depende de muchas otras clases concretas?
+
+---
+
 ## 🔄 Próximos Conceptos a Implementar
 
 - [x] Encapsulación (Encapsulation) ✅
 - [x] Descomposición (Decomposition) ✅
 - [x] Generalización (Generalization) ✅
+- [x] Cohesión y Acoplamiento ✅
 - [ ] Herencia (Inheritance) - Cubierto parcialmente en Generalización
 - [ ] Polimorfismo (Polymorphism) - Cubierto parcialmente en Generalización
 - [ ] Interfaces
