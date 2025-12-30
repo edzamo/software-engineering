@@ -15,9 +15,55 @@ Este proyecto es una colección de ejemplos prácticos que demuestran los princi
 
 ---
 
+## 📑 Índice / Menú de Navegación
+
+### 🔰 Conceptos Fundamentales (Básicos)
+1. [🔗 Cohesión y Acoplamiento](#-cohesión-y-acoplamiento)
+   - [Cohesión (Cohesion)](#cohesión-cohesion)
+   - [Acoplamiento (Coupling)](#acoplamiento-coupling)
+   - [Relación entre Cohesión y Acoplamiento](#relación-entre-cohesión-y-acoplamiento)
+   - [Ejemplos Rápidos](#ejemplos-rápidos)
+
+### 🏛️ Pilares de la Programación Orientada a Objetos
+2. [📦 Encapsulación (Encapsulation)](#2-encapsulación-encapsulation)
+3. [🔍 Abstracción (Abstraction)](#3-abstracción-abstraction)
+4. [🧩 Descomposición (Decomposition)](#4-descomposición-decomposition)
+5. [🔺 Generalización (Generalization)](#5-generalización-generalization)
+
+### 🎨 Diagramas y Relaciones UML
+6. [🎨 Diagramas UML](#-diagramas-uml)
+   - [Diagrama de Clases - Abstracción](#diagrama-de-clases---abstracción-animal)
+   - [Diagrama de Clases - Encapsulación](#diagrama-de-clases---encapsulación-bankaccount)
+   - [Diagrama de Clases - Descomposición](#diagrama-de-clases---descomposición-person)
+   - [Diagrama de Clases - Generalización](#diagrama-de-clases---generalización-vehicle)
+7. [🔷 Símbolos de Relación en Diagramas UML](#-símbolos-de-relación-en-diagramas-uml)
+   - [Rombo Lleno (Composición)](#1-rombo-lleno-composición----)
+   - [Rombo Vacío (Agregación)](#2-rombo-vacío-agregación----)
+   - [Relación de Herencia](#3-relación-de-herencia----)
+   - [Relación de Implementación](#4-relación-de-implementación----)
+
+### 💻 Ejemplos y Código
+8. [💡 Ejemplos de Código](#-ejemplos-de-código)
+9. [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+10. [🔑 Conceptos Clave - Ayuda Memoria](#-conceptos-clave---ayuda-memoria)
+
+### 🛠️ Guías Prácticas
+11. [🧪 Ejecutar el Proyecto](#-ejecutar-el-proyecto)
+12. [📝 Notas Adicionales](#-notas-adicionales)
+   - [Diferencias entre Clase Abstracta e Interfaz](#diferencias-entre-clase-abstracta-e-interfaz)
+   - [Cuándo usar Clase Abstracta vs Interfaz](#cuándo-usar-clase-abstracta-vs-interfaz)
+13. [🔄 Próximos Conceptos a Implementar](#-próximos-conceptos-a-implementar)
+14. [📖 Referencias](#-referencias)
+
+---
+
 ## 📚 Conceptos de Programación Orientada a Objetos
 
-### 1. Abstracción (Abstraction)
+### 🔰 Conceptos Fundamentales
+
+## 🔗 Cohesión y Acoplamiento
+
+### 3. Abstracción (Abstraction)
 
 #### ¿Qué es la Abstracción?
 
@@ -855,7 +901,7 @@ La **encapsulación** es el mecanismo que oculta los detalles internos de una cl
 
 ---
 
-### 3. Descomposición (Decomposition)
+### 4. Descomposición (Decomposition)
 
 #### ¿Qué es la Descomposición?
 
@@ -879,7 +925,7 @@ La **descomposición** es el proceso de dividir un problema complejo en partes m
 
 ---
 
-### 4. Generalización (Generalization)
+### 5. Generalización (Generalization)
 
 #### ¿Qué es la Generalización?
 
@@ -1209,10 +1255,6 @@ for (Animal animal : animals) {
 - Las clases implementadoras tienen una relación "puede-hacer" o "se comporta-como"
 
 ---
-
----
-
-## 🔗 Cohesión y Acoplamiento
 
 ### Cohesión (Cohesion)
 
