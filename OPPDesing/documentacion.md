@@ -29,7 +29,8 @@ Este proyecto es una colección de ejemplos prácticos que demuestran los princi
 3. [🔍 Abstracción (Abstraction)](#3-abstracción-abstraction)
 4. [🧩 Descomposición (Decomposition)](#4-descomposición-decomposition)
 - [🔀 Separación de Responsabilidades (Separation of Concerns)](#separación-de-responsabilidades-separation-of-concerns)
-5. [🔺 Generalización (Generalization)](#5-generalización-generalization)
+5. [� Association](#association)
+6. [�🔺 Generalización (Generalization)](#5-generalización-generalization)
 
 ### 🎨 Diagramas y Relaciones UML
 6. [🎨 Diagramas UML](#-diagramas-uml)
@@ -868,7 +869,7 @@ OPPDesing/
 │                               └── VehicleTest.java
 ├── build.gradle
 ├── settings.gradle
-└── DOCUMENTACION.md
+└── documentacion.md
 ```
 
 ### 2. Encapsulación (Encapsulation)
@@ -1240,6 +1241,11 @@ for (Animal animal : animals) {
 ./gradlew run -PmainClass=ec.com.desing.oop.generalization.GeneralizationExample
 ```
 
+### Ejecutar el ejemplo de association:
+```bash
+./gradlew run -PmainClass=ec.com.desing.oop.association.AssociationExample
+```
+
 ### Ver reporte de pruebas:
 ```bash
 ./gradlew test --info
@@ -1595,6 +1601,7 @@ public class OrderProcessor {
 - [ ] Polimorfismo (Polymorphism) - Cubierto parcialmente en Generalización
 - [ ] Interfaces
 - [ ] Composición vs Herencia
+- [x] Association (Association) ✅
 - [ ] Principios SOLID
 
 ---
