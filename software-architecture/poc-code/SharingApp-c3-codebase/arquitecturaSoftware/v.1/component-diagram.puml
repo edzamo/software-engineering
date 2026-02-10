@@ -1,0 +1,27 @@
+@startuml SharingApp_Component_Diagram
+title Diagrama de Componentes UML - SharingApp
+
+skinparam componentStyle uml2
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+
+package "CLIENTE" {
+    [Aplicación Android]
+    [Aplicación Web]
+}
+
+package "SERVIDOR" {
+    [Servidor Web]
+    [Servidor de Aplicaciones]
+}
+
+package "PERSISTENCIA" {
+    database "Base de Datos Remota"
+}
+
+[Aplicación Android] --> [Servidor Web] : HTTP REST API
+[Aplicación Web] --> [Servidor Web] : HTTP REST API
+[Servidor Web] --> [Servidor de Aplicaciones] : Interface
+[Servidor de Aplicaciones] --> [Base de Datos Remota] : SQL Interface
+
+@enduml

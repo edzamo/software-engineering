@@ -1,0 +1,248 @@
+# ============================================
+# Archivos y directorios generados por build
+# ============================================
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+.gradletasknamecache
+
+# Archivos compilados
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar
+*.tar.gz
+
+# Archivos de salida
+out/
+target/
+dist/
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# ============================================
+# IDEs y Editores
+# ============================================
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nb-configuration.xml
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# Sistema Operativo
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# Archivos temporales y logs
+# ============================================
+
+# Logs
+*.log
+*.log.*
+logs/
+*.out
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.#*
+\#*#
+.*.sw?
+
+# Archivos de backup
+*.bak
+*.backup
+*.old
+*.orig
+
+# ============================================
+# Archivos de configuración local
+# ============================================
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Configuración local
+local.properties
+local.gradle
+gradle.properties.local
+
+# ============================================
+# Archivos de dependencias y cache
+# ============================================
+
+# Maven (si se usa)
+.mvn/
+mvnw
+mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+
+# Node (si se usa para alguna herramienta)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ============================================
+# Archivos de testing y coverage
+# ============================================
+
+# Reportes de pruebas
+test-results/
+test-results.xml
+.coverage/
+coverage/
+*.coverage
+*.lcov
+.nyc_output
+
+# ============================================
+# Archivos de documentación generada
+# ============================================
+
+# JavaDoc
+javadoc/
+docs/api/
+
+# ============================================
+# Archivos de certificados y keys
+# ============================================
+
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.jks
+*.keystore
+*.truststore
+
+# ============================================
+# Archivos de base de datos
+# ============================================
+
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+
+# ============================================
+# Archivos de aplicación
+# ============================================
+
+# Archivos de aplicación generados
+*.pid
+*.seed
+*.pid.lock
+
+# ============================================
+# Excepciones - Archivos del proyecto que SÍ deben incluirse
+# ============================================
+
+# Asegurar que el wrapper de Gradle se incluya
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Asegurar que los scripts de Gradle se incluyan
+!gradlew
+!gradlew.bat
+
+# Asegurar que la documentación se incluya
+!*.md
+!documentacion.md
+
+# Asegurar que los archivos de configuración del proyecto se incluyan
+!build.gradle
+!settings.gradle
+!gradle.properties
+
+# Asegurar que el código fuente se incluya
+!src/**/*.java
+!src/**/*.kt
+!src/**/*.groovy
