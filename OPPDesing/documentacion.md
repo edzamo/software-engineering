@@ -37,6 +37,7 @@ Este proyecto es una colección de ejemplos prácticos que demuestran los princi
    - [Diagrama de Clases - Abstracción](#diagrama-de-clases---abstracción-animal)
    - [Diagrama de Clases - Encapsulación](#diagrama-de-clases---encapsulación-bankaccount)
    - [Diagrama de Clases - Descomposición](#diagrama-de-clases---descomposición-person)
+   - [Diagrama de Clases - Association](#diagrama-de-clases---association-studentteacher)
    - [Diagrama de Clases - Generalización](#diagrama-de-clases---generalización-vehicle)
 7. [🔷 Símbolos de Relación en Diagramas UML](#-símbolos-de-relación-en-diagramas-uml)
    - [Rombo Lleno (Composición)](#1-rombo-lleno-composición----)
@@ -291,6 +292,40 @@ classDiagram
 - **`+`**: Modificador `public` (accesible desde cualquier lugar)
 - **`*` al final del método**: Indica método abstracto (debe ser implementado)
 - **`<|--`**: Relación de herencia (extends)
+
+### Diagrama de Clases - Association (Student/Teacher)
+
+```mermaid
+classDiagram
+    class Student {
+        -String name
+        +Student(String)
+        +String getName()
+        +void learn()
+    }
+    
+    class Teacher {
+        -String name
+        +Teacher(String)
+        +String getName()
+        +void teach()
+    }
+    
+    Student -- Teacher : associated with
+    
+    note for Student "Estudiante que puede\naprender de un profesor"
+    note for Teacher "Profesor que puede\nenseñar a un estudiante"
+```
+
+#### Descripción de la Relación:
+
+La **asociación** entre `Student` y `Teacher` representa una relación **de muchos-a-muchos** donde:
+
+- Un estudiante **puede aprender de** uno o más profesores
+- Un profesor **puede enseñar a** uno o más estudiantes
+- La relación es **bidireccional**: ambas clases conocen la existencia de la otra
+- La relación es **débil**: no existe dependencia de ciclo de vida entre las clases
+- Ninguna clase es propietaria de la otra
 
 ---
 
