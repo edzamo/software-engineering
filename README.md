@@ -62,7 +62,7 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 | [`reactive-programming/`](reactive-programming) | Programación reactiva | ✅ Completo | Mono/Flux, `map` vs `flatMap`, manejo de errores reactivo, R2DBC vs JPA, testing con StepVerifier. |
 | [`cloud-aws/`](cloud-aws) | Cloud (AWS) | ✅ Completo | Servicios AWS clave para un backend Java + cómo practicar con LocalStack (sin tarjeta ni cuenta real). |
 | [`tdd/`](tdd) | TDD | ✅ Completo | Ciclo red-green-refactor (diagrama de estados), pirámide de testing, patrón AAA. |
-| [`ia-agentes/`](ia-agentes) | IA aplicada al desarrollo | 🟡 En progreso | Catálogo de subagentes de Claude Code — 3 listos para desarrollo de software (hexagonal, WebFlux, TDD); analítica/big data pendientes. |
+| [`ia-agentes/`](ia-agentes) | IA aplicada al desarrollo | 🟡 En progreso | 6 agentes + 2 skills de Claude Code para desarrollo de software (hexagonal, WebFlux, TDD, GitFlow, OWASP, clean code, commits, PRs), con `agent-harness/` como fuente/compilador reusable entre proyectos; analítica/big data pendientes. |
 | [`entrevistas/`](entrevistas) | Bitácora de procesos de entrevista | 🟡 En progreso | Un proceso en curso (SaludTools) — logística, checklist y mapa hacia el resto del repo. Se va sumando por proceso. |
 
 ## Cómo está organizado

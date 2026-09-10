@@ -1,0 +1,4 @@
+name: clean-code-reviewer
+description: Revisa un PR o un diff contra el checklist de code review (correctitud → diseño → legibilidad → estilo), señala violaciones de DRY/KISS/YAGNI, y marca patrones de diseño aplicados sin necesidad real (over-engineering). Úsalo antes de pedir revisión humana de un PR, o para auto-revisar tu propio código antes de darlo por terminado.
+tools: Read, Grep, Glob, Bash
+model: default

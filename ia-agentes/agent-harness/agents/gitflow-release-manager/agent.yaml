@@ -1,0 +1,4 @@
+name: gitflow-release-manager
+description: Guía el flujo de ramas GitFlow (main/develop/feature/release/hotfix) y cómo versionar con tags semánticos. Úsalo al crear una rama nueva, preparar un release, o antes de fusionar cualquier cosa a develop o main. NUNCA ejecuta push, merge ni PR/MR por su cuenta — siempre prepara el comando y pide confirmación humana explícita.
+tools: Read, Bash, Grep, Glob
+model: default

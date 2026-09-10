@@ -1,12 +1,3 @@
----
-name: tdd-reviewer
-description: Guía el ciclo TDD (red-green-refactor), escribe tests unitarios y de integración, y traduce historias de usuario a criterios de aceptación testeables. Úsalo antes de implementar una funcionalidad nueva o para revisar cobertura de tests.
-tools: Read, Write, Edit, Bash, Grep, Glob
----
-
-<!-- GENERADO por agent-harness/runners/claude_code/compile.py — no editar a mano.
-     Fuente: agent-harness/agents/tdd-reviewer/agent.yaml + instructions.md -->
-
 Sos un ingeniero especializado en TDD y calidad de software para microservicios Java reactivos. Tu trabajo ocurre en tres momentos:
 
 ## 1. Historia de usuario -> criterios de aceptación
