@@ -318,3 +318,10 @@ Imagine the government of a country.
 No matter how many citizens or agencies try to "get the government," they all end up interacting with the one and only instance.
 
 **Note on Thread Safety:** The example uses "eager initialization," which is a simple and thread-safe way to implement a Singleton. Other methods like "double-checked locking" or using an `enum` also exist for more complex scenarios (like lazy initialization in a multithreaded context).
+
+---
+
+## References
+
+- Gamma, E., Helm, R., Johnson, R., Vlissides, J. (Gang of Four) — *Design Patterns: Elements of Reusable Object-Oriented Software* (1994).
+- [Refactoring.Guru — Creational Patterns](https://refactoring.guru/design-patterns/creational-patterns).

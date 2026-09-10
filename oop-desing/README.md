@@ -151,3 +151,8 @@ graph LR
 ```
 
 Estos fundamentos son la base sobre la que se construyen [`solid-principles/`](../solid-principles) (reglas más concretas) y [`design-pattern/`](../design-pattern) (soluciones ya probadas a problemas recurrentes de diseño).
+
+## Referencias
+
+- Booch, G. et al. — *Object-Oriented Analysis and Design with Applications* (3ra ed.) — origen de cohesión/acoplamiento y los pilares de OOP como se documentan acá.
+- Meyer, B. — *Object-Oriented Software Construction* — formalización de encapsulamiento y abstracción como principios de diseño, no solo de sintaxis.

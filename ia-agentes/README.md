@@ -21,7 +21,7 @@ o agregá `ia-agentes/` como carpeta del workspace si trabajás desde el IDE. Un
 
 | Agente | Cuándo usarlo | Qué hace |
 |---|---|---|
-| [`hexagonal-architect`](.claude/agents/hexagonal-architect.md) | Al arrancar un microservicio nuevo desde cero | Arma el esqueleto de paquetes `domain/application/infrastructure` y valida que no se violen los límites del hexágono (ver [`hexagonal-architecture/`](../hexagonal-architecture)). |
+| [`hexagonal-architect`](.claude/agents/hexagonal-architect.md) | Al arrancar un microservicio nuevo desde cero | Arma el esqueleto de paquetes `domain/application/infrastructure` y valida que no se violen los límites del hexágono (ver [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md)). |
 | [`java-reactive-dev`](.claude/agents/java-reactive-dev.md) | Al implementar o revisar código con Spring WebFlux | Prioriza la elección correcta entre `map`/`flatMap` y el manejo de errores reactivo (ver [`reactive-programming/`](../reactive-programming)). |
 | [`tdd-reviewer`](.claude/agents/tdd-reviewer.md) | Antes de implementar una funcionalidad nueva | Traduce una historia de usuario a criterios Gherkin y guía el ciclo red-green-refactor (ver [`tdd/`](../tdd)). |
 
@@ -52,3 +52,7 @@ Cronometrado a 45–60 min, este flujo simula bastante bien la presión de un ej
 ## Por qué subagentes y no solo prompts sueltos
 
 Un subagente encapsula el criterio (buenas prácticas, convenciones del repo, qué evitar) una sola vez, en un archivo versionado — en vez de repetir el mismo contexto en cada prompt. Cada archivo en `.claude/agents/` sigue el mismo formato: un frontmatter (`name`, `description`, `tools`) y un system prompt con reglas concretas, no genéricas. Ver los tres archivos existentes como referencia de cómo escribir uno nuevo para un dominio distinto.
+
+## Referencias
+
+- [Claude Code — Subagents](https://docs.claude.com/en/docs/claude-code/sub-agents) — documentación oficial del formato `.claude/agents/*.md` usado en esta carpeta.

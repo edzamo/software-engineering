@@ -48,6 +48,79 @@ graph TB
 | `Secrets Manager` | Credenciales de BD y API keys — nunca hardcodeadas ni en `application.properties`. |
 | `IAM` | Roles y permisos — un servicio nunca usa credenciales de usuario, usa un role con permisos mínimos. |
 
+## S3 — buckets, clases de almacenamiento y ciclo de vida
+
+Preguntas típicas: "¿qué clases de S3 existen?", "¿cómo hacés que un archivo se borre solo después de 30 días?", "¿cuál es la diferencia entre versioning y lifecycle?".
+
+### Clases de almacenamiento (storage classes)
+
+La pregunta central es: **¿con qué frecuencia se accede al archivo, y qué tan rápido lo necesito de vuelta?**
+
+| Clase | Acceso | Tiempo de recuperación | Caso de uso |
+|---|---|---|---|
+| `S3 Standard` | Frecuente | Inmediato (milisegundos) | Archivos que se leen seguido: imágenes de una app, documentos activos. |
+| `S3 Intelligent-Tiering` | Variable/desconocido | Inmediato | AWS mueve el archivo automáticamente entre tiers según el patrón de acceso real — ideal cuando no sabés de antemano qué tan seguido se va a leer. |
+| `S3 Standard-IA` (Infrequent Access) | Poco frecuente pero rápido si se necesita | Inmediato | Backups recientes, datos de recuperación ante desastres. Más barato en storage, más caro por GB leído. |
+| `S3 One Zone-IA` | Poco frecuente | Inmediato | Igual que IA pero en una sola AZ — más barato, pero se pierde si esa AZ falla. Datos re-creables. |
+| `S3 Glacier Instant Retrieval` | Archivo, acceso ocasional | Milisegundos | Archivos históricos que rara vez se tocan pero que si se piden, deben responder ya (ej: imágenes médicas antiguas). |
+| `S3 Glacier Flexible Retrieval` | Archivo | Minutos a horas | Backups anuales, compliance — se puede esperar. |
+| `S3 Glacier Deep Archive` | Archivo, casi nunca | Horas (~12h) | La más barata. Retención legal de 7-10 años, datos que "se congelan" y casi nunca se vuelven a leer. |
+
+> 🔑 La idea que el entrevistador busca: **no todo va en Standard**. Elegir la clase correcta es una decisión de costo basada en el patrón de acceso, y se puede automatizar con **lifecycle rules** (ver abajo) en vez de decidirlo a mano.
+
+### Lifecycle policies (reglas de ciclo de vida)
+
+Automatizan la transición entre clases o el borrado, sin intervención manual. Se configuran a nivel de bucket o por prefijo (carpeta lógica).
+
+```
+Regla ejemplo: "logs/"
+  Día 0   → S3 Standard (se escribe el log)
+  Día 30  → transición a S3 Standard-IA
+  Día 90  → transición a S3 Glacier Flexible Retrieval
+  Día 365 → expiración (se borra definitivamente)
+```
+
+- **Transition actions** — mueven el objeto a una clase más barata pasado X tiempo.
+- **Expiration actions** — borran el objeto (o versiones viejas) pasado X tiempo. Útil para logs, uploads temporales, archivos de sesión.
+- Se pueden combinar con **versioning**: cuando versioning está activo, el lifecycle puede apuntar a versiones no-actuales (`noncurrent version expiration`) para no acumular historial infinito.
+
+### Otros conceptos de bucket que suelen preguntar
+
+| Concepto | Qué es |
+|---|---|
+| **Versioning** | Guarda cada versión de un objeto en vez de sobrescribirlo. Protege contra borrado/sobrescritura accidental — pero sin lifecycle, las versiones viejas se acumulan y cuestan. |
+| **Object Lock (WORM)** | Write Once Read Many — impide borrar/modificar un objeto durante un período (retención legal, compliance). Los que "se congelan definitivo" que preguntás: esto es lo que lo garantiza, no solo la clase Glacier. |
+| **Bucket policy vs IAM policy** | Bucket policy: se adjunta al bucket, controla quién accede a ese bucket específico (puede dar acceso cross-account). IAM policy: se adjunta a un usuario/rol, controla a qué recursos AWS puede acceder ese usuario. |
+| **Presigned URL** | URL temporal con firma que da acceso limitado en el tiempo a un objeto privado, sin exponer credenciales — típico para permitir que un frontend suba/descargue un archivo directo a S3. |
+| **Encryption at rest (SSE-S3 / SSE-KMS)** | Cifrado del lado del servidor. SSE-KMS da control fino de permisos sobre la key de cifrado (auditable vía CloudTrail); SSE-S3 es más simple, AWS gestiona todo. |
+| **Multipart upload** | Subir archivos grandes en partes paralelas — necesario a partir de ~100MB, obligatorio arriba de 5GB. |
+
+---
+
+## RDS — base de datos relacional gestionada
+
+Preguntas típicas: "¿qué te da RDS que no tengas con Postgres en Docker?", "¿qué es Multi-AZ?", "¿cuándo usarías una read replica?".
+
+### Qué resuelve RDS que un Postgres/MySQL "a mano" no
+
+RDS es el motor de base de datos (Postgres, MySQL, MariaDB, SQL Server, Oracle) pero con el trabajo operativo delegado a AWS: parches de seguridad automáticos, backups, failover, monitoreo — vos seguís escribiendo el mismo SQL y usando el mismo driver JDBC/R2DBC.
+
+| Concepto | Qué es | Cuándo importa |
+|---|---|---|
+| **Multi-AZ** | RDS mantiene una réplica sincrónica en otra zona de disponibilidad. Si la instancia primaria falla, AWS hace failover automático al standby (DNS se actualiza, no cambia tu connection string). | Alta disponibilidad en producción — es la respuesta esperada a "¿cómo evitás downtime si se cae la instancia de BD?". |
+| **Read Replica** | Copia **asíncrona** de la BD, de solo lectura, para descargar tráfico de lectura de la instancia principal. Puede estar en otra región. | Cuando el cuello de botella son lecturas (dashboards, reportes) y no querés que compitan con las escrituras transaccionales. |
+| **Multi-AZ vs Read Replica** | Multi-AZ = disponibilidad (failover), replicación síncrona, el standby no se usa para servir tráfico. Read Replica = escalar lecturas, replicación asíncrona (puede tener lag), sí sirve tráfico. | Es la pregunta trampa clásica: no son lo mismo ni resuelven lo mismo. |
+| **Backups automáticos + snapshots** | Backups automáticos diarios + point-in-time recovery dentro de la ventana de retención (hasta 35 días). Snapshots manuales se guardan indefinidamente hasta que los borrás. | Recuperación ante error humano ("borré la tabla sin WHERE"), no solo ante desastre de infraestructura. |
+| **Connection pooling (RDS Proxy)** | Las conexiones a una BD relacional son caras de abrir/cerrar. RDS Proxy mantiene un pool compartido — crítico con Lambda, donde cada invocación podría abrir su propia conexión y agotar el límite de la BD. | Arquitecturas serverless o con muchas instancias efímeras (ECS con auto-scaling agresivo). |
+| **Parameter groups / option groups** | Configuración del motor de BD (ej: `max_connections`, `work_mem`) gestionada como recurso de AWS en vez de editar un `.conf` a mano. | Tuning de performance sin acceso SSH a la instancia — RDS no da acceso al sistema operativo. |
+| **Vertical vs horizontal scaling en RDS** | Vertical: subir el tipo de instancia (más CPU/RAM) — con downtime breve salvo Multi-AZ. Horizontal: agregar read replicas — no escala escrituras, solo lecturas. | RDS relacional no escala escrituras horizontalmente de forma nativa (para eso existe Aurora o ir a NoSQL/sharding). |
+
+> ⚠️ **Punto que un senior debe saber decir en voz alta:** RDS relacional (Postgres/MySQL clásico) no resuelve el particionamiento de escrituras — si el cuello de botella son las escrituras y no las lecturas, la respuesta no es "agregar read replicas", es reconsiderar el modelo de datos (sharding, Aurora, o mover ese dominio a DynamoDB).
+
+### R2DBC vs RDS clásico (conexión desde Spring WebFlux)
+
+RDS es el servicio (la base de datos gestionada); R2DBC es el driver **no bloqueante** que usás para conectarte a esa base desde un pipeline reactivo. RDS no sabe ni le importa si el cliente es JDBC o R2DBC — la diferencia vive 100% del lado de la aplicación.
+
 ## Entorno de práctica (LocalStack)
 
 Un `docker-compose.yml` con Postgres + LocalStack (S3, SQS, SNS, DynamoDB, Lambda, Secrets Manager emulados) alcanza para practicar sin cuenta AWS real:
@@ -76,5 +149,12 @@ El patrón se repite para cualquier servicio AWS: mismo comando/SDK, apuntando a
 | 6 min | Crear una cola SQS, enviar un mensaje JSON y recibirlo, explicando en voz alta la diferencia con un tópico SNS. |
 | 8 min | Crear una tabla DynamoDB con clave simple, insertar un item y consultarlo — explicar cuándo usarías esto en vez de RDS. |
 | 5 min | Explicar cómo el mismo código Java que usa `S3AsyncClient` funciona igual contra LocalStack y contra AWS real — qué es lo único que cambia. |
+| 4 min | En voz alta: explicar la diferencia entre Multi-AZ y Read Replica en RDS, sin mirar la tabla de arriba. |
+| 4 min | Diseñar (solo hablando) una lifecycle policy para un bucket de "comprobantes de pago": cuánto tiempo en Standard, cuándo pasa a IA/Glacier, cuándo expira. |
 
 Relacionado: [`microservices-patterns/`](../microservices-patterns) para cómo SQS/SNS se usan en patrones de comunicación event-driven.
+
+## Referencias
+
+- [Documentación oficial de AWS — S3 Storage Classes](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html) y [Amazon RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html).
+- [LocalStack Documentation](https://docs.localstack.cloud/) — para el entorno de práctica local sin cuenta AWS real.

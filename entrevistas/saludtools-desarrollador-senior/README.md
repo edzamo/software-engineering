@@ -165,7 +165,7 @@ com.saludtools.<servicio>/
 
 > **Nota:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta.
 
-Más detalle y comparación de proyectos de referencia en [`hexagonal-architecture/`](../../hexagonal-architecture).
+Más detalle y comparación de proyectos de referencia en [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md).
 
 ---
 
@@ -267,7 +267,7 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 | Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../microservices-patterns) |
 | AWS + práctica con LocalStack | [`cloud-aws/`](../../cloud-aws) |
 | Map/List/Stream en Java | [`java-core/`](../../java-core) |
-| Arquitectura hexagonal | [`hexagonal-architecture/`](../../hexagonal-architecture) |
+| Arquitectura hexagonal | [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) |
 | Escalar de 0 a millones de usuarios | [`system-design/`](../../system-design) |
 | TDD | [`tdd/`](../../tdd) |
 | Agentes de Claude Code | [`ia-agentes/`](../../ia-agentes) |

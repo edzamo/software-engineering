@@ -6,6 +6,10 @@ In simple terms, they deal with object creation mechanisms, trying to create obj
 
 This document covers the following behavioral patterns:
 1.  **Chain of Responsibility**
+2.  **Command**
+3.  **Iterator**
+4.  **Strategy**
+5.  **Visitor**
 
 ---
 
@@ -200,3 +204,156 @@ Think of a TV remote control.
 4.  You can also check if you've reached the last channel (`hasNext()` method).
 
 The remote control (Iterator) provides a simple, universal interface to interact with the TV's channels (the collection), hiding the complex internal details.
+
+---
+
+### 4. Strategy
+
+The **Strategy** pattern defines a family of interchangeable algorithms, encapsulates each one behind a common interface, and lets the client swap between them at runtime — without conditional logic (`if`/`switch`) scattered through the code that uses them.
+
+### How It Works
+
+Instead of hardcoding an algorithm inside a class, the class holds a reference to a `Strategy` interface and delegates the work to whichever concrete strategy it was given (constructor injection or a setter).
+
+1.  **Strategy Interface (`DiscountStrategy`):** Declares the algorithm's contract, e.g. `applyDiscount(double price)`.
+2.  **Concrete Strategies (`BlackFridayDiscount`, `LoyaltyDiscount`, `NoDiscount`):** Each implements the interface with a different algorithm.
+3.  **Context (`ShoppingCart`):** Holds a reference to a `DiscountStrategy` and delegates to it — it never knows which concrete strategy it's using.
+
+```java
+interface DiscountStrategy { double applyDiscount(double price); }
+
+class BlackFridayDiscount implements DiscountStrategy {
+    public double applyDiscount(double price) { return price * 0.6; }
+}
+class LoyaltyDiscount implements DiscountStrategy {
+    public double applyDiscount(double price) { return price * 0.9; }
+}
+class NoDiscount implements DiscountStrategy {
+    public double applyDiscount(double price) { return price; }
+}
+
+class ShoppingCart {
+    private final DiscountStrategy discount;
+    ShoppingCart(DiscountStrategy discount) { this.discount = discount; }
+    double checkout(double price) { return discount.applyDiscount(price); }
+}
+
+// new ShoppingCart(new BlackFridayDiscount()).checkout(100.0);
+```
+
+### Class Diagram
+
+```mermaid
+classDiagram
+    class ShoppingCart {
+        -DiscountStrategy discount
+        +checkout(double): double
+    }
+    class DiscountStrategy {
+        <<interface>>
+        +applyDiscount(double): double
+    }
+    class BlackFridayDiscount { +applyDiscount(double): double }
+    class LoyaltyDiscount { +applyDiscount(double): double }
+    class NoDiscount { +applyDiscount(double): double }
+
+    ShoppingCart o--> DiscountStrategy : delegates to
+    DiscountStrategy <|.. BlackFridayDiscount
+    DiscountStrategy <|.. LoyaltyDiscount
+    DiscountStrategy <|.. NoDiscount
+```
+
+🔹 **Simple explanation with a real-world example**
+
+Think of a GPS app choosing a route:
+
+1.  You pick "fastest route," "shortest route," or "avoid tolls."
+2.  Each option is a different algorithm (`Strategy`) for computing the path.
+3.  The GPS (`Context`) doesn't implement any routing logic itself — it just asks whichever strategy you picked to compute the route.
+
+👉 **When to use it:** you have several ways to do the same task (payment methods, sorting/pricing/validation rules, retry policies) and want to pick the algorithm at runtime instead of writing a long `if/else` or `switch` chain. It's also how Factory Method problems get solved once objects are created — Factory Method picks *which object to build*, Strategy picks *which algorithm to run*.
+
+---
+
+### 5. Visitor
+
+The **Visitor** pattern lets you add new operations to a group of related classes without modifying those classes — you move the operation into a separate "visitor" object that knows how to handle each concrete type.
+
+### How It Works
+
+Each element in the hierarchy implements an `accept(Visitor)` method that calls back into the visitor (`visitor.visit(this)`), letting the visitor's overloaded methods handle each concrete type differently. This "double dispatch" is what lets the correct overload run without `instanceof` checks.
+
+1.  **Element Interface (`Shape`):** Declares `accept(ShapeVisitor visitor)`.
+2.  **Concrete Elements (`Circle`, `Square`):** Implement `accept` by calling back the matching `visit` overload on the visitor.
+3.  **Visitor Interface (`ShapeVisitor`):** Declares one `visit` overload per concrete element type.
+4.  **Concrete Visitors (`AreaCalculator`, `ExportToJsonVisitor`):** Each implements a full new operation over the whole hierarchy, without touching `Shape`, `Circle`, or `Square`.
+
+```java
+interface ShapeVisitor {
+    void visit(Circle circle);
+    void visit(Square square);
+}
+
+interface Shape { void accept(ShapeVisitor visitor); }
+
+class Circle implements Shape {
+    double radius;
+    Circle(double radius) { this.radius = radius; }
+    public void accept(ShapeVisitor visitor) { visitor.visit(this); }
+}
+class Square implements Shape {
+    double side;
+    Square(double side) { this.side = side; }
+    public void accept(ShapeVisitor visitor) { visitor.visit(this); }
+}
+
+class AreaCalculator implements ShapeVisitor {
+    double totalArea = 0;
+    public void visit(Circle c) { totalArea += Math.PI * c.radius * c.radius; }
+    public void visit(Square s) { totalArea += s.side * s.side; }
+}
+```
+
+### Class Diagram
+
+```mermaid
+classDiagram
+    class Shape {
+        <<interface>>
+        +accept(ShapeVisitor)
+    }
+    class Circle { +accept(ShapeVisitor) }
+    class Square { +accept(ShapeVisitor) }
+    class ShapeVisitor {
+        <<interface>>
+        +visit(Circle)
+        +visit(Square)
+    }
+    class AreaCalculator {
+        +visit(Circle)
+        +visit(Square)
+    }
+
+    Shape <|.. Circle
+    Shape <|.. Square
+    ShapeVisitor <|.. AreaCalculator
+    Circle ..> ShapeVisitor : accept() calls back
+    Square ..> ShapeVisitor : accept() calls back
+```
+
+🔹 **Simple explanation with a real-world example**
+
+Think of a tax auditor visiting different types of businesses (restaurants, retail stores, factories):
+
+1.  Each business type knows how to "receive" the auditor (`accept`), but the business itself doesn't know how to calculate taxes.
+2.  The auditor (`Visitor`) carries the actual logic — and applies a *different* calculation depending on which business type they're visiting.
+3.  Next year, tax law changes: you only need a new auditor (a new `Visitor` implementation) — the businesses themselves don't change at all.
+
+👉 **When to use it:** you need to add new, unrelated operations (export to XML, calculate totals, validate) over a stable class hierarchy, and you don't want to keep editing every class in that hierarchy each time. Trade-off worth naming out loud: Visitor makes adding new *operations* easy, but adding a new *element type* to the hierarchy means touching every visitor — it inverts the usual extensibility trade-off, which is exactly the kind of thing a senior interviewer wants to hear you notice.
+
+---
+
+## References
+
+- Gamma, E., Helm, R., Johnson, R., Vlissides, J. (Gang of Four) — *Design Patterns: Elements of Reusable Object-Oriented Software* (1994).
+- [Refactoring.Guru — Behavioral Patterns](https://refactoring.guru/design-patterns/behavioral-patterns).

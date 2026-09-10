@@ -2,6 +2,8 @@
 
 Patrón de puertos y adaptadores, ilustrado con los dominios que respaldaron esta documentación (código de referencia fuera de este repo, ver nota al final).
 
+> Comparación con otras arquitecturas por capas (MVC, Clean, Onion) en el [índice de esta carpeta](README.md).
+
 ## El patrón, en un diagrama
 
 ```mermaid
@@ -74,3 +76,7 @@ Naming: `XxxUseCase` (interfaz, port in) → `XxxUseCaseImpl` (application/useca
 Para cómo estos microservicios se comunican entre sí en un sistema más grande (eventos, colas, resiliencia), ver [`microservices-patterns/`](../microservices-patterns). Para la versión reactiva de esta misma arquitectura (WebFlux + R2DBC en vez de JPA bloqueante), ver [`reactive-programming/`](../reactive-programming).
 
 > El código completo de los proyectos que ilustran esta tabla no se versiona en este repo (que es solo documentación) — queda en una carpeta local aparte, pendiente de reorganizar en sus propios repos.
+
+## Referencias
+
+- Cockburn, A. — [*Hexagonal Architecture*](https://alistair.cockburn.us/hexagonal-architecture/) (2005), artículo original donde se propuso el patrón de puertos y adaptadores.

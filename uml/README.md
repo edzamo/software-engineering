@@ -134,4 +134,9 @@ sequenceDiagram
 | **Secuencia** | Orden temporal de interacciones entre objetos/servicios para un flujo puntual — ideal para documentar un caso de uso o un endpoint. |
 | **Estados** | Ciclo de vida de una entidad con estados y transiciones (ej: un pedido: creado → pagado → enviado → entregado). |
 
-Relacionado: [`hexagonal-architecture/`](../hexagonal-architecture) y [`system-design/`](../system-design) usan esta misma notación para documentar arquitectura real.
+Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) y [`system-design/`](../system-design) usan esta misma notación para documentar arquitectura real.
+
+## Referencias
+
+- Fowler, M. — *UML Distilled: A Brief Guide to the Standard Object Modeling Language* (3ra ed.) — la referencia estándar para las 5 relaciones documentadas acá.
+- [Especificación UML 2.5 del OMG](https://www.omg.org/spec/UML/) — definición formal de la notación.

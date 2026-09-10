@@ -25,3 +25,8 @@ Los módulos parten del curso **[System Design Interview — ByteByteGo](https:/
 3. Este índice se actualiza con cada módulo agregado.
 
 Relacionado: [`microservices-patterns/`](../microservices-patterns) para patrones a nivel de comunicación entre servicios.
+
+## Referencias
+
+- Xu, A. — *System Design Interview – An Insider's Guide* (Vol. 1 y 2) — estructura y progresión de los temas de escalabilidad.
+- [ByteByteGo](https://bytebytego.com/) (Alex Xu) — diagramas y explicaciones en video que sirvieron de base para este módulo.

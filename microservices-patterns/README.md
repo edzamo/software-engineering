@@ -110,4 +110,9 @@ Ejemplos de preguntas que calzan en este formato:
 | 5 min | "¿Cuándo NO usarías microservicios?" |
 | 6 min | "Explicá el outbox pattern como si hablaras con alguien de Producto." |
 
-Relacionado: [`hexagonal-architecture/`](../hexagonal-architecture) para la estructura interna de cada servicio, [`reactive-programming/`](../reactive-programming) para cómo se implementa la comunicación no bloqueante, y [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB).
+Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`reactive-programming/`](../reactive-programming) para cómo se implementa la comunicación no bloqueante, y [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB).
+
+## Referencias
+
+- Richardson, C. — *Microservices Patterns* (2018) — fuente principal de los patrones de resiliencia, saga y outbox documentados acá.
+- [microservices.io](https://microservices.io/patterns/index.html) (del mismo autor) — catálogo online de referencia rápida.

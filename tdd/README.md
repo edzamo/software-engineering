@@ -108,3 +108,8 @@ class FizzBuzz {
 ```
 
 Relacionado: [`microservices-patterns/`](../microservices-patterns) y [`reactive-programming/`](../reactive-programming) tienen sus propias secciones de testing (`StepVerifier`, Testcontainers) para los casos que van más allá de un test unitario simple.
+
+## Referencias
+
+- Beck, K. — *Test Driven Development: By Example* (2002) — origen del ciclo red-green-refactor.
+- Martin, R. C. — *Clean Code* (2008), capítulo sobre tests unitarios — base del patrón AAA (Arrange-Act-Assert) usado en los ejemplos.

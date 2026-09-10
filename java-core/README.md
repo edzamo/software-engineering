@@ -88,3 +88,8 @@ List<Item> todosLosItems = pedidos.stream()
 | 7 min | Dada `List<List<Tag>>` (una lista de tags por producto), devolvé el `Set<Tag>` único de todos los productos usando `flatMap` + `distinct`. |
 | 6 min | Implementá un contador de intentos de login fallidos por usuario (`Map<String, Integer>`) usando `computeIfAbsent`/`merge`, e incrementalo en un loop simulando eventos. |
 | 8 min | Convertí `List<Cliente>` a `Map<String, ClienteDto>` (clave = id), y explicá qué pasa si hay ids duplicados con `Collectors.toMap` (spoiler: `IllegalStateException`, hay que pasar una función de merge). |
+
+## Referencias
+
+- Documentación oficial de Oracle — [Java Collections Framework](https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html) y [`java.util.stream`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html).
+- Baeldung — [Guía de `Stream` y `Collectors` en Java](https://www.baeldung.com/java-8-streams) — fuente de los ejemplos de `groupingBy`/`merge`/`flatMap` usados en este cheatsheet.

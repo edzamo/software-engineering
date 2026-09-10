@@ -1,6 +1,6 @@
 # Software Engineering — Ruta de estudio
 
-Repositorio de estudio y repaso rápido para consolidar lo que un **Software Engineer / Solutions Architect Senior** debe dominar: fundamentos de OOP, patrones de diseño, SOLID, arquitectura hexagonal y de microservicios, system design a gran escala, programación reactiva, cloud (AWS), UML, TDD, y cómo integrar IA (subagentes de Claude Code) al flujo de trabajo.
+Repositorio de estudio y repaso rápido para consolidar lo que un **Software Engineer / Solutions Architect Senior** debe dominar: fundamentos de OOP, SOLID y clean code, patrones de diseño, arquitecturas de software (hexagonal, clean, onion, MVC) y de microservicios, system design a gran escala, programación reactiva, cloud (AWS), UML, TDD, y cómo integrar IA (subagentes de Claude Code) al flujo de trabajo.
 
 > Este repo es **solo documentación** — píldoras en Markdown con diagramas Mermaid, pensadas para repasar rápido y consultar en el momento (una entrevista, una decisión de arquitectura). No contiene proyectos de código para clonar y correr: esa parte vive aparte, fuera de este repo, para que acá no haya nada que compilar ni mantener — solo materia de estudio.
 
@@ -13,9 +13,10 @@ graph LR
     root --> oop["oop-desing/<br/>Fundamentos OOP"]
     root --> javacore["java-core/<br/>Collections &amp; Streams"]
     root --> solid["solid-principles/<br/>Principios SOLID"]
+    root --> cc["clean-code/<br/>DRY, KISS, YAGNI, code review"]
     root --> dp["design-pattern/<br/>Patrones de diseño"]
     root --> uml["uml/<br/>Notación UML"]
-    root --> hex["hexagonal-architecture/<br/>Puertos y adaptadores"]
+    root --> arch["software-architectures/<br/>MVC, Clean, Onion, Hexagonal"]
     root --> sysdes["system-design/<br/>System Design"]
     root --> micro["microservices-patterns/<br/>Microservicios"]
     root --> reactive["reactive-programming/<br/>Programación reactiva"]
@@ -26,15 +27,16 @@ graph LR
 
     oop --> javacore
     oop --> solid
-    solid --> dp
-    dp --> hex
-    hex --> sysdes
+    solid --> cc
+    cc --> dp
+    dp --> arch
+    arch --> sysdes
     sysdes --> micro
-    hex --> micro
+    arch --> micro
     micro --> reactive
     micro --> aws
-    hex --> tdd
-    hex --> ia
+    arch --> tdd
+    arch --> ia
     reactive --> entrevistas
     aws --> entrevistas
     micro --> entrevistas
@@ -51,9 +53,10 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 | [`oop-desing/`](oop-desing) | Fundamentos OOP | ✅ Completo | Cohesión/acoplamiento, abstracción, encapsulamiento, descomposición, asociación, generalización — agnóstico de lenguaje. |
 | [`java-core/`](java-core) | Collections & Streams | ✅ Completo | Cheatsheet de `List`/`Map`/`Stream` (`groupingBy`, `merge`, `computeIfAbsent`, `flatMap`) con drills cronometrados. |
 | [`solid-principles/`](solid-principles) | Principios SOLID | ✅ Completo | Los 5 principios con diagramas "violación vs aplicado" y píldoras de repaso. |
-| [`design-pattern/`](design-pattern) | Patrones de diseño (GoF) | 🟡 En progreso | Índice de cobertura + docs de creacionales y de comportamiento. |
+| [`clean-code/`](clean-code) | Clean Code | ✅ Completo | DRY, KISS, YAGNI y checklist de code review — los principios "chicos" que complementan SOLID. |
+| [`design-pattern/`](design-pattern) | Patrones de diseño (GoF) | ✅ Completo | Creacionales, estructurales y de comportamiento — los 22 patrones GoF documentados con ejemplo y "cuándo usarlo". |
 | [`uml/`](uml) | Notación UML | ✅ Completo | Cheatsheet de las 5 relaciones (herencia, asociación, agregación, composición, dependencia) con diagramas Mermaid. |
-| [`hexagonal-architecture/`](hexagonal-architecture) | Arquitectura hexagonal | ✅ Completo | Diagrama de puertos/adaptadores + convención de paquetes de referencia. |
+| [`software-architectures/`](software-architectures) | Arquitecturas de software | 🟡 En progreso | MVC, Clean Architecture, Onion, Hexagonal (puertos/adaptadores) — comparadas entre sí. Mobile (MVVM/MVP/MVI) y web frontend (Flux/Redux) pendientes. |
 | [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios (load balancer, replicación, cache, CDN, sharding) — basado en ByteByteGo. Se va sumando módulo a módulo. |
 | [`microservices-patterns/`](microservices-patterns) | Patrones de microservicios | ✅ Completo | Comunicación sync/async, resiliencia (circuit breaker, retry, bulkhead), consistencia (saga, outbox), API-first, OWASP. |
 | [`reactive-programming/`](reactive-programming) | Programación reactiva | ✅ Completo | Mono/Flux, `map` vs `flatMap`, manejo de errores reactivo, R2DBC vs JPA, testing con StepVerifier. |

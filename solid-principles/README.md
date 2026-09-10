@@ -159,4 +159,8 @@ classDiagram
     note for PasswordService "Aplicando DIP: PasswordService no sabe\nqué base de datos concreta usa"
 ```
 
-Relacionado: [`design-pattern/`](../design-pattern) — muchos patrones GoF son aplicaciones directas de estos principios (Strategy/Factory Method → OCP, Adapter → DIP).
+Relacionado: [`design-pattern/`](../design-pattern) — muchos patrones GoF son aplicaciones directas de estos principios (Strategy/Factory Method → OCP, Adapter → DIP). [`clean-code/`](../clean-code) — DRY, KISS, YAGNI y checklist de code review, los principios "chicos" que complementan a SOLID.
+
+## Referencias
+
+- Martin, R. C. — *Agile Software Development, Principles, Patterns, and Practices* (2002) y *Clean Architecture* (2017) — origen y formalización de los 5 principios SOLID.

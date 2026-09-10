@@ -95,4 +95,9 @@ StepVerifier.create(useCase.process(invalidRequest))
 | 7 min | Explicá en voz alta, con un ejemplo de cada uno, la diferencia entre `map` y `flatMap` — como si se lo explicaras a alguien no técnico. |
 | 8 min | Test con `StepVerifier` que verifique que un `Mono` propaga una excepción de dominio cuando el `WebClient` simulado falla. |
 
-Relacionado: [`hexagonal-architecture/`](../hexagonal-architecture) para dónde encaja este código dentro de la arquitectura, y [`microservices-patterns/`](../microservices-patterns) para cómo se combina con resiliencia entre servicios.
+Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para dónde encaja este código dentro de la arquitectura, y [`microservices-patterns/`](../microservices-patterns) para cómo se combina con resiliencia entre servicios.
+
+## Referencias
+
+- [Project Reactor — Reference Documentation](https://projectreactor.io/docs/core/release/reference/) — fuente oficial de `Mono`/`Flux` y los operadores documentados acá.
+- [Spring Framework — WebFlux Reference](https://docs.spring.io/spring-framework/reference/web/webflux.html) — comportamiento de `WebClient`, R2DBC y el modelo no bloqueante de Spring.

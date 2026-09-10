@@ -13,7 +13,7 @@ graph TB
         P["Prototype"]
         S["Singleton"]
     end
-    subgraph estructurales[" Estructurales — pendiente "]
+    subgraph estructurales[" Estructurales — documentado "]
         AD["Adapter"]
         BR["Bridge"]
         C["Composite"]
@@ -22,7 +22,7 @@ graph TB
         FL["Flyweight"]
         PR["Proxy"]
     end
-    subgraph comportamiento[" De comportamiento — parcial "]
+    subgraph comportamiento[" De comportamiento — documentado "]
         COR["Chain of Responsibility"]
         CMD["Command"]
         IT["Iterator"]
@@ -31,16 +31,15 @@ graph TB
     end
 
     style creacionales fill:#0d7d72,color:#fff
-    style estructurales fill:#f5e2d2,color:#111
-    style comportamiento fill:#d9efec,color:#111
+    style estructurales fill:#0d7d72,color:#fff
+    style comportamiento fill:#0d7d72,color:#fff
 ```
 
 | Categoría | Patrones | Doc |
 |---|---|---|
 | **Creacionales** | Factory Method, Abstract Factory, Builder, Prototype, Singleton | [`creational-patterns.md`](creational-patterns.md) — con caso de ejemplo en [`factory-method-example-es.md`](factory-method-example-es.md) / [`-en.md`](factory-method-example-en.md) |
-| **De comportamiento** | Chain of Responsibility, Command, Iterator | [`behavioral-patterns.md`](behavioral-patterns.md) |
-| **De comportamiento** | Strategy, Visitor | ⏳ Pendiente de documentar |
-| **Estructurales** | Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy | ⏳ Pendiente de documentar |
+| **Estructurales** | Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy | [`structural-patterns.md`](structural-patterns.md) |
+| **De comportamiento** | Chain of Responsibility, Command, Iterator, Strategy, Visitor | [`behavioral-patterns.md`](behavioral-patterns.md) |
 
 ## Cuándo usar cada categoría (repaso rápido)
 
@@ -49,3 +48,8 @@ graph TB
 - **De comportamiento** — cómo se reparten responsabilidades y se comunican los objetos entre sí (algoritmos intercambiables, cadenas de manejo, iteración).
 
 Relacionado: [`solid-principles/`](../solid-principles) — los patrones de diseño son, en gran parte, aplicaciones concretas de SOLID (ej. Strategy/Factory Method resuelven OCP; Adapter resuelve DIP).
+
+## Referencias
+
+- Gamma, E., Helm, R., Johnson, R., Vlissides, J. (Gang of Four) — *Design Patterns: Elements of Reusable Object-Oriented Software* (1994) — fuente original de los 22 patrones GoF cubiertos en esta carpeta.
+- [Refactoring.Guru — Design Patterns](https://refactoring.guru/design-patterns) — explicaciones y ejemplos modernos usados como referencia complementaria.
