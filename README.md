@@ -1,59 +1,77 @@
-# Software Engineering
-## _Learning path_
+# Software Engineering — Ruta de estudio
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+Repositorio de estudio y repaso rápido para consolidar lo que un **Software Engineer / Solutions Architect Senior** debe dominar: fundamentos de OOP, patrones de diseño, SOLID, arquitectura hexagonal y de microservicios, system design a gran escala, programación reactiva, cloud (AWS), UML, TDD, y cómo integrar IA (subagentes de Claude Code) al flujo de trabajo.
 
-Dillinger is a cloud-enabled, mobile-ready, offline-storage compatible,
-AngularJS-powered HTML5 Markdown editor.
+> Este repo es **solo documentación** — píldoras en Markdown con diagramas Mermaid, pensadas para repasar rápido y consultar en el momento (una entrevista, una decisión de arquitectura). No contiene proyectos de código para clonar y correr: esa parte vive aparte, fuera de este repo, para que acá no haya nada que compilar ni mantener — solo materia de estudio.
 
-- Introduction to Software Architecture
-- Software Design and Architecture Patterns
-- Application and Microservices Development
-- Cloud Computing y Contenedores
-- DevOps y Automatización
-- Seguridad y Calidad del Software
+## Mapa del repositorio
 
+```mermaid
+graph LR
+    root["software-engineering"]
 
-## Tech
+    root --> oop["oop-desing/<br/>Fundamentos OOP"]
+    root --> javacore["java-core/<br/>Collections &amp; Streams"]
+    root --> solid["solid-principles/<br/>Principios SOLID"]
+    root --> dp["design-pattern/<br/>Patrones de diseño"]
+    root --> uml["uml/<br/>Notación UML"]
+    root --> hex["hexagonal-architecture/<br/>Puertos y adaptadores"]
+    root --> sysdes["system-design/<br/>System Design"]
+    root --> micro["microservices-patterns/<br/>Microservicios"]
+    root --> reactive["reactive-programming/<br/>Programación reactiva"]
+    root --> aws["cloud-aws/<br/>AWS + LocalStack"]
+    root --> tdd["tdd/<br/>TDD"]
+    root --> ia["ia-agentes/<br/>IA con Claude Code"]
+    root --> entrevistas["entrevistas/<br/>Bitácora de procesos"]
 
-Dillinger uses a number of open source projects to work properly:
+    oop --> javacore
+    oop --> solid
+    solid --> dp
+    dp --> hex
+    hex --> sysdes
+    sysdes --> micro
+    hex --> micro
+    micro --> reactive
+    micro --> aws
+    hex --> tdd
+    hex --> ia
+    reactive --> entrevistas
+    aws --> entrevistas
+    micro --> entrevistas
 
-- [AngularJS] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
+    style root fill:#0d7d72,color:#fff
+```
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
+La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de objetos, después principios de diseño y patrones, y desde ahí hacia arquitectura de sistemas completos (hexagonal → microservicios → reactivo/cloud), con TDD y UML como prácticas transversales.
 
+## Índice
 
-## License
+| Carpeta | Tema | Estado | Contenido destacado |
+|---|---|---|---|
+| [`oop-desing/`](oop-desing) | Fundamentos OOP | ✅ Completo | Cohesión/acoplamiento, abstracción, encapsulamiento, descomposición, asociación, generalización — agnóstico de lenguaje. |
+| [`java-core/`](java-core) | Collections & Streams | ✅ Completo | Cheatsheet de `List`/`Map`/`Stream` (`groupingBy`, `merge`, `computeIfAbsent`, `flatMap`) con drills cronometrados. |
+| [`solid-principles/`](solid-principles) | Principios SOLID | ✅ Completo | Los 5 principios con diagramas "violación vs aplicado" y píldoras de repaso. |
+| [`design-pattern/`](design-pattern) | Patrones de diseño (GoF) | 🟡 En progreso | Índice de cobertura + docs de creacionales y de comportamiento. |
+| [`uml/`](uml) | Notación UML | ✅ Completo | Cheatsheet de las 5 relaciones (herencia, asociación, agregación, composición, dependencia) con diagramas Mermaid. |
+| [`hexagonal-architecture/`](hexagonal-architecture) | Arquitectura hexagonal | ✅ Completo | Diagrama de puertos/adaptadores + convención de paquetes de referencia. |
+| [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios (load balancer, replicación, cache, CDN, sharding) — basado en ByteByteGo. Se va sumando módulo a módulo. |
+| [`microservices-patterns/`](microservices-patterns) | Patrones de microservicios | ✅ Completo | Comunicación sync/async, resiliencia (circuit breaker, retry, bulkhead), consistencia (saga, outbox), API-first, OWASP. |
+| [`reactive-programming/`](reactive-programming) | Programación reactiva | ✅ Completo | Mono/Flux, `map` vs `flatMap`, manejo de errores reactivo, R2DBC vs JPA, testing con StepVerifier. |
+| [`cloud-aws/`](cloud-aws) | Cloud (AWS) | ✅ Completo | Servicios AWS clave para un backend Java + cómo practicar con LocalStack (sin tarjeta ni cuenta real). |
+| [`tdd/`](tdd) | TDD | ✅ Completo | Ciclo red-green-refactor (diagrama de estados), pirámide de testing, patrón AAA. |
+| [`ia-agentes/`](ia-agentes) | IA aplicada al desarrollo | 🟡 En progreso | Catálogo de subagentes de Claude Code — 3 listos para desarrollo de software (hexagonal, WebFlux, TDD); analítica/big data pendientes. |
+| [`entrevistas/`](entrevistas) | Bitácora de procesos de entrevista | 🟡 En progreso | Un proceso en curso (SaludTools) — logística, checklist y mapa hacia el resto del repo. Se va sumando por proceso. |
 
-MIT
+## Cómo está organizado
 
-**Free Software, Hell Yeah!**
+- **Un tema por carpeta raíz.** Cada carpeta es autocontenida: un `README.md` como punto de entrada, con diagramas Mermaid y píldoras — sin código para compilar.
+- **Los resúmenes de curso se cargan incrementalmente**, módulo por módulo, para evitar documentos gigantes.
+- **Los diagramas se escriben en Mermaid**, no en imágenes ni ASCII art — GitHub los renderiza nativamente en el navegador, sin depender de herramientas externas (PlantUML, draw.io) para poder leerlos.
+- **El código de referencia vive fuera de este repo**, en una carpeta local aparte (`codigo-por-reorganizar/`) — proyectos completos en Java/JS que respaldaron esta documentación, pendientes de reorganizar en sus propios repos. No se versiona acá para que este repo se mantenga liviano y 100% enfocado en estudio.
+- Antes de crear una carpeta nueva para un tema, revisar si ya existe una carpeta similar y seguir el mismo patrón de organización.
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+## Cómo estudiar con este repo
 
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
-   
-   
-   
+1. Andá al índice de arriba y abrí el tema que necesitás repasar — cada `README.md` de carpeta está pensado para leerse solo, sin depender de los demás.
+2. Los diagramas Mermaid son el resumen visual — si tenés poco tiempo, mirá esos primero y volvé al texto para el detalle.
+3. Los temas marcados 🟡 en el índice son los que más vale la pena reforzar primero.

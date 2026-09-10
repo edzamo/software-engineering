@@ -1,65 +1,59 @@
-# UML Project Example
+# Notación UML — referencia rápida
 
-This project is a simple Java setup to demonstrate basic Object-Oriented Programming concepts, illustrated with UML (Unified Modeling Language) diagrams.
+Cómo se representan las relaciones entre clases en UML (Unified Modeling Language), para usar al diseñar la arquitectura de un sistema o documentar un artefacto — sin necesidad de ningún proyecto de código, es pura notación.
 
-## What is UML?
+## Cheatsheet — las 5 relaciones que hay que reconocer al vuelo
 
-UML, or Unified Modeling Language, is a standardized modeling language used in software engineering to visualize, specify, construct, and document the artifacts of a software system. It provides a set of graphical notations to create visual models of software-intensive systems.
+| Relación | Pregunta que responde | Notación | Fuerza del vínculo |
+|---|---|---|---|
+| **Herencia** (Inheritance) | "¿Es un...?" | Línea sólida + triángulo hueco apuntando a la superclase | Fuerte — acoplamiento estructural |
+| **Asociación** (Association) | "¿Se conecta con...?" | Línea sólida simple | La más general/débil |
+| **Agregación** (Aggregation) | "¿Tiene un... (pero puede vivir sin él)?" | Línea sólida + rombo **hueco** del lado del contenedor | Débil — ciclos de vida independientes |
+| **Composición** (Composition) | "¿Es parte de... (y no existe sin él)?" | Línea sólida + rombo **relleno** del lado del contenedor | Fuerte — ciclo de vida dependiente |
+| **Dependencia** (Dependency) | "¿Usa a... en algún método, sin guardar una referencia?" | Línea punteada + flecha abierta | La más débil — acoplamiento temporal |
 
----
+> 🧠 **Píldora — agregación vs composición, la duda más común:** preguntate "si borro el contenedor, ¿el contenido sigue existiendo?". Una `Facultad` sigue existiendo sin la `Universidad` (agregación). Una `Habitacion` no tiene sentido sin la `Casa` (composición).
 
-## Key OOP Concepts and UML Notation
-
-Here are some of the fundamental relationships between classes in OOP, along with their standard UML notation.
+## Cada relación, en un diagrama
 
 ### Herencia (Inheritance)
-- **Relación:** Una clase (subclase) hereda propiedades y comportamientos de otra (superclase). Representa una relación "es un".
-- **Notación UML:** Línea sólida con una flecha de triángulo hueco que apunta a la superclase.
-- **Ejemplo:**
-  ```mermaid
-  classDiagram
+Una subclase hereda propiedades y comportamientos de una superclase. Relación "es un".
+```mermaid
+classDiagram
     Animal <|-- Perro
-  ```
+```
 
 ### Asociación (Association)
-- **Relación:** Describe una conexión entre clases. Es la relación más general.
-- **Notación UML:** Línea sólida entre clases.
-- **Ejemplo:**
-  ```mermaid
-  classDiagram
+Conexión entre clases sin implicar posesión — la más general de todas.
+```mermaid
+classDiagram
     Persona -- Direccion
-  ```
+```
 
 ### Agregación (Aggregation)
-- **Relación:** Una forma especializada de asociación que representa una relación "tiene un" donde las clases tienen ciclos de vida independientes.
-- **Notación UML:** Línea sólida con un rombo hueco en el lado del contenedor.
-- **Ejemplo:**
-  ```mermaid
-  classDiagram
+Relación "tiene un" donde las clases tienen ciclos de vida **independientes**.
+```mermaid
+classDiagram
     Universidad o-- Facultad
-  ```
+```
 
 ### Composición (Composition)
-- **Relación:** Una forma fuerte de agregación donde el ciclo de vida de la clase contenida depende de la clase contenedora. Representa una relación "es parte de".
-- **Notación UML:** Línea sólida con un rombo relleno en el lado del contenedor.
-- **Ejemplo:**
-  ```mermaid
-  classDiagram
+Forma fuerte de agregación: el ciclo de vida de la parte **depende** del todo. Relación "es parte de".
+```mermaid
+classDiagram
     Casa *-- Habitacion
-  ```
+```
 
 ### Dependencia (Dependency)
-- **Relación:** Ocurre cuando un cambio en una clase puede afectar a otra clase, sin que haya una relación estructural directa.
-- **Notación UML:** Línea discontinua con una flecha abierta.
-- **Ejemplo:**
-  ```mermaid
-  classDiagram
+Un cambio en una clase puede afectar a otra, sin relación estructural directa (por ejemplo, un parámetro de método).
+```mermaid
+classDiagram
     Controlador ..> Servicio
-  ```
+```
 
-## Project Class Diagram
+## Ejemplo aplicado — combinando varias relaciones
 
-Here is the UML class diagram for the implemented Java code:
+Un mismo modelo (biblioteca de libros) mostrando herencia, asociación, agregación y dependencia juntas:
 
 ```mermaid
 classDiagram
@@ -71,26 +65,21 @@ classDiagram
         +getTitle(): String
         +getAuthor(): Author
     }
-
     class BookPrinted {
         -page: int
         +showInfo()
     }
-
     class BookDigital {
         -format: String
         +showInfo()
     }
-
     class Author {
         -name: String
     }
-
     class User {
         -name: String
         +borrowBook(Book)
     }
-
     class Library {
         -books: List~Book~
         +addBook(Book)
@@ -104,9 +93,14 @@ classDiagram
     User ..> Book : borrows
 ```
 
-## Sequence Diagram
+- `Book <|-- BookPrinted` — **herencia**: `BookPrinted` es un `Book`.
+- `Book -- Author` — **asociación**: cada libro tiene un autor.
+- `Library o-- Book` — **agregación**: la biblioteca contiene libros, pero un libro puede existir sin esa biblioteca puntual.
+- `User ..> Book` — **dependencia**: `User.borrowBook()` usa `Book` como parámetro, sin guardar una referencia permanente.
 
-This diagram shows the sequence of interactions between objects as defined in the `Main.java` file.
+### El mismo modelo, como diagrama de secuencia
+
+Útil para mostrar el **orden de interacciones** entre objetos, no solo su estructura:
 
 ```mermaid
 sequenceDiagram
@@ -130,10 +124,14 @@ sequenceDiagram
     user->>book1: getTitle()
     user->>book1: getAuthor()
     deactivate user
-    
-    Main->>user: borrowBook(book2)
-    activate user
-    user->>book2: getTitle()
-    user->>book2: getAuthor()
-    deactivate user
 ```
+
+## Cuándo usar cada tipo de diagrama
+
+| Diagrama | Para qué |
+|---|---|
+| **Clases** | Estructura estática del sistema — qué entidades existen y cómo se relacionan. Es el que más se usa al diseñar un dominio o revisar una arquitectura hexagonal. |
+| **Secuencia** | Orden temporal de interacciones entre objetos/servicios para un flujo puntual — ideal para documentar un caso de uso o un endpoint. |
+| **Estados** | Ciclo de vida de una entidad con estados y transiciones (ej: un pedido: creado → pagado → enviado → entregado). |
+
+Relacionado: [`hexagonal-architecture/`](../hexagonal-architecture) y [`system-design/`](../system-design) usan esta misma notación para documentar arquitectura real.
