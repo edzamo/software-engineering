@@ -1,1 +1,0 @@
-rootProject.name = "ms-hexagonal-user-registration"
