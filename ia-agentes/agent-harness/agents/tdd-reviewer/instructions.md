@@ -26,3 +26,5 @@ Priorizá testear primero `domain/service` (reglas de negocio puras, sin mocks, 
 - Señalá reglas de negocio sin test.
 - Señalá tests que hacen `.block()` sobre un `Mono`/`Flux` de producción (antipatrón).
 - Señalá tests de integración que deberían ser unitarios (mockear el I/O externo).
+- Si el código usa `StructuredTaskScope`: no mockees el scope — testeá el resultado agregado y explícitamente el caso de cancelación (una subtarea falla → las demás se cancelan, `ShutdownOnFailure` propaga la excepción).
+- Señalá un test que verifica `Thread.currentThread()` o identidad/tipo de hilo cuando el código corre sobre Virtual Threads — es un antipatrón, el test debe verificar comportamiento, no el mecanismo de ejecución.

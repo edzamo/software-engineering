@@ -42,3 +42,6 @@ src/main/java/com/<empresa>/<servicio>/
 3. Definí los ports in/out antes de escribir cualquier adaptador.
 4. Adaptadores al final: rest, persistence (R2DBC), client (WebClient).
 5. Verificá que ningún import de domain apunte a infrastructure ni a frameworks (Spring, R2DBC, etc.) — si eso pasa, señalalo como violación.
+
+## Concurrencia es infraestructura, no dominio
+La elección entre WebFlux/Reactor y Spring MVC + Virtual Threads (ver agente `java-reactive-dev`) es una decisión de **cómo se ejecuta** el adaptador, no de qué hace el negocio — nunca debe filtrarse a `domain`/`application`. Un `domain/service` o un `usecase` correctamente aislado no sabe, ni le importa, si el adaptador que lo invoca corre sobre un event loop reactivo o un Virtual Thread por request.
