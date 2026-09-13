@@ -15,6 +15,7 @@ graph LR
     root --> solid["solid-principles/<br/>Principios SOLID"]
     root --> cc["clean-code/<br/>DRY, KISS, YAGNI, code review"]
     root --> dp["design-pattern/<br/>Patrones de diseño"]
+    root --> ddd["ddd/<br/>Domain-Driven Design"]
     root --> uml["uml/<br/>Notación UML"]
     root --> arch["software-architectures/<br/>MVC, Clean, Onion, Hexagonal"]
     root --> sysdes["system-design/<br/>System Design"]
@@ -29,7 +30,8 @@ graph LR
     oop --> solid
     solid --> cc
     cc --> dp
-    dp --> arch
+    dp --> ddd
+    ddd --> arch
     arch --> sysdes
     sysdes --> micro
     arch --> micro
@@ -55,6 +57,7 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 | [`solid-principles/`](solid-principles) | Principios SOLID | ✅ Completo | Los 5 principios con diagramas "violación vs aplicado" y píldoras de repaso. |
 | [`clean-code/`](clean-code) | Clean Code | ✅ Completo | DRY, KISS, YAGNI y checklist de code review — los principios "chicos" que complementan SOLID. |
 | [`design-pattern/`](design-pattern) | Patrones de diseño (GoF) | ✅ Completo | Creacionales, estructurales y de comportamiento — los 22 patrones GoF documentados con ejemplo y "cuándo usarlo". |
+| [`ddd/`](ddd) | Domain-Driven Design | 🟡 En progreso | Entities vs Value Objects (`record` vs `class`), Aggregate Root, Rich vs Anemic Domain Model — con `Order` (coffee shop) y `Appointment` (citas médicas) como casos trabajados. Bounded Context, Repository, Domain Events pendientes. |
 | [`uml/`](uml) | Notación UML | ✅ Completo | Cheatsheet de las 5 relaciones (herencia, asociación, agregación, composición, dependencia) con diagramas Mermaid. |
 | [`software-architectures/`](software-architectures) | Arquitecturas de software | 🟡 En progreso | MVC, Clean Architecture, Onion, Hexagonal (puertos/adaptadores) — comparadas entre sí. Mobile (MVVM/MVP/MVI) y web frontend (Flux/Redux) pendientes. |
 | [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios (load balancer, replicación, cache, CDN, sharding) — basado en ByteByteGo. Se va sumando módulo a módulo. |

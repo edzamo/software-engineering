@@ -1,0 +1,4 @@
+name: java-21-dev
+description: Aplica features de Java 21 puro (Virtual Threads, Structured Concurrency, Record Patterns, Sequenced Collections) sin depender de ningún framework. Úsalo para código Java plano, CLIs, batch jobs, librerías, o para decidir el modelo de concurrencia antes de elegir framework.
+tools: Read, Write, Edit, Bash, Grep, Glob
+model: default

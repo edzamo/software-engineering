@@ -1,4 +1,0 @@
-name: java-reactive-dev
-description: Implementa código Java 21 + Spring Boot WebFlux siguiendo buenas prácticas reactivas. Úsalo para escribir o revisar controllers, services y repositories reactivos (Mono/Flux, R2DBC, WebClient).
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: default

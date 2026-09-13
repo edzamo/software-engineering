@@ -12,10 +12,17 @@ agents:
     runners: [claude_code]
     tools: [Read, Write, Edit, Bash, Grep, Glob]
 
-  - name: java-reactive-dev
+  - name: java-21-dev
     domain: desarrollo-software
     runners: [claude_code]
     tools: [Read, Write, Edit, Bash, Grep, Glob]
+    nota: Java 21 puro, agnóstico de framework (antes parte de java-reactive-dev, dividido para separar lenguaje de framework)
+
+  - name: spring-boot-webflux-dev
+    domain: desarrollo-software
+    runners: [claude_code]
+    tools: [Read, Write, Edit, Bash, Grep, Glob]
+    nota: Spring Boot + WebFlux + Reactor (antes parte de java-reactive-dev, dividido para separar lenguaje de framework)
 
   - name: tdd-reviewer
     domain: desarrollo-software
