@@ -1,6 +1,8 @@
-# Java Core — Collections & Streams
+# Collections & Streams — cheatsheet de operaciones del día a día
 
 Operaciones sobre `List`, `Map` y `Stream` — la base de cualquier lógica de transformación de datos en Java, tanto en código bloqueante como dentro de un `map`/`flatMap` reactivo (ver [`reactive-programming/`](../reactive-programming)). Es contenido que se oxida rápido si no se usa seguido, por eso vale la pena tenerlo como cheatsheet.
+
+> Este documento asume que ya sabés **cuál** estructura elegir (`ArrayList` vs `LinkedList`, `HashMap` vs `TreeMap`, etc. — ver [`data-structures-decision-guide.md`](data-structures-decision-guide.md)) y se enfoca en **cómo operarla** una vez elegida. Las interfaces funcionales que se usan en `filter`/`map` (`Predicate`, `Function`, etc.) están detalladas en [`functional-interfaces.md`](functional-interfaces.md).
 
 ## 1. List — cheatsheet
 
@@ -93,3 +95,5 @@ List<Item> todosLosItems = pedidos.stream()
 
 - Documentación oficial de Oracle — [Java Collections Framework](https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html) y [`java.util.stream`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html).
 - Baeldung — [Guía de `Stream` y `Collectors` en Java](https://www.baeldung.com/java-8-streams) — fuente de los ejemplos de `groupingBy`/`merge`/`flatMap` usados en este cheatsheet.
+
+Relacionado: [`data-structures-decision-guide.md`](data-structures-decision-guide.md) para cuál estructura elegir antes de operarla, [`functional-interfaces.md`](functional-interfaces.md) para el catálogo completo de `Predicate`/`Function`/etc. que alimenta estos streams, y [`reactive-programming/`](../reactive-programming) para el `flatMap` equivalente en Project Reactor (no confundir ambos).

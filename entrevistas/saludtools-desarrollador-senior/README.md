@@ -322,7 +322,7 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 | Mono/Flux, map vs flatMap, manejo de errores reactivo | [`reactive-programming/`](../../reactive-programming) |
 | Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../microservices-patterns) |
 | AWS + práctica con LocalStack | [`cloud-aws/`](../../cloud-aws) |
-| Map/List/Stream en Java | [`java-core/`](../../java-core) |
+| Java como lenguaje: POO, estructuras de datos, interfaces funcionales, evolución 8→21 | [`java-core/`](../../java-core) |
 | Arquitectura hexagonal | [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) |
 | Escalar de 0 a millones de usuarios | [`system-design/`](../../system-design) |
 | TDD | [`tdd/`](../../tdd) |
