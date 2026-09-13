@@ -8,7 +8,7 @@ Carpeta viva: acá se va sumando un subdirectorio por cada proceso de entrevista
 
 | Proceso | Rol | Stack | Estado | Carpeta |
 |---|---|---|---|---|
-| SaludTools | Desarrollador(a) Senior | Java 21, Spring WebFlux, AWS, microservicios | En curso | [`saludtools-desarrollador-senior/`](saludtools-desarrollador-senior) |
+| SaludTools | Desarrollador(a) Senior | Java 21, Spring WebFlux, DDD, AWS, microservicios | En curso | [`saludtools-desarrollador-senior/`](saludtools-desarrollador-senior) |
 
 ## Cómo se arma cada proceso nuevo
 

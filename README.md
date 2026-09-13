@@ -20,6 +20,7 @@ graph LR
     root --> arch["software-architectures/<br/>MVC, Clean, Onion, Hexagonal"]
     root --> sysdes["system-design/<br/>System Design"]
     root --> micro["microservices-patterns/<br/>Microservicios"]
+    root --> springboot["spring-boot/<br/>Spring / Spring Boot / JPA"]
     root --> reactive["reactive-programming/<br/>Programación reactiva"]
     root --> aws["cloud-aws/<br/>AWS + LocalStack"]
     root --> tdd["tdd/<br/>TDD"]
@@ -35,6 +36,8 @@ graph LR
     arch --> sysdes
     sysdes --> micro
     arch --> micro
+    arch --> springboot
+    springboot --> reactive
     micro --> reactive
     micro --> aws
     arch --> tdd
@@ -62,10 +65,11 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 | [`software-architectures/`](software-architectures) | Arquitecturas de software | 🟡 En progreso | MVC, Clean Architecture, Onion, Hexagonal (puertos/adaptadores) — comparadas entre sí. Mobile (MVVM/MVP/MVI) y web frontend (Flux/Redux) pendientes. |
 | [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios (load balancer, replicación, cache, CDN, sharding) — basado en ByteByteGo. Se va sumando módulo a módulo. |
 | [`microservices-patterns/`](microservices-patterns) | Patrones de microservicios | ✅ Completo | Comunicación sync/async, resiliencia (circuit breaker, retry, bulkhead), consistencia (saga, outbox), API-first, OWASP. |
+| [`spring-boot/`](spring-boot) | Spring / Spring Boot / JPA | ✅ Completo | Framework vs Spring Framework vs Spring Boot, IoC/DI, MVC vs WebFlux, JPA vs Hibernate vs Entidad (JPA vs DDD), auto-configuración, anotaciones clave. |
 | [`reactive-programming/`](reactive-programming) | Programación reactiva | ✅ Completo | Mono/Flux, `map` vs `flatMap`, manejo de errores reactivo, R2DBC vs JPA, testing con StepVerifier. |
 | [`cloud-aws/`](cloud-aws) | Cloud (AWS) | ✅ Completo | Servicios AWS clave para un backend Java + cómo practicar con LocalStack (sin tarjeta ni cuenta real). |
 | [`tdd/`](tdd) | TDD | ✅ Completo | Ciclo red-green-refactor (diagrama de estados), pirámide de testing, patrón AAA. |
-| [`ia-agentes/`](ia-agentes) | IA aplicada al desarrollo | 🟡 En progreso | 6 agentes + 2 skills de Claude Code para desarrollo de software (hexagonal, WebFlux, TDD, GitFlow, OWASP, clean code, commits, PRs), con `agent-harness/` como fuente/compilador reusable entre proyectos; analítica/big data pendientes. |
+| [`ia-agentes/`](ia-agentes) | IA aplicada al desarrollo | 🟡 En progreso | 7 agentes + 2 skills de Claude Code para desarrollo de software (hexagonal, Java 21, Spring Boot WebFlux, TDD, GitFlow, OWASP, clean code, commits, PRs), con `agent-harness/` como fuente/compilador reusable entre proyectos; analítica/big data pendientes. |
 | [`entrevistas/`](entrevistas) | Bitácora de procesos de entrevista | 🟡 En progreso | Un proceso en curso (SaludTools) — logística, checklist y mapa hacia el resto del repo. Se va sumando por proceso. |
 
 ## Cómo está organizado

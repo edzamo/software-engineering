@@ -8,9 +8,9 @@ Catálogo de **subagentes reales de Claude Code** listos para invocar cuando arr
 
 `ia-agentes/` tiene tres piezas que no son lo mismo — ver [`claude-code-project-anatomy.md`](claude-code-project-anatomy.md) para el detalle completo de cada una y cómo se relacionan (agent vs. skill, cuándo usar cada uno, qué más puede tener un proyecto con Claude Code):
 
-- **`.claude/agents/*.md`** — los 6 agentes, ya compilados, listos para que Claude Code los auto-descubra. **No se editan acá directamente.**
+- **`.claude/agents/*.md`** — los 7 agentes, ya compilados, listos para que Claude Code los auto-descubra. **No se editan acá directamente.**
 - **`.claude/skills/*/SKILL.md`** — 2 skills (procedimientos que corre el hilo principal, no un agente aparte): `conventional-commit` y `pr-description`. Estos sí se editan directo, ahí mismo.
-- **`agent-harness/`** — la **fuente** de los 6 agentes (`agent.yaml` + `instructions.md` por agente) más el compilador que genera `.claude/agents/*.md`. Se edita un agente acá, se corre `compile.py`, y recién ahí se actualiza lo que Claude Code lee. El porqué de esta separación está en [`agent-harness/README.md`](agent-harness/README.md).
+- **`agent-harness/`** — la **fuente** de los 7 agentes (`agent.yaml` + `instructions.md` por agente) más el compilador que genera `.claude/agents/*.md`. Se edita un agente acá, se corre `compile.py`, y recién ahí se actualiza lo que Claude Code lee. El porqué de esta separación está en [`agent-harness/README.md`](agent-harness/README.md).
 
 ## Cómo activarlos
 
@@ -30,7 +30,8 @@ o agregá `ia-agentes/` como carpeta del workspace si trabajás desde el IDE. Un
 | Agente | Cuándo usarlo | Qué hace |
 |---|---|---|
 | [`hexagonal-architect`](.claude/agents/hexagonal-architect.md) | Al arrancar un microservicio nuevo desde cero | Arma el esqueleto de paquetes `domain/application/infrastructure` y valida que no se violen los límites del hexágono (ver [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md)). |
-| [`java-reactive-dev`](.claude/agents/java-reactive-dev.md) | Al implementar o revisar código con Spring WebFlux | Prioriza la elección correcta entre `map`/`flatMap` y el manejo de errores reactivo (ver [`reactive-programming/`](../reactive-programming)). |
+| [`java-21-dev`](.claude/agents/java-21-dev.md) | Al escribir código Java 21 puro, sin atarte a un framework (CLIs, librerías, o para decidir el modelo de concurrencia) | Virtual Threads vs Reactor, Structured Concurrency, Record Patterns, Sequenced Collections — agnóstico de framework (ver [`java-core/`](../java-core)). |
+| [`spring-boot-webflux-dev`](.claude/agents/spring-boot-webflux-dev.md) | Al implementar o revisar código con Spring Boot + WebFlux | `map`/`flatMap`, manejo de errores reactivo, inyección de dependencias, `ProblemDetail`, validación, testing (ver [`reactive-programming/`](../reactive-programming) y [`spring-boot/`](../spring-boot)). |
 | [`tdd-reviewer`](.claude/agents/tdd-reviewer.md) | Antes de implementar una funcionalidad nueva | Traduce una historia de usuario a criterios Gherkin y guía el ciclo red-green-refactor (ver [`tdd/`](../tdd)). |
 | [`gitflow-release-manager`](.claude/agents/gitflow-release-manager.md) | Al crear una rama, preparar un release/hotfix, o antes de mergear a `develop`/`main` | Guía GitFlow (`feature` → `develop`, `release`/`hotfix` → `main` con tag SemVer). Nunca ejecuta `push`/`merge`/PR sin confirmación humana explícita. |
 | [`owasp-security-reviewer`](.claude/agents/owasp-security-reviewer.md) | Antes de dar por terminado un endpoint que toca input de usuario, auth o datos sensibles | Revisa el código contra los 10 riesgos de OWASP Top 10 (2021), con archivo/línea y mitigación puntual por hallazgo (ver [`microservices-patterns/`](../microservices-patterns#5-seguridad-owasp-top-10)). |
@@ -58,7 +59,7 @@ sequenceDiagram
     participant gitflow-release-manager
     participant tdd-reviewer
     participant hexagonal-architect
-    participant java-reactive-dev
+    participant spring-boot-webflux-dev
     participant owasp-security-reviewer
 
     Vos->>gitflow-release-manager: "Arrancá una feature para <dominio>"
@@ -67,8 +68,8 @@ sequenceDiagram
     hexagonal-architect-->>Vos: paquetes domain/application/infrastructure
     Vos->>tdd-reviewer: "Historia de usuario: <...>"
     tdd-reviewer-->>Vos: criterios Gherkin + primer test que falla
-    Vos->>java-reactive-dev: "Implementá hasta que el test pase"
-    java-reactive-dev-->>Vos: código + explicación de map/flatMap/errores
+    Vos->>spring-boot-webflux-dev: "Implementá hasta que el test pase"
+    spring-boot-webflux-dev-->>Vos: código + explicación de map/flatMap/errores
     Vos->>owasp-security-reviewer: "Revisá el endpoint antes de cerrar"
     owasp-security-reviewer-->>Vos: hallazgos OWASP (archivo/línea) o OK
     Vos->>clean-code-reviewer: "Revisá diseño/DRY/patrones antes del PR"

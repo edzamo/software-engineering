@@ -20,7 +20,7 @@ Preparate un ejemplo concreto de tu experiencia para cada fila (2-3 frases, form
 |---|---|
 | Diseño de arquitecturas / decisiones de escalabilidad, mantenibilidad, seguridad, costos | |
 | Liderar refactorizaciones | |
-| Definir estándares (SOLID, Clean Code, DDD) | |
+| Definir estándares (SOLID, Clean Code, DDD — ver [`solid-principles/`](../../solid-principles), [`clean-code/`](../../clean-code), [`ddd/`](../../ddd)) | |
 | Code reviews exigentes pero constructivas | |
 | Mentorizar developers junior/intermedios, pair programming | |
 | Corresponsabilidad en producción — incidentes y post-mortems | |

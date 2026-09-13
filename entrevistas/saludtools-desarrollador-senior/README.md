@@ -138,32 +138,79 @@ Docker-compose y script completo de práctica (fuera de este repo, ver sección 
 
 ---
 
+## 03.5 · Spring / Spring Boot / JPA — fundamentos que dan por sentado que sabés
+
+Preguntas de base que un entrevistador Senior espera contestadas sin dudar, incluso si el stack del día a día ya es 100% reactivo.
+
+- **¿Qué es un framework?** Código de terceros que controla el flujo (te llama a vos, no al revés — *Inversion of Control*). Vos completás los huecos con tu lógica.
+- **Spring vs Spring Framework vs Spring Boot:**
+  - *Spring* = el ecosistema entero (Framework + Boot + Data + Security + Cloud...).
+  - *Spring Framework* = el núcleo (2003): contenedor **IoC** + **Inyección de Dependencias** (`ApplicationContext`, `@Component`, AOP).
+  - *Spring Boot* = una capa encima que agrega **auto-configuración** + **starters** + servidor embebido — "Spring, pero sin cablear todo a mano".
+- **Constructor injection, no `@Autowired` en campos** — recomendación oficial de Spring (inmutabilidad, dependencias garantizadas no-null, testeable sin el contenedor). Con Lombok: `@RequiredArgsConstructor` sobre campos `private final`, en vez de escribir el constructor.
+- **JPA vs Hibernate:** JPA es la **especificación** (`@Entity`, `EntityManager`); Hibernate es la **implementación** más usada de esa especificación. Spring Data JPA agrega repositorios (`JpaRepository<T,ID>`) encima de ambos.
+- **JPA/Hibernate es bloqueante** (JDBC por debajo) — nunca dentro de un pipeline WebFlux. Para reactivo: **Spring Data R2DBC** (API distinta, sin lazy-loading ni caché de 1er nivel).
+- **Entidad JPA ≠ Entidad DDD:** una `@Entity` de JPA mapea una tabla; una Entidad de DDD es identidad+ciclo de vida en el dominio. En hexagonal son **clases distintas** (`OrderJpaEntity` vs `Order`), unidas por un `Mapper` en el adaptador — el dominio nunca importa `jakarta.persistence`.
+- **El problema N+1** — acceder a una relación `@ManyToOne(fetch = LAZY)` dentro de un loop dispara una query por fila. Se resuelve con `JOIN FETCH`, `@EntityGraph`, o una proyección DTO directa — nunca cambiando el fetch type a `EAGER` por defecto (trae de más en los casos que no lo necesitan). Detalle en [`spring-boot/spring-data.md`](../../spring-boot/spring-data.md).
+- **`@Transactional` no funciona en WebFlux/R2DBC** — depende de `ThreadLocal`, incompatible con un pipeline que salta de hilo en el event loop. Se usa `TransactionalOperator` en su lugar.
+- **`WebClient` sin timeout configurado** es la trampa más común en código reactivo real — una llamada colgada consume un canal de Netty indefinidamente. Detalle de `WebClient`, `WebTestClient` y seguridad reactiva (`ServerHttpSecurity`) en [`spring-boot/webflux.md`](../../spring-boot/webflux.md).
+
+Detalle completo con tabla comparativa, anotaciones clave y diagrama del ecosistema en [`spring-boot/`](../../spring-boot) (incluye también Spring Batch — Job/Step, chunk processing — por si sale como tema de procesamiento masivo).
+
+---
+
+## 03.6 · DDD (Domain-Driven Design) — "definir estándares" no es solo SOLID
+
+La descripción del rol pide explícitamente promover DDD como estándar (ver [`fit-y-liderazgo.md`](fit-y-liderazgo.md), sección 3) — vale la pena tener el vocabulario firme, no solo "haber leído el libro de Evans".
+
+- **Entity vs Value Object** — `class` con igualdad por `id` y ciclo de vida (`Order`, `Appointment`) vs `record` inmutable con igualdad por valor (`LineItem`, `TimeSlot`). Un `record` de Java modela un Value Object, nunca una Entity — la igualdad estructural automática es justo lo que **no** querés en una Entity.
+- **Aggregate / Aggregate Root** — el clúster que se guarda/actualiza como una sola transacción. Un Aggregate solo referencia a otro **por ID** (`PatientId`, no `Patient` completo) — nunca lo compone. Regla de oro: una transacción de base de datos = un Aggregate.
+- **Repository pattern** — un Repository por Aggregate Root, nunca por tabla (`LineItem` no tiene su propio repositorio). En hexagonal, es exactamente `port/out` + `PersistenceAdapter` — DDD le pone nombre al mismo patrón.
+- **Domain Events** — hechos ya ocurridos, nombrados en pasado (`AppointmentCompleted`, no `CompleteAppointment` — eso es un Command). Se publican en la misma transacción que el cambio de estado (Outbox pattern) para no perderlos ni duplicarlos si algo falla después.
+- **Domain Service** — una regla que cruza dos Aggregates y no tiene un dueño natural entre las Entities existentes (ej. `transferMoney(from, to, amount)`). No confundir con el Application Service: el Domain Service decide reglas de negocio sin I/O; el Application Service orquesta (Repository, transacción) sin decidir reglas.
+- **Bounded Context** — la misma palabra (`Patient`) puede significar algo distinto en dos contextos (Citas Médicas vs Facturación) — es la frontera donde el modelo y el vocabulario son consistentes, no una capa técnica.
+- **CQRS** — separar el modelo de escritura (Aggregate rico, con invariantes) del modelo de lectura (proyección plana, un `record` sin comportamiento). Empezar siempre por el nivel más simple (separar puertos/queries en el código) antes de pensar en bases de datos de lectura separadas.
+
+> **Frase para repetir en la entrevista:** "en el día a día, el patrón hexagonal me da la ubicación en el código (`domain`/`application`/`infrastructure`); DDD me da el criterio de **qué va dentro de `domain`** — cuándo algo es una Entity, cuándo un Value Object, y dónde trazar el límite de un Aggregate."
+
+Detalle completo, ejemplos trabajados con `Order`/`Appointment`, y drills cronometrados en [`ddd/`](../../ddd).
+
+---
+
 ## 04 · Arquitectura hexagonal
 
 ```
 com.saludtools.<servicio>/
 ├── domain/              núcleo puro — sin Spring, sin I/O
-│   ├── model/            entidades y value objects (records)
-│   └── service/          reglas de negocio puras
+│   └── <agregado>/       entidad (identidad + ciclo de vida — clase, no record),
+│                          value objects (records), excepciones de dominio propias
 ├── application/         frontera del hexágono
-│   ├── port/in/          interfaces de casos de uso (ej. EvaluateXUseCase)
+│   ├── port/in/          interfaces de casos de uso (ej. EvaluateXUseCase + su Command)
 │   ├── port/out/         interfaces que el caso de uso necesita (ej. XPort)
-│   ├── usecase/          XUseCaseImpl — orquesta domain + ports out
-│   └── exception/        excepciones de negocio
+│   └── service/          XService — implementa el UseCase, orquesta domain + ports out
+│                          (constructor injection, Lombok @RequiredArgsConstructor)
 └── infrastructure/      adaptadores — implementan los ports
-    ├── rest/              controller reactivo (Mono/Flux) + DTOs + @ControllerAdvice
-    ├── persistence/       R2DBC repository (implementa port/out)
-    └── client/            WebClient hacia servicios externos (implementa port/out)
+    ├── adapter/in/web/     controller reactivo (Mono/Flux) + DTOs (@Valid) +
+    │                       @RestControllerAdvice devolviendo ProblemDetail (RFC 7807)
+    ├── adapter/out/persistence/  R2DBC repository (implementa port/out), sufijo "Adapter"
+    │   ├── entity/          clase de persistencia (@Table), distinta de la entidad de dominio
+    │   └── mapper/          traduce Entity(persistencia)↔Entidad(dominio)
+    ├── adapter/out/client/  WebClient hacia servicios externos (implementa port/out)
+    └── config/              @Configuration (OpenAPI, @ConfigurationProperties, etc.)
 ```
 
 ### Reglas que ya aplicás (mantenelas en el live coding)
 
 - `domain` no importa nada de `infrastructure` ni de Spring — es lo primero que un evaluador revisa.
-- Naming consistente: `EvaluateCreditUseCase` (port in) → `EvaluateCreditUseCaseImpl`. `RiskPort` (port out) → `RiskAdapter` (infrastructure).
-- DTOs de `rest/dto` y `client/dto` nunca cruzan a `domain` — se mapean en el adaptador.
-- Excepciones de negocio en `application/exception`, traducidas a HTTP en un manejador centralizado (`@ControllerAdvice`).
+- Naming: `EvaluateCreditUseCase` (port in, interfaz) → `EvaluateCreditService` (application/service, **no** `...UseCaseImpl`). `RiskPort` (port out) → `RiskPersistenceAdapter`/`RiskClientAdapter` (infrastructure, sufijo "Adapter" solo en el lado de salida — el controller web no lo lleva).
+- Un `Command` (input de un UseCase) es un **`record`**, no una interfaz — solo los puertos (contratos con implementación intercambiable) son interfaces; el Command es dato inmutable, con validación estructural en su compact constructor (*self-validating value object*).
+- Cada `UseCase` debe mapear 1:1 a un método que **ya existe** en la entidad de dominio (ej. `Account.withdraw()`) — si el dominio no tiene el comportamiento todavía, se agrega primero ahí, no se inventa el caso de uso antes.
+- Una excepción que representa un **hecho de negocio** (ej. "no existe", "transición inválida") vive en `domain`, no en `application/exception` — no es un detalle de cableado. Se traduce a HTTP en un `@RestControllerAdvice` centralizado devolviendo `ProblemDetail`.
+- DTOs de `rest`/`client` nunca cruzan a `domain` — se mapean en el adaptador. Nunca serializar la entidad de dominio directo en la respuesta HTTP.
 
-> **Nota:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta.
+> **Nota JPA vs R2DBC:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta. Diferencia JPA/Hibernate/Entidad explicada en [`spring-boot/`](../../spring-boot).
+
+> **Validado en la práctica (2026-09-13):** este patrón exacto se implementó y probó end-to-end con `curl` real en dos dominios distintos (citas médicas y pedidos de café) en un playground de arquitectura hexagonal — incluyendo el hallazgo real de que un `Mono<T>` vacío en WebFlux devuelve `200` con body vacío por defecto, no `404`; hay que traducirlo explícitamente con `.switchIfEmpty(Mono.error(...))` en el adapter web.
 
 Más detalle y comparación de proyectos de referencia en [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md).
 
@@ -222,18 +269,21 @@ Para hacer con el timer puesto, en tu IDE, antes del día de la prueba.
 | 10 min | Armá el esqueleto hexagonal completo (domain/application/infrastructure) para un caso nuevo ("gestión de turnos médicos") sin mirar el repo de referencia. |
 | 8 min | Test con `StepVerifier` que verifique que un `Mono` propaga `RiskServiceUnavailableException` cuando el WebClient simulado falla. |
 | 6 min | Levantá LocalStack, creá un bucket S3 y subí un archivo de prueba con el AWS CLI, sin mirar este documento. |
+| 5 min | Explicá en voz alta, con el caso de `Appointment`/`PatientId`, por qué un Aggregate solo referencia a otro por ID y nunca lo compone completo. |
+| 5 min | Te preguntan "¿cómo evitás un N+1 en este listado?" con una relación `@ManyToOne` de por medio — respondé nombrando 2 soluciones distintas y su trade-off. |
 
 ---
 
 ## 07 · Agentes de Claude Code
 
-Los 3 agentes de práctica (hexagonal, WebFlux, TDD) están en [`ia-agentes/`](../../ia-agentes) del repo — usalos para practicar el flujo completo y para mostrar en la entrevista cómo integrás IA con criterio.
+Los agentes de práctica relevantes (hexagonal, Java 21, Spring Boot WebFlux, TDD) están en [`ia-agentes/`](../../ia-agentes) del repo — usalos para practicar el flujo completo y para mostrar en la entrevista cómo integrás IA con criterio.
 
 - **`hexagonal-architect`** — arma el esqueleto de paquetes domain/application/infrastructure para un dominio nuevo, y valida que no se violen los límites del hexágono.
-- **`java-reactive-dev`** — implementa o revisa controllers/services/repositories con WebFlux, priorizando la elección correcta entre map/flatMap y el manejo de errores.
+- **`java-21-dev`** — Java 21 puro, agnóstico de framework (Virtual Threads vs Reactor, Structured Concurrency, Record Patterns).
+- **`spring-boot-webflux-dev`** — implementa o revisa controllers/services/repositories con Spring Boot WebFlux, priorizando la elección correcta entre map/flatMap, manejo de errores, inyección de dependencias y `ProblemDetail`.
 - **`tdd-reviewer`** — traduce historias de usuario a criterios Gherkin y guía el ciclo red-green-refactor con JUnit5/Mockito/StepVerifier.
 
-> Flujo sugerido: `hexagonal-architect` arma el esqueleto → `tdd-reviewer` da el primer test que falla → `java-reactive-dev` implementa hasta que pase. Cronometrado a 45–60 min simula la presión real del ejercicio en vivo.
+> Flujo sugerido: `hexagonal-architect` arma el esqueleto → `tdd-reviewer` da el primer test que falla → `spring-boot-webflux-dev` implementa hasta que pase. Cronometrado a 45–60 min simula la presión real del ejercicio en vivo.
 
 ---
 
@@ -263,6 +313,11 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 
 | Tema | Carpeta |
 |---|---|
+| Spring / Spring Boot / JPA / Hibernate (fundamentos) | [`spring-boot/fundamentals.md`](../../spring-boot/fundamentals.md) |
+| WebFlux dentro de Spring Boot (`WebClient`, testing, seguridad, vs. Virtual Threads) | [`spring-boot/webflux.md`](../../spring-boot/webflux.md) |
+| Spring Data (repositorios, N+1, `@Transactional`, R2DBC) | [`spring-boot/spring-data.md`](../../spring-boot/spring-data.md) |
+| Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../spring-boot/spring-batch.md) |
+| DDD (Entities/VO, Aggregates, Repository, Domain Events/Service, Bounded Context, CQRS) | [`ddd/`](../../ddd) |
 | Mono/Flux, map vs flatMap, manejo de errores reactivo | [`reactive-programming/`](../../reactive-programming) |
 | Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../microservices-patterns) |
 | AWS + práctica con LocalStack | [`cloud-aws/`](../../cloud-aws) |

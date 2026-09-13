@@ -8,31 +8,28 @@ Píldoras de DDD construidas a partir de casos concretos (no solo teoría): un d
 
 ```mermaid
 graph TB
-    subgraph modelado[" Modelado táctico — documentado "]
+    subgraph modelado[" Modelado táctico y estratégico — documentado "]
         EVO["Entities vs Value Objects<br/>record vs class"]
-    end
-    subgraph pendiente[" Pendiente "]
-        BC["Bounded Context"]
         AGG["Aggregates — límites de consistencia"]
         REPO["Repository pattern"]
         DE["Domain Events"]
         DS["Domain Service"]
+        BC["Bounded Context"]
         CQRS["CQRS"]
     end
 
     style modelado fill:#0d7d72,color:#fff
-    style pendiente fill:#f5e2d2,color:#111
 ```
 
 | Tema | Doc | Idea central en una línea |
 |---|---|---|
 | **Entities vs Value Objects** | [`entities-vs-value-objects.md`](entities-vs-value-objects.md) | Cuándo un objeto de dominio debe ser `class` (tiene identidad y ciclo de vida) y cuándo `record` (es un valor inmutable) — con `Order` y `Appointment` como casos trabajados, y por qué el Anemic Domain Model es un anti-patrón. |
-| Bounded Context | ⏳ Pendiente | Cómo delimitar formalmente dónde termina un Aggregate y empieza la referencia a otro. |
-| Aggregates — límites de consistencia | ⏳ Pendiente | Qué invariantes debe garantizar el Aggregate Root de forma transaccional. |
-| Repository pattern | ⏳ Pendiente | El puerto de salida que persiste un Aggregate completo, no tablas sueltas. |
-| Domain Events | ⏳ Pendiente | Publicar eventos como `OrderPaid`/`AppointmentCancelled` — conecta con `microservices-patterns/` (outbox). |
-| Domain Service | ⏳ Pendiente | Reglas de negocio que no pertenecen a ninguna Entity individual. |
-| CQRS | ⏳ Pendiente | Separar modelo de escritura (Aggregates ricos) de modelo de lectura (proyecciones). |
+| **Aggregates — límites de consistencia** | [`aggregates.md`](aggregates.md) | Qué invariantes debe garantizar el Aggregate Root de forma transaccional, por qué `LineItem` no tiene repositorio propio, y por qué un Aggregate solo referencia a otro por ID. |
+| **Repository pattern** | [`repository-pattern.md`](repository-pattern.md) | El puerto de salida que persiste un Aggregate completo, no tablas sueltas — y cómo se mapea 1:1 con `port/out` + `PersistenceAdapter` en hexagonal. |
+| **Domain Events** | [`domain-events.md`](domain-events.md) | Publicar hechos ya ocurridos (`OrderPaid`, `AppointmentCompleted`) para coordinar Aggregates/contextos sin acoplarlos — conecta con el Outbox pattern de `microservices-patterns/`. |
+| **Domain Service** | [`domain-service.md`](domain-service.md) | Reglas de negocio que cruzan dos Aggregates y no pertenecen a ninguna Entity individual — y cómo no confundirlo con el Application Service. |
+| **Bounded Context** | [`bounded-context.md`](bounded-context.md) | Dónde termina un modelo y empieza otro, Ubiquitous Language, y los patrones de Context Mapping (Anticorruption Layer, Customer/Supplier, Shared Kernel). |
+| **CQRS** | [`cqrs.md`](cqrs.md) | Separar el modelo de escritura (Aggregates ricos) del modelo de lectura (proyecciones planas) — y los 3 niveles reales del patrón, del más simple al más costoso. |
 
 ## Código de referencia
 
@@ -42,8 +39,15 @@ Los ejemplos de este documento vienen de un proyecto de práctica en desarrollo 
 
 ## Cómo estudiar esta carpeta
 
-1. Empezá por [`entities-vs-value-objects.md`](entities-vs-value-objects.md) — es la base de todo lo demás (Aggregates, Repository, Domain Events asumen que ya distinguís Entity de Value Object).
-2. Los temas ⏳ se van a ir completando a medida que aparezcan en la práctica (proyecto de referencia) o en preparación de entrevista — mismo criterio que el resto del repo: nada de documentos teóricos sin un caso concreto detrás.
+Orden recomendado — cada doc asume conceptos de los anteriores:
+
+1. [`entities-vs-value-objects.md`](entities-vs-value-objects.md) — la base de todo lo demás (modelado táctico).
+2. [`aggregates.md`](aggregates.md) — el límite de consistencia que agrupa Entities/Value Objects.
+3. [`repository-pattern.md`](repository-pattern.md) — cómo se persiste un Aggregate ya delimitado.
+4. [`domain-events.md`](domain-events.md) — cómo coordinar Aggregates sin romper su límite transaccional.
+5. [`domain-service.md`](domain-service.md) — reglas que cruzan Aggregates y no encajan en ninguna Entity.
+6. [`bounded-context.md`](bounded-context.md) — el salto de modelado táctico (dentro de un contexto) a estratégico (entre contextos).
+7. [`cqrs.md`](cqrs.md) — una vez claro el modelo de escritura (1-6), cómo separarlo del modelo de lectura.
 
 Relacionado: [`entrevistas/saludtools-desarrollador-senior/`](../entrevistas/saludtools-desarrollador-senior) — DDD es uno de los estándares que ese perfil pide promover explícitamente.
 
