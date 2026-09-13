@@ -89,7 +89,7 @@ stateDiagram-v2
     NO_SHOW --> [*]
 ```
 
-Código completo de referencia (proyecto en desarrollo): [`spring-webflux-hexagonal-architecture`](../../../codigo-por-reorganizar/) — dominio `appointment` y dominio `order`. *(Pendiente: reemplazar este link por la ruta/repo definitiva una vez esté terminado, y enlazar el ticket de Jira correspondiente aquí.)*
+Código completo de referencia (proyecto en desarrollo): [`spring-webflux-hexagonal-architecture`](../codigo-por-reorganizar/) — dominio `appointment` y dominio `order`. *(Pendiente: reemplazar este link por la ruta/repo definitiva una vez esté terminado, y enlazar el ticket de Jira correspondiente aquí.)*
 
 ## Anemic Domain Model vs Rich Domain Model
 

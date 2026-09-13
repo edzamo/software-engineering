@@ -16,6 +16,7 @@ graph TB
         DS["Domain Service"]
         BC["Bounded Context"]
         CQRS["CQRS"]
+        ES["Event Sourcing"]
     end
 
     style modelado fill:#0d7d72,color:#fff
@@ -30,6 +31,7 @@ graph TB
 | **Domain Service** | [`domain-service.md`](domain-service.md) | Reglas de negocio que cruzan dos Aggregates y no pertenecen a ninguna Entity individual — y cómo no confundirlo con el Application Service. |
 | **Bounded Context** | [`bounded-context.md`](bounded-context.md) | Dónde termina un modelo y empieza otro, Ubiquitous Language, y los patrones de Context Mapping (Anticorruption Layer, Customer/Supplier, Shared Kernel). |
 | **CQRS** | [`cqrs.md`](cqrs.md) | Separar el modelo de escritura (Aggregates ricos) del modelo de lectura (proyecciones planas) — y los 3 niveles reales del patrón, del más simple al más costoso. |
+| **Event Sourcing** | [`event-sourcing.md`](event-sourcing.md) | Guardar el historial de eventos como única fuente de verdad en vez del estado final — replay, snapshots, y por qué casi siempre viaja junto a CQRS nivel 3. |
 
 ## Código de referencia
 
@@ -48,6 +50,7 @@ Orden recomendado — cada doc asume conceptos de los anteriores:
 5. [`domain-service.md`](domain-service.md) — reglas que cruzan Aggregates y no encajan en ninguna Entity.
 6. [`bounded-context.md`](bounded-context.md) — el salto de modelado táctico (dentro de un contexto) a estratégico (entre contextos).
 7. [`cqrs.md`](cqrs.md) — una vez claro el modelo de escritura (1-6), cómo separarlo del modelo de lectura.
+8. [`event-sourcing.md`](event-sourcing.md) — el último paso, opcional y más costoso: qué cambia si el evento mismo (no el estado) es la fuente de verdad.
 
 Relacionado: [`entrevistas/saludtools-desarrollador-senior/`](../entrevistas/saludtools-desarrollador-senior) — DDD es uno de los estándares que ese perfil pide promover explícitamente.
 

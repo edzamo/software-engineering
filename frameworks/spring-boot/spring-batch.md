@@ -8,7 +8,7 @@ La pregunta que dispara este documento: *"¿por qué no proceso 500,000 registro
 |---|---|---|---|
 | Volumen | Grandes volúmenes (miles a millones de registros) en una ejecución. | Un registro (o pocos) por request. | Un mensaje por evento, procesado a medida que llega. |
 | Disparo | Programado (cron) o bajo demanda — nunca "en vivo" por un usuario esperando respuesta. | Sincrónico, el cliente espera. | Asíncrono, dirigido por evento. |
-| Caso típico | Cierre de fin de mes, migración de datos, generar reportes masivos, reconciliación contra un archivo externo. | CRUD de negocio normal. | Reaccionar a un `OrderPaid` (ver [`ddd/domain-events.md`](../ddd/domain-events.md)). |
+| Caso típico | Cierre de fin de mes, migración de datos, generar reportes masivos, reconciliación contra un archivo externo. | CRUD de negocio normal. | Reaccionar a un `OrderPaid` (ver [`ddd/domain-events.md`](../../ddd/domain-events.md)). |
 
 Señal de que hace falta Batch y no un simple `for` en un `@Scheduled`: el proceso puede fallar a mitad de camino y **no** es aceptable reprocesar todo desde cero, o el volumen no entra cómodo en memoria.
 
@@ -98,4 +98,4 @@ Cuando un solo `Step` secuencial no alcanza en tiempo (ej. un archivo de 10 mill
 - [Spring Batch — Reference Documentation](https://docs.spring.io/spring-batch/reference/) — Job/Step, chunk processing, fault tolerance (`skip`/`retry`), partitioning.
 - [Spring Batch — Domain Language](https://docs.spring.io/spring-batch/reference/domain.html) — definición formal de `Job`, `Step`, `JobInstance`, `JobExecution`, `StepExecution`.
 
-Relacionado: [`fundamentals.md`](fundamentals.md) para dónde encaja Batch dentro del ecosistema Spring, [`microservices-patterns/README.md`](../microservices-patterns/README.md) para la idempotencia y consistencia eventual que también aplican a un Job que se reintenta, y [`ddd/domain-events.md`](../ddd/domain-events.md) para el caso alternativo (mensajería dirigida por evento) cuando el volumen no justifica un proceso batch.
+Relacionado: [`fundamentals.md`](fundamentals.md) para dónde encaja Batch dentro del ecosistema Spring, [`microservices-patterns/README.md`](../../microservices-patterns/README.md) para la idempotencia y consistencia eventual que también aplican a un Job que se reintenta, y [`ddd/domain-events.md`](../../ddd/domain-events.md) para el caso alternativo (mensajería dirigida por evento) cuando el volumen no justifica un proceso batch.

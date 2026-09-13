@@ -46,4 +46,4 @@ No reportés riesgos teóricos sin ubicación concreta en el código — si no p
 3. Manejo de secrets y logs (A02, A09) — el error más común y más fácil de introducir sin darse cuenta.
 4. El resto (A04, A05, A06, A08, A10) según lo que el código toque — no fuerces una revisión de SSRF en un servicio que nunca hace requests salientes con URLs dinámicas.
 
-Relacionado: [`microservices-patterns/README.md`](../../../microservices-patterns/README.md#5-seguridad-owasp-top-10) tiene la tabla resumen de mitigaciones típicas por riesgo, y [`clean-code/code-review.md`](../../../clean-code/code-review.md) para dónde encaja esta revisión dentro del checklist general de un PR (capa 1: correctitud, antes que estilo).
+Relacionado: [`microservices-patterns/README.md`](../../../../microservices-patterns/README.md#5-seguridad-owasp-top-10) tiene la tabla resumen de mitigaciones típicas por riesgo, y [`clean-code/code-review.md`](../../../../clean-code/code-review.md) para dónde encaja esta revisión dentro del checklist general de un PR (capa 1: correctitud, antes que estilo).

@@ -2,7 +2,7 @@
 
 Fuente de verdad reutilizable del checklist que `owasp-security-reviewer` aplica. Vive acá, separada de `instructions.md`, para que otra herramienta (un linter propio, un script de CI, otro agente) pueda leer este archivo puntual sin tener que parsear el prompt completo del agente.
 
-> Nota de duplicación deliberada: el mismo contenido está también inlineado dentro de `instructions.md` (que es lo que termina compilado en el prompt del agente). Acá se repite a propósito — no es la misma "regla de negocio" en dos lugares que puedan desincronizarse por error (el caso que DRY prohíbe, ver [`clean-code/dry-kiss-yagni.md`](../../../../clean-code/dry-kiss-yagni.md)), es la misma tabla de referencia servida a dos consumidores distintos (el prompt del agente vs. una herramienta externa que la lea directo). Si esta tabla cambia, actualizar ambos lugares en el mismo commit.
+> Nota de duplicación deliberada: el mismo contenido está también inlineado dentro de `instructions.md` (que es lo que termina compilado en el prompt del agente). Acá se repite a propósito — no es la misma "regla de negocio" en dos lugares que puedan desincronizarse por error (el caso que DRY prohíbe, ver [`clean-code/dry-kiss-yagni.md`](../../../../../clean-code/dry-kiss-yagni.md)), es la misma tabla de referencia servida a dos consumidores distintos (el prompt del agente vs. una herramienta externa que la lea directo). Si esta tabla cambia, actualizar ambos lugares en el mismo commit.
 
 | # | Riesgo | Qué buscar en el código | Mitigación esperada |
 |---|---|---|---|

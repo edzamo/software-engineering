@@ -65,4 +65,4 @@ develop (integración, "next release")
 - Un tag que no sigue SemVer, o un release sin tag.
 - Un PR que la propia persona intenta auto-aprobar o mergear sin que otra persona lo haya revisado.
 
-Relacionado: [`software-architectures/`](../../../software-architectures) para cómo se organiza el código dentro de cada microservicio que este flujo despliega, y [`clean-code/code-review.md`](../../../clean-code/code-review.md) para el checklist de qué mirar en el Pull Request antes de aprobarlo.
+Relacionado: [`software-architectures/`](../../../../software-architectures) para cómo se organiza el código dentro de cada microservicio que este flujo despliega, y [`clean-code/code-review.md`](../../../../clean-code/code-review.md) para el checklist de qué mirar en el Pull Request antes de aprobarlo.

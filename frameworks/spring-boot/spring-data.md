@@ -85,7 +85,7 @@ Con `@ManyToOne(fetch = FetchType.LAZY)` (el default recomendado — `EAGER` tra
 |---|---|
 | `JOIN FETCH` en un `@Query` explícito (`SELECT a FROM AppointmentJpaEntity a JOIN FETCH a.patient WHERE ...`) | El caso general — trae todo en una sola query, sin cambiar el fetch type global de la entidad. |
 | `@EntityGraph(attributePaths = "patient")` sobre el método del repositorio | Alternativa declarativa a `JOIN FETCH` cuando no querés escribir JPQL a mano. |
-| Proyección DTO directa (`SELECT new com.x.PatientSummary(a.patient.id, a.patient.name) FROM ...`) | Cuando ni siquiera hace falta la entidad completa — trae solo los campos que el caso de uso necesita (conecta con CQRS nivel 1, ver [`ddd/cqrs.md`](../ddd/cqrs.md)). |
+| Proyección DTO directa (`SELECT new com.x.PatientSummary(a.patient.id, a.patient.name) FROM ...`) | Cuando ni siquiera hace falta la entidad completa — trae solo los campos que el caso de uso necesita (conecta con CQRS nivel 1, ver [`ddd/cqrs.md`](../../ddd/cqrs.md)). |
 | Batch fetching (`@BatchSize` o `spring.jpa.properties.hibernate.default_batch_fetch_size`) | Cuando no se puede tocar la query (código de terceros) — agrupa los N+1 en unas pocas queries `IN (...)`, no lo elimina del todo pero lo mitiga. |
 
 ## `@Transactional` — límites y la trampa en reactivo
@@ -100,7 +100,7 @@ public void confirmAndNotify(UUID appointmentId) {
 }
 ```
 
-- `@Transactional` envuelve el método en una transacción **de base de datos** — un fallo después de `repository.save(...)` (ej. `notificationClient.send` lanzando excepción) sí revierte el `save`, porque el commit ocurre al final del método, no línea por línea. Pero si `notificationClient` es una llamada HTTP a otro servicio, esa llamada **no** es transaccional ni se revierte — solo lo que tocó la base de datos. Mezclar I/O externo dentro de un método `@Transactional` es una señal de diseño a revisar: mejor publicar un Domain Event después del commit (`@TransactionalEventListener(phase = AFTER_COMMIT)`) y que la notificación ocurra fuera de la transacción de escritura (ver [`ddd/domain-events.md`](../ddd/domain-events.md)).
+- `@Transactional` envuelve el método en una transacción **de base de datos** — un fallo después de `repository.save(...)` (ej. `notificationClient.send` lanzando excepción) sí revierte el `save`, porque el commit ocurre al final del método, no línea por línea. Pero si `notificationClient` es una llamada HTTP a otro servicio, esa llamada **no** es transaccional ni se revierte — solo lo que tocó la base de datos. Mezclar I/O externo dentro de un método `@Transactional` es una señal de diseño a revisar: mejor publicar un Domain Event después del commit (`@TransactionalEventListener(phase = AFTER_COMMIT)`) y que la notificación ocurra fuera de la transacción de escritura (ver [`ddd/domain-events.md`](../../ddd/domain-events.md)).
 - `@Transactional` depende de `ThreadLocal` para propagar el contexto transaccional — **incompatible con WebFlux/Reactor**, donde una cadena `Mono`/`Flux` puede saltar entre hilos del event loop. Para transacciones reactivas se usa `TransactionalOperator`:
 
 ```java
@@ -157,4 +157,4 @@ Requiere `@EnableJpaAuditing` (o `@EnableR2dbcAuditing` en la variante reactiva)
 - [Spring Data R2DBC — Reference Documentation](https://docs.spring.io/spring-data/r2dbc/reference/) — modelo reactivo, limitaciones frente a JPA.
 - [Hibernate ORM — User Guide](https://hibernate.org/orm/documentation/) — detalle de fetch strategies y el problema N+1.
 
-Relacionado: [`fundamentals.md`](fundamentals.md) para JPA vs Hibernate y qué es una `@Entity`, [`webflux.md`](webflux.md) para el contexto reactivo donde aplica R2DBC, [`ddd/repository-pattern.md`](../ddd/repository-pattern.md) para la diferencia entre este repositorio técnico (Spring Data) y el Repository de DDD (puerto que persiste un Aggregate completo), y [`ddd/cqrs.md`](../ddd/cqrs.md) para las proyecciones DTO como alternativa al N+1.
+Relacionado: [`fundamentals.md`](fundamentals.md) para JPA vs Hibernate y qué es una `@Entity`, [`webflux.md`](webflux.md) para el contexto reactivo donde aplica R2DBC, [`ddd/repository-pattern.md`](../../ddd/repository-pattern.md) para la diferencia entre este repositorio técnico (Spring Data) y el Repository de DDD (puerto que persiste un Aggregate completo), y [`ddd/cqrs.md`](../../ddd/cqrs.md) para las proyecciones DTO como alternativa al N+1.

@@ -11,9 +11,9 @@ graph TB
         WF["WebFlux<br/>WebClient, testing, seguridad,<br/>vs. Virtual Threads"]
         SD["Spring Data<br/>JPA + R2DBC, N+1,<br/>@Transactional, Specifications"]
         SB["Spring Batch<br/>Job/Step, chunk processing,<br/>skip/retry, partitioning"]
+        SEC["Spring Security<br/>SecurityFilterChain, OAuth2/JWT,<br/>method security"]
     end
     subgraph pendiente[" Pendiente "]
-        SEC["Spring Security"]
         CLOUD["Spring Cloud<br/>(config, gateway, discovery)"]
         TEST["Spring Boot Test<br/>(@SpringBootTest, Testcontainers)"]
         ACT["Actuator + Observabilidad"]
@@ -29,8 +29,8 @@ graph TB
 | **WebFlux** | [`webflux.md`](webflux.md) | Cómo se cablea Reactor como framework web dentro de Spring Boot: controllers vs endpoints funcionales, `WebClient`, `WebTestClient`, seguridad reactiva, y la decisión frente a Spring MVC + Virtual Threads (JEP 444). |
 | **Spring Data** | [`spring-data.md`](spring-data.md) | Repositorios generados por convención de nombre, `@Query`, Specifications, el problema N+1 y sus soluciones, `@Transactional` (y por qué no aplica igual en reactivo), Spring Data R2DBC. |
 | **Spring Batch** | [`spring-batch.md`](spring-batch.md) | Job/Step, chunk-oriented processing (Reader/Processor/Writer), `skip`/`retry`, reinicio ante fallo vía `JobRepository`, partitioning. |
-| Spring Security | ⏳ Pendiente | Autenticación/autorización, `SecurityFilterChain` vs `SecurityWebFilterChain`, OAuth2/JWT. |
-| Spring Cloud | ⏳ Pendiente | Config Server, API Gateway, service discovery — relevante para microservicios (ver [`microservices-patterns/`](../microservices-patterns)). |
+| **Spring Security** | [`security.md`](security.md) | Autenticación vs autorización, `SecurityFilterChain`, OAuth2 Resource Server (JWT/Auth0), method security (`@PreAuthorize`), password encoding, CORS. |
+| Spring Cloud | ⏳ Pendiente | Config Server, API Gateway, service discovery — relevante para microservicios (ver [`microservices-patterns/`](../../microservices-patterns)). |
 | Spring Boot Test | ⏳ Pendiente | `@SpringBootTest`, slices de test (`@WebFluxTest`, `@DataJpaTest`), Testcontainers. |
 | Actuator + Observabilidad | ⏳ Pendiente | Health checks, métricas, `/actuator`, integración con tracing distribuido. |
 
@@ -38,10 +38,10 @@ graph TB
 
 1. Empezá por [`fundamentals.md`](fundamentals.md) — resuelve las confusiones de vocabulario (Spring vs Spring Boot, JPA vs Hibernate) que todo lo demás asume resueltas.
 2. [`webflux.md`](webflux.md) y [`spring-data.md`](spring-data.md) se leen en cualquier orden — cubren proyectos satélite independientes entre sí (aunque se combinan en la variante reactiva: WebFlux + Spring Data R2DBC).
-3. [`spring-batch.md`](spring-batch.md) es el más aislado — solo hace falta cuando el problema es específicamente de procesamiento masivo, no de servir requests.
+3. [`spring-batch.md`](spring-batch.md) y [`security.md`](security.md) son los más aislados — Batch solo hace falta ante procesamiento masivo, Security se necesita en cualquier momento pero no depende de haber leído los otros primero.
 4. Los temas ⏳ se van a ir completando a medida que aparezcan en la práctica o en preparación de entrevista — mismo criterio que el resto del repo: nada de documentos teóricos sin un caso concreto detrás.
 
-Relacionado: [`reactive-programming/`](../reactive-programming) para el detalle de Project Reactor que [`webflux.md`](webflux.md) asume conocido, [`ddd/`](../ddd) para cómo modelar el dominio que estos frameworks terminan sirviendo/persistiendo, y [`software-architectures/hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (`@RestController`, `JpaRepository`, `@Entity`) dentro del layout de carpetas.
+Relacionado: [`reactive-programming/`](../../reactive-programming) para el detalle de Project Reactor que [`webflux.md`](webflux.md) asume conocido, [`ddd/`](../../ddd) para cómo modelar el dominio que estos frameworks terminan sirviendo/persistiendo, y [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (`@RestController`, `JpaRepository`, `@Entity`) dentro del layout de carpetas.
 
 ## Referencias
 

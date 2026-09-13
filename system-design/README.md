@@ -7,12 +7,14 @@ Conceptos y patrones de diseño de sistemas a gran escala — la parte de "arqui
 | # | Tema | Archivo | Estado |
 |---|---|---|---|
 | 1 | Escalar de 0 a millones de usuarios | [`01-scale-from-zero-to-millions.md`](01-scale-from-zero-to-millions.md) | ✅ |
-| 2 | Back-of-the-envelope estimation | — | ⏳ |
-| 3 | Diseño de un rate limiter | — | ⏳ |
-| 4 | Diseño de un sistema de notificaciones | — | ⏳ |
-| 5 | Diseño de un news feed / timeline | — | ⏳ |
-| 6 | Diseño de un acortador de URLs | — | ⏳ |
-| 7 | Casos de estudio reales (Netflix, Uber, Twitter, etc.) | — | ⏳ |
+| 2 | Bases de datos: SQL vs NoSQL, ACID vs CAP theorem | [`02-databases-sql-vs-nosql.md`](02-databases-sql-vs-nosql.md) | ✅ |
+| 3 | Estilos de API: REST vs GraphQL vs gRPC | [`03-api-styles.md`](03-api-styles.md) | ✅ |
+| 4 | Back-of-the-envelope estimation | — | ⏳ |
+| 5 | Diseño de un rate limiter | — | ⏳ |
+| 6 | Diseño de un sistema de notificaciones | — | ⏳ |
+| 7 | Diseño de un news feed / timeline | — | ⏳ |
+| 8 | Diseño de un acortador de URLs | — | ⏳ |
+| 9 | Casos de estudio reales (Netflix, Uber, Twitter, etc.) | — | ⏳ |
 
 ## Fuente
 

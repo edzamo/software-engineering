@@ -6,7 +6,7 @@ entrevista. Es la base sobre la que se apoyan las demás píldoras de esta
 carpeta — [`webflux.md`](webflux.md), [`spring-data.md`](spring-data.md),
 [`spring-batch.md`](spring-batch.md) — que profundizan cada proyecto
 satélite. Para el detalle de operadores de Reactor (`map`/`flatMap`, manejo
-de errores, `StepVerifier`) ver [`reactive-programming/`](../reactive-programming).
+de errores, `StepVerifier`) ver [`reactive-programming/`](../../reactive-programming).
 
 ## Mapa mental (de lo general a lo concreto)
 
@@ -76,7 +76,7 @@ arranca la aplicación).
 
 Los operadores de Reactor (`Mono`/`Flux`, `map` vs `flatMap`, manejo de
 errores, testing con `StepVerifier`) están en
-[`reactive-programming/`](../reactive-programming). Cómo se integra WebFlux
+[`reactive-programming/`](../../reactive-programming). Cómo se integra WebFlux
 específicamente con Spring Boot (`WebClient`, endpoints funcionales,
 `WebTestClient`, seguridad reactiva) está en [`webflux.md`](webflux.md).
 
@@ -118,13 +118,13 @@ public class OrderJpaEntity {
 
 **Ojo con la confusión de nombres:** "Entity" en JPA (mapeo objeto-relacional)
 **no es lo mismo** que "Entity" en DDD (identidad + ciclo de vida, ver
-[`ddd/entities-vs-value-objects.md`](../ddd/entities-vs-value-objects.md)).
+[`ddd/entities-vs-value-objects.md`](../../ddd/entities-vs-value-objects.md)).
 En una arquitectura hexagonal bien hecha, la Entidad de **dominio**
 (`Order`, sin anotaciones de framework) y la Entidad **JPA**
 (`OrderJpaEntity`, con `@Entity`/`@Table`/`@Column`) son **clases distintas**,
 mapeadas entre sí por un `Mapper` en el adaptador de persistencia — el
 dominio nunca debe saber que existe JPA/Hibernate. Ver
-[`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md#convención-de-paquetes-de-referencia)
+[`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md#convención-de-paquetes-de-referencia)
 para la convención `persistence/entity/` + `persistence/mapper/`.
 
 ### JPA/Hibernate vs R2DBC
@@ -166,4 +166,4 @@ auto-configuró con `--debug` al arrancar, o inspeccionando
 - [Hibernate ORM — User Guide](https://hibernate.org/orm/documentation/) — la implementación de referencia de JPA.
 - [Spring Data R2DBC — Reference Documentation](https://docs.spring.io/spring-data/r2dbc/reference/) — persistencia reactiva, sin JPA.
 
-Relacionado: [`webflux.md`](webflux.md) y [`spring-data.md`](spring-data.md) para el detalle de esos dos proyectos satélite, [`reactive-programming/`](../reactive-programming) para WebFlux/Reactor en profundidad, [`software-architectures/hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (entity/mapper/adapter) dentro de una arquitectura hexagonal, y [`ddd/`](../ddd) para la distinción Entity/Value Object del lado del dominio (no de JPA).
+Relacionado: [`webflux.md`](webflux.md) y [`spring-data.md`](spring-data.md) para el detalle de esos dos proyectos satélite, [`reactive-programming/`](../../reactive-programming) para WebFlux/Reactor en profundidad, [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (entity/mapper/adapter) dentro de una arquitectura hexagonal, y [`ddd/`](../../ddd) para la distinción Entity/Value Object del lado del dominio (no de JPA).

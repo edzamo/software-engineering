@@ -1,6 +1,6 @@
 # Spring WebFlux — cómo se usa Reactor dentro de Spring Boot
 
-Los operadores de Project Reactor (`Mono`/`Flux`, `map` vs `flatMap`, manejo de errores, `StepVerifier`) están cubiertos en profundidad en [`reactive-programming/`](../reactive-programming) — este documento asume ese contenido y se enfoca en lo que **Spring Boot agrega encima**: cómo se cablea WebFlux como framework web (controllers vs endpoints funcionales, `WebClient`, testing con `WebTestClient`, seguridad, y la decisión de arquitectura frente a Virtual Threads).
+Los operadores de Project Reactor (`Mono`/`Flux`, `map` vs `flatMap`, manejo de errores, `StepVerifier`) están cubiertos en profundidad en [`reactive-programming/`](../../reactive-programming) — este documento asume ese contenido y se enfoca en lo que **Spring Boot agrega encima**: cómo se cablea WebFlux como framework web (controllers vs endpoints funcionales, `WebClient`, testing con `WebTestClient`, seguridad, y la decisión de arquitectura frente a Virtual Threads).
 
 ## Anotado vs funcional — las dos formas de exponer un endpoint
 
@@ -39,7 +39,7 @@ WebClient inventoryClient(WebClient.Builder builder) {
 Errores comunes que un entrevistador senior espera que sepas señalar:
 
 - **`.block()` sobre el resultado de un `WebClient` dentro de un controller reactivo** — anula toda la ventaja de no bloquear el event loop de Netty. Si aparece, es porque alguien mezcló código bloqueante donde no correspondía (ver la nota de Virtual Threads más abajo).
-- **No configurar timeouts.** Sin un timeout explícito (`.responseTimeout(Duration.ofSeconds(3))` o vía `HttpClient` de Reactor Netty), una llamada colgada consume un canal de Netty indefinidamente. Combinar con `retryWhen(Retry.backoff(...))` — ver [`reactive-programming/`](../reactive-programming).
+- **No configurar timeouts.** Sin un timeout explícito (`.responseTimeout(Duration.ofSeconds(3))` o vía `HttpClient` de Reactor Netty), una llamada colgada consume un canal de Netty indefinidamente. Combinar con `retryWhen(Retry.backoff(...))` — ver [`reactive-programming/`](../../reactive-programming).
 - **No manejar `WebClientResponseException`** — un 4xx/5xx del downstream levanta esta excepción por defecto; sin un `onStatus(...)` o `onErrorMap`, se propaga como una excepción genérica de infraestructura en vez de una excepción de dominio legible.
 
 ## Manejo de errores — `@RestControllerAdvice` + `ProblemDetail` (RFC 7807)
@@ -81,7 +81,7 @@ class AppointmentControllerTest {
 }
 ```
 
-`StepVerifier` (ver [`reactive-programming/`](../reactive-programming)) testea el `Mono`/`Flux` que devuelve un *service*/*use case* directamente; `WebTestClient` testea el endpoint HTTP completo (serialización, status codes, headers) — son complementarios, no alternativas.
+`StepVerifier` (ver [`reactive-programming/`](../../reactive-programming)) testea el `Mono`/`Flux` que devuelve un *service*/*use case* directamente; `WebTestClient` testea el endpoint HTTP completo (serialización, status codes, headers) — son complementarios, no alternativas.
 
 ## Seguridad reactiva — `SecurityWebFilterChain`
 
@@ -112,7 +112,7 @@ Con Virtual Threads (Java 21, JEP 444) estable, Spring MVC dejó de ser automát
 | Backpressure | No nativo — cada request consume un Virtual Thread completo. | Nativo — `Flux` puede aplicar backpressure real al productor. |
 | Cuándo preferirlo | Equipos sin experiencia reactiva, código bloqueante existente (JPA/JDBC) que no vale la pena migrar. | Alto volumen con backpressure real necesario, o ya se tiene un stack 100% no bloqueante (R2DBC, WebClient) de punta a punta. |
 
-**No se combinan dentro del mismo pipeline**: activar Virtual Threads en un servidor Tomcat (`spring.threads.virtual.enabled=true`) no vuelve "gratis" bloquear dentro de un flujo `Mono`/`Flux` de WebFlux — BlockHound y las validaciones de no-bloqueo de Reactor no distinguen si el hilo subyacente es virtual o de plataforma; siguen marcando el `.block()` como violación. La elección se hace **una vez, a nivel de framework web** (MVC+VT o WebFlux), no se mezcla operador por operador. Detalle completo de esta decisión en [`ia-agentes/agent-harness/agents/java-reactive-dev/instructions.md`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md).
+**No se combinan dentro del mismo pipeline**: activar Virtual Threads en un servidor Tomcat (`spring.threads.virtual.enabled=true`) no vuelve "gratis" bloquear dentro de un flujo `Mono`/`Flux` de WebFlux — BlockHound y las validaciones de no-bloqueo de Reactor no distinguen si el hilo subyacente es virtual o de plataforma; siguen marcando el `.block()` como violación. La elección se hace **una vez, a nivel de framework web** (MVC+VT o WebFlux), no se mezcla operador por operador. Detalle completo de esta decisión en [`ia-agentes/agent-harness/agents/java-reactive-dev/instructions.md`](../../ia-agentes/agent-harness/agents/java-21-dev/instructions.md).
 
 ## Drills de repaso
 
@@ -128,4 +128,4 @@ Con Virtual Threads (Java 21, JEP 444) estable, Spring MVC dejó de ser automát
 - [Spring Framework — WebFlux Reference](https://docs.spring.io/spring-framework/reference/web/webflux.html) — modelo de programación, `WebClient`, testing.
 - [Spring Security — Reactive Applications](https://docs.spring.io/spring-security/reference/reactive/index.html) — `ServerHttpSecurity`, OAuth2 resource server reactivo.
 
-Relacionado: [`reactive-programming/`](../reactive-programming) para los operadores de Reactor en profundidad, [`fundamentals.md`](fundamentals.md) para la ubicación de WebFlux dentro del ecosistema Spring, y [`ia-agentes/agent-harness/agents/java-reactive-dev/instructions.md`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md) para la guía completa de reconciliación WebFlux vs. Virtual Threads.
+Relacionado: [`reactive-programming/`](../../reactive-programming) para los operadores de Reactor en profundidad, [`fundamentals.md`](fundamentals.md) para la ubicación de WebFlux dentro del ecosistema Spring, y [`ia-agentes/agent-harness/agents/java-reactive-dev/instructions.md`](../../ia-agentes/agent-harness/agents/java-21-dev/instructions.md) para la guía completa de reconciliación WebFlux vs. Virtual Threads.

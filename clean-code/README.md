@@ -12,6 +12,7 @@ graph TB
         DRY["DRY<br/>Don't Repeat Yourself"]
         KISS["KISS<br/>Keep It Simple, Stupid"]
         YAGNI["YAGNI<br/>You Aren't Gonna Need It"]
+        OCP["Law of Demeter<br/>Tell-Don't-Ask<br/>Hollywood Principle"]
     end
     subgraph practica[" Práctica "]
         CR["Code Review<br/>checklist"]
@@ -31,6 +32,7 @@ graph TB
 | Tema | Doc | Idea en una línea |
 |---|---|---|
 | DRY / KISS / YAGNI | [`dry-kiss-yagni.md`](dry-kiss-yagni.md) | Tres principios que, en conjunto, evitan tanto la duplicación como la sobre-ingeniería. |
+| Cómo se hablan los objetos | [`object-communication-principles.md`](object-communication-principles.md) | Law of Demeter, Tell-Don't-Ask y Hollywood Principle — tres formas de evitar que un objeto conozca de más la estructura/estado/flujo de otro. |
 | Code Review | [`code-review.md`](code-review.md) | Checklist concreto de qué mirar en un PR, más allá de "¿compila y pasan los tests?". |
 | SOLID | [`../solid-principles/`](../solid-principles) | Los 5 principios de diseño orientado a objetos — carpeta propia por tamaño. |
 

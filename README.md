@@ -10,7 +10,7 @@ Repositorio de estudio y repaso rápido para consolidar lo que un **Software Eng
 graph LR
     root["software-engineering"]
 
-    root --> oop["oop-desing/<br/>Fundamentos OOP"]
+    root --> oop["oop-design/<br/>Fundamentos OOP"]
     root --> javacore["java-core/<br/>Collections &amp; Streams"]
     root --> solid["solid-principles/<br/>Principios SOLID"]
     root --> cc["clean-code/<br/>DRY, KISS, YAGNI, code review"]
@@ -20,7 +20,7 @@ graph LR
     root --> arch["software-architectures/<br/>MVC, Clean, Onion, Hexagonal"]
     root --> sysdes["system-design/<br/>System Design"]
     root --> micro["microservices-patterns/<br/>Microservicios"]
-    root --> springboot["spring-boot/<br/>Spring / Spring Boot / JPA"]
+    root --> frameworks["frameworks/<br/>Spring Boot, NestJS"]
     root --> reactive["reactive-programming/<br/>Programación reactiva"]
     root --> aws["cloud-aws/<br/>AWS + LocalStack"]
     root --> tdd["tdd/<br/>TDD"]
@@ -36,8 +36,8 @@ graph LR
     arch --> sysdes
     sysdes --> micro
     arch --> micro
-    arch --> springboot
-    springboot --> reactive
+    arch --> frameworks
+    frameworks --> reactive
     micro --> reactive
     micro --> aws
     arch --> tdd
@@ -55,17 +55,17 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 
 | Carpeta | Tema | Estado | Contenido destacado |
 |---|---|---|---|
-| [`oop-desing/`](oop-desing) | Fundamentos OOP | ✅ Completo | Cohesión/acoplamiento, abstracción, encapsulamiento, descomposición, asociación, generalización — agnóstico de lenguaje. |
+| [`oop-design/`](oop-design) | Fundamentos OOP | ✅ Completo | Cohesión/acoplamiento, abstracción, encapsulamiento, descomposición, asociación, generalización — agnóstico de lenguaje. |
 | [`java-core/`](java-core) | Collections & Streams | ✅ Completo | Cheatsheet de `List`/`Map`/`Stream` (`groupingBy`, `merge`, `computeIfAbsent`, `flatMap`) con drills cronometrados. |
 | [`solid-principles/`](solid-principles) | Principios SOLID | ✅ Completo | Los 5 principios con diagramas "violación vs aplicado" y píldoras de repaso. |
-| [`clean-code/`](clean-code) | Clean Code | ✅ Completo | DRY, KISS, YAGNI y checklist de code review — los principios "chicos" que complementan SOLID. |
+| [`clean-code/`](clean-code) | Clean Code | ✅ Completo | DRY, KISS, YAGNI, Law of Demeter/Tell-Don't-Ask/Hollywood Principle y checklist de code review — los principios "chicos" que complementan SOLID. |
 | [`design-pattern/`](design-pattern) | Patrones de diseño (GoF) | ✅ Completo | Creacionales, estructurales y de comportamiento — los 22 patrones GoF documentados con ejemplo y "cuándo usarlo". |
-| [`ddd/`](ddd) | Domain-Driven Design | 🟡 En progreso | Entities vs Value Objects (`record` vs `class`), Aggregate Root, Rich vs Anemic Domain Model — con `Order` (coffee shop) y `Appointment` (citas médicas) como casos trabajados. Bounded Context, Repository, Domain Events pendientes. |
+| [`ddd/`](ddd) | Domain-Driven Design | ✅ Completo | Entities vs Value Objects, Aggregates, Repository pattern, Domain Events, Domain Service, Bounded Context, CQRS — con `Order` (coffee shop) y `Appointment` (citas médicas) como casos trabajados. |
 | [`uml/`](uml) | Notación UML | ✅ Completo | Cheatsheet de las 5 relaciones (herencia, asociación, agregación, composición, dependencia) con diagramas Mermaid. |
 | [`software-architectures/`](software-architectures) | Arquitecturas de software | 🟡 En progreso | MVC, Clean Architecture, Onion, Hexagonal (puertos/adaptadores) — comparadas entre sí. Mobile (MVVM/MVP/MVI) y web frontend (Flux/Redux) pendientes. |
-| [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios (load balancer, replicación, cache, CDN, sharding) — basado en ByteByteGo. Se va sumando módulo a módulo. |
+| [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios, SQL vs NoSQL (ACID/CAP theorem), REST vs GraphQL vs gRPC — basado en ByteByteGo. Se va sumando módulo a módulo. |
 | [`microservices-patterns/`](microservices-patterns) | Patrones de microservicios | ✅ Completo | Comunicación sync/async, resiliencia (circuit breaker, retry, bulkhead), consistencia (saga, outbox), API-first, OWASP. |
-| [`spring-boot/`](spring-boot) | Spring / Spring Boot / JPA | ✅ Completo | Framework vs Spring Framework vs Spring Boot, IoC/DI, MVC vs WebFlux, JPA vs Hibernate vs Entidad (JPA vs DDD), auto-configuración, anotaciones clave. |
+| [`frameworks/`](frameworks) | Spring Boot, NestJS | 🟡 En progreso | Un framework de backend por carpeta ([`spring-boot/`](frameworks/spring-boot), [`nestjs/`](frameworks/nestjs)): fundamentos, capa web, persistencia, seguridad — con tabla de analogía punto a punto entre ambos. |
 | [`reactive-programming/`](reactive-programming) | Programación reactiva | ✅ Completo | Mono/Flux, `map` vs `flatMap`, manejo de errores reactivo, R2DBC vs JPA, testing con StepVerifier. |
 | [`cloud-aws/`](cloud-aws) | Cloud (AWS) | ✅ Completo | Servicios AWS clave para un backend Java + cómo practicar con LocalStack (sin tarjeta ni cuenta real). |
 | [`tdd/`](tdd) | TDD | ✅ Completo | Ciclo red-green-refactor (diagrama de estados), pirámide de testing, patrón AAA. |

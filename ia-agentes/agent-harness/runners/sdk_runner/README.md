@@ -1,6 +1,6 @@
 # runners/sdk_runner/ — reservado, no implementado (a propósito)
 
-Esta carpeta existe en la estructura para dejar explícito **dónde iría** un segundo runner si algún día hace falta correr estos mismos agentes fuera de Claude Code (por ejemplo, un pipeline de CI que invoque el Anthropic SDK directo, sin la CLI de Claude Code disponible). Hoy no hay nada acá porque no hay un caso de uso real que lo necesite — YAGNI aplicado a la propia infraestructura de agentes (ver [`clean-code/dry-kiss-yagni.md`](../../../clean-code/dry-kiss-yagni.md)).
+Esta carpeta existe en la estructura para dejar explícito **dónde iría** un segundo runner si algún día hace falta correr estos mismos agentes fuera de Claude Code (por ejemplo, un pipeline de CI que invoque el Anthropic SDK directo, sin la CLI de Claude Code disponible). Hoy no hay nada acá porque no hay un caso de uso real que lo necesite — YAGNI aplicado a la propia infraestructura de agentes (ver [`clean-code/dry-kiss-yagni.md`](../../../../clean-code/dry-kiss-yagni.md)).
 
 ## Por qué no un `loop.py` propio
 

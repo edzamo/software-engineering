@@ -151,11 +151,11 @@ Preguntas de base que un entrevistador Senior espera contestadas sin dudar, incl
 - **JPA vs Hibernate:** JPA es la **especificación** (`@Entity`, `EntityManager`); Hibernate es la **implementación** más usada de esa especificación. Spring Data JPA agrega repositorios (`JpaRepository<T,ID>`) encima de ambos.
 - **JPA/Hibernate es bloqueante** (JDBC por debajo) — nunca dentro de un pipeline WebFlux. Para reactivo: **Spring Data R2DBC** (API distinta, sin lazy-loading ni caché de 1er nivel).
 - **Entidad JPA ≠ Entidad DDD:** una `@Entity` de JPA mapea una tabla; una Entidad de DDD es identidad+ciclo de vida en el dominio. En hexagonal son **clases distintas** (`OrderJpaEntity` vs `Order`), unidas por un `Mapper` en el adaptador — el dominio nunca importa `jakarta.persistence`.
-- **El problema N+1** — acceder a una relación `@ManyToOne(fetch = LAZY)` dentro de un loop dispara una query por fila. Se resuelve con `JOIN FETCH`, `@EntityGraph`, o una proyección DTO directa — nunca cambiando el fetch type a `EAGER` por defecto (trae de más en los casos que no lo necesitan). Detalle en [`spring-boot/spring-data.md`](../../spring-boot/spring-data.md).
+- **El problema N+1** — acceder a una relación `@ManyToOne(fetch = LAZY)` dentro de un loop dispara una query por fila. Se resuelve con `JOIN FETCH`, `@EntityGraph`, o una proyección DTO directa — nunca cambiando el fetch type a `EAGER` por defecto (trae de más en los casos que no lo necesitan). Detalle en [`spring-boot/spring-data.md`](../../frameworks/spring-boot/spring-data.md).
 - **`@Transactional` no funciona en WebFlux/R2DBC** — depende de `ThreadLocal`, incompatible con un pipeline que salta de hilo en el event loop. Se usa `TransactionalOperator` en su lugar.
-- **`WebClient` sin timeout configurado** es la trampa más común en código reactivo real — una llamada colgada consume un canal de Netty indefinidamente. Detalle de `WebClient`, `WebTestClient` y seguridad reactiva (`ServerHttpSecurity`) en [`spring-boot/webflux.md`](../../spring-boot/webflux.md).
+- **`WebClient` sin timeout configurado** es la trampa más común en código reactivo real — una llamada colgada consume un canal de Netty indefinidamente. Detalle de `WebClient`, `WebTestClient` y seguridad reactiva (`ServerHttpSecurity`) en [`spring-boot/webflux.md`](../../frameworks/spring-boot/webflux.md).
 
-Detalle completo con tabla comparativa, anotaciones clave y diagrama del ecosistema en [`spring-boot/`](../../spring-boot) (incluye también Spring Batch — Job/Step, chunk processing — por si sale como tema de procesamiento masivo).
+Detalle completo con tabla comparativa, anotaciones clave y diagrama del ecosistema en [`spring-boot/`](../../frameworks/spring-boot) (incluye también Spring Batch — Job/Step, chunk processing — por si sale como tema de procesamiento masivo).
 
 ---
 
@@ -170,6 +170,7 @@ La descripción del rol pide explícitamente promover DDD como estándar (ver [`
 - **Domain Service** — una regla que cruza dos Aggregates y no tiene un dueño natural entre las Entities existentes (ej. `transferMoney(from, to, amount)`). No confundir con el Application Service: el Domain Service decide reglas de negocio sin I/O; el Application Service orquesta (Repository, transacción) sin decidir reglas.
 - **Bounded Context** — la misma palabra (`Patient`) puede significar algo distinto en dos contextos (Citas Médicas vs Facturación) — es la frontera donde el modelo y el vocabulario son consistentes, no una capa técnica.
 - **CQRS** — separar el modelo de escritura (Aggregate rico, con invariantes) del modelo de lectura (proyección plana, un `record` sin comportamiento). Empezar siempre por el nivel más simple (separar puertos/queries en el código) antes de pensar en bases de datos de lectura separadas.
+- **Event Sourcing** — no confundir con "publicar Domain Events": acá el evento **es** la fuente de verdad (se persiste la secuencia completa, el estado se reconstruye con replay), no un mensaje adicional después de guardar el estado. Casi siempre viaja junto a CQRS nivel 3. Se justifica solo cuando el historial de cambios es en sí un requisito de negocio (auditoría, sistemas clínicos/financieros) — no por defecto.
 
 > **Frase para repetir en la entrevista:** "en el día a día, el patrón hexagonal me da la ubicación en el código (`domain`/`application`/`infrastructure`); DDD me da el criterio de **qué va dentro de `domain`** — cuándo algo es una Entity, cuándo un Value Object, y dónde trazar el límite de un Aggregate."
 
@@ -208,7 +209,7 @@ com.saludtools.<servicio>/
 - Una excepción que representa un **hecho de negocio** (ej. "no existe", "transición inválida") vive en `domain`, no en `application/exception` — no es un detalle de cableado. Se traduce a HTTP en un `@RestControllerAdvice` centralizado devolviendo `ProblemDetail`.
 - DTOs de `rest`/`client` nunca cruzan a `domain` — se mapean en el adaptador. Nunca serializar la entidad de dominio directo en la respuesta HTTP.
 
-> **Nota JPA vs R2DBC:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta. Diferencia JPA/Hibernate/Entidad explicada en [`spring-boot/`](../../spring-boot).
+> **Nota JPA vs R2DBC:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta. Diferencia JPA/Hibernate/Entidad explicada en [`spring-boot/`](../../frameworks/spring-boot).
 
 > **Validado en la práctica (2026-09-13):** este patrón exacto se implementó y probó end-to-end con `curl` real en dos dominios distintos (citas médicas y pedidos de café) en un playground de arquitectura hexagonal — incluyendo el hallazgo real de que un `Mono<T>` vacío en WebFlux devuelve `200` con body vacío por defecto, no `404`; hay que traducirlo explícitamente con `.switchIfEmpty(Mono.error(...))` en el adapter web.
 
@@ -313,10 +314,10 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 
 | Tema | Carpeta |
 |---|---|
-| Spring / Spring Boot / JPA / Hibernate (fundamentos) | [`spring-boot/fundamentals.md`](../../spring-boot/fundamentals.md) |
-| WebFlux dentro de Spring Boot (`WebClient`, testing, seguridad, vs. Virtual Threads) | [`spring-boot/webflux.md`](../../spring-boot/webflux.md) |
-| Spring Data (repositorios, N+1, `@Transactional`, R2DBC) | [`spring-boot/spring-data.md`](../../spring-boot/spring-data.md) |
-| Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../spring-boot/spring-batch.md) |
+| Spring / Spring Boot / JPA / Hibernate (fundamentos) | [`spring-boot/fundamentals.md`](../../frameworks/spring-boot/fundamentals.md) |
+| WebFlux dentro de Spring Boot (`WebClient`, testing, seguridad, vs. Virtual Threads) | [`spring-boot/webflux.md`](../../frameworks/spring-boot/webflux.md) |
+| Spring Data (repositorios, N+1, `@Transactional`, R2DBC) | [`spring-boot/spring-data.md`](../../frameworks/spring-boot/spring-data.md) |
+| Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../frameworks/spring-boot/spring-batch.md) |
 | DDD (Entities/VO, Aggregates, Repository, Domain Events/Service, Bounded Context, CQRS) | [`ddd/`](../../ddd) |
 | Mono/Flux, map vs flatMap, manejo de errores reactivo | [`reactive-programming/`](../../reactive-programming) |
 | Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../microservices-patterns) |
