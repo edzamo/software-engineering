@@ -2,6 +2,8 @@
 
 Apuntes de repaso sobre Project Reactor y Spring WebFlux — la parte que más rápido se oxida si no se usa seguido, porque las decisiones (`map` vs `flatMap`, qué operador de error usar) dependen de reconocer el patrón, no de memoria pura.
 
+> Este documento cubre `map`/`flatMap`, errores y testing. El resto del catálogo — creación (`fromCallable`, `justOrEmpty`), combinación (`zip`), secuenciación (`then`/`thenReturn`), propagación de contexto (`deferContextual`) y side-effects de logging (`doOnNext`/`doOnSuccess`) — está en [`reactive-operators-decision-guide.md`](reactive-operators-decision-guide.md), con qué tan frecuente es cada operador en microservicios reactivos reales.
+
 ## Idea central
 
 ```mermaid
@@ -95,7 +97,7 @@ StepVerifier.create(useCase.process(invalidRequest))
 | 7 min | Explicá en voz alta, con un ejemplo de cada uno, la diferencia entre `map` y `flatMap` — como si se lo explicaras a alguien no técnico. |
 | 8 min | Test con `StepVerifier` que verifique que un `Mono` propaga una excepción de dominio cuando el `WebClient` simulado falla. |
 
-Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para dónde encaja este código dentro de la arquitectura, y [`microservices-patterns/`](../microservices-patterns) para cómo se combina con resiliencia entre servicios.
+Relacionado: [`reactive-operators-decision-guide.md`](reactive-operators-decision-guide.md) para el catálogo completo de creación/combinación/secuenciación/contexto, [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para dónde encaja este código dentro de la arquitectura, y [`microservices-patterns/`](../microservices-patterns) para cómo se combina con resiliencia entre servicios.
 
 ## Referencias
 

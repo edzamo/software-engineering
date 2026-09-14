@@ -16,6 +16,83 @@ Contacto de proceso: Ani (reclutadora). Detalle de fit, logística y entregables
 
 ---
 
+## 00 · Plan de estudio — qué hacer con el tiempo que queda (hoy lunes, entrevista martes)
+
+Ya no queda tiempo para "seguir leyendo teoría nueva" — todo lo de abajo (01-06) ya está documentado y probado. Lo que falta es **priorizar** y **practicar en voz alta**, no acumular más lectura.
+
+### La ansiedad real que hay que resolver primero: "casi todo el código lo hace la IA"
+
+Eso es correcto, y es exactamente lo que SaludTools espera de un Senior en 2026 — no te van a medir por velocidad de tipeo. Lo que un entrevistador Senior evalúa hoy, con o sin IA generando el código, son 3 cosas puntuales:
+
+1. **Criterio de arquitectura** — ¿dónde va esta lógica? (`domain` vs `application` vs `infrastructure`), no "¿sabés la sintaxis de memoria?".
+2. **Explicar el *por qué*, no solo mostrar que funciona** — si la IA te sugiere un `flatMap`, ¿sabés decir por qué ahí y no un `map`? Si sugiere `Mono.just(archivo.leer())`, ¿detectás que está mal y por qué?
+3. **Revisar y corregir lo que la IA propone, en voz alta** — es literalmente el flujo que ya practicaste con los agentes (`hexagonal-architect` → `tdd-reviewer` → `spring-boot-webflux-dev`, ver sección 07). No es una habilidad nueva que te falte: es la que ya construiste sin llamarla así.
+
+**Guion corto si preguntan directamente "¿cómo usás la IA?":** *"La uso para el primer borrador — el esqueleto, el boilerplate, un test inicial — pero reviso cada sugerencia contra las reglas de la arquitectura antes de aceptarla: si mete lógica de negocio en el controller, si usa `map` donde debería ir `flatMap`, si el `Mono` puede terminar vacío sin manejarlo. La IA acelera el primer paso, el criterio de por qué algo está bien sigue siendo mío."*
+
+### Las 2 formas que puede tomar el ejercicio — un guion para cada una
+
+No sabés cuál te va a tocar, así que preparate para las dos con una apertura ya decidida (no improvisada):
+
+| Si es... | Tu apertura (primeros 2-3 min, en voz alta) |
+|---|---|
+| **"Implementá esto"** (código real, en tu IDE, con o sin autocomplete permitido) | 1) Repetí el requerimiento con tus palabras para confirmar que entendiste. 2) Anunciá el esqueleto hexagonal antes de tipear una línea (`domain`/`application`/`infrastructure`, ver sección 04). 3) Empezá por el test que falla (TDD, sección 05), no por la implementación. 4) Si usás autocomplete/IA, verbalizá por qué aceptás o corregís cada sugerencia relevante (esto es lo que más pesa, ver arriba). |
+| **"Diseñemos un sistema"** (arquitectura, pizarra o con Claude ahí mismo) | 1) Preguntá 2-3 cosas antes de dibujar nada: volumen esperado, qué dato es crítico que nunca se pierda (consistencia fuerte vs eventual), quién más consume esto. 2) Dibujá el hexágono + los límites de microservicio, no el detalle de clases. 3) Nombrá 2-3 alternativas reales para cada decisión (SQL vs NoSQL, sync vs async — ver [`system-design/02-databases-sql-vs-nosql.md`](../../system-design/02-databases-sql-vs-nosql.md) y [`microservices-patterns/`](../../microservices-patterns)) y cerrá con "para este caso, con este volumen/equipo, elijo X porque...". |
+
+### SaludTools es una startup — que se note en cómo respondés
+
+No es un banco ni una corporación con comités de arquitectura — es una startup HealthTech. Priorizá simplicidad sobre ceremonia en cualquier respuesta de diseño: si te dan a elegir, defendé la opción que resuelve el problema **hoy** sin sobre-ingeniería (mismo criterio YAGNI de [`clean-code/`](../../clean-code)), y mencionalo explícitamente — "en una startup, agregaría esto solo cuando el volumen real lo justifique, no antes" es una respuesta de nivel senior, no una excusa.
+
+### Bloques de estudio para hoy (en orden, con tiempo asignado)
+
+| Bloque | Tiempo | Qué hacer |
+|---|---|---|
+| 1 · Simulacro completo | 45-60 min | Corré el flujo de la sección 07 de punta a punta con un dominio **nuevo** que no hayas usado antes (ni citas médicas ni café — inventá uno de SaludTools, ej. "seguimiento de signos vitales"). Cronometrado. Es la práctica de mayor impacto de todas. |
+| 2 · Operadores reactivos en voz alta | 25-30 min | Repasá [`reactive-operators-decision-guide.md`](../../reactive-programming/reactive-operators-decision-guide.md) — `map`/`flatMap`, `switchIfEmpty`, manejo de errores. Explicá cada uno en voz alta como si se lo dijeras a alguien no técnico, sin mirar el ejemplo. |
+| 3 · Vocabulario DDD sin mirar | 15-20 min | Tapá la sección 03.6 y decí de memoria: Entity vs VO, Aggregate, Repository pattern, Domain Event, Bounded Context — una frase cada uno. |
+| 4 · Fit y logística | 15-20 min | Repasá [`fit-y-liderazgo.md`](fit-y-liderazgo.md) — tené listo un ejemplo propio por cada fila de responsabilidades, y la respuesta a "por qué SaludTools/por qué salud". |
+| 5 · Sanity check de entorno | 10 min | Confirmá que el IDE, JDK 21 y (si aplica) LocalStack arrancan sin fricción — no aprendas nada nuevo de AWS hoy, solo verificá que lo que ya sabés arranca. |
+
+**No** le metas tiempo nuevo a temas que no dominás de antes (ej. Spring Batch, Event Sourcing a fondo) — la ganancia marginal de estudiarlos hoy es baja comparada con practicar el flujo completo del bloque 1.
+
+---
+
+## 00.5 · Vocabulario para un simulador tipo "Head of Engineering" (ADRs, HL7/FHIR, gobierno técnico)
+
+Si usás un prompt de simulación de entrevista (4 bloques: arquitectura/stack, gobierno técnico con ADRs, deuda técnica/producción, liderazgo/HL7-FHIR), esto es lo que el repo **no** cubría todavía porque nunca lo necesitamos hasta ahora — es la parte específica de SaludTools/HealthTech, no repaso general.
+
+### ADR (Architecture Decision Record) — Bloque 2
+
+Un ADR es un documento corto que registra **una** decisión de arquitectura: el contexto, las opciones consideradas, la elegida y por qué. No es diseño detallado, es trazabilidad de decisiones para que en 6 meses alguien entienda el "por qué" sin preguntarte a vos.
+
+Formato mínimo (memorizable):
+1. **Contexto** — qué problema forzó la decisión.
+2. **Opciones consideradas** — mínimo 2, con trade-offs reales (no una "correcta" y una de relleno).
+3. **Decisión** — la elegida, en una frase.
+4. **Consecuencias** — qué se gana y qué se sacrifica (deuda técnica aceptada a propósito).
+
+Ejemplo hablado (adaptalo en la entrevista a lo que te pregunten):
+> "Para el envío de eventos de facturación electrónica, documenté un ADR: contexto era necesidad de desacoplar la generación de RIPS del flujo síncrono de la API; opciones eran SQS (simple, manejado, at-least-once) vs. Kafka (retención/replay, pero más ceremonia operativa para el tamaño del equipo); elegí SQS porque el volumen y el equipo no justificaban Kafka todavía — lo documenté como decisión revisable si el volumen crece 10x."
+
+### HL7 / FHIR — Bloque 4 (interoperabilidad en salud)
+
+No hace falta ser experto en un día, pero sí poder hablar con criterio 60 segundos:
+- **HL7 v2** — el estándar más viejo y todavía dominante en LATAM para mensajería entre sistemas de salud (admisión, resultados de labs) — mensajes tipo texto delimitado (`ADT`, `ORU`), no JSON.
+- **FHIR** (Fast Healthcare Interoperability Resources) — el estándar moderno, basado en recursos REST/JSON (`Patient`, `Encounter`, `Observation`, `Bundle`). Es lo que se usa si SaludTools expone o consume API-first con otros sistemas (labs, IPS, EPS).
+- **Por qué importa para el rol**: SaludTools integra con terceros (clínicas, labs, entidades regulatorias — RIPS). La pregunta real no es "¿conocés el estándar al detalle?" sino "¿entendés que la interoperabilidad médica tiene reglas de formato y regulación que no podés inventar libremente, a diferencia de una API interna?". Respuesta segura: *"No he implementado FHIR en profundidad, pero entiendo el modelo de recursos REST y la razón regulatoria detrás — lo abordaría revisando la spec del recurso específico antes de diseñar la integración, no asumiendo un formato propio."*
+
+### Deuda técnica y producción sin frenar el negocio — Bloque 3
+
+- **Refactor sin detener el negocio**: strangler fig (reemplazar módulo por módulo detrás de la misma interfaz), feature flags para activar el código nuevo gradualmente, y siempre con el módulo viejo corriendo en paralelo hasta validar en producción real.
+- **Observabilidad mínima que hay que nombrar**: logs estructurados + métricas (los "golden signals": latencia, tráfico, errores, saturación) + tracing distribuido si hay microservicios. Sin esto, "reducir deuda técnica" no se puede medir.
+- **Gestión de incidentes**: postmortem sin culpa (blameless) enfocado en la causa raíz del sistema, no en quién lo escribió — es la respuesta que un Head of Engineering espera de alguien que ya lideró equipos.
+
+### Trade-offs escalabilidad vs. costo vs. time-to-market — Bloque 2
+
+Heurística para responder cualquier pregunta de este tipo: *"la decisión correcta depende del volumen y la etapa de la empresa, no de la solución más elegante — en una startup en crecimiento, prefiero la opción más simple que no me bloquee escalar después, y documento en el ADR cuándo revisarla."* Es la misma idea que ya usás en la sección 00 sobre YAGNI en SaludTools — reutilizala acá.
+
+---
+
 ## 01 · Programación reactiva
 
 Lo más probable es que el diferenciador de la entrevista pase por acá. Objetivo: no bloquear el event loop, nunca.
@@ -305,6 +382,8 @@ Google Meet, pantalla compartida, sin plataforma especial — el entorno lo llev
 - ¿Cómo es el proceso de code review y quién define estándares hoy?
 - ¿Qué tan seguido pasan cosas en las guardias — volumen real de incidentes?
 - ¿Cómo se toman las decisiones de arquitectura (ADRs, comités, o más orgánico)?
+- Siendo una startup: ¿cómo balancean deuda técnica vs. velocidad de entrega cuando hay presión de negocio? (muestra que entendés el contexto, no solo arquitectura en abstracto)
+- ¿Qué tan integrado está el uso de IA (Claude Code, Copilot, etc.) en el flujo del equipo hoy?
 
 ---
 
