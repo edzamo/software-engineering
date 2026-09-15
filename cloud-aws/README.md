@@ -31,26 +31,59 @@ flowchart LR
 
 No es "cuál es mejor" — es cuánta responsabilidad operativa querés asumir vos vs. delegarle a Amazon. Un mismo proyecto puede mezclar los tres (algunos endpoints en Lambda, otros en ECS) detrás del mismo API Gateway.
 
+### Capa de arquitectura tradicional → servicio AWS
+
+La forma más rápida de no quedarte en blanco dibujando: pensá primero las capas de **cualquier** system design (con o sin AWS), y recién después ponele el nombre de AWS a cada una.
+
+| Capa (system design clásico) | Servicio AWS | Para qué |
+|---|---|---|
+| Cliente (mobile/web) | — | Origen del tráfico. |
+| CDN | `CloudFront` | Cachea contenido estático cerca del usuario — reduce latencia, saca carga del backend. |
+| API Gateway | `API Gateway` | Auth, rate limiting, y ruteo a la capa de cómputo correcta. |
+| Autenticación de usuarios | `Cognito` | Login/signup, tokens JWT, MFA, social login — **no confundir con IAM** (ver tabla abajo). |
+| Load Balancer | `ALB`/`NLB` | Reparte tráfico entre instancias del cómputo. |
+| Caching | `ElastiCache` (Redis/Memcached) | Evita pegarle a la DB en cada request — sesiones, resultados de queries frecuentes. |
+| Cómputo | `EC2`/`ECS`/`Lambda` | Ver espectro de control/responsabilidad arriba. |
+| Datos | `RDS`/`DynamoDB` | Ver tabla de categorías arriba. |
+| Archivos | `S3` | Objetos, no queries. |
+| Comunicación async | `SQS`/`SNS`/`EventBridge` | Desacoplar servicios entre sí. |
+| Red privada | `VPC` | Aísla el cómputo y las bases de datos de acceso público directo. |
+
+**`Cognito` vs `IAM` — la confusión típica de entrevista:**
+
+| | `Cognito` | `IAM` |
+|---|---|---|
+| Autentica a | Usuarios finales de tu app (el cliente que hace login). | Servicios/recursos de AWS entre sí (tu EC2 accediendo a S3, por ejemplo). |
+| Devuelve | Tokens JWT que tu API valida. | Roles/permisos que la infraestructura usa internamente. |
+| Ejemplo real | Un usuario de la app inicia sesión → Cognito valida credenciales → emite JWT. | Tu servicio en ECS necesita leer un bucket S3 → asume un IAM Role con ese permiso, sin credenciales hardcodeadas. |
+
 ### Ejemplo de system design — la pregunta típica de entrevista
 
 ```mermaid
 flowchart TB
-    Client["Cliente"] --> APIGW["API Gateway<br/>(auth, rate limiting, ruteo)"]
-    APIGW --> VPC
+    Mobile["App móvil"] --> CDN
+    Web["Web"] --> CDN
+    CDN["CloudFront (CDN)<br/>contenido estático"] --> APIGW["API Gateway<br/>auth, rate limiting, ruteo"]
+    APIGW -.valida token.-> Cognito["Cognito<br/>autenticación de usuarios"]
+    APIGW --> ALB["Load Balancer (ALB)"]
+    ALB --> Cache{"¿En cache?"}
+    Cache -- "Sí" --> Redis["ElastiCache (Redis)"]
+    Cache -- "No, sigue" --> VPC
 
     subgraph VPC[" VPC — red privada "]
         Compute["EC2 / ECS<br/>(cómputo)"]
         RDS["RDS<br/>(datos transaccionales)"]
-        Dynamo["DynamoDB<br/>(datos de alta lectura, ej. sesiones)"]
+        Dynamo["DynamoDB<br/>(datos de alta lectura)"]
         Compute --> RDS
         Compute --> Dynamo
+        Compute -.escribe/lee.-> Redis
     end
 
     Compute --> S3["S3<br/>(archivos)"]
-    Compute --> SQS["SQS/SNS/EventBridge<br/>(comunicación async entre servicios)"]
+    Compute --> SQS["SQS/SNS/EventBridge<br/>(comunicación async)"]
 ```
 
-**Guion para explicarlo en voz alta:** "el cliente entra por API Gateway, que autentica y rutea a mi capa de cómputo dentro de una VPC — ahí decido EC2/ECS según cuánto control necesito. Los datos transaccionales van a RDS, y si hay un acceso de altísima frecuencia y baja latencia (como sesiones) lo separo a DynamoDB para no sobrecargar la base relacional. Los archivos van a S3, y la comunicación entre servicios (para no acoplarlos directo) va por SQS, SNS o EventBridge según necesite cola, broadcast, o un bus de eventos."
+**Guion para explicarlo en voz alta:** "el cliente (mobile/web) entra por CloudFront para contenido estático, y por API Gateway para la API — ahí valido el token contra Cognito y rate-limiteo. El Load Balancer reparte a mi capa de cómputo, pero antes reviso ElastiCache para no pegarle a la base si el dato ya está cacheado. Adentro de la VPC, el cómputo (EC2 o ECS, según cuánto control necesito) habla con RDS para datos transaccionales y DynamoDB para accesos de alta frecuencia. Los archivos van a S3, y la comunicación entre servicios va por SQS/SNS/EventBridge para no acoplarlos directo."
 
 ## Servicios core
 
@@ -99,7 +132,11 @@ graph TB
 | `Lambda` | Función serverless — útil para tareas puntuales disparadas por un evento S3/SQS. |
 | `ECS/Fargate` | Cómo se despliega en producción un contenedor Spring Boot — sin gestionar servidores. |
 | `Secrets Manager` | Credenciales de BD y API keys — nunca hardcodeadas ni en `application.properties`. |
-| `IAM` | Roles y permisos — un servicio nunca usa credenciales de usuario, usa un role con permisos mínimos. |
+| `IAM` | Roles y permisos entre servicios/recursos AWS — no confundir con `Cognito` (ver tabla de comparación arriba). |
+| `CloudFront` | CDN — cachea contenido estático (assets, imágenes) cerca del usuario final. |
+| `ElastiCache` | Redis/Memcached gestionado — caching delante de RDS/DynamoDB para no pegarle a la DB en cada request. |
+| `Cognito` | Autenticación de usuarios finales (login/signup/JWT/MFA) — la contraparte de IAM pero para tus usuarios, no para tus servicios. |
+| `VPC` | Red privada donde viven cómputo y datos, aislados de acceso público directo. |
 
 ## S3 — buckets, clases de almacenamiento y ciclo de vida
 
