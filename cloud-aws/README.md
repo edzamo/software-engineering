@@ -4,6 +4,54 @@ Servicios AWS que un backend Java suele tocar, y un entorno para practicarlos en
 
 > Minikube emula **Kubernetes**, no AWS. Para practicar S3/SQS/RDS/DynamoDB sin poner una tarjeta real, la herramienta correcta es **[LocalStack](https://www.localstack.cloud/)**.
 
+## El modelo mental — 3 categorías, con lo que ya conocés
+
+No hay que memorizar servicios sueltos — hay que ubicar cada uno en **una de 3 categorías** (cómputo, datos, comunicación) y relacionarlo con algo que ya sabés usar sin nube:
+
+| Categoría | Servicio AWS | Es básicamente... |
+|---|---|---|
+| **Cómputo** | `EC2` | Una VM que vos dimensionás (CPU/RAM) — como un servidor propio, con SSH, pero alquilado. |
+| | `ECS`/`EKS` | Un orquestador de contenedores — lo mismo que Kubernetes (pods), gestionado por Amazon. |
+| | `Lambda` | Una función que corre sola, sin servidor que dimensionar — serverless puro. |
+| **Datos** | `RDS` | Tu Postgres/MySQL de siempre, gestionado (backups, failover automáticos). |
+| | `DynamoDB` | NoSQL documento/clave-valor — el equivalente a un MongoDB, pero gestionado y con latencia de milisegundos. |
+| | `S3` | Un disco duro casi infinito, organizado como carpetas — para archivos, no para queries. |
+| **Comunicación** | `SQS` | Cola punto a punto — el equivalente a RabbitMQ. |
+| | `SNS` | Pub/sub — un evento, muchos suscriptores (broadcast). |
+| | `EventBridge` | Bus de eventos con reglas de ruteo — el equivalente a Kafka para arquitecturas event-driven. |
+
+**El otro eje que importa en Cómputo — espectro de control vs. responsabilidad:**
+
+```mermaid
+flowchart LR
+    EC2["EC2<br/>vos controlás el SO"] --> ECS["ECS/Fargate<br/>vos controlás el contenedor"] --> Lambda["Lambda<br/>solo controlás la función"]
+    EC2 -.-> R1["Máximo control<br/>= máxima responsabilidad<br/>(si te hackean, es tuyo)"]
+    Lambda -.-> R2["Mínimo control<br/>= mínima responsabilidad<br/>(Amazon asegura la ejecución)"]
+```
+
+No es "cuál es mejor" — es cuánta responsabilidad operativa querés asumir vos vs. delegarle a Amazon. Un mismo proyecto puede mezclar los tres (algunos endpoints en Lambda, otros en ECS) detrás del mismo API Gateway.
+
+### Ejemplo de system design — la pregunta típica de entrevista
+
+```mermaid
+flowchart TB
+    Client["Cliente"] --> APIGW["API Gateway<br/>(auth, rate limiting, ruteo)"]
+    APIGW --> VPC
+
+    subgraph VPC[" VPC — red privada "]
+        Compute["EC2 / ECS<br/>(cómputo)"]
+        RDS["RDS<br/>(datos transaccionales)"]
+        Dynamo["DynamoDB<br/>(datos de alta lectura, ej. sesiones)"]
+        Compute --> RDS
+        Compute --> Dynamo
+    end
+
+    Compute --> S3["S3<br/>(archivos)"]
+    Compute --> SQS["SQS/SNS/EventBridge<br/>(comunicación async entre servicios)"]
+```
+
+**Guion para explicarlo en voz alta:** "el cliente entra por API Gateway, que autentica y rutea a mi capa de cómputo dentro de una VPC — ahí decido EC2/ECS según cuánto control necesito. Los datos transaccionales van a RDS, y si hay un acceso de altísima frecuencia y baja latencia (como sesiones) lo separo a DynamoDB para no sobrecargar la base relacional. Los archivos van a S3, y la comunicación entre servicios (para no acoplarlos directo) va por SQS, SNS o EventBridge según necesite cola, broadcast, o un bus de eventos."
+
 ## Servicios core
 
 ```mermaid
@@ -21,6 +69,7 @@ graph TB
     subgraph messaging[" Mensajería "]
         SQS["SQS<br/>colas punto a punto"]
         SNS["SNS<br/>pub/sub"]
+        EB["EventBridge<br/>bus de eventos"]
     end
     subgraph security[" Seguridad "]
         IAM["IAM<br/>roles y permisos"]
@@ -44,6 +93,7 @@ graph TB
 | `S3` | Almacenar archivos. SDK: `S3AsyncClient` para no bloquear el event loop. |
 | `SQS` | Cola de mensajes para desacoplar microservicios — patrón event-driven, procesamiento asíncrono. |
 | `SNS` | Pub/sub — un evento notifica a varios consumidores (ej: SQS + Lambda a la vez). |
+| `EventBridge` | Bus de eventos con reglas de ruteo — arquitecturas event-driven más desacopladas que SNS directo. |
 | `RDS` | Postgres/MySQL gestionado — equivalente cloud de una base local en Docker. |
 | `DynamoDB` | NoSQL gestionado — ideal para acceso por clave con baja latencia y escalado automático. |
 | `Lambda` | Función serverless — útil para tareas puntuales disparadas por un evento S3/SQS. |
