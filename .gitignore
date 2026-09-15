@@ -64,3 +64,6 @@ Thumbs.db
 *.tmp
 *.temp
 .env
+
+### Repaso de entrevista (no versionar, es descartable) ###
+entrevistas/saludtools-desarrollador-senior/practica/

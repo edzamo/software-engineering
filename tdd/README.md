@@ -107,7 +107,7 @@ class FizzBuzz {
 }
 ```
 
-Relacionado: [`microservices-patterns/`](../microservices-patterns) y [`reactive-programming/`](../reactive-programming) tienen sus propias secciones de testing (`StepVerifier`, Testcontainers) para los casos que van más allá de un test unitario simple.
+Relacionado: [`microservices-patterns/`](../microservices-patterns) y [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) tienen sus propias secciones de testing (`StepVerifier`, Testcontainers) para los casos que van más allá de un test unitario simple.
 
 ## Referencias
 

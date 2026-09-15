@@ -1,6 +1,6 @@
 # Collections & Streams — cheatsheet de operaciones del día a día
 
-Operaciones sobre `List`, `Map` y `Stream` — la base de cualquier lógica de transformación de datos en Java, tanto en código bloqueante como dentro de un `map`/`flatMap` reactivo (ver [`reactive-programming/`](../reactive-programming)). Es contenido que se oxida rápido si no se usa seguido, por eso vale la pena tenerlo como cheatsheet.
+Operaciones sobre `List`, `Map` y `Stream` — la base de cualquier lógica de transformación de datos en Java, tanto en código bloqueante como dentro de un `map`/`flatMap` reactivo (ver [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md)). Es contenido que se oxida rápido si no se usa seguido, por eso vale la pena tenerlo como cheatsheet.
 
 > Este documento asume que ya sabés **cuál** estructura elegir (`ArrayList` vs `LinkedList`, `HashMap` vs `TreeMap`, etc. — ver [`data-structures-decision-guide.md`](data-structures-decision-guide.md)) y se enfoca en **cómo operarla** una vez elegida. Las interfaces funcionales que se usan en `filter`/`map` (`Predicate`, `Function`, etc.) están detalladas en [`functional-interfaces.md`](functional-interfaces.md).
 
@@ -70,7 +70,7 @@ Map<String, BigDecimal> totalPorCliente = facturas.stream()
 - Un `Stream` se consume **una sola vez** — reusarlo tira `IllegalStateException`.
 - Las operaciones intermedias (`map`, `filter`, `sorted`) son **lazy**: no se ejecutan hasta que hay una operación terminal (`toList`, `collect`, `forEach`, `reduce`).
 - `reduce` acumula un único resultado sin necesidad de un `Collector`: `lista.stream().reduce(0, Integer::sum)`.
-- `flatMap` en Streams (no confundir con el de Reactor, ver [`reactive-programming/`](../reactive-programming)) aplana listas anidadas: `List<List<X>>` → `Stream<X>` con `.flatMap(List::stream)`.
+- `flatMap` en Streams (no confundir con el de Reactor, ver [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md)) aplana listas anidadas: `List<List<X>>` → `Stream<X>` con `.flatMap(List::stream)`.
 - `.parallelStream()` solo conviene con colecciones grandes y operaciones sin estado compartido — no es el default razonable.
 
 ```java
@@ -96,4 +96,4 @@ List<Item> todosLosItems = pedidos.stream()
 - Documentación oficial de Oracle — [Java Collections Framework](https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html) y [`java.util.stream`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html).
 - Baeldung — [Guía de `Stream` y `Collectors` en Java](https://www.baeldung.com/java-8-streams) — fuente de los ejemplos de `groupingBy`/`merge`/`flatMap` usados en este cheatsheet.
 
-Relacionado: [`data-structures-decision-guide.md`](data-structures-decision-guide.md) para cuál estructura elegir antes de operarla, [`functional-interfaces.md`](functional-interfaces.md) para el catálogo completo de `Predicate`/`Function`/etc. que alimenta estos streams, y [`reactive-programming/`](../reactive-programming) para el `flatMap` equivalente en Project Reactor (no confundir ambos).
+Relacionado: [`data-structures-decision-guide.md`](data-structures-decision-guide.md) para cuál estructura elegir antes de operarla, [`functional-interfaces.md`](functional-interfaces.md) para el catálogo completo de `Predicate`/`Function`/etc. que alimenta estos streams, y [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para el `flatMap` equivalente en Project Reactor (no confundir ambos).

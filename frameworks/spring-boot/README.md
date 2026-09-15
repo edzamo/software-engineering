@@ -8,7 +8,7 @@ Píldoras de repaso del ecosistema Spring Boot para entrevista de senior develop
 graph TB
     subgraph documentado[" Documentado "]
         F["Fundamentos<br/>Spring/Framework/Boot, IoC/DI,<br/>MVC vs WebFlux, JPA vs Hibernate"]
-        WF["WebFlux<br/>WebClient, testing, seguridad,<br/>vs. Virtual Threads"]
+        WF["WebFlux<br/>Reactor, WebClient, WebFilter,<br/>HTTP/2, streaming, performance"]
         SD["Spring Data<br/>JPA + R2DBC, N+1,<br/>@Transactional, Specifications"]
         SB["Spring Batch<br/>Job/Step, chunk processing,<br/>skip/retry, partitioning"]
         SEC["Spring Security<br/>SecurityFilterChain, OAuth2/JWT,<br/>method security"]
@@ -26,22 +26,22 @@ graph TB
 | Tema | Doc | Idea central en una línea |
 |---|---|---|
 | **Fundamentos** | [`fundamentals.md`](fundamentals.md) | Spring vs Spring Framework vs Spring Boot, IoC/DI, MVC vs WebFlux, JPA vs Hibernate, auto-configuración y las anotaciones que hay que saber explicar sin dudar. |
-| **WebFlux** | [`webflux.md`](webflux.md) | Cómo se cablea Reactor como framework web dentro de Spring Boot: controllers vs endpoints funcionales, `WebClient`, `WebTestClient`, seguridad reactiva, y la decisión frente a Spring MVC + Virtual Threads (JEP 444). |
+| **WebFlux** | [`webflux.md`](webflux.md) + [`webflux-operators.md`](webflux-operators.md) + [`webflux-advanced.md`](webflux-advanced.md) | Guía de estudio en 3 partes: Parte 1 — el controlador, por qué existe WebFlux, `Mono`/`Flux`, `map` vs `flatMap`, `WebClient`, `WebTestClient`, seguridad reactiva, y la decisión frente a Spring MVC + Virtual Threads (JEP 444). Parte 2 — el catálogo completo de operadores de Reactor (`zip`, `switchIfEmpty`, `deferContextual`, `then`, `doOnNext`) con frecuencia real de uso en microservicios en producción. Parte 3 — `WebFilter`, HTTP/2, streaming/SSE, optimización de rendimiento, y testing de integración con Testcontainers. |
 | **Spring Data** | [`spring-data.md`](spring-data.md) | Repositorios generados por convención de nombre, `@Query`, Specifications, el problema N+1 y sus soluciones, `@Transactional` (y por qué no aplica igual en reactivo), Spring Data R2DBC. |
 | **Spring Batch** | [`spring-batch.md`](spring-batch.md) | Job/Step, chunk-oriented processing (Reader/Processor/Writer), `skip`/`retry`, reinicio ante fallo vía `JobRepository`, partitioning. |
 | **Spring Security** | [`security.md`](security.md) | Autenticación vs autorización, `SecurityFilterChain`, OAuth2 Resource Server (JWT/Auth0), method security (`@PreAuthorize`), password encoding, CORS. |
 | Spring Cloud | ⏳ Pendiente | Config Server, API Gateway, service discovery — relevante para microservicios (ver [`microservices-patterns/`](../../microservices-patterns)). |
-| Spring Boot Test | ⏳ Pendiente | `@SpringBootTest`, slices de test (`@WebFluxTest`, `@DataJpaTest`), Testcontainers. |
+| Spring Boot Test | 🟡 Parcial | `@SpringBootTest` + Testcontainers ya cubierto para el caso reactivo en [`webflux-advanced.md`](webflux-advanced.md) sección 5; slices de test (`@WebFluxTest`, `@DataJpaTest`) para el resto del ecosistema, pendiente. |
 | Actuator + Observabilidad | ⏳ Pendiente | Health checks, métricas, `/actuator`, integración con tracing distribuido. |
 
 ## Cómo estudiar esta carpeta
 
 1. Empezá por [`fundamentals.md`](fundamentals.md) — resuelve las confusiones de vocabulario (Spring vs Spring Boot, JPA vs Hibernate) que todo lo demás asume resueltas.
-2. [`webflux.md`](webflux.md) y [`spring-data.md`](spring-data.md) se leen en cualquier orden — cubren proyectos satélite independientes entre sí (aunque se combinan en la variante reactiva: WebFlux + Spring Data R2DBC).
+2. [`webflux.md`](webflux.md) (con sus Partes 2 y 3, [`webflux-operators.md`](webflux-operators.md) y [`webflux-advanced.md`](webflux-advanced.md)) y [`spring-data.md`](spring-data.md) se leen en cualquier orden entre sí — cubren proyectos satélite independientes (aunque se combinan en la variante reactiva: WebFlux + Spring Data R2DBC). Dentro de WebFlux sí conviene el orden Parte 1 → 2 → 3.
 3. [`spring-batch.md`](spring-batch.md) y [`security.md`](security.md) son los más aislados — Batch solo hace falta ante procesamiento masivo, Security se necesita en cualquier momento pero no depende de haber leído los otros primero.
 4. Los temas ⏳ se van a ir completando a medida que aparezcan en la práctica o en preparación de entrevista — mismo criterio que el resto del repo: nada de documentos teóricos sin un caso concreto detrás.
 
-Relacionado: [`reactive-programming/`](../../reactive-programming) para el detalle de Project Reactor que [`webflux.md`](webflux.md) asume conocido, [`ddd/`](../../ddd) para cómo modelar el dominio que estos frameworks terminan sirviendo/persistiendo, y [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (`@RestController`, `JpaRepository`, `@Entity`) dentro del layout de carpetas.
+Relacionado: [`webflux-operators.md`](webflux-operators.md) para el catálogo completo de operadores de Project Reactor (Parte 2 de la guía de WebFlux), [`webflux-advanced.md`](webflux-advanced.md) para `WebFilter`/HTTP/2/streaming/performance/testing de integración (Parte 3), [`ddd/`](../../ddd) para cómo modelar el dominio que estos frameworks terminan sirviendo/persistiendo, y [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (`@RestController`, `JpaRepository`, `@Entity`) dentro del layout de carpetas.
 
 ## Referencias
 

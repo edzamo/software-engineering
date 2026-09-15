@@ -1,6 +1,6 @@
 # SaludTools — Desarrollador(a) Senior
 
-> **Entrevista técnica: martes que viene.** Por eso este documento tiene el contenido completo replicado acá mismo (no solo links) — para tener todo a mano sin saltar de carpeta en carpeta. Los links a las fuentes generales quedan más abajo, para cuando haya que reestructurar esto de vuelta en referencias puras.
+> **Entrevista técnica: HOY, 5:00 PM.** Por eso este documento tiene el contenido completo replicado acá mismo (no solo links) — para tener todo a mano sin saltar de carpeta en carpeta. Los links a las fuentes generales quedan más abajo, para cuando haya que reestructurar esto de vuelta en referencias puras.
 
 Java 21, Spring WebFlux, AWS, microservicios sobre un producto HealthTech.
 
@@ -16,7 +16,7 @@ Contacto de proceso: Ani (reclutadora). Detalle de fit, logística y entregables
 
 ---
 
-## 00 · Plan de estudio — qué hacer con el tiempo que queda (hoy lunes, entrevista martes)
+## 00 · Plan de estudio — qué hacer con el tiempo que queda (hoy, entrevista a las 5pm)
 
 Ya no queda tiempo para "seguir leyendo teoría nueva" — todo lo de abajo (01-06) ya está documentado y probado. Lo que falta es **priorizar** y **practicar en voz alta**, no acumular más lectura.
 
@@ -48,7 +48,7 @@ No es un banco ni una corporación con comités de arquitectura — es una start
 | Bloque | Tiempo | Qué hacer |
 |---|---|---|
 | 1 · Simulacro completo | 45-60 min | Corré el flujo de la sección 07 de punta a punta con un dominio **nuevo** que no hayas usado antes (ni citas médicas ni café — inventá uno de SaludTools, ej. "seguimiento de signos vitales"). Cronometrado. Es la práctica de mayor impacto de todas. |
-| 2 · Operadores reactivos en voz alta | 25-30 min | Repasá [`reactive-operators-decision-guide.md`](../../reactive-programming/reactive-operators-decision-guide.md) — `map`/`flatMap`, `switchIfEmpty`, manejo de errores. Explicá cada uno en voz alta como si se lo dijeras a alguien no técnico, sin mirar el ejemplo. |
+| 2 · Operadores reactivos en voz alta | 25-30 min | Repasá [`webflux-operators.md`](../../frameworks/spring-boot/webflux-operators.md) — `map`/`flatMap`, `switchIfEmpty`, manejo de errores. Explicá cada uno en voz alta como si se lo dijeras a alguien no técnico, sin mirar el ejemplo. |
 | 3 · Vocabulario DDD sin mirar | 15-20 min | Tapá la sección 03.6 y decí de memoria: Entity vs VO, Aggregate, Repository pattern, Domain Event, Bounded Context — una frase cada uno. |
 | 4 · Fit y logística | 15-20 min | Repasá [`fit-y-liderazgo.md`](fit-y-liderazgo.md) — tené listo un ejemplo propio por cada fila de responsabilidades, y la respuesta a "por qué SaludTools/por qué salud". |
 | 5 · Sanity check de entorno | 10 min | Confirmá que el IDE, JDK 21 y (si aplica) LocalStack arrancan sin fricción — no aprendas nada nuevo de AWS hoy, solo verificá que lo que ya sabés arranca. |
@@ -92,6 +92,42 @@ No hace falta ser experto en un día, pero sí poder hablar con criterio 60 segu
 Heurística para responder cualquier pregunta de este tipo: *"la decisión correcta depende del volumen y la etapa de la empresa, no de la solución más elegante — en una startup en crecimiento, prefiero la opción más simple que no me bloquee escalar después, y documento en el ADR cuándo revisarla."* Es la misma idea que ya usás en la sección 00 sobre YAGNI en SaludTools — reutilizala acá.
 
 ---
+
+## 00.7 · Píldoras relámpago — Java Backend + AWS (repaso rápido-fuego)
+
+12 preguntas típicas de entrevista "Java + AWS senior", condensadas a una línea cada una — para captar rápido, no para leer en detalle (el detalle ya está en las carpetas de siempre, linkeadas donde aplica).
+
+### Java backend
+
+| # | Pregunta | Respuesta relámpago |
+|---|---|---|
+| 1 | ¿Cómo diseñás un backend Java escalable? | Microservicios + comunicación async (Kafka/SQS) + caching (Redis) + connection pooling (HikariCP) + stateless detrás de un load balancer. Ver [`microservices-patterns/`](../../microservices-patterns). |
+| 2 | ¿Java 8 vs Java 17+? | 8: lambdas/streams/`Optional`. 11: HTTP Client, `var`. 17 (LTS): sealed classes, records, pattern matching `instanceof`. Detalle completo en [`java-core/java-version-evolution.md`](../../java-core/java-version-evolution.md). |
+| 3 | ¿Cómo asegurás calidad de código y performance? | Ver tabla debajo — es contenido nuevo, no estaba en el repo. |
+| 10 | ¿Cómo manejás fallas en sistemas distribuidos? | Retry con backoff + circuit breaker (Resilience4j) + DLQ + idempotency keys + graceful degradation. Ya cubierto en [`microservices-patterns/`](../../microservices-patterns) sección 2. |
+| 11 | Contame de un proyecto que llevaste vos solo, de punta a punta. | Tené un ejemplo propio armado (migración monolito→microservicios, CI/CD, IaC, entrega sin supervisión constante) — ver [`fit-y-liderazgo.md`](fit-y-liderazgo.md) para cómo estructurar la respuesta con el framework STAR. |
+| 12 | ¿Cómo depurás un problema de performance en producción? | Orden: CloudWatch metrics → X-Ray traces → GC logs/heap dump → recién ahí optimizar la causa raíz. Detalle completo (nuevo) en [`cloud-aws/`](../../cloud-aws) sección "Observabilidad y debugging". |
+
+**Calidad de código y performance en Java (pregunta 3 — contenido nuevo):**
+
+| Práctica | Herramienta típica |
+|---|---|
+| Análisis estático | SonarQube / Checkstyle — antes de mergear, no como auditoría post-hoc. |
+| Tests | JUnit + tests de integración — no solo unitarios. |
+| Profiling | JVisualVM o Java Flight Recorder — para encontrar el método/hilo real que consume CPU, no adivinar. |
+| Tuning de GC | Parámetros de la JVM ajustados al patrón de la app (throughput vs. baja latencia) — no defaults sin revisar en un servicio con SLA de latencia. |
+| CI/CD | Build + tests + análisis estático automatizados en cada PR — la calidad se aplica en la pipeline, no se pide "por favor" en el code review. |
+
+### AWS
+
+| # | Pregunta | Respuesta relámpago |
+|---|---|---|
+| 4 | ¿Cómo diseñás almacenamiento de archivos con S3? | `S3AsyncClient` + keys con UUID + versioning/lifecycle + IAM/bucket policies + CloudFront. Detalle completo ya en [`cloud-aws/`](../../cloud-aws) sección S3. |
+| 5 | ¿Buenas prácticas corriendo Java en EC2? | ASG + ALB/NLB + SSM Parameter Store + CloudWatch/X-Ray + AMI horneada con Packer. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección EC2. |
+| 6 | ¿DynamoDB vs RDS? | DynamoDB: NoSQL, latencia constante, escala automático, sin joins — alto volumen de escritura por clave. RDS: relacional, joins/transacciones. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección DynamoDB. |
+| 7 | ¿Cómo usás Elasticsearch desde Java? | Cliente REST para indexar/consultar, full-text search, sharding+replication, Kibana para visualizar. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección Elasticsearch. |
+| 8 | ¿CDK vs CloudFormation? | CDK es código (Java/TS/Python) que **compila a** CloudFormation — no lo reemplaza, le da abstracciones reales encima. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección IaC. |
+| 9 | ¿Cómo diseñarías un sistema de gestión de órdenes escalable en AWS? | API Gateway → Lambda/EC2 (microservicios Spring Boot) → DynamoDB (lookups) + S3 (archivo) → SQS/Kafka (eventos async) → Elasticsearch (búsqueda) → CloudWatch/X-Ray/ELK (observabilidad) → Multi-AZ + retries + DLQs (resiliencia). Es literalmente juntar todas las píldoras de arriba en un solo diagrama — practicalo dibujándolo de memoria. |
 
 ## 01 · Programación reactiva
 
@@ -394,11 +430,11 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 | Tema | Carpeta |
 |---|---|
 | Spring / Spring Boot / JPA / Hibernate (fundamentos) | [`spring-boot/fundamentals.md`](../../frameworks/spring-boot/fundamentals.md) |
-| WebFlux dentro de Spring Boot (`WebClient`, testing, seguridad, vs. Virtual Threads) | [`spring-boot/webflux.md`](../../frameworks/spring-boot/webflux.md) |
+| WebFlux — Parte 1: controlador, Mono/Flux, map vs flatMap, WebClient, testing, seguridad, vs. Virtual Threads | [`spring-boot/webflux.md`](../../frameworks/spring-boot/webflux.md) |
+| WebFlux — Parte 2: catálogo de operadores (`zip`, `switchIfEmpty`, `deferContextual`, `then`, `doOnNext`) con frecuencia real de uso | [`spring-boot/webflux-operators.md`](../../frameworks/spring-boot/webflux-operators.md) |
 | Spring Data (repositorios, N+1, `@Transactional`, R2DBC) | [`spring-boot/spring-data.md`](../../frameworks/spring-boot/spring-data.md) |
 | Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../frameworks/spring-boot/spring-batch.md) |
 | DDD (Entities/VO, Aggregates, Repository, Domain Events/Service, Bounded Context, CQRS) | [`ddd/`](../../ddd) |
-| Mono/Flux, map vs flatMap, manejo de errores reactivo | [`reactive-programming/`](../../reactive-programming) |
 | Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../microservices-patterns) |
 | AWS + práctica con LocalStack | [`cloud-aws/`](../../cloud-aws) |
 | Java como lenguaje: POO, estructuras de datos, interfaces funcionales, evolución 8→21 | [`java-core/`](../../java-core) |

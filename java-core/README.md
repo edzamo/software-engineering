@@ -45,7 +45,7 @@ graph TB
 3. [`functional-interfaces.md`](functional-interfaces.md) y [`java-version-evolution.md`](java-version-evolution.md) se leen en cualquier orden — el primero profundiza Java 8 específicamente, el segundo da el panorama completo 8→21.
 4. [`collections-and-streams.md`](collections-and-streams.md) al final, como cheatsheet de consulta rápida antes de una entrevista — es el más denso en código copiable.
 
-Relacionado: [`oop-design/`](../oop-design) para POO agnóstico de lenguaje, [`ddd/entities-vs-value-objects.md`](../ddd/entities-vs-value-objects.md) para cuándo modelar con `record` vs `class` en el dominio, [`reactive-programming/`](../reactive-programming) para `Mono`/`Flux` (el "otro" `flatMap`, distinto al de Streams), y el agente [`java-21-dev`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md) para la profundidad completa de Java 21 en código de revisión real.
+Relacionado: [`oop-design/`](../oop-design) para POO agnóstico de lenguaje, [`ddd/entities-vs-value-objects.md`](../ddd/entities-vs-value-objects.md) para cuándo modelar con `record` vs `class` en el dominio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para `Mono`/`Flux` (el "otro" `flatMap`, distinto al de Streams), y el agente [`java-21-dev`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md) para la profundidad completa de Java 21 en código de revisión real.
 
 ## Referencias
 

@@ -6,7 +6,7 @@ entrevista. Es la base sobre la que se apoyan las demás píldoras de esta
 carpeta — [`webflux.md`](webflux.md), [`spring-data.md`](spring-data.md),
 [`spring-batch.md`](spring-batch.md) — que profundizan cada proyecto
 satélite. Para el detalle de operadores de Reactor (`map`/`flatMap`, manejo
-de errores, `StepVerifier`) ver [`reactive-programming/`](../../reactive-programming).
+de errores, `StepVerifier`) ver [`webflux.md`](webflux.md).
 
 ## Mapa mental (de lo general a lo concreto)
 
@@ -74,11 +74,10 @@ arranca la aplicación).
 | Cuándo elegirlo | Stack tradicional, JDBC/JPA bloqueante, equipo sin experiencia reactiva | Alta concurrencia con I/O (muchas llamadas a otros servicios/DB), o ya hay drivers reactivos (R2DBC, WebClient) |
 | Persistencia típica | Spring Data JPA (Hibernate) | Spring Data R2DBC (no bloqueante) |
 
-Los operadores de Reactor (`Mono`/`Flux`, `map` vs `flatMap`, manejo de
-errores, testing con `StepVerifier`) están en
-[`reactive-programming/`](../../reactive-programming). Cómo se integra WebFlux
-específicamente con Spring Boot (`WebClient`, endpoints funcionales,
-`WebTestClient`, seguridad reactiva) está en [`webflux.md`](webflux.md).
+La guía completa de WebFlux — el controlador, por qué existe, `Mono`/`Flux`,
+`map` vs `flatMap`, manejo de errores, `WebClient`, testing, seguridad
+reactiva — está en [`webflux.md`](webflux.md), y el catálogo completo de
+operadores de Reactor en [`webflux-operators.md`](webflux-operators.md).
 
 ## 4 · JPA vs Hibernate — la pregunta clásica de entrevista
 
@@ -166,4 +165,4 @@ auto-configuró con `--debug` al arrancar, o inspeccionando
 - [Hibernate ORM — User Guide](https://hibernate.org/orm/documentation/) — la implementación de referencia de JPA.
 - [Spring Data R2DBC — Reference Documentation](https://docs.spring.io/spring-data/r2dbc/reference/) — persistencia reactiva, sin JPA.
 
-Relacionado: [`webflux.md`](webflux.md) y [`spring-data.md`](spring-data.md) para el detalle de esos dos proyectos satélite, [`reactive-programming/`](../../reactive-programming) para WebFlux/Reactor en profundidad, [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (entity/mapper/adapter) dentro de una arquitectura hexagonal, y [`ddd/`](../../ddd) para la distinción Entity/Value Object del lado del dominio (no de JPA).
+Relacionado: [`webflux.md`](webflux.md) + [`webflux-operators.md`](webflux-operators.md) para WebFlux/Reactor en profundidad, [`spring-data.md`](spring-data.md) para el otro proyecto satélite, [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) para dónde encaja cada pieza (entity/mapper/adapter) dentro de una arquitectura hexagonal, y [`ddd/`](../../ddd) para la distinción Entity/Value Object del lado del dominio (no de JPA).

@@ -20,8 +20,7 @@ graph LR
     root --> arch["software-architectures/<br/>MVC, Clean, Onion, Hexagonal"]
     root --> sysdes["system-design/<br/>System Design"]
     root --> micro["microservices-patterns/<br/>Microservicios"]
-    root --> frameworks["frameworks/<br/>Spring Boot, NestJS"]
-    root --> reactive["reactive-programming/<br/>Programación reactiva"]
+    root --> frameworks["frameworks/<br/>Spring Boot (WebFlux/Reactor), NestJS"]
     root --> aws["cloud-aws/<br/>AWS + LocalStack"]
     root --> tdd["tdd/<br/>TDD"]
     root --> ia["ia-agentes/<br/>IA con Claude Code"]
@@ -38,13 +37,12 @@ graph LR
     sysdes --> micro
     arch --> micro
     arch --> frameworks
-    frameworks --> reactive
-    micro --> reactive
+    micro --> frameworks
     micro --> aws
     arch --> tdd
     arch --> ia
     ia --> aieng
-    reactive --> entrevistas
+    frameworks --> entrevistas
     aws --> entrevistas
     micro --> entrevistas
     aieng --> entrevistas
@@ -68,8 +66,7 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 | [`software-architectures/`](software-architectures) | Arquitecturas de software | 🟡 En progreso | MVC, Clean Architecture, Onion, Hexagonal (puertos/adaptadores) — comparadas entre sí. Mobile (MVVM/MVP/MVI) y web frontend (Flux/Redux) pendientes. |
 | [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios, SQL vs NoSQL (ACID/CAP theorem), REST vs GraphQL vs gRPC — basado en ByteByteGo. Se va sumando módulo a módulo. |
 | [`microservices-patterns/`](microservices-patterns) | Patrones de microservicios | ✅ Completo | Comunicación sync/async, resiliencia (circuit breaker, retry, bulkhead), consistencia (saga, outbox), API-first, OWASP. |
-| [`frameworks/`](frameworks) | Spring Boot, NestJS | 🟡 En progreso | Un framework de backend por carpeta ([`spring-boot/`](frameworks/spring-boot), [`nestjs/`](frameworks/nestjs)): fundamentos, capa web, persistencia, seguridad — con tabla de analogía punto a punto entre ambos. |
-| [`reactive-programming/`](reactive-programming) | Programación reactiva | ✅ Completo | Mono/Flux, `map` vs `flatMap`, manejo de errores, R2DBC vs JPA, testing con StepVerifier, y una guía de decisión completa de operadores (`fromCallable`, `zip`, `switchIfEmpty`, `deferContextual`, `then`/`thenReturn`, `collectList`) con frecuencia real de uso en microservicios en producción. |
+| [`frameworks/`](frameworks) | Spring Boot, NestJS | 🟡 En progreso | Un framework de backend por carpeta ([`spring-boot/`](frameworks/spring-boot), [`nestjs/`](frameworks/nestjs)): fundamentos, capa web, persistencia, seguridad. Spring Boot incluye la guía de WebFlux/Project Reactor en 2 partes ([`webflux.md`](frameworks/spring-boot/webflux.md) + [`webflux-operators.md`](frameworks/spring-boot/webflux-operators.md)) con frecuencia real de uso de operadores en microservicios en producción — y tabla de analogía punto a punto con NestJS. |
 | [`cloud-aws/`](cloud-aws) | Cloud (AWS) | ✅ Completo | Servicios AWS clave para un backend Java + cómo practicar con LocalStack (sin tarjeta ni cuenta real). |
 | [`tdd/`](tdd) | TDD | ✅ Completo | Ciclo red-green-refactor (diagrama de estados), pirámide de testing, patrón AAA. |
 | [`ia-agentes/`](ia-agentes) | IA aplicada al desarrollo | 🟡 En progreso | 7 agentes + 2 skills de Claude Code para desarrollo de software (hexagonal, Java 21, Spring Boot WebFlux, TDD, GitFlow, OWASP, clean code, commits, PRs), con `agent-harness/` como fuente/compilador reusable entre proyectos; analítica/big data pendientes. |

@@ -110,7 +110,7 @@ Ejemplos de preguntas que calzan en este formato:
 | 5 min | "¿Cuándo NO usarías microservicios?" |
 | 6 min | "Explicá el outbox pattern como si hablaras con alguien de Producto." |
 
-Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`reactive-programming/`](../reactive-programming) para cómo se implementa la comunicación no bloqueante, y [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB).
+Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para cómo se implementa la comunicación no bloqueante, y [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB).
 
 ## Referencias
 

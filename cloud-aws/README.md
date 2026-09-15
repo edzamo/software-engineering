@@ -9,6 +9,7 @@ Servicios AWS que un backend Java suele tocar, y un entorno para practicarlos en
 ```mermaid
 graph TB
     subgraph compute[" Cómputo "]
+        EC2["EC2<br/>ASG + ALB + AMI horneada"]
         ECS["ECS / Fargate<br/>contenedores sin gestionar servidores"]
         Lambda["Lambda<br/>funciones serverless"]
     end
@@ -26,6 +27,7 @@ graph TB
         Secrets["Secrets Manager<br/>credenciales"]
     end
 
+    EC2 --> RDS
     ECS --> RDS
     ECS --> S3
     ECS --> SQS
@@ -38,6 +40,7 @@ graph TB
 
 | Servicio | Para qué lo usás desde un backend Java |
 |---|---|
+| `EC2` | Cómputo tradicional detrás de un Auto Scaling Group + ALB — ver sección dedicada más abajo. |
 | `S3` | Almacenar archivos. SDK: `S3AsyncClient` para no bloquear el event loop. |
 | `SQS` | Cola de mensajes para desacoplar microservicios — patrón event-driven, procesamiento asíncrono. |
 | `SNS` | Pub/sub — un evento notifica a varios consumidores (ej: SQS + Lambda a la vez). |
@@ -121,6 +124,66 @@ RDS es el motor de base de datos (Postgres, MySQL, MariaDB, SQL Server, Oracle) 
 
 RDS es el servicio (la base de datos gestionada); R2DBC es el driver **no bloqueante** que usás para conectarte a esa base desde un pipeline reactivo. RDS no sabe ni le importa si el cliente es JDBC o R2DBC — la diferencia vive 100% del lado de la aplicación.
 
+## EC2 — cómputo tradicional, y cómo no operarlo "a mano"
+
+Preguntas típicas: "¿cómo escalás un servicio Java en EC2?", "¿dónde guardás la configuración sin hardcodearla?".
+
+| Práctica | Qué resuelve |
+|---|---|
+| **Auto Scaling Group (ASG)** | Escala horizontal — agrega/quita instancias según CPU/memoria/tráfico, en vez de dimensionar una instancia fija "por si acaso". |
+| **Elastic Load Balancer (ALB/NLB)** | Reparte tráfico entre las instancias del ASG. ALB = capa 7 (HTTP, path-based routing); NLB = capa 4 (TCP, más throughput, IP estática). |
+| **SSM Parameter Store** (o Secrets Manager para credenciales) | Configuración externalizada — nunca hardcodeada en el JAR ni en variables de entorno planas para secretos. |
+| **CloudWatch + X-Ray** | Métricas (CPU/memoria/latencia) + tracing distribuido por request — ver sección de observabilidad más abajo. |
+| **Packer / AMI horneada** | Se construye una imagen (AMI) con el JDK y dependencias ya instaladas, en vez de correr un script de provisioning en cada arranque — instancias nuevas del ASG arrancan más rápido y de forma reproducible. |
+
+**Frase para entrevista:** "en EC2 el patrón estándar no es una instancia fija, es un ASG detrás de un ALB, con la config en Parameter Store y una AMI horneada — así una instancia nueva escala sin intervención manual y sin secretos en el código."
+
+## DynamoDB — NoSQL gestionado, y cuándo elegirlo sobre RDS
+
+Preguntas típicas: "¿DynamoDB o RDS para este caso?", "¿por qué DynamoDB no soporta joins?".
+
+| | DynamoDB | RDS (Postgres/MySQL) |
+|---|---|---|
+| Modelo | NoSQL clave-valor/documento, schema-less. | Relacional, schema fijo. |
+| Latencia | Milisegundos de un dígito, constante sin importar el tamaño de la tabla. | Variable según query/índices/joins. |
+| Escalado | Automático (horizontal, particionado por partition key). | Vertical por defecto; horizontal solo para lecturas (read replicas) — ver sección RDS arriba. |
+| Queries | Por clave (partition key + opcional sort key) o índices secundarios (GSI/LSI) — sin joins. | SQL completo: joins, agregaciones, transacciones multi-tabla. |
+| Caso de uso típico | Sesiones de usuario, catálogo de productos, datos de IoT/gaming con muchísima escritura. | Datos financieros/transaccionales, reportes con relaciones complejas. |
+
+**Regla práctica**: si la pregunta de acceso es siempre "dame el item por su ID" y el volumen de escritura es alto → DynamoDB. Si hay que cruzar información entre tablas o garantizar transacciones ACID multi-fila → RDS.
+
+## Elasticsearch — búsqueda y análisis de logs
+
+Preguntas típicas: "¿cómo implementarías búsqueda full-text en una app Java?".
+
+- Se usa para **búsqueda full-text, autocompletado y análisis de logs** — no reemplaza a la base de datos transaccional, vive al lado (los datos se indexan ahí después de guardarse en la fuente de verdad).
+- Desde Java: cliente REST oficial (`ElasticsearchClient` en versiones recientes del SDK) para indexar/consultar documentos.
+- **Sharding + replication**: los datos se particionan en shards para escalar horizontalmente, y cada shard tiene réplicas para tolerancia a fallos — el mismo principio que un índice de base de datos, pero distribuido.
+- **Kibana** — la capa de visualización encima de Elasticsearch, típica para dashboards de logs/métricas.
+
+## Infrastructure as Code — CDK vs CloudFormation
+
+| | CloudFormation | AWS CDK |
+|---|---|---|
+| Cómo se define | JSON/YAML declarativo. | Código real (Java, TypeScript, Python) que **compila a** CloudFormation. |
+| Reusabilidad | Limitada a "copiar y pegar" plantillas o usar módulos. | Abstracciones reales — clases, herencia, loops, funciones — igual que cualquier código. |
+| Para quién | Equipos que prefieren declarativo puro. | Equipos que ya piensan en términos de objetos/funciones y quieren IaC con el mismo lenguaje que el backend. |
+
+**Frase para entrevista:** "CDK no reemplaza a CloudFormation, lo genera — es una capa de developer experience encima, así que cualquier limitación de CloudFormation (rollback, drift) sigue aplicando por debajo."
+
+## Observabilidad y debugging de un problema de performance en producción
+
+Pregunta muy común en entrevista senior: *"¿cómo depurás un problema de performance en producción?"* — la respuesta esperada tiene un orden, no es una lista suelta:
+
+1. **CloudWatch metrics** — primero lo barato y rápido: CPU, memoria, latencia agregada. Confirma *que* hay un problema y *cuándo* empezó.
+2. **X-Ray traces** — de "hay latencia" a "en qué request/servicio específico" — traza distribuida que muestra qué llamada downstream es el cuello de botella.
+3. **GC logs + heap dump** — si el síntoma es memoria/latencia intermitente (no un downstream lento), es momento de mirar la JVM: pausas de GC largas, o un heap dump para encontrar qué retiene memoria (`JVisualVM`, `jcmd`, o Java Flight Recorder).
+4. **Optimizar la causa raíz encontrada** — recién ahí: query de base de datos sin índice, falta de caching, un pool de conexiones subdimensionado — nunca "optimizar" antes de confirmar dónde está el cuello real.
+
+**Frase para entrevista:** "no empiezo por adivinar — primero confirmo con métricas agregadas que hay un problema real, después uso tracing para ubicar el servicio/llamada exacta, y solo si el síntoma apunta a la JVM (no a un downstream) reviso GC/heap. Optimizar antes de medir es la forma más común de arreglar lo que no era el problema."
+
+Para el patrón de resiliencia frente a fallas de servicios downstream (retry con backoff, circuit breaker, DLQ, idempotencia) ver [`microservices-patterns/`](../microservices-patterns) sección 2 — es la contraparte de este debugging: cómo evitar que la falla se propague, no solo cómo diagnosticarla.
+
 ## Entorno de práctica (LocalStack)
 
 Un `docker-compose.yml` con Postgres + LocalStack (S3, SQS, SNS, DynamoDB, Lambda, Secrets Manager emulados) alcanza para practicar sin cuenta AWS real:
@@ -151,10 +214,15 @@ El patrón se repite para cualquier servicio AWS: mismo comando/SDK, apuntando a
 | 5 min | Explicar cómo el mismo código Java que usa `S3AsyncClient` funciona igual contra LocalStack y contra AWS real — qué es lo único que cambia. |
 | 4 min | En voz alta: explicar la diferencia entre Multi-AZ y Read Replica en RDS, sin mirar la tabla de arriba. |
 | 4 min | Diseñar (solo hablando) una lifecycle policy para un bucket de "comprobantes de pago": cuánto tiempo en Standard, cuándo pasa a IA/Glacier, cuándo expira. |
+| 5 min | ¿DynamoDB o RDS para un catálogo de productos con altísimo volumen de lectura por ID, sin necesidad de joins? Justificar. |
+| 5 min | Explicar en voz alta el orden de pasos para depurar un problema de performance en producción: qué mirás primero, y por qué no empezás optimizando directamente. |
+| 4 min | ¿CDK reemplaza a CloudFormation o lo usa por debajo? ¿Qué implica eso para el rollback/drift? |
 
-Relacionado: [`microservices-patterns/`](../microservices-patterns) para cómo SQS/SNS se usan en patrones de comunicación event-driven.
+Relacionado: [`microservices-patterns/`](../microservices-patterns) para cómo SQS/SNS se usan en patrones de comunicación event-driven, y para el patrón de resiliencia (retry/circuit breaker/DLQ/idempotencia) que complementa la sección de observabilidad de arriba.
 
 ## Referencias
 
-- [Documentación oficial de AWS — S3 Storage Classes](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html) y [Amazon RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html).
+- [Documentación oficial de AWS — S3 Storage Classes](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html), [Amazon RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html) y [Amazon DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html).
+- [AWS CDK — Developer Guide](https://docs.aws.amazon.com/cdk/v2/guide/home.html) — modelo de abstracciones sobre CloudFormation.
+- [AWS X-Ray Developer Guide](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html) — tracing distribuido para depurar performance en producción.
 - [LocalStack Documentation](https://docs.localstack.cloud/) — para el entorno de práctica local sin cuenta AWS real.
