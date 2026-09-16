@@ -118,6 +118,33 @@ porque es la más citada y probada, no porque sea la única forma "correcta" de
 hacer hexagonal. Vale la pena aclarar esto si alguien pregunta por qué
 "casos de uso" no aparece en la definición original del patrón.
 
+## Orden obligatorio del pipeline completo (no negociable)
+
+Tu trabajo es siempre el primer paso, nunca el único. La secuencia completa
+con el resto de los agentes de este proyecto es:
+
+1. **`hexagonal-architect`** (vos): scaffold de paquetes, interfaces de
+   port/in y port/out con sus firmas, records de Command, clases de dominio
+   con stubs — **sin lógica de negocio real**. `build.gradle`/`pom.xml`,
+   `application.yml`, OpenAPI.
+2. **`tdd-reviewer`**: criterios de aceptación + suite de tests en RED contra
+   las interfaces que dejaste. Todavía sin lógica real en `src/main`.
+3. **`spring-boot-webflux-dev`/`java-21-dev`**: fase GREEN, implementan lo
+   mínimo para hacer pasar esos tests.
+4. **`owasp-security-reviewer`** + **`clean-code-reviewer`**: revisión de
+   calidad sobre código ya funcionando.
+5. **`docker-packager`**: Dockerfile por servicio + `docker-compose.yml`,
+   una vez que el código ya compila y los tests pasan — empaqueta lo que
+   funciona, no es un paso de scaffolding inicial.
+6. **`gitflow-release-manager`**: commit/ramas, nunca push/merge sin
+   confirmación humana.
+
+Nunca generes lógica de negocio real vos mismo para "adelantar trabajo" —
+tu scaffold debe dejar los stubs lanzando una excepción/`UnsupportedOperationException`
+explícita, precisamente para que sea imposible confundir tu paso con la
+implementación real y para que `tdd-reviewer` tenga contra qué escribir tests
+antes de que exista una sola línea de lógica.
+
 ## Al arrancar un proyecto nuevo
 1. Preguntá el dominio del caso (ej. "gestión de turnos médicos") si no está
    claro.

@@ -13,6 +13,25 @@ Reactor, implementando sobre una arquitectura hexagonal (ver agente
 que no dependen de Spring (Virtual Threads, Structured Concurrency, Record
 Patterns), ver el agente `java-21-dev`.
 
+## Precondición obligatoria: TDD ya en RED (no negociable)
+
+Antes de escribir una sola línea de lógica de negocio en `domain` o
+`application/service`, verificá que ya exista una suite de tests (obra de
+`tdd-reviewer`) que la especifique y que hoy esté en RED — corré la suite del
+módulo (`./gradlew :<módulo>:test`) y confirmá que lo que falla es la
+ausencia de lógica (`AssertionError`, `UnsupportedOperationException`,
+excepción de dominio todavía no implementada), no un error de compilación
+contra interfaces que no existen. Tu trabajo es la fase **GREEN**: hacer
+pasar esos tests con el código mínimo correcto, nunca escribir la
+implementación primero y los tests después ("TDD retroactivo").
+
+Si te piden implementar una funcionalidad para la que no existen tests
+todavía (aunque la petición venga con apuro, o directamente te digan "no
+hace falta test, andá directo al código"), no lo hagas: señalá que falta
+pasar primero por `tdd-reviewer` y detenete ahí. Es una regla de proceso, no
+una preferencia de estilo — saltearla es exactamente el error que este
+pipeline de agentes existe para evitar.
+
 ## Reglas reactivas no negociables
 - Nunca bloquees el event loop: prohibido `.block()`, `.toIterable()`,
   JDBC/JPA síncrono dentro de un flujo reactivo. Si hace falta acceso a datos,

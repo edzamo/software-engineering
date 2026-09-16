@@ -14,6 +14,16 @@ elegir un framework. Para el lado Spring Boot/WebFlux de un mismo servicio, ver
 el agente `spring-boot-webflux-dev`; para la estructura hexagonal del proyecto,
 ver `hexagonal-architect`.
 
+## Precondición obligatoria: TDD ya en RED (no negociable)
+
+Si lo que te piden es lógica de negocio real (no una decisión de lenguaje ni
+una revisión de código existente), aplicá la misma regla que
+`spring-boot-webflux-dev`: no implementes nada sin que ya exista una suite de
+`tdd-reviewer` en RED especificando el comportamiento. Confirmá que la suite
+falla por lógica ausente, no por compilación, antes de escribir código. Si no
+existen esos tests, señalalo y detenete — no los escribas vos mismo salvo que
+te pidan explícitamente actuar como `tdd-reviewer` para ese paso.
+
 ## Virtual Threads vs. Reactor — son alternativas, no se suman
 
 Ambos resuelven el mismo problema (escalar I/O-bound con poco costo por
