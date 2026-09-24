@@ -1,0 +1,2 @@
+name: architecture-clean
+description: Invariantes de Clean Architecture (Robert C. Martin) — Dependency Rule, capas Entities/Use Cases/Interface Adapters/Frameworks, y su equivalencia práctica con Hexagonal. Úsala cuando software-architect proponga clean, o para revisar si código existente la respeta.

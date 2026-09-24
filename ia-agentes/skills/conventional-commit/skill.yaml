@@ -1,0 +1,2 @@
+name: conventional-commit
+description: Redacta el mensaje de un commit a partir del diff en staging, detectando y respetando la convención que ya usa el repo (o Conventional Commits si no hay una convención clara). Úsalo cuando el usuario pida "generá el commit" o antes de correr git commit.

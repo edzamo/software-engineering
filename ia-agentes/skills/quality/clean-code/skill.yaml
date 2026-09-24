@@ -1,0 +1,2 @@
+name: quality-clean-code
+description: Checklist de revisión de código en 4 capas (correctitud, diseño, legibilidad, estilo) y violaciones de DRY/KISS/YAGNI, agnóstico de lenguaje. Referenciada por clean-code-reviewer. Las mejoras idiomáticas de cada lenguaje (records, satisfies, dataclasses...) están en las skills stacks-*.

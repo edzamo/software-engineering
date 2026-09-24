@@ -3,6 +3,9 @@ name: pr-description
 description: Arma el título y la descripción de un Pull Request (resumen + plan de pruebas) a partir de los commits y el diff de la rama actual contra la base. Úsalo antes de crear un PR con gh pr create, o para redactar la descripción a mano.
 ---
 
+<!-- GENERADO por compiler/compile.py — no editar a mano.
+     Fuente: skills/pr-description/ -->
+
 # PR Description
 
 Procedimiento para redactar un PR a partir del estado real de la rama, no de memoria.
@@ -16,7 +19,7 @@ git log <rama-base>..HEAD --oneline
 git diff <rama-base>...HEAD
 ```
 
-Si no está claro cuál es la rama base, preguntá (`main`/`master`/`develop` — en un flujo GitFlow como el de [`gitflow-release-manager`](../../agent-harness/agents/gitflow-release-manager/instructions.md), una `feature/*` normalmente apunta a `develop`, no a `main`). Leé **todos** los commits del rango, no solo el último — el PR describe la rama completa.
+Si no está claro cuál es la rama base, preguntá (`main`/`master`/`develop` — en un flujo GitFlow como el de [`gitflow-release-manager`](../../../agents/gitflow-release-manager/prompt.md), una `feature/*` normalmente apunta a `develop`, no a `main`). Leé **todos** los commits del rango, no solo el último — el PR describe la rama completa.
 
 ## Paso 2 — título
 

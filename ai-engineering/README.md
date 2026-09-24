@@ -92,7 +92,7 @@ La progresión es deliberada: no se puede razonar sobre RAG (Fase 2) sin dominar
 
 ## 7 · Relación con el resto del repo
 
-- [`ia-agentes/`](../ia-agentes) — una vez completada la Fase 3-4 (Function Calling, MCP, orquestación de agentes), tiene sentido volver a `ia-agentes/agent-harness/` y entender/extender esa capa de compilación con criterio propio, no solo copiarla.
+- [`ia-agentes/`](../ia-agentes) — una vez completada la Fase 3-4 (Function Calling, MCP, orquestación de agentes), tiene sentido volver a `ia-agentes/compiler/` y entender/extender esa capa de compilación con criterio propio, no solo copiarla.
 - [`ddd/`](../ddd) y [`software-architectures/`](../software-architectures) — un agente en producción (Fase 5) sigue siendo una aplicación de software: necesita capas claras (¿dónde vive la lógica de orquestación vs. el adaptador HTTP del microservicio FastAPI?), no una excepción a las reglas del resto del repo.
 - [`frameworks/`](../frameworks) — el microservicio de la Fase 5 (FastAPI) es Python, fuera del alcance actual de `frameworks/` (Spring Boot, NestJS) — evaluar más adelante si amerita su propia carpeta `frameworks/fastapi/` cuando se practique en profundidad.
 - [`system-design/`](../system-design) — cachear con Redis (Fase 5) conecta directo con los patrones de cache ya vistos en [`01-scale-from-zero-to-millions.md`](../system-design/01-scale-from-zero-to-millions.md).

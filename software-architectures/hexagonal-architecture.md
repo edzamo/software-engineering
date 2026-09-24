@@ -56,7 +56,7 @@ Casos reales que ilustran el patrón, cuyo código completo vive fuera de este r
 Alineada con `buckpal` (proyecto de referencia de *Get Your Hands Dirty on
 Clean Architecture*, Tom Hombergs — github.com/thombergs/buckpal), validada
 end-to-end en un caso real (dominio de citas médicas, Spring WebFlux, ver
-agente `hexagonal-architect` en `ia-agentes/`):
+skill `stacks-java` en `ia-agentes/.claude/skills/`):
 
 ```
 src/main/java/com/<empresa>/<servicio>/

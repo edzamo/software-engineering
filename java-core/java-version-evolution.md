@@ -72,11 +72,11 @@ String procesar(PaymentMethod method) {
 
 ## Java 21 (2023, LTS) — concurrencia y pattern matching avanzado
 
-La LTS más significativa desde Java 8 para el día a día de un backend — cubierta en profundidad, con ejemplos de reconciliación arquitectónica, en el agente [`java-21-dev`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md). Resumen de las piezas clave:
+La LTS más significativa desde Java 8 para el día a día de un backend — cubierta en profundidad, con ejemplos de reconciliación arquitectónica, en la skill [`stacks-java`](../ia-agentes/.claude/skills/stacks-java/SKILL.md). Resumen de las piezas clave:
 
 | Feature (JEP) | Qué resuelve |
 |---|---|
-| **Virtual Threads** (JEP 444) | Hilos gestionados por la JVM (no 1:1 con el hilo del SO) — permiten escribir código bloqueante-imperativo que escala igual que código reactivo en I/O. Ver el agente `java-21-dev` para la reconciliación completa con Project Reactor/WebFlux (no se combinan, son alternativas — ver también [`../frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md)). |
+| **Virtual Threads** (JEP 444) | Hilos gestionados por la JVM (no 1:1 con el hilo del SO) — permiten escribir código bloqueante-imperativo que escala igual que código reactivo en I/O. Ver la skill `stacks-java` para la reconciliación completa con Project Reactor/WebFlux (no se combinan, son alternativas — ver también [`../frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md)). |
 | **Structured Concurrency** (JEP 453, preview) | `StructuredTaskScope` — agrupa varias tareas concurrentes bajo un mismo ámbito, que se cancelan/propagan errores juntas, en vez de hilos sueltos sin relación de ciclo de vida. |
 | **Record Patterns** (JEP 440) | Destructuring de un `record` directo en el `switch`/`instanceof`: `if (obj instanceof Punto(int x, int y))` — accedés a los campos sin llamar a los getters uno por uno. |
 | **Pattern Matching para `switch`** (JEP 441, confirmado) | Ya no preview — incluye `case null`, guardas `when`, y exhaustividad verificada con `sealed`. |
@@ -119,4 +119,4 @@ List<String> invertida = lista.reversed(); // vista, O(1) — no crea una copia
 - [OpenJDK — JEP Index](https://openjdk.org/jeps/0) — fuente primaria de cada JEP citado (444, 453, 440, 441, 431).
 - Oracle — [Java Language Updates](https://docs.oracle.com/en/java/javase/21/language/java-language-changes.html) — changelog oficial por versión.
 
-Relacionado: [`functional-interfaces.md`](functional-interfaces.md) para el detalle de Java 8, [`ddd/entities-vs-value-objects.md`](../ddd/entities-vs-value-objects.md) para cuándo usar `record` en modelado de dominio, [`data-structures-decision-guide.md`](data-structures-decision-guide.md) para Sequenced Collections en la práctica, y el agente [`java-21-dev`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md) para la reconciliación completa Virtual Threads vs. Reactor con reglas de revisión de código.
+Relacionado: [`functional-interfaces.md`](functional-interfaces.md) para el detalle de Java 8, [`ddd/entities-vs-value-objects.md`](../ddd/entities-vs-value-objects.md) para cuándo usar `record` en modelado de dominio, [`data-structures-decision-guide.md`](data-structures-decision-guide.md) para Sequenced Collections en la práctica, y la skill [`stacks-java`](../ia-agentes/.claude/skills/stacks-java/SKILL.md) para la reconciliación completa Virtual Threads vs. Reactor con reglas de revisión de código.

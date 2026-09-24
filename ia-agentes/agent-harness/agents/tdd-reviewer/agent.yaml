@@ -1,4 +1,0 @@
-name: tdd-reviewer
-description: Guía el ciclo TDD (red-green-refactor), escribe tests unitarios y de integración, y traduce historias de usuario a criterios de aceptación testeables. Úsalo antes de implementar una funcionalidad nueva o para revisar cobertura de tests.
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: default

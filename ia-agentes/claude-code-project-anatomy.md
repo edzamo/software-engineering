@@ -6,64 +6,95 @@ Mapa de referencia de **todo lo que puede tener** un proyecto que usa Claude Cod
 
 ```
 proyecto/
-├── CLAUDE.md                        # memoria persistente — instrucciones que el hilo principal
-│                                     # lee siempre, sin invocarlas explícitamente
-├── .mcp.json                        # servidores MCP registrados (herramientas externas reales)
+├── .github/workflows/                # CI — corre tests + tests de arquitectura (opcional)
 │
-├── .claude/
-│   ├── settings.json                 # permisos (allow/deny por tool), hooks — versionado, del equipo
-│   ├── settings.local.json           # overrides personales — NO versionado (va en .gitignore)
-│   ├── agents/<nombre>.md            # subagentes: delegables, corren en su propio contexto
-│   ├── skills/<nombre>/SKILL.md      # skills: procedimientos que corre el hilo principal
-│   └── commands/<nombre>.md          # slash commands custom (opcional, no usado en este repo todavía)
+├── agents/<nombre>/                  # FUENTE de cada agente
+│   ├── agent.yaml                    #   name, description, tools, model
+│   └── prompt.md                     #   el system prompt
 │
-├── agent-harness/                    # PATRÓN OPCIONAL — fuente canónica + compilador
-│   └── ...                           # ver agent-harness/README.md — se justifica solo si hace
-│                                      # falta portabilidad multi-runtime (ver más abajo)
+├── skills/                           # FUENTE de cada skill, agrupada por categoría
+│   ├── architecture/<estilo>/        #   agnóstico de lenguaje: invariantes de arquitectura
+│   │   ├── skill.yaml
+│   │   └── rules.md
+│   ├── quality/<tema>/               #   agnóstico de lenguaje: TDD, clean code, OWASP, refactor
+│   │   ├── skill.yaml
+│   │   └── protocol.md | rules.md | checklists.md | catalog.md
+│   ├── stacks/<lenguaje>/            #   SÍ depende del lenguaje: versión, herramientas, sintaxis
+│   │   ├── skill.yaml
+│   │   └── rules.md
+│   └── <nombre>/                     #   skills sueltas, sin categoría (procedimientos)
+│       ├── skill.yaml
+│       └── rules.md
 │
-└── (tests, scripts, el resto del código del proyecto)
+├── compiler/compile.py               # traduce agents/ + skills/ al formato que Claude Code
+│                                      # auto-descubre — ver "Por qué un compilador" más abajo
+├── tests/                            # valida la fuente y que lo compilado esté sincronizado
+│
+├── pipelines/                        # documentación del orden del pipeline (no ejecutable hoy)
+│
+├── CLAUDE.md                         # memoria persistente — instrucciones que el hilo principal
+│                                      # lee siempre, sin invocarlas explícitamente
+├── .mcp.json                         # servidores MCP registrados (herramientas externas reales)
+│
+└── .claude/                          # SALIDA — lo que Claude Code realmente lee, generado
+    ├── settings.json                 #   permisos (allow/deny por tool), hooks — versionado
+    ├── settings.local.json           #   overrides personales — NO versionado (.gitignore)
+    ├── CLAUDE.md                     #   reglas del proyecto (se edita acá directo, no se compila)
+    ├── hooks/<nombre>.py             #   hooks reales (ej. el que hace cumplir TDD)
+    ├── scripts/<nombre>.py           #   scripts que los agentes corren (ej. detectar el stack)
+    ├── agents/<nombre>.md            #   GENERADO desde agents/<nombre>/
+    ├── skills/<nombre>/SKILL.md      #   GENERADO desde skills/[<categoría>/]<nombre>/
+    └── commands/<nombre>.md          #   slash commands custom (opcional, no usado acá)
 ```
 
 ## Las piezas, una por una — qué resuelve cada una
 
 | Pieza | Qué problema resuelve | Vive en | Estado en este repo |
 |---|---|---|---|
-| **`CLAUDE.md`** | Contexto que el hilo principal debe conocer *siempre*, sin que nadie lo pida — convenciones del repo, qué evitar, cómo correr los tests. Es memoria, no una tarea puntual. | Raíz del proyecto (o de una subcarpeta, si aplica solo ahí). | No usado en este repo todavía — es documentación pura, sin convenciones de build que memorizar. Candidato natural si el repo empezara a tener código real para compilar. |
-| **`.claude/settings.json`** | Permisos: qué tools se auto-aprueban, cuáles requieren confirmación, hooks (comandos que corren en eventos como "antes de una tool call"). Es la config real de seguridad/automatización — no un archivo propio inventado. | `.claude/settings.json` (versionado, del equipo) + `.claude/settings.local.json` (personal, no versionado). | No configurado en `ia-agentes/` — se usa con los permisos por defecto de la sesión. |
-| **`.mcp.json`** | Registro de servidores MCP: integraciones reales con sistemas externos (GitHub API, una base de datos, un linter que devuelve JSON) que un agente o skill puede usar como tool. | Raíz del proyecto. | No usado — los 6 agentes de este repo solo necesitan `Read/Write/Edit/Bash/Grep/Glob`, que ya cubren todo lo que hacen (ver [`agent-harness/tool-integrations/README.md`](agent-harness/tool-integrations/README.md) para el análisis de cuándo sí haría falta). |
-| **`.claude/agents/*.md`** | Subagentes: delegás una tarea completa (revisar OWASP, armar el esqueleto hexagonal) a un contexto separado, con su propio criterio versionado. Ideal cuando la tarea es un dominio de juicio propio y puede correr independiente del hilo principal. | `.claude/agents/<nombre>.md`. | **Implementado.** 6 agentes — ver [`README.md`](README.md#catálogo-por-dominio). Fuente canónica en [`agent-harness/agents/`](agent-harness/agents). |
-| **`.claude/skills/<nombre>/SKILL.md`** | Skills: un procedimiento puntual y repetible que el **hilo principal** ejecuta él mismo (no delega a otro contexto) — más liviano que un agente, para tareas más mecánicas. | `.claude/skills/<nombre>/SKILL.md`. | **Implementado.** `conventional-commit` y `pr-description` — ver tabla más abajo. |
-| **`.claude/commands/<nombre>.md`** | Slash commands custom — atajos tipo `/mi-comando` que insertan un prompt predefinido. Útil para flujos que se repiten pero no necesitan la lógica de una Skill (más simple: solo texto, sin instrucciones de "cuándo" invocarlo). | `.claude/commands/<nombre>.md`. | No usado en este repo — las 2 tareas repetitivas que identificamos (commit, PR) ya encajan mejor como Skills (se auto-invocan por contexto, un command hay que tipearlo). |
-| **`agent-harness/`** | Patrón organizacional opcional: separa la fuente de cada agente (`agent.yaml` + `instructions.md`) de cómo se compila para un runtime puntual (`.claude/agents/*.md`). Se justifica cuando además de Claude Code hace falta portabilidad (SDK crudo, otro cliente) o reutilización de piezas (ej. un checklist en `rules/` leído por otra herramienta). | `agent-harness/` en la raíz del proyecto (acá vive dentro de `ia-agentes/`). | **Implementado** — ver [`agent-harness/README.md`](agent-harness/README.md) para el detalle completo de por qué existe y qué hace cada subcarpeta. |
-| **Automatización / "loops"** | Para tareas que no son "hacé esto una vez", sino "revisá esto cada tanto" o "corré esto en un horario" — dos mecanismos distintos, no lo mismo: **(a)** un loop de sesión con paso dinámico (repetir un prompt cada N minutos mientras la sesión sigue abierta), **(b)** una rutina programada en la nube con cron (corre sola, sin sesión abierta). | No es un archivo del proyecto — se invoca como skill/tool de la sesión (`/loop`, `schedule`), no se versiona en el repo. | No usado — ningún flujo de este repo necesita correr sin supervisión en un horario. Si algún día hiciera falta (ej. "revisar cada mañana si hay una entrevista agendada"), es candidato. |
+| **`CLAUDE.md`** | Contexto que el hilo principal debe conocer *siempre*, sin que nadie lo pida — convenciones del repo, qué evitar, cómo correr los tests. Es memoria, no una tarea puntual. | Raíz del proyecto, o `.claude/CLAUDE.md`. | **Implementado** — ver [`.claude/CLAUDE.md`](.claude/CLAUDE.md): TDD obligatorio, detectar el stack antes de generar código, decisiones de diseño consultadas. |
+| **`.claude/settings.json`** | Permisos: qué tools se auto-aprueban, cuáles requieren confirmación, hooks (comandos que corren en eventos como "antes de una tool call"). | `.claude/settings.json` (versionado) + `.claude/settings.local.json` (personal, no versionado). | **Implementado** — registra el hook `tdd_gate.py` en `PreToolUse`. |
+| **`.mcp.json`** | Registro de servidores MCP: integraciones reales con sistemas externos que un agente o skill puede usar como tool. | Raíz del proyecto. | No usado — los agentes de este repo solo necesitan `Read/Write/Edit/Bash/Grep/Glob`. |
+| **`.claude/agents/*.md`** | Subagentes: delegás una tarea completa (revisar OWASP, proponer una arquitectura) a un contexto separado, con su propio criterio versionado. | `.claude/agents/<nombre>.md`, **generado** desde `agents/<nombre>/`. | **Implementado.** 8 agentes — ver [`README.md`](README.md#catálogo-por-dominio). |
+| **`.claude/skills/<nombre>/SKILL.md`** | Skills: un procedimiento o un cuerpo de conocimiento reutilizable que el **hilo principal** (o un agente) consulta sin abrir un contexto nuevo. | `.claude/skills/<nombre>/SKILL.md`, **generado** desde `skills/[<categoría>/]<nombre>/`. | **Implementado.** 12 skills en 3 categorías agnósticas de lenguaje (`architecture-*`, `quality-*`) + 1 que sí depende del lenguaje (`stacks-*`) + 2 de procedimiento — ver tabla en [`README.md`](README.md#skills). |
+| **`.claude/commands/<nombre>.md`** | Slash commands custom — atajos tipo `/mi-comando` que insertan un prompt predefinido. | `.claude/commands/<nombre>.md`. | No usado — las tareas repetitivas identificadas (commit, PR) ya encajan mejor como Skills. |
+| **`agents/` + `skills/` + `compiler/`** | Separan la **fuente** editable (organizada por rol y por categoría de conocimiento, como cualquier repo de ingeniería) de **cómo se empaqueta** para el único formato que Claude Code auto-descubre (`.claude/agents/*.md` y `.claude/skills/<nombre>/SKILL.md`, ambos planos). | Raíz de `ia-agentes/`. | **Implementado** — ver "Por qué un compilador" más abajo. |
+| **`.claude/hooks/*.py` + `.claude/scripts/*.py`** | Automatización que corre sin que el agente decida invocarla: un hook puede **bloquear** una tool call (ej. escribir lógica sin test); un script es algo que un agente corre explícitamente (ej. detectar el stack del proyecto). | `.claude/hooks/`, `.claude/scripts/` (código de la sesión, no se compila — se copian tal cual). | **Implementado** — `tdd_gate.py` (hook) y `detect_stack.py` (script), ambos con tests propios. |
+| **Automatización / "loops"** | Para tareas que no son "hacé esto una vez", sino "revisá esto cada tanto" o "corré esto en un horario". | No es un archivo del proyecto — se invoca como skill/tool de la sesión (`/loop`, `schedule`). | No usado en este repo. |
 
 ## Agent vs. Skill — la pregunta que más se confunde
 
 | | Agent | Skill |
 |---|---|---|
-| ¿Dónde corre? | Contexto/hilo separado (se invoca con el tool `Agent`). | El mismo hilo principal (se invoca con el tool `Skill`). |
-| ¿Para qué tipo de tarea? | Un **dominio de juicio** completo — requiere analizar, decidir, a veces iterar (revisar seguridad, diseñar arquitectura). | Un **procedimiento puntual** — pasos más mecánicos y predecibles (armar un mensaje de commit, una descripción de PR). |
-| ¿Cuánto contexto necesita? | Bastante — por eso vale la pena aislarlo en su propio contexto. | Poco — por eso no vale la pena el costo de abrir un contexto nuevo. |
-| Ejemplo en este repo | `owasp-security-reviewer` (analiza código, prioriza, arma un reporte con criterio). | `conventional-commit` (mira el diff, sigue una receta, produce un mensaje). |
+| ¿Dónde corre? | Contexto/hilo separado (se invoca con el tool `Agent`). | El mismo hilo principal, o consultada por un agente sin abrir contexto nuevo. |
+| ¿Para qué tipo de tarea? | Un **dominio de juicio** completo — analiza, decide, a veces itera (revisar seguridad, proponer una arquitectura). | Un **cuerpo de conocimiento o un procedimiento puntual** — invariantes, un checklist, una receta (armar un commit, las reglas de una arquitectura). |
+| ¿Cuánto contexto necesita? | Bastante — por eso vale la pena aislarlo. | Poco a moderado — se consulta, no se delega. |
+| Ejemplo en este repo | `owasp-security-reviewer` (analiza código, prioriza, arma un reporte con criterio). | `quality-owasp-security` (la tabla de los 10 riesgos que ese agente consulta) — o `conventional-commit` (mira el diff, sigue una receta). |
 
-## Dos patrones para organizar los agentes — cuál usar
+## Por qué un compilador, y no `.claude/` a mano
 
-- **Plano** (`.claude/agents/*.md` escritos directamente a mano, sin `agent-harness/`): la opción correcta si el único objetivo es usar Claude Code — es más simple, cero pasos extra.
-- **Harness** (fuente canónica + compilador, como `agent-harness/` acá): se justifica cuando hace falta portabilidad a otro runtime, o reutilizar una pieza (como el checklist OWASP) desde afuera del prompt del agente. Es el punto intermedio elegido en este repo — ver el razonamiento completo en [`agent-harness/README.md`](agent-harness/README.md#por-qué-esta-estructura-y-no-algo-más-simple-o-más-elaborado).
+Dos formas de organizar agentes y skills:
 
-No hay una respuesta "correcta" universal — es una decisión de costo/beneficio según cuántos runtimes reales vas a necesitar, la misma lógica de YAGNI que aplicamos en todo [`clean-code/`](../clean-code).
+- **Plano** (`.claude/agents/*.md` y `.claude/skills/*/SKILL.md` escritos directamente a mano): la opción más simple, correcta si el catálogo es chico y nadie necesita reutilizar una pieza de conocimiento desde otro lugar.
+- **Fuente + compilador** (`agents/` + `skills/` + `compiler/`, el patrón de este repo): la fuente se organiza como se organizaría cualquier repo de ingeniería de software agnóstico — un rol por agente, un cuerpo de conocimiento por skill, agrupado en categorías (`architecture/`, `quality/`, `stacks/`). El compilador traduce eso al único formato que Claude Code exige: un directorio **plano**, sin subcarpetas de categoría. Sin este paso, `skills/architecture/hexagonal/` y `skills/quality/clean-code/` colisionarían en un mismo nivel (`.claude/skills/hexagonal`, `.claude/skills/clean-code`) o habría que aplanar los nombres a mano y arriesgarse a que la fuente y lo que Claude Code lee se desincronicen.
+
+No hay una respuesta "correcta" universal — es una decisión de costo/beneficio, la misma lógica de YAGNI que aplicamos en todo [`clean-code/`](../clean-code). Acá se justifica porque el catálogo ya tiene 8 agentes y 12 skills, y porque separar "qué es agnóstico" de "qué depende del lenguaje" (`architecture/`+`quality/` vs. `stacks/`) es justo la lección que motivó esta reorganización.
 
 ## Cómo llevarte esto a un proyecto nuevo
 
 ```bash
-# lo mínimo para tener agentes + skills funcionando
+# lo mínimo para tener agentes + skills funcionando (no editable ahí)
 cp -r ia-agentes/.claude ./.claude
 
-# si además querés la fuente editable (agent-harness)
-cp -r ia-agentes/agent-harness ./agent-harness
+# si además querés la fuente editable (agents/, skills/, compiler/, tests/)
+cp -r ia-agentes/agents ./agents
+cp -r ia-agentes/skills ./skills
+cp -r ia-agentes/compiler ./compiler
+cp -r ia-agentes/tests ./tests
 ```
 
-Relacionado: [`README.md`](README.md) para el catálogo de agentes y cómo activarlos, [`agent-harness/README.md`](agent-harness/README.md) para el patrón fuente/compilador, y [`.claude/skills/`](.claude/skills) para las 2 skills implementadas.
+Con la fuente editable: agregar o cambiar un agente es tocar `agents/<nombre>/prompt.md` (o `skills/<categoría>/<nombre>/rules.md`) y correr `python3 compiler/compile.py`; `python3 -m unittest discover -s tests` valida que quedó todo sincronizado.
+
+Relacionado: [`README.md`](README.md) para el catálogo completo de agentes y skills, y [`.claude/CLAUDE.md`](.claude/CLAUDE.md) para las reglas que aplican siempre.
 
 ## Referencias
 

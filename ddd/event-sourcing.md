@@ -60,7 +60,7 @@ public class Appointment {
 }
 ```
 
-- El `switch` con pattern matching sobre el tipo de evento (Java 21, ver [`java-21-dev`](../ia-agentes/agent-harness/agents/java-21-dev/instructions.md)) es la forma idiomática de aplicar cada evento — cada `case` sabe cómo mutar el estado para ese tipo particular.
+- El `switch` con pattern matching sobre el tipo de evento (Java 21, ver [`stacks-java`](../ia-agentes/.claude/skills/stacks-java/SKILL.md)) es la forma idiomática de aplicar cada evento — cada `case` sabe cómo mutar el estado para ese tipo particular.
 - El **event store** (la tabla `append-only` que guarda cada evento con su número de secuencia) reemplaza a la tabla `appointments` tradicional como fuente de verdad — la tabla de estado actual, si existe, es solo una **proyección** derivada (ver más abajo), nunca la fuente original.
 
 ## Snapshots — el problema de rendimiento, y su solución

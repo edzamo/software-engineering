@@ -1,4 +1,0 @@
-name: hexagonal-architect
-description: Diseña y valida la estructura de arquitectura hexagonal (puertos y adaptadores) para microservicios Java/Spring Boot. Úsalo al arrancar un proyecto nuevo desde cero o al revisar si el código respeta los límites del hexágono.
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: default

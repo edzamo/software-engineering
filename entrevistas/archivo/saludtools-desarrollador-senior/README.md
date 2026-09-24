@@ -1,5 +1,7 @@
 # SaludTools — Desarrollador(a) Senior
 
+> **Proceso cerrado:** no avanzó en la evaluación técnica. Lo aprendido y el plan de mejora están en [`kaizen/`](../../kaizen). Lo de abajo queda como material de preparación.
+
 > **Entrevista técnica: HOY, 5:00 PM.** Por eso este documento tiene el contenido completo replicado acá mismo (no solo links) — para tener todo a mano sin saltar de carpeta en carpeta. Los links a las fuentes generales quedan más abajo, para cuando haya que reestructurar esto de vuelta en referencias puras.
 
 Java 21, Spring WebFlux, AWS, microservicios sobre un producto HealthTech.
@@ -37,18 +39,18 @@ No sabés cuál te va a tocar, así que preparate para las dos con una apertura 
 | Si es... | Tu apertura (primeros 2-3 min, en voz alta) |
 |---|---|
 | **"Implementá esto"** (código real, en tu IDE, con o sin autocomplete permitido) | 1) Repetí el requerimiento con tus palabras para confirmar que entendiste. 2) Anunciá el esqueleto hexagonal antes de tipear una línea (`domain`/`application`/`infrastructure`, ver sección 04). 3) Empezá por el test que falla (TDD, sección 05), no por la implementación. 4) Si usás autocomplete/IA, verbalizá por qué aceptás o corregís cada sugerencia relevante (esto es lo que más pesa, ver arriba). |
-| **"Diseñemos un sistema"** (arquitectura, pizarra o con Claude ahí mismo) | 1) Preguntá 2-3 cosas antes de dibujar nada: volumen esperado, qué dato es crítico que nunca se pierda (consistencia fuerte vs eventual), quién más consume esto. 2) Dibujá el hexágono + los límites de microservicio, no el detalle de clases. 3) Nombrá 2-3 alternativas reales para cada decisión (SQL vs NoSQL, sync vs async — ver [`system-design/02-databases-sql-vs-nosql.md`](../../system-design/02-databases-sql-vs-nosql.md) y [`microservices-patterns/`](../../microservices-patterns)) y cerrá con "para este caso, con este volumen/equipo, elijo X porque...". |
+| **"Diseñemos un sistema"** (arquitectura, pizarra o con Claude ahí mismo) | 1) Preguntá 2-3 cosas antes de dibujar nada: volumen esperado, qué dato es crítico que nunca se pierda (consistencia fuerte vs eventual), quién más consume esto. 2) Dibujá el hexágono + los límites de microservicio, no el detalle de clases. 3) Nombrá 2-3 alternativas reales para cada decisión (SQL vs NoSQL, sync vs async — ver [`system-design/02-databases-sql-vs-nosql.md`](../../../system-design/02-databases-sql-vs-nosql.md) y [`microservices-patterns/`](../../../microservices-patterns)) y cerrá con "para este caso, con este volumen/equipo, elijo X porque...". |
 
 ### SaludTools es una startup — que se note en cómo respondés
 
-No es un banco ni una corporación con comités de arquitectura — es una startup HealthTech. Priorizá simplicidad sobre ceremonia en cualquier respuesta de diseño: si te dan a elegir, defendé la opción que resuelve el problema **hoy** sin sobre-ingeniería (mismo criterio YAGNI de [`clean-code/`](../../clean-code)), y mencionalo explícitamente — "en una startup, agregaría esto solo cuando el volumen real lo justifique, no antes" es una respuesta de nivel senior, no una excusa.
+No es un banco ni una corporación con comités de arquitectura — es una startup HealthTech. Priorizá simplicidad sobre ceremonia en cualquier respuesta de diseño: si te dan a elegir, defendé la opción que resuelve el problema **hoy** sin sobre-ingeniería (mismo criterio YAGNI de [`clean-code/`](../../../clean-code)), y mencionalo explícitamente — "en una startup, agregaría esto solo cuando el volumen real lo justifique, no antes" es una respuesta de nivel senior, no una excusa.
 
 ### Bloques de estudio para hoy (en orden, con tiempo asignado)
 
 | Bloque | Tiempo | Qué hacer |
 |---|---|---|
 | 1 · Simulacro completo | 45-60 min | Corré el flujo de la sección 07 de punta a punta con un dominio **nuevo** que no hayas usado antes (ni citas médicas ni café — inventá uno de SaludTools, ej. "seguimiento de signos vitales"). Cronometrado. Es la práctica de mayor impacto de todas. |
-| 2 · Operadores reactivos en voz alta | 25-30 min | Repasá [`webflux-operators.md`](../../frameworks/spring-boot/webflux-operators.md) — `map`/`flatMap`, `switchIfEmpty`, manejo de errores. Explicá cada uno en voz alta como si se lo dijeras a alguien no técnico, sin mirar el ejemplo. |
+| 2 · Operadores reactivos en voz alta | 25-30 min | Repasá [`webflux-operators.md`](../../../frameworks/spring-boot/webflux-operators.md) — `map`/`flatMap`, `switchIfEmpty`, manejo de errores. Explicá cada uno en voz alta como si se lo dijeras a alguien no técnico, sin mirar el ejemplo. |
 | 3 · Vocabulario DDD sin mirar | 15-20 min | Tapá la sección 03.6 y decí de memoria: Entity vs VO, Aggregate, Repository pattern, Domain Event, Bounded Context — una frase cada uno. |
 | 4 · Fit y logística | 15-20 min | Repasá [`fit-y-liderazgo.md`](fit-y-liderazgo.md) — tené listo un ejemplo propio por cada fila de responsabilidades, y la respuesta a "por qué SaludTools/por qué salud". |
 | 5 · Sanity check de entorno | 10 min | Confirmá que el IDE, JDK 21 y (si aplica) LocalStack arrancan sin fricción — no aprendas nada nuevo de AWS hoy, solo verificá que lo que ya sabés arranca. |
@@ -101,12 +103,12 @@ Heurística para responder cualquier pregunta de este tipo: *"la decisión corre
 
 | # | Pregunta | Respuesta relámpago |
 |---|---|---|
-| 1 | ¿Cómo diseñás un backend Java escalable? | Microservicios + comunicación async (Kafka/SQS) + caching (Redis) + connection pooling (HikariCP) + stateless detrás de un load balancer. Ver [`microservices-patterns/`](../../microservices-patterns). |
-| 2 | ¿Java 8 vs Java 17+? | 8: lambdas/streams/`Optional`. 11: HTTP Client, `var`. 17 (LTS): sealed classes, records, pattern matching `instanceof`. Detalle completo en [`java-core/java-version-evolution.md`](../../java-core/java-version-evolution.md). |
+| 1 | ¿Cómo diseñás un backend Java escalable? | Microservicios + comunicación async (Kafka/SQS) + caching (Redis) + connection pooling (HikariCP) + stateless detrás de un load balancer. Ver [`microservices-patterns/`](../../../microservices-patterns). |
+| 2 | ¿Java 8 vs Java 17+? | 8: lambdas/streams/`Optional`. 11: HTTP Client, `var`. 17 (LTS): sealed classes, records, pattern matching `instanceof`. Detalle completo en [`java-core/java-version-evolution.md`](../../../java-core/java-version-evolution.md). |
 | 3 | ¿Cómo asegurás calidad de código y performance? | Ver tabla debajo — es contenido nuevo, no estaba en el repo. |
-| 10 | ¿Cómo manejás fallas en sistemas distribuidos? | Retry con backoff + circuit breaker (Resilience4j) + DLQ + idempotency keys + graceful degradation. Ya cubierto en [`microservices-patterns/`](../../microservices-patterns) sección 2. |
+| 10 | ¿Cómo manejás fallas en sistemas distribuidos? | Retry con backoff + circuit breaker (Resilience4j) + DLQ + idempotency keys + graceful degradation. Ya cubierto en [`microservices-patterns/`](../../../microservices-patterns) sección 2. |
 | 11 | Contame de un proyecto que llevaste vos solo, de punta a punta. | Tené un ejemplo propio armado (migración monolito→microservicios, CI/CD, IaC, entrega sin supervisión constante) — ver [`fit-y-liderazgo.md`](fit-y-liderazgo.md) para cómo estructurar la respuesta con el framework STAR. |
-| 12 | ¿Cómo depurás un problema de performance en producción? | Orden: CloudWatch metrics → X-Ray traces → GC logs/heap dump → recién ahí optimizar la causa raíz. Detalle completo (nuevo) en [`cloud-aws/`](../../cloud-aws) sección "Observabilidad y debugging". |
+| 12 | ¿Cómo depurás un problema de performance en producción? | Orden: CloudWatch metrics → X-Ray traces → GC logs/heap dump → recién ahí optimizar la causa raíz. Detalle completo (nuevo) en [`cloud-aws/`](../../../cloud-aws) sección "Observabilidad y debugging". |
 
 **Calidad de código y performance en Java (pregunta 3 — contenido nuevo):**
 
@@ -122,11 +124,11 @@ Heurística para responder cualquier pregunta de este tipo: *"la decisión corre
 
 | # | Pregunta | Respuesta relámpago |
 |---|---|---|
-| 4 | ¿Cómo diseñás almacenamiento de archivos con S3? | `S3AsyncClient` + keys con UUID + versioning/lifecycle + IAM/bucket policies + CloudFront. Detalle completo ya en [`cloud-aws/`](../../cloud-aws) sección S3. |
-| 5 | ¿Buenas prácticas corriendo Java en EC2? | ASG + ALB/NLB + SSM Parameter Store + CloudWatch/X-Ray + AMI horneada con Packer. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección EC2. |
-| 6 | ¿DynamoDB vs RDS? | DynamoDB: NoSQL, latencia constante, escala automático, sin joins — alto volumen de escritura por clave. RDS: relacional, joins/transacciones. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección DynamoDB. |
-| 7 | ¿Cómo usás Elasticsearch desde Java? | Cliente REST para indexar/consultar, full-text search, sharding+replication, Kibana para visualizar. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección Elasticsearch. |
-| 8 | ¿CDK vs CloudFormation? | CDK es código (Java/TS/Python) que **compila a** CloudFormation — no lo reemplaza, le da abstracciones reales encima. Nuevo — en [`cloud-aws/`](../../cloud-aws) sección IaC. |
+| 4 | ¿Cómo diseñás almacenamiento de archivos con S3? | `S3AsyncClient` + keys con UUID + versioning/lifecycle + IAM/bucket policies + CloudFront. Detalle completo ya en [`cloud-aws/`](../../../cloud-aws) sección S3. |
+| 5 | ¿Buenas prácticas corriendo Java en EC2? | ASG + ALB/NLB + SSM Parameter Store + CloudWatch/X-Ray + AMI horneada con Packer. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección EC2. |
+| 6 | ¿DynamoDB vs RDS? | DynamoDB: NoSQL, latencia constante, escala automático, sin joins — alto volumen de escritura por clave. RDS: relacional, joins/transacciones. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección DynamoDB. |
+| 7 | ¿Cómo usás Elasticsearch desde Java? | Cliente REST para indexar/consultar, full-text search, sharding+replication, Kibana para visualizar. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección Elasticsearch. |
+| 8 | ¿CDK vs CloudFormation? | CDK es código (Java/TS/Python) que **compila a** CloudFormation — no lo reemplaza, le da abstracciones reales encima. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección IaC. |
 | 9 | ¿Cómo diseñarías un sistema de gestión de órdenes escalable en AWS? | API Gateway → Lambda/EC2 (microservicios Spring Boot) → DynamoDB (lookups) + S3 (archivo) → SQS/Kafka (eventos async) → Elasticsearch (búsqueda) → CloudWatch/X-Ray/ELK (observabilidad) → Multi-AZ + retries + DLQs (resiliencia). Es literalmente juntar todas las píldoras de arriba en un solo diagrama — practicalo dibujándolo de memoria. |
 
 ## 01 · Programación reactiva
@@ -218,7 +220,7 @@ if (exception instanceof CedulaInvalidaException ex) {
 }
 ```
 
-Más drills de Map/List/Stream (no específicos de esta entrevista) en [`java-core/`](../../java-core).
+Más drills de Map/List/Stream (no específicos de esta entrevista) en [`java-core/`](../../../java-core).
 
 ---
 
@@ -247,7 +249,7 @@ aws --endpoint-url=http://localhost:4566 s3 mb s3://practica-bucket
 
 > En Spring, apuntás el `S3AsyncClient`/`SqsAsyncClient` al endpoint de LocalStack (`http://localhost:4566`) con credenciales dummy (`test`/`test`) — el código de producción no cambia, solo el endpoint por config. Si en la entrevista te piden usar AWS, contá esto en voz alta: mostrás que sabés separar código de infraestructura.
 
-Docker-compose y script completo de práctica (fuera de este repo, ver sección de enlaces) en la carpeta local de referencia — comandos equivalentes documentados en [`cloud-aws/`](../../cloud-aws).
+Docker-compose y script completo de práctica (fuera de este repo, ver sección de enlaces) en la carpeta local de referencia — comandos equivalentes documentados en [`cloud-aws/`](../../../cloud-aws).
 
 ---
 
@@ -264,11 +266,11 @@ Preguntas de base que un entrevistador Senior espera contestadas sin dudar, incl
 - **JPA vs Hibernate:** JPA es la **especificación** (`@Entity`, `EntityManager`); Hibernate es la **implementación** más usada de esa especificación. Spring Data JPA agrega repositorios (`JpaRepository<T,ID>`) encima de ambos.
 - **JPA/Hibernate es bloqueante** (JDBC por debajo) — nunca dentro de un pipeline WebFlux. Para reactivo: **Spring Data R2DBC** (API distinta, sin lazy-loading ni caché de 1er nivel).
 - **Entidad JPA ≠ Entidad DDD:** una `@Entity` de JPA mapea una tabla; una Entidad de DDD es identidad+ciclo de vida en el dominio. En hexagonal son **clases distintas** (`OrderJpaEntity` vs `Order`), unidas por un `Mapper` en el adaptador — el dominio nunca importa `jakarta.persistence`.
-- **El problema N+1** — acceder a una relación `@ManyToOne(fetch = LAZY)` dentro de un loop dispara una query por fila. Se resuelve con `JOIN FETCH`, `@EntityGraph`, o una proyección DTO directa — nunca cambiando el fetch type a `EAGER` por defecto (trae de más en los casos que no lo necesitan). Detalle en [`spring-boot/spring-data.md`](../../frameworks/spring-boot/spring-data.md).
+- **El problema N+1** — acceder a una relación `@ManyToOne(fetch = LAZY)` dentro de un loop dispara una query por fila. Se resuelve con `JOIN FETCH`, `@EntityGraph`, o una proyección DTO directa — nunca cambiando el fetch type a `EAGER` por defecto (trae de más en los casos que no lo necesitan). Detalle en [`spring-boot/spring-data.md`](../../../frameworks/spring-boot/spring-data.md).
 - **`@Transactional` no funciona en WebFlux/R2DBC** — depende de `ThreadLocal`, incompatible con un pipeline que salta de hilo en el event loop. Se usa `TransactionalOperator` en su lugar.
-- **`WebClient` sin timeout configurado** es la trampa más común en código reactivo real — una llamada colgada consume un canal de Netty indefinidamente. Detalle de `WebClient`, `WebTestClient` y seguridad reactiva (`ServerHttpSecurity`) en [`spring-boot/webflux.md`](../../frameworks/spring-boot/webflux.md).
+- **`WebClient` sin timeout configurado** es la trampa más común en código reactivo real — una llamada colgada consume un canal de Netty indefinidamente. Detalle de `WebClient`, `WebTestClient` y seguridad reactiva (`ServerHttpSecurity`) en [`spring-boot/webflux.md`](../../../frameworks/spring-boot/webflux.md).
 
-Detalle completo con tabla comparativa, anotaciones clave y diagrama del ecosistema en [`spring-boot/`](../../frameworks/spring-boot) (incluye también Spring Batch — Job/Step, chunk processing — por si sale como tema de procesamiento masivo).
+Detalle completo con tabla comparativa, anotaciones clave y diagrama del ecosistema en [`spring-boot/`](../../../frameworks/spring-boot) (incluye también Spring Batch — Job/Step, chunk processing — por si sale como tema de procesamiento masivo).
 
 ---
 
@@ -287,7 +289,7 @@ La descripción del rol pide explícitamente promover DDD como estándar (ver [`
 
 > **Frase para repetir en la entrevista:** "en el día a día, el patrón hexagonal me da la ubicación en el código (`domain`/`application`/`infrastructure`); DDD me da el criterio de **qué va dentro de `domain`** — cuándo algo es una Entity, cuándo un Value Object, y dónde trazar el límite de un Aggregate."
 
-Detalle completo, ejemplos trabajados con `Order`/`Appointment`, y drills cronometrados en [`ddd/`](../../ddd).
+Detalle completo, ejemplos trabajados con `Order`/`Appointment`, y drills cronometrados en [`ddd/`](../../../ddd).
 
 ---
 
@@ -322,11 +324,11 @@ com.saludtools.<servicio>/
 - Una excepción que representa un **hecho de negocio** (ej. "no existe", "transición inválida") vive en `domain`, no en `application/exception` — no es un detalle de cableado. Se traduce a HTTP en un `@RestControllerAdvice` centralizado devolviendo `ProblemDetail`.
 - DTOs de `rest`/`client` nunca cruzan a `domain` — se mapean en el adaptador. Nunca serializar la entidad de dominio directo en la respuesta HTTP.
 
-> **Nota JPA vs R2DBC:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta. Diferencia JPA/Hibernate/Entidad explicada en [`spring-boot/`](../../frameworks/spring-boot).
+> **Nota JPA vs R2DBC:** si tu referencia previa usa JPA bloqueante + `@Transactional` (Quarkus/Spring MVC), en Spring WebFlux el adaptador de persistencia usa `R2dbcRepository` y devuelve `Mono`/`Flux` — no hay transacciones bloqueantes tradicionales, se usa `TransactionalOperator` si hace falta. Diferencia JPA/Hibernate/Entidad explicada en [`spring-boot/`](../../../frameworks/spring-boot).
 
 > **Validado en la práctica (2026-09-13):** este patrón exacto se implementó y probó end-to-end con `curl` real en dos dominios distintos (citas médicas y pedidos de café) en un playground de arquitectura hexagonal — incluyendo el hallazgo real de que un `Mono<T>` vacío en WebFlux devuelve `200` con body vacío por defecto, no `404`; hay que traducirlo explícitamente con `.switchIfEmpty(Mono.error(...))` en el adapter web.
 
-Más detalle y comparación de proyectos de referencia en [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md).
+Más detalle y comparación de proyectos de referencia en [`hexagonal-architecture.md`](../../../software-architectures/hexagonal-architecture.md).
 
 ---
 
@@ -367,7 +369,7 @@ When solicita un crédito cuya cuota es menor al 40% del salario
 Then la evaluación resulta APROBADO
 ```
 
-Ciclo completo y kata de ejemplo en [`tdd/`](../../tdd).
+Ciclo completo y kata de ejemplo en [`tdd/`](../../../tdd).
 
 ---
 
@@ -390,7 +392,7 @@ Para hacer con el timer puesto, en tu IDE, antes del día de la prueba.
 
 ## 07 · Agentes de Claude Code
 
-Los agentes de práctica relevantes (hexagonal, Java 21, Spring Boot WebFlux, TDD) están en [`ia-agentes/`](../../ia-agentes) del repo — usalos para practicar el flujo completo y para mostrar en la entrevista cómo integrás IA con criterio.
+Los agentes de práctica relevantes (hexagonal, Java 21, Spring Boot WebFlux, TDD) están en [`ia-agentes/`](../../../ia-agentes) del repo — usalos para practicar el flujo completo y para mostrar en la entrevista cómo integrás IA con criterio.
 
 - **`hexagonal-architect`** — arma el esqueleto de paquetes domain/application/infrastructure para un dominio nuevo, y valida que no se violen los límites del hexágono.
 - **`java-21-dev`** — Java 21 puro, agnóstico de framework (Virtual Threads vs Reactor, Structured Concurrency, Record Patterns).
@@ -429,16 +431,16 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 
 | Tema | Carpeta |
 |---|---|
-| Spring / Spring Boot / JPA / Hibernate (fundamentos) | [`spring-boot/fundamentals.md`](../../frameworks/spring-boot/fundamentals.md) |
-| WebFlux — Parte 1: controlador, Mono/Flux, map vs flatMap, WebClient, testing, seguridad, vs. Virtual Threads | [`spring-boot/webflux.md`](../../frameworks/spring-boot/webflux.md) |
-| WebFlux — Parte 2: catálogo de operadores (`zip`, `switchIfEmpty`, `deferContextual`, `then`, `doOnNext`) con frecuencia real de uso | [`spring-boot/webflux-operators.md`](../../frameworks/spring-boot/webflux-operators.md) |
-| Spring Data (repositorios, N+1, `@Transactional`, R2DBC) | [`spring-boot/spring-data.md`](../../frameworks/spring-boot/spring-data.md) |
-| Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../frameworks/spring-boot/spring-batch.md) |
-| DDD (Entities/VO, Aggregates, Repository, Domain Events/Service, Bounded Context, CQRS) | [`ddd/`](../../ddd) |
-| Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../microservices-patterns) |
-| AWS + práctica con LocalStack | [`cloud-aws/`](../../cloud-aws) |
-| Java como lenguaje: POO, estructuras de datos, interfaces funcionales, evolución 8→21 | [`java-core/`](../../java-core) |
-| Arquitectura hexagonal | [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) |
-| Escalar de 0 a millones de usuarios | [`system-design/`](../../system-design) |
-| TDD | [`tdd/`](../../tdd) |
-| Agentes de Claude Code | [`ia-agentes/`](../../ia-agentes) |
+| Spring / Spring Boot / JPA / Hibernate (fundamentos) | [`spring-boot/fundamentals.md`](../../../frameworks/spring-boot/fundamentals.md) |
+| WebFlux — Parte 1: controlador, Mono/Flux, map vs flatMap, WebClient, testing, seguridad, vs. Virtual Threads | [`spring-boot/webflux.md`](../../../frameworks/spring-boot/webflux.md) |
+| WebFlux — Parte 2: catálogo de operadores (`zip`, `switchIfEmpty`, `deferContextual`, `then`, `doOnNext`) con frecuencia real de uso | [`spring-boot/webflux-operators.md`](../../../frameworks/spring-boot/webflux-operators.md) |
+| Spring Data (repositorios, N+1, `@Transactional`, R2DBC) | [`spring-boot/spring-data.md`](../../../frameworks/spring-boot/spring-data.md) |
+| Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../../frameworks/spring-boot/spring-batch.md) |
+| DDD (Entities/VO, Aggregates, Repository, Domain Events/Service, Bounded Context, CQRS) | [`ddd/`](../../../ddd) |
+| Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../../microservices-patterns) |
+| AWS + práctica con LocalStack | [`cloud-aws/`](../../../cloud-aws) |
+| Java como lenguaje: POO, estructuras de datos, interfaces funcionales, evolución 8→21 | [`java-core/`](../../../java-core) |
+| Arquitectura hexagonal | [`hexagonal-architecture.md`](../../../software-architectures/hexagonal-architecture.md) |
+| Escalar de 0 a millones de usuarios | [`system-design/`](../../../system-design) |
+| TDD | [`tdd/`](../../../tdd) |
+| Agentes de Claude Code | [`ia-agentes/`](../../../ia-agentes) |

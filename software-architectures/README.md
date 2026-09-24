@@ -4,6 +4,8 @@ Píldoras comparativas de los estilos de arquitectura más habituales a nivel de
 
 > Diferencia con otras carpetas del repo: acá se compara **cómo se organiza el código dentro de una aplicación** (capas, dependencias entre ellas). Para cómo se comunican varias aplicaciones entre sí, ver [`microservices-patterns/`](../microservices-patterns). Para cómo escalar la infraestructura completa, ver [`system-design/`](../system-design).
 
+> **Empezá acá:** [`decisiones-de-arquitectura.md`](decisiones-de-arquitectura.md) — qué es un *trade-off*, cómo decidir entre opciones y cómo dejarlo escrito en un ADR. Es la habilidad que hace útil todo lo demás de esta carpeta.
+
 ## Cobertura actual
 
 ```mermaid

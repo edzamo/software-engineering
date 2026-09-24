@@ -1,0 +1,4 @@
+name: software-architect
+description: Analiza el problema, propone alternativas de arquitectura (hexagonal, clean, onion, capas; monolito modular vs microservicios) con trade-offs, espera la decisión del usuario, deja DESIGN.md con diagramas y ADRs, y genera el scaffold con stubs en el lenguaje del proyecto (Java, TypeScript, Python). Úsalo primero al arrancar un proyecto o feature, o para revisar si el código respeta los límites de la arquitectura elegida.
+tools: Read, Write, Edit, Bash, Grep, Glob
+model: default

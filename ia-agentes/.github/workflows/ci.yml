@@ -1,0 +1,77 @@
+# Plantilla de CI para un proyecto que usa este .claude/ (agentes + skills +
+# hook de TDD). Detecta el stack con el mismo script que usan los agentes y
+# corre: tests + tests de arquitectura (si el proyecto los define) + un
+# escaneo de seguridad liviano. Es la garantía real de las fases que
+# `pipelines/feature-implementation.json` solo documenta — ver
+# pipelines/README.md.
+#
+# Copiar a .github/workflows/ci.yml del proyecto de destino y ajustar el
+# `working-directory` si el código no vive en la raíz del repo.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+jobs:
+  detect-stack:
+    runs-on: ubuntu-latest
+    outputs:
+      language: ${{ steps.detect.outputs.language }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        run: |
+          python3 .claude/scripts/detect_stack.py > stack.json
+          cat stack.json
+          echo "language=$(python3 -c "import json;print(json.load(open('stack.json'))['stacks'][0]['language'])")" >> "$GITHUB_OUTPUT"
+
+  test-java:
+    needs: detect-stack
+    if: needs.detect-stack.outputs.language == 'java' || needs.detect-stack.outputs.language == 'kotlin'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21' }
+      - run: ./gradlew test || ./mvnw -q test
+      # Tests de arquitectura (ArchUnit): corren dentro de `./gradlew test` si
+      # están en src/test/java — no hace falta un paso separado.
+
+  test-typescript:
+    needs: detect-stack
+    if: needs.detect-stack.outputs.language == 'typescript' || needs.detect-stack.outputs.language == 'javascript'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '24' }
+      - run: npm ci
+      - run: npm test
+      - name: Tests de arquitectura (dependency-cruiser)
+        run: npx depcruise src --config .dependency-cruiser.cjs
+        continue-on-error: true # falla el step, no el job, hasta que el proyecto lo configure
+
+  test-python:
+    needs: detect-stack
+    if: needs.detect-stack.outputs.language == 'python'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - run: uv run pytest -q
+      - name: Tests de arquitectura (import-linter)
+        run: uv run lint-imports
+        continue-on-error: true
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Semgrep (SAST)
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: p/owasp-top-ten
+        continue-on-error: true # complementa a owasp-security-reviewer, no lo reemplaza — ver skills/quality/owasp-security

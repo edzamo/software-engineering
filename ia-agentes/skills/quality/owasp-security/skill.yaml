@@ -1,0 +1,2 @@
+name: quality-owasp-security
+description: OWASP Top 10 (2021) con qué buscar y mitigación por cada riesgo, agnóstico de stack (Java/Spring, TypeScript/Node, Python). Referenciada por owasp-security-reviewer. Revisión estática, no reemplaza un SAST real (Semgrep/CodeQL) en CI.

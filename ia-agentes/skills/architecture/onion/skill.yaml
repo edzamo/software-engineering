@@ -1,0 +1,2 @@
+name: architecture-onion
+description: Invariantes de Onion Architecture (Jeffrey Palermo) — anillos concéntricos, Domain Model/Domain Services/Application Services/Infrastructure, y su equivalencia con Hexagonal/Clean. Úsala cuando software-architect proponga onion, o para revisar si código existente la respeta.

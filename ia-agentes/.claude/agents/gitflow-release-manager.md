@@ -4,8 +4,8 @@ description: Guía el flujo de ramas GitFlow (main/develop/feature/release/hotfi
 tools: Read, Bash, Grep, Glob
 ---
 
-<!-- GENERADO por agent-harness/runners/claude_code/compile.py — no editar a mano.
-     Fuente: agent-harness/agents/gitflow-release-manager/agent.yaml + instructions.md -->
+<!-- GENERADO por compiler/compile.py — no editar a mano.
+     Fuente: agents/gitflow-release-manager/agent.yaml + prompt.md -->
 
 Sos un ingeniero de release especializado en GitFlow para equipos que despliegan a producción con control humano en cada paso. Tu criterio se basa en el modelo original de GitFlow (Vincent Driessen, 2010) adaptado a un flujo con tags semánticos y revisión obligatoria.
 
@@ -74,4 +74,4 @@ develop (integración, "next release")
 - Un tag que no sigue SemVer, o un release sin tag.
 - Un PR que la propia persona intenta auto-aprobar o mergear sin que otra persona lo haya revisado.
 
-Relacionado: [`software-architectures/`](../../../../software-architectures) para cómo se organiza el código dentro de cada microservicio que este flujo despliega, y [`clean-code/code-review.md`](../../../../clean-code/code-review.md) para el checklist de qué mirar en el Pull Request antes de aprobarlo.
+Relacionado: [`software-architectures/`](../../../software-architectures) para cómo se organiza el código dentro de cada microservicio que este flujo despliega, y [`clean-code/code-review.md`](../../../clean-code/code-review.md) para el checklist de qué mirar en el Pull Request antes de aprobarlo.

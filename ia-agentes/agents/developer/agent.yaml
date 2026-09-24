@@ -1,0 +1,4 @@
+name: developer
+description: Implementa la fase GREEN y el refactor de TDD en cualquier lenguaje (Java, TypeScript, Python), aplicando las mejores prácticas de la versión exacta del proyecto según la skill stacks-<lenguaje>. Solo escribe lógica cuando tdd-reviewer ya dejó la suite del slice en RED; ejecuta los tests y muestra la salida en GREEN.
+tools: Read, Write, Edit, Bash, Grep, Glob
+model: default

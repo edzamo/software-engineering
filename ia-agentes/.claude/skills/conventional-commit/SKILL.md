@@ -3,6 +3,9 @@ name: conventional-commit
 description: Redacta el mensaje de un commit a partir del diff en staging, detectando y respetando la convención que ya usa el repo (o Conventional Commits si no hay una convención clara). Úsalo cuando el usuario pida "generá el commit" o antes de correr git commit.
 ---
 
+<!-- GENERADO por compiler/compile.py — no editar a mano.
+     Fuente: skills/conventional-commit/ -->
+
 # Conventional Commit
 
 Procedimiento para escribir un mensaje de commit correcto sin inventar el formato — se adapta a lo que el repo ya viene haciendo, en vez de imponer un estilo ajeno.
@@ -48,4 +51,4 @@ Si no hay nada en staging todavía, mostrá qué hay sin commitear (`git status`
 
 ## Paso 5 — mostrar el mensaje antes de commitear
 
-Nunca corras `git commit` directo con el mensaje armado — mostralo primero (en un heredoc si tiene cuerpo multilínea) y esperá confirmación, salvo que el usuario ya haya pedido explícitamente "commiteá con ese mensaje". Mismo criterio de "no publicar sin aprobación" que usa el agente [`gitflow-release-manager`](../../agent-harness/agents/gitflow-release-manager/instructions.md) para push/merge — commitear es más reversible, pero el mensaje final lo valida la persona.
+Nunca corras `git commit` directo con el mensaje armado — mostralo primero (en un heredoc si tiene cuerpo multilínea) y esperá confirmación, salvo que el usuario ya haya pedido explícitamente "commiteá con ese mensaje". Mismo criterio de "no publicar sin aprobación" que usa el agente [`gitflow-release-manager`](../../../agents/gitflow-release-manager/prompt.md) para push/merge — commitear es más reversible, pero el mensaje final lo valida la persona.

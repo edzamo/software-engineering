@@ -4,7 +4,7 @@ La pregunta que dispara este documento: *"¿cómo le aviso a Facturación que un
 
 ## La idea central
 
-Un Domain Event es un objeto inmutable que representa **algo que ya pasó** en el dominio, relevante para el negocio: `AppointmentCompleted`, `OrderPaid`, `AppointmentCancelled`. Se nombra en **pasado** — nunca `CompleteAppointment` (eso sería un Command, una intención de que algo pase; ver la distinción con Command en [`hexagonal-architect`](../ia-agentes/agent-harness/agents/hexagonal-architect/instructions.md), sección "Command vs. interfaz").
+Un Domain Event es un objeto inmutable que representa **algo que ya pasó** en el dominio, relevante para el negocio: `AppointmentCompleted`, `OrderPaid`, `AppointmentCancelled`. Se nombra en **pasado** — nunca `CompleteAppointment` (eso sería un Command, una intención de que algo pase; ver la distinción con Command en [`software-architect`](../ia-agentes/agents/software-architect/prompt.md), sección "Command vs. interfaz").
 
 - Lo publica el Aggregate Root en el mismo método que produce el cambio de estado — la generación del evento es parte de la misma operación de negocio, no un paso separado que alguien pueda olvidar.
 - Quien lo consume no lo sabe de antemano el emisor — eso es lo que permite que `Appointment` (Citas Médicas) nunca importe nada de `Invoice` (Facturación), aunque Facturación reaccione a sus eventos. Es el mecanismo estándar para comunicar dos Aggregates (ver [`aggregates.md`](aggregates.md), sección "una transacción, un Aggregate") o dos Bounded Contexts (ver [`bounded-context.md`](bounded-context.md)) sin acoplarlos.

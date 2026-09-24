@@ -1,0 +1,37 @@
+{
+  "$schema": "invariantes de arquitectura hexagonal, agnóstico de lenguaje — ver rules.md para el detalle y el porqué de cada una",
+  "invariants": [
+    {
+      "id": "domain-no-importa-infraestructura",
+      "severity": "error",
+      "layers": {"forbidden_from": "domain", "forbidden_to": ["infrastructure", "application"]},
+      "description": "El dominio no importa nada de infraestructura ni de frameworks."
+    },
+    {
+      "id": "adapter-implementa-puerto",
+      "severity": "error",
+      "layers": {"required_from": "infrastructure.adapter", "required_to": "application.port"},
+      "description": "Un adapter siempre implementa un puerto; nunca se referencia directo desde domain/application."
+    },
+    {
+      "id": "dto-no-cruza-al-dominio",
+      "severity": "error",
+      "description": "Los DTOs de infraestructura se mapean a Value Objects en el adapter de entrada; nunca se serializa una entidad de dominio directo."
+    },
+    {
+      "id": "excepcion-de-negocio-vive-en-dominio",
+      "severity": "warning",
+      "description": "Una excepción que representa un hecho de negocio (no existe, transición inválida) vive en domain, no en application."
+    },
+    {
+      "id": "contrato-vs-dato",
+      "severity": "warning",
+      "description": "Interfaz solo si hay (o puede haber) más de una implementación intercambiable; un Command/DTO es un dato inmutable, no una interfaz."
+    },
+    {
+      "id": "concurrencia-es-infraestructura",
+      "severity": "warning",
+      "description": "Reactivo vs hilos / event loop vs workers / async vs sync es una decisión del adapter; nunca se filtra al dominio."
+    }
+  ]
+}

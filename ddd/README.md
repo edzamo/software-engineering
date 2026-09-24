@@ -52,7 +52,7 @@ Orden recomendado — cada doc asume conceptos de los anteriores:
 7. [`cqrs.md`](cqrs.md) — una vez claro el modelo de escritura (1-6), cómo separarlo del modelo de lectura.
 8. [`event-sourcing.md`](event-sourcing.md) — el último paso, opcional y más costoso: qué cambia si el evento mismo (no el estado) es la fuente de verdad.
 
-Relacionado: [`entrevistas/saludtools-desarrollador-senior/`](../entrevistas/saludtools-desarrollador-senior) — DDD es uno de los estándares que ese perfil pide promover explícitamente.
+Relacionado: [`entrevistas/archivo/saludtools-desarrollador-senior/`](../entrevistas/archivo/saludtools-desarrollador-senior) — DDD es uno de los estándares que ese perfil pide promover explícitamente.
 
 ## Referencias
 
