@@ -1,0 +1,361 @@
+{
+  "pipeline": "feature-implementation",
+  "version": "1.0.0",
+  "description": "Pipeline end-to-end e inviolable: Arquitectura -> TDD -> Construcción por stack -> Calidad y Seguridad.",
+  "inputs": {
+    "required": [
+      "feature_description",
+      "architecture_style",
+      "stack"
+    ],
+    "properties": {
+      "feature_description": "Historia de usuario/caso de uso con criterios de aceptación",
+      "architecture_style": {
+        "enum": [
+          "hexagonal",
+          "clean",
+          "onion"
+        ]
+      },
+      "stack": {
+        "language": {
+          "enum": [
+            "java",
+            "dotnet",
+            "node-typescript",
+            "python"
+          ]
+        },
+        "version": "p. ej. 8, 11, 17, 21, 8.0, 20",
+        "framework": {
+          "enum": [
+            "spring-boot-mvc",
+            "spring-boot-webflux",
+            "quarkus",
+            "nestjs",
+            "express",
+            "aspnet-core",
+            "fastapi",
+            "flask",
+            "none"
+          ]
+        }
+      }
+    }
+  },
+  "global_policies": {
+    "phase_order_enforced": true,
+    "skip_allowed": false,
+    "production_code_before_phase_3": "forbidden",
+    "halt_on_blocking_verdict": true,
+    "max_review_cycles_per_phase": 3,
+    "on_max_cycles": "escalate_to_human",
+    "artifacts_are_immutable_once_approved": true,
+    "scaffolding_without_logic_allowed_before_red": true
+  },
+  "phases": [
+    {
+      "id": "phase-0-context",
+      "order": 0,
+      "name": "Contexto y mejores prácticas",
+      "agent": "orchestrator",
+      "steps": [
+        "detect_stack_version_framework",
+        "read_stack_index",
+        "summarize_applicable_constraints",
+        "inventory_existing_code_by_layer"
+      ],
+      "gate": {
+        "pass_if": {
+          "stack_detected": true
+        }
+      },
+      "outputs": [
+        "stack",
+        "constraints"
+      ]
+    },
+    {
+      "id": "phase-1-architecture",
+      "order": 1,
+      "name": "Validación de arquitectura",
+      "agent": "agents/arch-validator-agent.md",
+      "skills": [
+        "skills/architecture/${architecture_style}/rules.md",
+        "skills/architecture/hexagonal/invariants.json"
+      ],
+      "input": [
+        "feature_description",
+        "design_proposal"
+      ],
+      "constraints": [
+        "no_source_code_written"
+      ],
+      "gate": {
+        "pass_if": {
+          "verdict_in": [
+            "APPROVED",
+            "APPROVED_WITH_WARNINGS"
+          ]
+        },
+        "on_fail": {
+          "action": "halt_and_return_objections",
+          "loop_back_to": "phase-1-architecture"
+        }
+      },
+      "outputs": [
+        "architecture_review",
+        "ports",
+        "use_cases",
+        "invariants"
+      ]
+    },
+    {
+      "id": "phase-2-tdd-red",
+      "order": 2,
+      "name": "TDD obligatorio (RED)",
+      "agent": "agents/tdd-driver-agent.md",
+      "depends_on": [
+        "phase-1-architecture"
+      ],
+      "skills": [
+        "skills/quality/tdd-workflow/protocol.md",
+        "skills/stacks/${stack.language}/index.md"
+      ],
+      "input": [
+        "ports",
+        "use_cases",
+        "invariants"
+      ],
+      "constraints": [
+        "tests_only",
+        "production_code_forbidden"
+      ],
+      "steps": [
+        "derive_test_plan_from_ports_and_invariants",
+        "write_failing_tests",
+        "execute_suite_and_capture_red_evidence"
+      ],
+      "gate": {
+        "pass_if": {
+          "state": "RED_CONFIRMED",
+          "evidence": [
+            "test_name",
+            "failure_message",
+            "exit_code"
+          ]
+        },
+        "on_fail": {
+          "action": "halt_reject_production_code"
+        }
+      },
+      "outputs": [
+        "failing_tests",
+        "red_evidence",
+        "test_plan"
+      ]
+    },
+    {
+      "id": "phase-3-construction",
+      "order": 3,
+      "name": "Construcción y stack (GREEN + REFACTOR)",
+      "agent": "agents/tdd-driver-agent.md",
+      "depends_on": [
+        "phase-2-tdd-red"
+      ],
+      "skills": [
+        "skills/stacks/${stack.language}/index.md",
+        "skills/quality/clean-code/rules.md",
+        "skills/quality/refactoring/catalog.md",
+        "skills/architecture/${architecture_style}/rules.md"
+      ],
+      "stack_resolution": {
+        "java": {
+          "common": [
+            "skills/stacks/java/common-naming.md"
+          ],
+          "version": {
+            "8": [
+              "skills/stacks/java/java8-11/rules.md"
+            ],
+            "11": [
+              "skills/stacks/java/java8-11/rules.md"
+            ],
+            "17": [
+              "skills/stacks/java/java17-21-plus/rules.md"
+            ],
+            "21": [
+              "skills/stacks/java/java17-21-plus/rules.md"
+            ]
+          },
+          "framework": {
+            "spring-boot-mvc": [
+              "skills/stacks/java/spring-boot/best-practices.md"
+            ],
+            "spring-boot-webflux": [
+              "skills/stacks/java/spring-boot/best-practices.md"
+            ],
+            "quarkus": [
+              "skills/stacks/java/quarkus/best-practices.md"
+            ]
+          }
+        },
+        "dotnet": [
+          "skills/stacks/dotnet/naming.md",
+          "skills/stacks/dotnet/clean-architecture-dotnet.md"
+        ],
+        "node-typescript": [
+          "skills/stacks/node-typescript/naming.md",
+          "skills/stacks/node-typescript/nestjs-hexagonal.md"
+        ],
+        "python": [
+          "skills/stacks/python/naming.md",
+          "skills/stacks/python/hexagonal-python.md"
+        ]
+      },
+      "cycle": [
+        "GREEN_minimal_code",
+        "run_full_suite",
+        "REFACTOR_in_micro_steps",
+        "run_full_suite"
+      ],
+      "loop": {
+        "until": "test_plan_exhausted",
+        "next_state": "RED_CONFIRMED"
+      },
+      "constraints": [
+        "minimum_code_to_pass",
+        "no_behavior_without_failing_test",
+        "no_framework_imports_in_domain_or_application",
+        "architecture_test_must_pass"
+      ],
+      "gate": {
+        "pass_if": {
+          "suite": "all_green",
+          "architecture_tests": "pass",
+          "coverage": {
+            "line": 85,
+            "branch": 75,
+            "domain": 95
+          }
+        },
+        "on_fail": {
+          "action": "loop_back_to",
+          "target": "phase-2-tdd-red"
+        }
+      },
+      "outputs": [
+        "production_code",
+        "green_evidence",
+        "coverage_report"
+      ],
+      "construction_order": [
+        "scaffolding_no_logic",
+        "domain",
+        "use_cases",
+        "outbound_adapters",
+        "inbound_adapters",
+        "composition_root"
+      ],
+      "layer_gate": "previous layer green and refactored before opening the next"
+    },
+    {
+      "id": "phase-4a-code-review",
+      "order": 4,
+      "name": "Revisión de Clean Code y refactorización",
+      "agent": "agents/code-reviewer-agent.md",
+      "depends_on": [
+        "phase-3-construction"
+      ],
+      "parallel_group": "phase-4",
+      "skills": [
+        "skills/quality/clean-code/rules.md",
+        "skills/quality/refactoring/catalog.md",
+        "skills/architecture/${architecture_style}/rules.md"
+      ],
+      "input": [
+        "production_code",
+        "architecture_review",
+        "coverage_report"
+      ],
+      "gate": {
+        "pass_if": {
+          "verdict_in": [
+            "APPROVED",
+            "APPROVED_WITH_WARNINGS"
+          ]
+        },
+        "on_fail": {
+          "action": "return_findings",
+          "loop_back_to": "phase-3-construction",
+          "requires_tests_green": true
+        }
+      },
+      "outputs": [
+        "code_review_report"
+      ]
+    },
+    {
+      "id": "phase-4b-security",
+      "order": 4,
+      "name": "Auditoría OWASP / SAST",
+      "agent": "agents/security-agent.md",
+      "depends_on": [
+        "phase-3-construction"
+      ],
+      "parallel_group": "phase-4",
+      "skills": [
+        "skills/quality/owasp-security/checklists.md",
+        "skills/stacks/${stack.language}/index.md"
+      ],
+      "input": [
+        "production_code",
+        "dependency_manifest"
+      ],
+      "gate": {
+        "pass_if": {
+          "verdict_in": [
+            "APPROVED",
+            "APPROVED_WITH_WARNINGS"
+          ],
+          "no_findings_at_or_above": "HIGH",
+          "no_secrets": true
+        },
+        "on_fail": {
+          "action": "return_findings",
+          "loop_back_to": "phase-2-tdd-red",
+          "reason": "cada fix de seguridad inicia con un test que falle"
+        }
+      },
+      "outputs": [
+        "security_report"
+      ]
+    }
+  ],
+  "final_gate": {
+    "requires": [
+      "phase-4a-code-review",
+      "phase-4b-security"
+    ],
+    "all_verdicts_non_blocking": true,
+    "deliverables": [
+      "production_code",
+      "tests",
+      "architecture_review",
+      "code_review_report",
+      "security_report",
+      "coverage_report"
+    ]
+  },
+  "failure_handling": {
+    "blocking_verdict": "stop_downstream_phases",
+    "flaky_or_unverifiable_evidence": "treat_as_blocked",
+    "human_escalation": {
+      "after_cycles": 3,
+      "include": [
+        "accumulated_findings",
+        "last_artifacts"
+      ]
+    }
+  }
+}

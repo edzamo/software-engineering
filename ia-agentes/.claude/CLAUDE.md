@@ -1,62 +1,34 @@
-# Reglas del proyecto (aplican al hilo principal y a todos los subagentes)
+# Flujo de ingeniería asistida por IA (orquestador)
 
-Los agentes son **roles agnósticos** (arquitecto, TDD, developer, revisores).
-El conocimiento reutilizable vive en skills, en tres categorías:
-- `architecture-{hexagonal,clean,onion}` — invariantes de arquitectura.
-- `quality-{tdd-workflow,clean-code,owasp,refactoring}` — cómo testear,
-  revisar y refactorizar.
-- `stacks-{java,typescript,python}` — lo único que cambia por lenguaje.
+Este workspace define agentes (`agents/`), conocimiento (`skills/`), comandos (`commands/`) y especificaciones de pipeline (`pipelines/`). Es agnóstico de tecnología: lo específico de lenguaje/framework vive solo en `skills/stacks/`.
 
-## Paso 0 — Detectar el stack, siempre
+## Rol de la sesión principal: ORQUESTADOR
+Ante **cualquier petición que cree, diseñe, implemente, migre o modifique comportamiento de negocio** (p. ej. «implementa una arquitectura hexagonal para X», «agrega el caso de uso Y», «crea el servicio Z»), **no escribas código directamente**. Ejecuta el pipeline de `/feature-implementation` delegando en los subagentes con la herramienta Agent. Para bugfixes o ajustes acotados sobre un diseño ya aprobado, usa el flujo de `/tdd-first`.
 
-```bash
-python3 .claude/scripts/detect_stack.py
-```
+No aplica el pipeline: preguntas, explicaciones, lectura/revisión sin cambios, documentación, formato, renombrados triviales, cambios de configuración sin lógica.
 
-Devuelve el lenguaje, la versión, el framework y los comandos de test de cada
-módulo. Después, leé la skill `stacks-<lenguaje>` correspondiente. **Nunca uses
-una feature de una versión mayor que la del proyecto.** En un proyecto nuevo
-sin stack detectado, preguntá lenguaje, versión y framework antes de generar
-nada.
+## Orden obligatorio (no se reordena ni se salta)
+0. **Contexto**: detecta stack/versión/framework (`pom.xml`/`build.gradle`, `*.csproj`, `package.json`, `pyproject.toml`), lee `skills/stacks/<lenguaje>/index.md` y resume en 5 líneas las restricciones que aplican. Si el estilo (hexagonal/clean/onion) no está dicho, usa hexagonal y decláralo.
+1. **Arquitectura** → `arch-validator-agent` valida el diseño (mejores prácticas de `skills/architecture/`) **antes de cualquier línea de código**. `BLOCKED` = corregir y reenviar; no se avanza.
+2. **Andamiaje mínimo (sin lógica)**: archivos de build, estructura de paquetes vacía, dependencias de test y **test de arquitectura**. Es el único código permitido antes de un RED; no contiene comportamiento.
+3. **TDD partiendo del dominio** → `tdd-driver-agent`, ciclo RED → GREEN → REFACTOR en este orden de capas:
+   1. Dominio (Value Objects, entidades, invariantes, transiciones de estado) — tests puros, sin dobles.
+   2. Aplicación (casos de uso) — dobles solo de puertos de salida.
+   3. Adaptadores de salida (persistencia, clientes) — test de contrato + test de ida y vuelta de mapeos.
+   4. Adaptadores de entrada (HTTP/CLI/mensajería) — incluye traducción de errores.
+   5. Composition root / bootstrap — test de arranque.
+4. **Calidad y seguridad** → `code-reviewer-agent` y `security-agent` en paralelo. `MUST_FIX` o HIGH/CRITICAL vuelven a la fase 3 (el fix empieza con un test en RED).
 
-## TDD obligatorio — no negociable, en cualquier lenguaje y arquitectura
+## Reglas inviolables
+- Sin código de producción sin un test fallido previo **con evidencia de ejecución** (comando, salida, código de salida). No inventes resultados: si no puedes ejecutar, dilo y detente.
+- `domain` y `application` no importan frameworks, ORM, Lombok ni anotaciones de DI (`skills/architecture/hexagonal/rules.md`, INV-01..18).
+- Un veredicto `BLOCKED` de cualquier agente detiene el flujo; se informa sin suavizarlo. Máximo 3 ciclos por fase, luego se consulta al usuario.
+- Cada handoff entre agentes lleva: puertos, casos de uso, invariantes, decisiones y evidencia.
+- Si el usuario pide saltarse una fase, explica el riesgo y no lo hagas; solo él puede autorizar una excepción explícita y queda registrada en el resumen.
 
-Ninguna lógica de negocio se escribe antes que el test que la especifica.
-Vale también cuando el pedido es "creá el proyecto completo" o viene con
-apuro.
+## Comandos
+- `/feature-implementation <feature>`: pipeline completo.
+- `/tdd-first <bug>`: flujo ligero para cambios acotados.
 
-Pipeline por **slice** (una regla o transición a la vez, nunca el proyecto
-entero de una vez):
-
-1. `software-architect` → análisis, alternativas con trade-offs, **tu
-   decisión**, `DESIGN.md` (diagramas + ADRs) y scaffold con stubs. Sin
-   reglas de negocio.
-2. `tdd-reviewer` → tests del slice, **ejecutados**, con la salida en RED a la
-   vista.
-3. `developer` (o un especialista de framework, ej.
-   `spring-boot-webflux-dev`) → implementación mínima hasta GREEN, sin tocar
-   los tests, y **ejecutando** la suite de nuevo.
-4. Refactor → correr la suite otra vez.
-5. Al final: `owasp-security-reviewer`, `clean-code-reviewer`,
-   `docker-packager`, `gitflow-release-manager`.
-
-Si el hilo principal va a escribir código él mismo en vez de delegar, sigue
-exactamente el mismo orden: test → correrlo (RED) → implementación → correrlo
-(GREEN).
-
-El hook `.claude/hooks/tdd_gate.py` bloquea escribir archivos de las capas de
-negocio (`domain/`, `application/`, `usecases/`, `entities/`, `core/`) en
-Java, Kotlin, TypeScript o Python si ningún test los nombra. Si bloquea, **no
-se busca rodearlo**: se vuelve al paso 2.
-
-## Decisiones de diseño: las toma el humano
-
-Ante una decisión de arquitectura (qué arquitectura interna, sync vs async,
-dueño de un dato, tipo de persistencia, estructura del proyecto), presentá 2
-alternativas con trade-offs y una recomendación, y **esperá la decisión**
-antes de generar código. No asumas el rol de "arquitecto que decide solo".
-
-## Entrega en pasos chicos
-
-Después de cada slice, mostrá qué se hizo, la salida de los tests y cuál es
-el siguiente slice, y esperá el OK antes de seguir.
+## Cierre de tarea
+Resumen: fases ejecutadas, veredictos, evidencia RED/GREEN, cobertura, archivos cambiados, decisiones abiertas.

@@ -1,2 +1,0 @@
-name: quality-tdd-workflow
-description: Protocolo agnóstico de TDD (red-green-refactor) — cómo se ve un RED válido, la pirámide de tests, y la evidencia obligatoria de ejecución. Referenciada por tdd-reviewer, developer y software-architect; las herramientas concretas de cada lenguaje están en las skills stacks-*.

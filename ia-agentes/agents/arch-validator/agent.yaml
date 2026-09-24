@@ -1,4 +1,0 @@
-name: arch-validator
-description: GATE de arquitectura, solo lectura. Valida la propuesta de diseño (DESIGN.md, scaffold, imports) contra las invariantes de la arquitectura elegida (hexagonal, clean, onion) ANTES de que exista lógica de negocio o test alguno; si encuentra violaciones emite un informe de objeciones con veredicto RECHAZADO y detiene el pipeline. Úsalo siempre después de software-architect y antes de tdd-reviewer, y de nuevo cuando un diff toque el dominio, los puertos o las dependencias entre capas.
-tools: Read, Grep, Glob, Bash
-model: default

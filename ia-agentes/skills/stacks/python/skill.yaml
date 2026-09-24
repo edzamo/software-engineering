@@ -1,2 +1,0 @@
-name: stacks-python
-description: Conocimiento de stack para proyectos Python (FastAPI, Django, Flask, scripts) — qué features usar según la versión (3.10 a 3.14), herramientas y comandos de TDD (pytest, pytest-asyncio), gestión con uv/poetry, layout por arquitectura (hexagonal/clean/onion) y empaquetado Docker. Úsala siempre que detect_stack.py reporte python, antes de escribir tests o código.

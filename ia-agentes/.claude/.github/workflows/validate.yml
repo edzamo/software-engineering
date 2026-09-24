@@ -1,0 +1,37 @@
+name: validate-workspace
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .claude
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          set -e
+          find . -name '*.json' -not -path './node_modules/*' -print0 | while IFS= read -r -d '' f; do
+            python3 -m json.tool "$f" > /dev/null || { echo "Invalid JSON: $f"; exit 1; }
+          done
+
+      - name: Validate agents and commands frontmatter
+        run: |
+          python3 - <<'PY'
+          import glob, re, sys
+          bad = []
+          for f in glob.glob("agents/*.md") + glob.glob("commands/*.md"):
+              t = open(f).read()
+              m = re.match(r"---\n(.*?)\n---\n", t, re.S)
+              if not m: bad.append((f, "missing frontmatter")); continue
+              fm = m.group(1)
+              if not f.startswith("commands/") and "name:" not in fm: bad.append((f, "missing name"))
+              if "description:" not in fm: bad.append((f, "missing description"))
+          for b in bad: print(*b)
+          sys.exit(1 if bad else 0)
+          PY

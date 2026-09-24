@@ -1,2 +1,0 @@
-name: stacks-typescript
-description: Conocimiento de stack para proyectos TypeScript/Node (NestJS, Express, Fastify) — qué features usar según la versión de TypeScript y Node, herramientas y comandos de TDD (Vitest, Jest, node:test), layout por arquitectura (hexagonal/clean/onion) y empaquetado Docker. Úsala siempre que detect_stack.py reporte typescript o javascript, antes de escribir tests o código.

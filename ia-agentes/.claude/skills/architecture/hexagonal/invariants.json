@@ -1,0 +1,192 @@
+{
+  "style": "hexagonal",
+  "version": "1.0.0",
+  "layers": {
+    "domain": {
+      "may_depend_on": []
+    },
+    "application": {
+      "may_depend_on": [
+        "domain"
+      ]
+    },
+    "adapter_in": {
+      "may_depend_on": [
+        "application",
+        "domain"
+      ]
+    },
+    "adapter_out": {
+      "may_depend_on": [
+        "application",
+        "domain"
+      ]
+    },
+    "bootstrap": {
+      "may_depend_on": [
+        "domain",
+        "application",
+        "adapter_in",
+        "adapter_out"
+      ]
+    }
+  },
+  "forbidden_edges": [
+    {
+      "from": "domain",
+      "to": [
+        "application",
+        "adapter_in",
+        "adapter_out",
+        "bootstrap"
+      ]
+    },
+    {
+      "from": "application",
+      "to": [
+        "adapter_in",
+        "adapter_out",
+        "bootstrap"
+      ]
+    },
+    {
+      "from": "adapter_in",
+      "to": [
+        "adapter_out",
+        "bootstrap"
+      ]
+    },
+    {
+      "from": "adapter_out",
+      "to": [
+        "adapter_in",
+        "bootstrap"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "INV-01",
+      "severity": "block",
+      "rule": "domain has no dependency on application, adapters or frameworks"
+    },
+    {
+      "id": "INV-02",
+      "severity": "block",
+      "rule": "application has no dependency on adapters or frameworks"
+    },
+    {
+      "id": "INV-03",
+      "severity": "block",
+      "rule": "adapters do not reference each other"
+    },
+    {
+      "id": "INV-04",
+      "severity": "block",
+      "rule": "every external interaction is behind a port"
+    },
+    {
+      "id": "INV-05",
+      "severity": "block",
+      "rule": "adapters contain no business decisions"
+    },
+    {
+      "id": "INV-06",
+      "severity": "block",
+      "rule": "transport/persistence models never enter the domain"
+    },
+    {
+      "id": "INV-07",
+      "severity": "block",
+      "rule": "wiring only in composition root"
+    },
+    {
+      "id": "INV-08",
+      "severity": "block",
+      "rule": "use cases testable without real infrastructure"
+    },
+    {
+      "id": "INV-09",
+      "severity": "block",
+      "rule": "infrastructure exceptions translated at the adapter boundary"
+    },
+    {
+      "id": "INV-10",
+      "severity": "block",
+      "rule": "no cyclic dependencies"
+    },
+    {
+      "id": "INV-11",
+      "severity": "block",
+      "rule": "domain<->persistence mapping is bijective; round-trip test per state/enum"
+    },
+    {
+      "id": "INV-12",
+      "severity": "block",
+      "rule": "no Lombok or framework/DI annotations in domain and application"
+    },
+    {
+      "id": "INV-13",
+      "severity": "warn",
+      "rule": "time and ids enter through ports; domain owns identity and state transitions"
+    },
+    {
+      "id": "INV-14",
+      "severity": "warn",
+      "rule": "every use case has at least one inbound adapter"
+    },
+    {
+      "id": "INV-15",
+      "severity": "block",
+      "rule": "domain/application errors translated in a single inbound handler, never default 500"
+    },
+    {
+      "id": "INV-16",
+      "severity": "warn",
+      "rule": "persistence models named differently from domain models"
+    },
+    {
+      "id": "INV-17",
+      "severity": "block",
+      "rule": "sensitive data never stored or serialized in clear (toString, logs)"
+    },
+    {
+      "id": "INV-18",
+      "severity": "block",
+      "rule": "multi-port writes define a unit of work at the boundary"
+    }
+  ],
+  "port_constraints": {
+    "max_methods": 7,
+    "naming": {
+      "inbound": "verb phrase in business language (e.g. RegisterAdopter)",
+      "outbound": "role in business language (e.g. AdopterRepository)",
+      "forbidden_tokens": [
+        "Jpa",
+        "Mongo",
+        "Kafka",
+        "Rabbit",
+        "Http",
+        "Rest",
+        "Sql",
+        "Dynamo",
+        "S3"
+      ]
+    }
+  },
+  "forbidden_symbols_in_core": [
+    "org.springframework",
+    "jakarta.",
+    "javax.persistence",
+    "io.quarkus",
+    "reactor.",
+    "com.fasterxml",
+    "@nestjs/",
+    "typeorm",
+    "express",
+    "Microsoft.EntityFrameworkCore",
+    "Microsoft.AspNetCore",
+    "lombok.",
+    "org.slf4j (use a port or none in core)"
+  ]
+}

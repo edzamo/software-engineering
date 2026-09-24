@@ -1,2 +1,0 @@
-name: pr-description
-description: Arma el título y la descripción de un Pull Request (resumen + plan de pruebas) a partir de los commits y el diff de la rama actual contra la base. Úsalo antes de crear un PR con gh pr create, o para redactar la descripción a mano.

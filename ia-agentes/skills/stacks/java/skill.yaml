@@ -1,2 +1,0 @@
-name: stacks-java
-description: Conocimiento de stack para proyectos Java/Kotlin (Maven o Gradle) — qué features usar según la versión del proyecto (8, 11, 17, 21, 25), herramientas y comandos de TDD (JUnit 5, AssertJ, Mockito, StepVerifier), layout por arquitectura (hexagonal/clean/onion) y empaquetado Docker. Úsala siempre que detect_stack.py reporte java o kotlin, antes de escribir tests o código.

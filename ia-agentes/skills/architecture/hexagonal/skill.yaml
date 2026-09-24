@@ -1,2 +1,0 @@
-name: architecture-hexagonal
-description: Invariantes de Arquitectura Hexagonal (Puertos y Adaptadores) — reglas de dependencia agnósticas de lenguaje, checklist de validación y tests de arquitectura ejecutables por stack. Úsala cuando software-architect proponga hexagonal, o para revisar si código existente la respeta. El layout de carpetas por lenguaje vive en las skills stacks-*.

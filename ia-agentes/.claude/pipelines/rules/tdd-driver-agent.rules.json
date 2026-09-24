@@ -1,0 +1,47 @@
+{
+  "agent": "tdd-driver-agent",
+  "phase": 2,
+  "version": "1.0.0",
+  "mode": "blocking",
+  "requires_handoff_from": "arch-validator-agent",
+  "required_handoff_verdicts": ["APPROVED", "APPROVED_WITH_WARNINGS"],
+  "skills": [
+    "skills/quality/tdd-workflow/protocol.md",
+    "skills/quality/refactoring/catalog.md"
+  ],
+  "cycle": {
+    "states": ["RED_CONFIRMED", "GREEN_CONFIRMED", "REFACTOR_DONE", "BLOCKED"],
+    "transitions": {
+      "START": ["RED_CONFIRMED"],
+      "RED_CONFIRMED": ["GREEN_CONFIRMED"],
+      "GREEN_CONFIRMED": ["REFACTOR_DONE", "RED_CONFIRMED"],
+      "REFACTOR_DONE": ["RED_CONFIRMED", "END"]
+    },
+    "production_code_allowed_in": ["GREEN"],
+    "test_code_allowed_in": ["RED"]
+  },
+  "rules": [
+    {"id": "TDD-001", "severity": "block", "description": "Production code without a prior failing test"},
+    {"id": "TDD-002", "severity": "block", "description": "New test passes on first run (no valid RED)"},
+    {"id": "TDD-003", "severity": "block", "description": "More than one new behavior per cycle"},
+    {"id": "TDD-004", "severity": "block", "description": "Test without meaningful assertion"},
+    {"id": "TDD-005", "severity": "warn", "description": "Test coupled to implementation details"},
+    {"id": "TDD-006", "severity": "block", "description": "Disabled/skipped tests to make the suite pass"},
+    {"id": "TDD-007", "severity": "block", "description": "Unit test requiring real infrastructure"},
+    {"id": "TDD-008", "severity": "block", "description": "Test edited to fit implementation without requirement change"},
+    {"id": "TDD-009", "severity": "block", "description": "Refactor performed with a red suite"}
+  ],
+  "valid_red_reasons": ["assertion_failure", "expected_missing_symbol_by_design"],
+  "invalid_red_reasons": ["test_syntax_error", "environment_failure", "flaky_timeout", "misconfigured_dependency"],
+  "evidence_required": ["test_name", "failure_message", "command_executed", "exit_code"],
+  "doubles_policy": {
+    "allowed_for": ["outbound_ports", "clock", "id_generator"],
+    "forbidden_for": ["domain_entities", "value_objects", "domain_services"]
+  },
+  "test_levels": ["domain_unit", "use_case_unit", "port_contract", "acceptance"],
+  "coverage_gate": {"line_min_percent": 85, "branch_min_percent": 75, "domain_min_percent": 95},
+  "handoff": {
+    "on_success": {"next_phase": "STACK_CONSTRUCTION", "payload": ["tdd_summary", "test_inventory"]},
+    "on_blocked": {"action": "halt_pipeline"}
+  }
+}

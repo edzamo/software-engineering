@@ -1,4 +1,0 @@
-name: owasp-security-reviewer
-description: Revisa código (especialmente endpoints REST, acceso a datos, autenticación) contra los 10 riesgos de OWASP Top 10. Úsalo antes de dar por terminada una funcionalidad que toca input de usuario, autenticación, autorización, o datos sensibles.
-tools: Read, Grep, Glob, Bash
-model: default

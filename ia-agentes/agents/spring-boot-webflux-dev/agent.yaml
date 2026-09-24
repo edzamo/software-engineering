@@ -1,4 +1,0 @@
-name: spring-boot-webflux-dev
-description: Implementa código Spring Boot + WebFlux + Project Reactor siguiendo buenas prácticas reactivas y de framework (inyección de dependencias, manejo de errores HTTP, validación, testing). Úsalo para escribir o revisar controllers, services, adapters de persistencia reactivos (Mono/Flux, R2DBC, WebClient) dentro de una arquitectura hexagonal. Solo implementa lógica de negocio cuando tdd-reviewer ya dejó la suite en RED (fase GREEN de TDD).
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: default

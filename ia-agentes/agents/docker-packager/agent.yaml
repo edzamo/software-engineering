@@ -1,4 +1,0 @@
-name: docker-packager
-description: Genera Dockerfiles multi-stage por servicio (Java, TypeScript/Node o Python, según el stack detectado) y un docker-compose.yml raíz para levantar todos los servicios juntos con un solo comando. Úsalo al final del pipeline, cuando el código ya compila y los tests pasan — nunca como paso de scaffolding inicial, y nunca antes de que exista lógica de negocio real que empaquetar.
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: default

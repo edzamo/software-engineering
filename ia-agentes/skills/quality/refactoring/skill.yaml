@@ -1,2 +1,0 @@
-name: quality-refactoring
-description: Catálogo agnóstico de code smells y su refactorización (Fowler), para usar en la fase Refactor de TDD y en clean-code-reviewer. Complementa quality-clean-code (que es un checklist de revisión) con el "cómo se arregla" paso a paso y de forma segura.

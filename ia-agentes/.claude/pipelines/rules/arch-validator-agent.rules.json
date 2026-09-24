@@ -1,0 +1,167 @@
+{
+  "agent": "arch-validator-agent",
+  "phase": 1,
+  "version": "1.0.0",
+  "mode": "blocking",
+  "supported_styles": [
+    "hexagonal",
+    "clean",
+    "onion"
+  ],
+  "skills": [
+    "skills/architecture/hexagonal/rules.md",
+    "skills/architecture/hexagonal/invariants.json",
+    "skills/architecture/clean/rules.md",
+    "skills/architecture/onion/rules.md"
+  ],
+  "verdicts": [
+    "APPROVED",
+    "APPROVED_WITH_WARNINGS",
+    "BLOCKED",
+    "NEEDS_CLARIFICATION"
+  ],
+  "blocking_verdicts": [
+    "BLOCKED",
+    "NEEDS_CLARIFICATION"
+  ],
+  "max_review_cycles": 3,
+  "on_max_cycles": "escalate_to_human",
+  "rules": [
+    {
+      "id": "ARCH-001",
+      "severity": "block",
+      "description": "Domain/application layers reference infrastructure"
+    },
+    {
+      "id": "ARCH-002",
+      "severity": "block",
+      "description": "Domain/application layers depend on a framework"
+    },
+    {
+      "id": "ARCH-003",
+      "severity": "block",
+      "description": "Dependency points outward"
+    },
+    {
+      "id": "ARCH-004",
+      "severity": "block",
+      "description": "Use case depends on a concrete implementation instead of a port"
+    },
+    {
+      "id": "ARCH-005",
+      "severity": "block",
+      "description": "Persistence entity or transport DTO used as domain model"
+    },
+    {
+      "id": "ARCH-006",
+      "severity": "block",
+      "description": "Business logic in adapter or I/O in domain"
+    },
+    {
+      "id": "ARCH-007",
+      "severity": "block",
+      "description": "External interaction without a port"
+    },
+    {
+      "id": "ARCH-008",
+      "severity": "block",
+      "description": "Cyclic dependency between modules"
+    },
+    {
+      "id": "ARCH-009",
+      "severity": "block",
+      "description": "Adapter depends directly on another adapter"
+    },
+    {
+      "id": "ARCH-010",
+      "severity": "block",
+      "description": "No explicit composition root"
+    },
+    {
+      "id": "ARCH-W01",
+      "severity": "warn",
+      "description": "Port wider than 7 methods"
+    },
+    {
+      "id": "ARCH-W02",
+      "severity": "warn",
+      "description": "Use case orchestrates more than one aggregate"
+    },
+    {
+      "id": "ARCH-W03",
+      "severity": "warn",
+      "description": "Global static state or singletons"
+    },
+    {
+      "id": "ARCH-W04",
+      "severity": "warn",
+      "description": "Technology name leaks into core naming"
+    },
+    {
+      "id": "ARCH-011",
+      "severity": "block",
+      "description": "Lombok or DI/transaction annotations in domain or application (INV-12)"
+    },
+    {
+      "id": "ARCH-012",
+      "severity": "block",
+      "description": "Lossy domain<->persistence mapping (INV-11)"
+    },
+    {
+      "id": "ARCH-013",
+      "severity": "block",
+      "description": "Errors not translated at inbound boundary (INV-15)"
+    },
+    {
+      "id": "ARCH-W05",
+      "severity": "warn",
+      "description": "Use case without inbound adapter (INV-14)"
+    }
+  ],
+  "forbidden_in_core": {
+    "description": "Tokens (language-agnostic hints) that must never appear in domain/application layers",
+    "imports_patterns": [
+      "org.springframework",
+      "jakarta.persistence",
+      "javax.persistence",
+      "io.quarkus",
+      "reactor.core",
+      "com.fasterxml.jackson",
+      "org.hibernate",
+      "software.amazon.awssdk",
+      "@nestjs/",
+      "typeorm",
+      "express",
+      "Microsoft.EntityFrameworkCore",
+      "Microsoft.AspNetCore",
+      "java.sql",
+      "java.net.http",
+      "System.Data",
+      "System.Net.Http"
+    ]
+  },
+  "output": {
+    "format": "markdown",
+    "required_sections": [
+      "Inventario de componentes",
+      "Objeciones",
+      "Advertencias",
+      "Puertos identificados",
+      "Handoff"
+    ]
+  },
+  "handoff": {
+    "on_approved": {
+      "next_agent": "tdd-driver-agent",
+      "payload": [
+        "ports",
+        "use_cases",
+        "invariants"
+      ]
+    },
+    "on_blocked": {
+      "next_agent": null,
+      "action": "halt_pipeline"
+    }
+  }
+}

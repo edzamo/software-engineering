@@ -1,0 +1,56 @@
+{
+  "pipeline": "tdd-first-pipeline",
+  "version": "1.0.0",
+  "description": "Pipeline ligero para cambios acotados (bugfix, ajuste de regla) sobre diseño ya aprobado: TDD primero, luego revisión.",
+  "preconditions": [
+    "existing_architecture_review_approved OR change_does_not_alter_ports_or_dependencies",
+    "baseline_suite_is_green"
+  ],
+  "escalation": {
+    "if_change_touches": ["new_port", "new_adapter", "new_dependency_direction", "new_module"],
+    "then": "run pipelines/feature-implementation.json"
+  },
+  "phases": [
+    {
+      "id": "red",
+      "order": 1,
+      "agent": "agents/tdd-driver-agent.md",
+      "skills": ["skills/quality/tdd-workflow/protocol.md"],
+      "steps": ["reproduce_bug_or_specify_behavior_as_failing_test", "run_suite", "capture_red_evidence"],
+      "constraints": ["production_code_forbidden"],
+      "gate": {"pass_if": {"state": "RED_CONFIRMED"}, "on_fail": "halt"}
+    },
+    {
+      "id": "green",
+      "order": 2,
+      "agent": "agents/tdd-driver-agent.md",
+      "depends_on": ["red"],
+      "skills": ["skills/stacks/${stack.language}/index.md"],
+      "steps": ["write_minimum_production_code", "run_full_suite"],
+      "gate": {"pass_if": {"suite": "all_green"}, "on_fail": "halt"}
+    },
+    {
+      "id": "refactor",
+      "order": 3,
+      "agent": "agents/tdd-driver-agent.md",
+      "depends_on": ["green"],
+      "skills": ["skills/quality/refactoring/catalog.md", "skills/quality/clean-code/rules.md"],
+      "steps": ["micro_refactor", "run_suite_after_each_step"],
+      "gate": {"pass_if": {"suite": "all_green"}, "on_fail": "revert_last_step"}
+    },
+    {
+      "id": "review",
+      "order": 4,
+      "parallel": [
+        {"agent": "agents/code-reviewer-agent.md", "gate": {"no_verdict": "BLOCKED"}},
+        {"agent": "agents/security-agent.md", "gate": {"no_verdict": "BLOCKED"}}
+      ],
+      "depends_on": ["refactor"]
+    }
+  ],
+  "policies": {
+    "no_production_change_without_red_evidence": true,
+    "regression_test_required_for_every_bugfix": true,
+    "max_cycles_before_human": 3
+  }
+}
