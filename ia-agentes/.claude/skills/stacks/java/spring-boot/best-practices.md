@@ -1,26 +1,29 @@
 # Spring Boot (MVC / WebFlux / Data / Security) — Buenas Prácticas
 
-Spring es un **detalle de infraestructura**: vive solo en `adapter.*` y `bootstrap`. Dominio y aplicación no lo importan.
+Spring es un **detalle de infraestructura**: vive en `adapter.*` y en la clase de arranque. `domain` no lo importa; `application` solo usa `@Service`/`@Transactional` (§1).
+
+> Nota: el contrato reactivo (`Mono`/`Flux` por puerto) solo aplica a proyectos **WebFlux**; en MVC bloqueante los puertos son síncronos.
 
 ## 1. Ubicación de Spring en la arquitectura
 | Capa | ¿Spring permitido? |
 |------|--------------------|
 | domain | No |
-| application (`port`, `service`) | No (sin `@Service`, `@Transactional`, `@Autowired`) |
+| application (`port`, `service`) | `@Service` en casos de uso y `@Transactional` solo en métodos multi-puerto (sin `@Autowired`, Lombok ni `@Slf4j`) |
 | adapter.in (controllers, listeners) | Sí |
 | adapter.out (repos, clients) | Sí |
-| bootstrap (`@Configuration`) | Sí |
+| clase de arranque / `@Configuration` opcional | Sí (no se exige paquete `bootstrap`; el composition root es la clase `@SpringBootApplication` + component-scan) |
 
-Los casos de uso se registran en `bootstrap` con `@Bean`:
+Los casos de uso llevan `@Service` (y `@Transactional` solo en el método que escribe en varios puertos) y reciben sus puertos por constructor explícito; Spring los cablea solo:
 ```java
-@Configuration
-class UseCaseConfig {
-    @Bean RegisterAdopter registerAdopter(AdopterRepository repo, Clock clock) {
-        return new RegisterAdopterService(repo, clock);
-    }
+@Service
+class RegisterAdopterService implements RegisterAdopter {
+    RegisterAdopterService(AdopterRepository repo, Clock clock) { ... }
+
+    @Transactional // solo si este método escribe en más de un puerto (INV-18)
+    public Adopter register(...) { ... }
 }
 ```
-La transaccionalidad se aplica con un decorador/adaptador (`TransactionalRegisterAdopter`) o vía `TransactionTemplate` en el borde, no anotando la aplicación.
+Son las **únicas** anotaciones de Spring permitidas en `application` (INV-12). Sin Lombok ni `@Slf4j`. Un `@Configuration` con `@Bean` solo se justifica para beans que no son casos de uso (p. ej. `Clock`) y puede vivir en la clase `@SpringBootApplication`; no crees una clase de configuración para cablear casos de uso. Un decorador o `TransactionTemplate` es una alternativa válida, no obligatoria: en servicios pequeños es sobreingeniería.
 
 ## 2. Inyección y configuración
 - Inyección **por constructor**; sin `@Autowired` en campos.
@@ -49,10 +52,10 @@ La transaccionalidad se aplica con un decorador/adaptador (`TransactionalRegiste
 
 ## 5. Spring Data
 - Repositorios Spring Data **solo** en `adapter.out.persistence`, ocultos tras el puerto de dominio.
-- Entidades JPA (`@Entity`) ≠ entidades de dominio; mapeo explícito (MapStruct/manual).
+- Entidades JPA (`@Entity`) ≠ entidades de dominio; mapeo explícito. **Manual por defecto** (mappers estáticos con test de ida y vuelta, INV-11). MapStruct solo si se cumplen los umbrales y reglas de `spring-boot/mapstruct.md` (MS-01..10); con dominio inmutable y pocos agregados el mapeo manual es más simple.
 - `open-in-view=false`; cargas explícitas (`@EntityGraph`, proyecciones) para evitar N+1.
 - Migraciones con Flyway/Liquibase; `ddl-auto=validate|none` en prod.
-- `@Transactional` en el adaptador/decorador; lecturas con `readOnly = true`.
+- `@Transactional` solo en el método de caso de uso que escribe en varios puertos; una operación de un solo puerto ya es atómica en su adaptador. Sin `@Transactional` de clase ni `readOnly` por defecto.
 - Consultas: derivadas simples o `@Query` parametrizadas; jamás concatenar strings.
 - Locking optimista (`@Version`) para agregados concurrentes.
 
@@ -76,14 +79,18 @@ La transaccionalidad se aplica con un decorador/adaptador (`TransactionalRegiste
 |-------|-------------|
 | Dominio/aplicación | JUnit 5 + AssertJ, sin contexto Spring |
 | Adaptador web | `@WebMvcTest` / `@WebFluxTest` |
-| Persistencia | `@DataJpaTest`/`@DataR2dbcTest` + Testcontainers |
+| Persistencia | `@DataJpaTest`/`@DataR2dbcTest` con H2 (offline/CI simple) o Testcontainers (fidelidad con el motor real). Riesgo de H2 vs MySQL/Postgres: diferencias de dialecto, tipos y locking; documéntalo y exige ambos si hay SQL nativo |
 | Contrato | Spring Cloud Contract / Pact |
 | Arquitectura | ArchUnit |
 | Integración | `@SpringBootTest` mínimo, Testcontainers |
 
+## 8b. Patrones de test que funcionaron
+- Matriz de transiciones con `@ParameterizedTest` + `@EnumSource(mode = EXCLUDE)`; contrato abstracto compartido fake/JPA; test de rollback multi-puerto; concurrencia con `ExecutorService` + `CountDownLatch`; exhaustividad de enums dominio↔persistencia; PAN ausente de todas las columnas (detalle en `quality/tdd-workflow/protocol.md`).
+- Tests de contexto Spring que declaran un bean propio (p. ej. `Clock`) colisionan con el de la clase principal: `@Primary` o nombre distinto. Slice tests con mappers generados: `@Import`.
+
 ## 9. Anti-patrones
 - `@Entity` o `@JsonProperty` en dominio.
-- `@Service` + `@Transactional` en aplicación.
+- `@Autowired`, Lombok o `@Slf4j` en aplicación (`@Service` y `@Transactional` sí están permitidas).
 - Caso de uso que recibe `ServerRequest`, `HttpServletRequest` o `Authentication`.
 - `block()` en WebFlux; `subscribe()` dentro de un servicio.
 - `@Autowired` en campo; `@Value` disperso.
@@ -91,23 +98,24 @@ La transaccionalidad se aplica con un decorador/adaptador (`TransactionalRegiste
 - Excepciones tragadas en `@ControllerAdvice` que devuelven 200.
 
 ## 10. Checklist
-- [ ] Spring solo en `adapter` y `bootstrap`.
-- [ ] Casos de uso cableados en `@Configuration`.
+- [ ] Spring solo en `adapter`, la clase de arranque y (`@Service`/`@Transactional`) en casos de uso.
+- [ ] Casos de uso con `@Service`, constructor explícito y `@Transactional` solo en métodos multi-puerto; sin clases de configuración solo para cablearlos.
 - [ ] Sin bloqueo en pipelines reactivos (BlockHound).
 - [ ] DTOs, entidades JPA y dominio separados.
 - [ ] Security deny-by-default, JWT validado, anti-IDOR.
 - [ ] Migraciones versionadas, `ddl-auto` seguro.
-- [ ] ArchUnit + Testcontainers en CI.
+- [ ] ArchUnit en CI; Testcontainers (o H2 documentado) para persistencia.
 
 ## 11. Lecciones de proyectos reales (coffee-shop hexagonal)
-- Los servicios de aplicación **no** llevan `@Service`/`@Slf4j`/`@RequiredArgsConstructor`: se cablean en `@Configuration` (ver §1).
+- Los servicios de aplicación **no** llevan `@Slf4j`/`@RequiredArgsConstructor` (constructor explícito); `@Service` sí y `@Transactional` solo en métodos multi-puerto (ver §1). Un `BeanConfig` solo para cablearlos fue sobreingeniería.
 - Entidades JPA con sufijo `JpaEntity`; sin clases homónimas al dominio.
 - Adaptador de persistencia: `@Component` llamado `<Agregado>PersistenceAdapter`; Spring Data queda privado a su paquete.
 - Mapeos estáticos están bien, pero con test de ida y vuelta por estado (INV-11). Nunca colapsar estados de dominio en un solo valor de BD.
 - `@Builder` de Lombok en entidades JPA: inicializa colecciones con `@Builder.Default` (`new ArrayList<>()`) para evitar NPE en helpers como `setItems`.
 - Controladores: `@RestController`, `PUT` para reemplazo, `@Valid` en DTOs, DTOs en `adapter.in.web.dto` (no en un paquete `mapper`).
 - `@RestControllerAdvice` obligatorio: `NotFound → 404`, transición inválida → `409`, validación → `400/422`, con `ProblemDetail`.
-- Transacción por caso de uso mediante decorador en `bootstrap` cuando se escriben varios puertos (INV-18).
+- `@Transactional` en el método que escribe en varios puertos (INV-18), con test de rollback. No añadas decoradores transaccionales por defecto.
+- No crees clases de configuración ni decoradores que solo repitan lo que una anotación ya resuelve.
 - Sin beans con `UnsupportedOperationException`: si un puerto aún no tiene adaptador, el caso de uso no se registra.
-- `IllegalStateException` genérica en dominio → excepción tipada (`InvalidOrderTransition`).
+- `IllegalStateException` genérica en dominio → excepción tipada con sufijo `Exception` (`OrderStateException`); en desarrollos nuevos se exige el sufijo `Exception` (incluidas las de puerto, p. ej. `OrderNotFoundException`).
 - Datos de tarjeta: guardar solo últimos 4 dígitos/token; sobrescribir `toString` del `record`.

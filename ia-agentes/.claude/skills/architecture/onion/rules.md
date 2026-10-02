@@ -26,7 +26,7 @@ Todas las dependencias apuntan **al centro**. Las capas externas dependen de las
 ## 4. Diferencias sutiles con Hexagonal
 - Onion enfatiza el **modelo de dominio central y capas concéntricas** (domain services / application services).
 - Hexagonal enfatiza **puertos y adaptadores** según la dirección de la interacción (in/out).
-- Ambos comparten la inversión de dependencias; prioriza las invariantes comunes en `hexagonal/invariants.json` cuando se auditan dependencias.
+- Ambos comparten la inversión de dependencias; prioriza las invariantes comunes en `hexagonal/invariants.json` cuando se auditan dependencias (INV-12/INV-18: la excepción de `@Service`/`@Transactional` en Application Services es solo Java/Spring y aplica a métodos multi-agregado/multi-puerto).
 
 ## 5. Estructura sugerida
 ```

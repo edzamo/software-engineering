@@ -11,7 +11,8 @@
 | `quality/clean-code` | `rules.md` | Fase 3 y revisión |
 | `quality/refactoring` | `catalog.md` | REFACTOR y revisión |
 | `quality/owasp-security` | `checklists.md` | Auditoría de seguridad |
-| `stacks/java` | `index.md` → `common-naming.md`, `java8-11/`, `java17-21-plus/`, `spring-boot/`, `quarkus/` | Proyectos Java |
+| `stacks/java` | `index.md` → `common-naming.md`, `java8-11/`, `java17-21-plus/`, `spring-boot/` (`best-practices.md`, `mapstruct.md`), `quarkus/` | Proyectos Java |
 | `stacks/dotnet` | `index.md`, `naming.md`, `clean-architecture-dotnet.md` | Proyectos .NET |
 | `stacks/node-typescript` | `index.md`, `naming.md`, `nestjs-hexagonal.md` | Node.js / TypeScript |
 | `stacks/python` | `index.md`, `naming.md`, `hexagonal-python.md` | Proyectos Python |
+| `DECISIONS.md` | ADR-lite de decisiones de diseño vigentes | Fase 1 (consultar antes de bloquear) |

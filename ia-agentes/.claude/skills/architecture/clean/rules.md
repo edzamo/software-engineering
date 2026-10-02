@@ -53,7 +53,7 @@ main/                 # composition root
 - Use Case que conoce el mecanismo de entrega (HTTP status codes).
 
 ## 7. Relación con Hexagonal
-Equivalencia: *Input Boundary* = puerto de entrada; *Gateway* = puerto de salida; *Controller/Presenter* = adaptadores. Aplica las mismas invariantes de dependencia de `skills/architecture/hexagonal/invariants.json`.
+Equivalencia: *Input Boundary* = puerto de entrada; *Gateway* = puerto de salida; *Controller/Presenter* = adaptadores. Aplica las mismas invariantes de `skills/architecture/hexagonal/invariants.json` (incluida INV-12/INV-18 con la excepción Java/Spring de `application` solo si el stack la define). Sin subcarpeta `model` en `entities/`: agrupa por agregado.
 
 ## 8. Checklist
 - [ ] ¿Entities y Use Cases compilan sin frameworks?

@@ -73,7 +73,7 @@
     {
       "id": "INV-02",
       "severity": "block",
-      "rule": "application has no dependency on adapters or frameworks"
+      "rule": "application has no dependency on adapters or frameworks (only exception: org.springframework.stereotype.Service and org.springframework.transaction.annotation.* on use cases, see INV-12); domain has no framework at all"
     },
     {
       "id": "INV-03",
@@ -83,7 +83,7 @@
     {
       "id": "INV-04",
       "severity": "block",
-      "rule": "every external interaction is behind a port"
+      "rule": "every external I/O interaction (db, http, queue, filesystem) is behind a port; clock/random ids in domain are WARN unless they prevent deterministic tests (see INV-13)"
     },
     {
       "id": "INV-05",
@@ -98,7 +98,7 @@
     {
       "id": "INV-07",
       "severity": "block",
-      "rule": "wiring only in composition root"
+      "rule": "wiring only in composition root = bootstrap class (@SpringBootApplication) + component-scan; @Service/@Component on use cases and adapters is allowed wiring; no mandatory bootstrap package"
     },
     {
       "id": "INV-08",
@@ -108,7 +108,7 @@
     {
       "id": "INV-09",
       "severity": "block",
-      "rule": "infrastructure exceptions translated at the adapter boundary"
+      "rule": "infrastructure exceptions (Spring Data, optimistic locking) translated at the outbound adapter; WARN if a single inbound point (ApiExceptionHandler) translates them and the project declares it as debt"
     },
     {
       "id": "INV-10",
@@ -123,12 +123,12 @@
     {
       "id": "INV-12",
       "severity": "block",
-      "rule": "no Lombok or framework/DI annotations in domain and application"
+      "rule": "no framework in domain; application has no Lombok/@Slf4j/@Autowired/web/persistence types; Java/Spring-only exception: @Service allowed on use cases; @Transactional only on methods writing to more than one port (INV-18)"
     },
     {
       "id": "INV-13",
       "severity": "warn",
-      "rule": "time and ids enter through ports; domain owns identity and state transitions"
+      "rule": "domain owns identity and state transitions; domain should offer an overload taking the id (e.g. Order.create(UUID,...)) and receive time via Clock; adapters must not generate business ids or set the clock (all WARN unless they prevent deterministic tests)"
     },
     {
       "id": "INV-14",
@@ -153,7 +153,7 @@
     {
       "id": "INV-18",
       "severity": "block",
-      "rule": "multi-port writes define a unit of work at the boundary"
+      "rule": "multi-port writes define a unit of work (@Transactional on that method is enough; decorator/TransactionTemplate optional, not default); rollback test required"
     }
   ],
   "port_constraints": {
@@ -175,7 +175,7 @@
     }
   },
   "forbidden_symbols_in_core": [
-    "org.springframework",
+    "org.springframework (in domain: none; in application: only org.springframework.stereotype.Service and org.springframework.transaction.annotation.*)",
     "jakarta.",
     "javax.persistence",
     "io.quarkus",

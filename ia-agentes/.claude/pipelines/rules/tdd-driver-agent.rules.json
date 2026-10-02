@@ -22,7 +22,7 @@
   },
   "rules": [
     {"id": "TDD-001", "severity": "block", "description": "Production code without a prior failing test"},
-    {"id": "TDD-002", "severity": "block", "description": "New test passes on first run (no valid RED)"},
+    {"id": "TDD-002", "severity": "block", "description": "New test passes on first run (no valid RED); declare it a characterization/acceptance test instead"},
     {"id": "TDD-003", "severity": "block", "description": "More than one new behavior per cycle"},
     {"id": "TDD-004", "severity": "block", "description": "Test without meaningful assertion"},
     {"id": "TDD-005", "severity": "warn", "description": "Test coupled to implementation details"},
@@ -31,15 +31,16 @@
     {"id": "TDD-008", "severity": "block", "description": "Test edited to fit implementation without requirement change"},
     {"id": "TDD-009", "severity": "block", "description": "Refactor performed with a red suite"}
   ],
-  "valid_red_reasons": ["assertion_failure", "expected_missing_symbol_by_design"],
+  "valid_red_reasons": ["assertion_failure", "expected_missing_symbol_by_design (compilation RED must be documented)"],
   "invalid_red_reasons": ["test_syntax_error", "environment_failure", "flaky_timeout", "misconfigured_dependency"],
   "evidence_required": ["test_name", "failure_message", "command_executed", "exit_code"],
+  "structural_refactor_rule": "renames/moves start with a failing ArchUnit rule (RED)",
   "doubles_policy": {
     "allowed_for": ["outbound_ports", "clock", "id_generator"],
     "forbidden_for": ["domain_entities", "value_objects", "domain_services"]
   },
   "test_levels": ["domain_unit", "use_case_unit", "port_contract", "acceptance"],
-  "coverage_gate": {"line_min_percent": 85, "branch_min_percent": 75, "domain_min_percent": 95},
+  "coverage_gate": {"line_min_percent": 85, "branch_min_percent": 75, "domain_min_percent": 95, "note": "If no coverage tool is configured, report as debt and do not block, but propose configuring it"},
   "handoff": {
     "on_success": {"next_phase": "STACK_CONSTRUCTION", "payload": ["tdd_summary", "test_inventory"]},
     "on_blocked": {"action": "halt_pipeline"}

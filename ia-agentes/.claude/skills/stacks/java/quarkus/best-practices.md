@@ -1,9 +1,9 @@
 # Quarkus (Reactive, Panache, Native Image) — Buenas Prácticas
 
-Quarkus es infraestructura: vive en `adapter.*` y `bootstrap`. Dominio y aplicación permanecen libres de `io.quarkus`, `jakarta.*` (CDI/JPA) y Mutiny.
+Quarkus es infraestructura: vive en `adapter.*` y en la clase/config de arranque. `domain` permanece libre de `io.quarkus`, `jakarta.*` (CDI/JPA) y Mutiny; `application` igual, salvo la excepción pragmática (análoga a Spring, INV-12): los casos de uso pueden llevar `@ApplicationScoped` y `@Transactional`.
 
 ## 1. Cableado (CDI sin contaminar el núcleo)
-- Los casos de uso no llevan `@ApplicationScoped`; se producen en `bootstrap`:
+- Por defecto los casos de uso llevan `@ApplicationScoped` (y `@Transactional` si escriben varios puertos) con constructor explícito. Alternativa cuando se quiera `application` 100% libre de CDI: producirlos con `@Produces`:
 ```java
 @ApplicationScoped
 class UseCaseProducers {
@@ -19,7 +19,7 @@ class UseCaseProducers {
 ## 2. REST
 - **Quarkus REST** (RESTEasy Reactive) para endpoints; `@Path`, `@GET`... solo en `adapter.in`.
 - Validación con Hibernate Validator en DTOs; `ExceptionMapper` centralizado devolviendo `application/problem+json`.
-- DTOs separados del dominio; mapeo con MapStruct (`componentModel = "cdi"`).
+- DTOs separados del dominio; mapeo manual por defecto; MapStruct opcional según `spring-boot/mapstruct.md` (adaptando `componentModel = "cdi"`).
 
 ## 3. Modelo reactivo (Mutiny)
 - `Uni<T>` (0..1) y `Multi<T>` (0..N); no bloquear **I/O threads**. Un endpoint que devuelve `Uni/Multi` corre en el event loop.
@@ -77,7 +77,7 @@ class UseCaseProducers {
 - `@Inject` en campos privados en código propio; scopes innecesarios (`@Singleton` global con estado mutable).
 
 ## 10. Checklist
-- [ ] Quarkus solo en `adapter` y `bootstrap`; casos de uso via `@Produces`.
+- [ ] Quarkus solo en `adapter` y arranque; en casos de uso solo `@ApplicationScoped`/`@Transactional` (o `@Produces` si se prefiere núcleo puro).
 - [ ] Sin bloqueo en event loop (`@Blocking`/`@RunOnVirtualThread` cuando proceda).
 - [ ] Panache como Repository detrás del puerto, con mapeo a dominio.
 - [ ] Build nativo verificado con tests de integración sobre el binario.

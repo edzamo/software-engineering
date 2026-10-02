@@ -24,6 +24,7 @@
     "BLOCKED",
     "NEEDS_CLARIFICATION"
   ],
+  "read_policy": "read every cited file; validate against real code; declare read limits",
   "max_review_cycles": 3,
   "on_max_cycles": "escalate_to_human",
   "rules": [
@@ -35,7 +36,7 @@
     {
       "id": "ARCH-002",
       "severity": "block",
-      "description": "Domain/application layers depend on a framework"
+      "description": "Domain/application layers depend on a framework (only exception: org.springframework.stereotype.Service and org.springframework.transaction.annotation.* on application use cases; nothing in domain)"
     },
     {
       "id": "ARCH-003",
@@ -60,7 +61,7 @@
     {
       "id": "ARCH-007",
       "severity": "block",
-      "description": "External interaction without a port"
+      "description": "External I/O interaction without a port (clock/random ids in domain are WARN unless they prevent deterministic tests)"
     },
     {
       "id": "ARCH-008",
@@ -75,7 +76,7 @@
     {
       "id": "ARCH-010",
       "severity": "block",
-      "description": "No explicit composition root"
+      "description": "No composition root (Spring: @SpringBootApplication class + component-scan; bootstrap package not required)"
     },
     {
       "id": "ARCH-W01",
@@ -100,7 +101,7 @@
     {
       "id": "ARCH-011",
       "severity": "block",
-      "description": "Lombok or DI/transaction annotations in domain or application (INV-12)"
+      "description": "Framework in domain; Lombok/@Slf4j/@Autowired/web/persistence types in application; @Service allowed on application use cases and @Transactional only on multi-port write methods (INV-12/INV-18); Java/Spring-only exception"
     },
     {
       "id": "ARCH-012",
@@ -113,6 +114,16 @@
       "description": "Errors not translated at inbound boundary (INV-15)"
     },
     {
+      "id": "ARCH-W06",
+      "severity": "warn",
+      "description": "Clock/random ids generated in domain preventing deterministic tests, or adapter generating business ids/setting clock (INV-13)"
+    },
+    {
+      "id": "ARCH-W07",
+      "severity": "warn",
+      "description": "Disproportionate design: extra classes/layers that only duplicate a framework annotation or mechanism (BeanConfig, transactional decorators, needless mappers); ask the user instead of applying a skill rule blindly"
+    },
+    {
       "id": "ARCH-W05",
       "severity": "warn",
       "description": "Use case without inbound adapter (INV-14)"
@@ -121,7 +132,7 @@
   "forbidden_in_core": {
     "description": "Tokens (language-agnostic hints) that must never appear in domain/application layers",
     "imports_patterns": [
-      "org.springframework",
+      "org.springframework (application may only use org.springframework.stereotype.Service and org.springframework.transaction.annotation.*; domain none)",
       "jakarta.persistence",
       "javax.persistence",
       "io.quarkus",
@@ -147,6 +158,8 @@
       "Objeciones",
       "Advertencias",
       "Puertos identificados",
+      "Límites de lectura",
+      "Mapa de decisiones abiertas",
       "Handoff"
     ]
   },
@@ -156,7 +169,8 @@
       "payload": [
         "ports",
         "use_cases",
-        "invariants"
+        "invariants",
+        "open_decisions"
       ]
     },
     "on_blocked": {

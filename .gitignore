@@ -65,3 +65,8 @@ Thumbs.db
 *.temp
 .env
 
+### Estado efímero de agentes IA (ia-agentes/.claude) ###
+**/.claude/.tdd-state/*
+!**/.claude/.tdd-state/.gitkeep
+**/.claude/settings.local.json
+

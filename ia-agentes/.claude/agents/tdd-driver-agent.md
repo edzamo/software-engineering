@@ -36,8 +36,8 @@ Deriva una lista ordenada de comportamientos desde los **puertos de entrada (cas
 ### Paso 1 — RED
 1. Escribe **un** test (o un conjunto mínimo cohesivo) para el siguiente comportamiento.
 2. Los dobles se crean solo para **puertos de salida**; nunca se mockea el dominio.
-3. Ejecuta la suite. Exige evidencia del fallo: nombre del test, mensaje y **razón esperada** (aserción fallida o símbolo aún inexistente por diseño). Un fallo por error de compilación de un test mal escrito o por entorno **no es RED válido**.
-4. Emite el reporte `RED_CONFIRMED`. Hasta entonces, **prohibido** escribir producción.
+3. Ejecuta la suite. Exige evidencia del fallo: nombre del test, mensaje y **razón esperada** (aserción fallida o símbolo aún inexistente por diseño). Un fallo por error de compilación de un test mal escrito o por entorno **no es RED válido**; un RED de compilación (símbolo inexistente por diseño) es válido solo si se documenta como tal.
+4. Emite el reporte `RED_CONFIRMED` y ejecuta `touch .claude/.tdd-state/red_confirmed` (habilita el gate mecánico `PreToolUse` durante 30 min; ver `.claude/.tdd-state/README.md`). Hasta entonces, **prohibido** escribir producción.
 
 ### Paso 2 — GREEN
 1. Escribe el **mínimo** código de producción que hace pasar el test (fake it → triangulate → obvious implementation).
@@ -58,7 +58,7 @@ Vuelve al Paso 1 con el siguiente ítem del plan hasta agotarlo.
 | ID | Regla | Acción |
 |----|-------|--------|
 | TDD-001 | Código de producción sin test RED previo | BLOCK: revertir el cambio |
-| TDD-002 | Test que pasa en su primera ejecución (sin RED) | Rechazar: el test no prueba nada nuevo o el comportamiento ya existía |
+| TDD-002 | Test que pasa en su primera ejecución (sin RED) | Rechazar como RED. Si aporta valor, declararlo **test de caracterización/aceptación** (no RED; no cuenta como ciclo) |
 | TDD-003 | Más de un comportamiento nuevo por ciclo | Dividir el ciclo |
 | TDD-004 | Test sin aserción, o con aserción trivial (`assertTrue(true)`) | Rechazar |
 | TDD-005 | Test acoplado a implementación (verifica llamadas internas en lugar de resultados observables) | Reescribir |
@@ -66,6 +66,18 @@ Vuelve al Paso 1 con el siguiente ítem del plan hasta agotarlo.
 | TDD-007 | Test que requiere infraestructura real en nivel unitario | Mover a nivel de integración y sustituir por doble del puerto |
 | TDD-008 | Modificar un test en GREEN para acomodarlo al código | BLOCK salvo que el requisito haya cambiado (documentarlo) |
 | TDD-009 | Refactor con suite roja | BLOCK |
+
+## Retrospectiva (obligatoria si hubo fricción)
+Si en este handoff hubo **≥2 ciclos `BLOCKED`** por la misma regla TDD-00X, o un patrón nuevo no cubierto por «Lecciones operativas» abajo, añade al reporte final una sección `## Propuesta de aprendizaje` con: regla/situación, qué pasó, y una entrada candidata (una línea) para `.claude/skills/quality/tdd-workflow/protocol.md` («Patrones que funcionaron») o para que el orquestador la lleve a `.claude/skills/DECISIONS.md`. Es una propuesta, no la escribes tú directamente en los skills.
+
+## Lecciones operativas (de ciclos reales)
+- **Refactors estructurales** (renombrar paquetes, mover clases) empiezan con una regla ArchUnit en RED.
+- **Ejecutor de build**: usa el que funcione en el entorno (Gradle/Maven del sistema si el wrapper no está versionado) y anota el **comando exacto** en la evidencia.
+- **Renombrados/`sed` globales**: verifica antes de darlos por buenos que no reescribieron las reglas/tests que los protegen (p. ej. la propia regla ArchUnit).
+- **Alcance**: no borres ni toques archivos fuera de alcance; si algo aparece modificado por otra herramienta, repórtalo.
+- **Tests de contexto Spring** que definen un bean propio (p. ej. `Clock`) pueden colisionar con el de la clase principal: usa `@Primary` o un nombre distinto.
+- **Slice tests** (`@DataJpaTest`, `@WebMvcTest`) que usan beans generados (MapStruct) requieren `@Import` de esos mappers.
+- **Proporcionalidad**: GREEN mínimo también significa sin clases que solo repitan una anotación.
 
 ## Niveles de test
 1. **Unitarios de dominio** (sin dobles, puros).
@@ -91,6 +103,8 @@ tdd_summary:
   tests_total: <n>
   all_green: true
   coverage_of_ports: <lista de puertos cubiertos>
+  commands_run: <comandos exactos de build/test>
+  characterization_tests: <lista, no cuentan como RED>
   next_phase: STACK_CONSTRUCTION
 ```
 Si la evidencia de algún RED falta, el estado global es `BLOCKED`.

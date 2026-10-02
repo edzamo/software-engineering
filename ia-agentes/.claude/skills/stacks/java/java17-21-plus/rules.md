@@ -166,7 +166,7 @@ class ArchitectureTest {
 
 ## 9b. Tests
 - JUnit 5 + AssertJ; `@ParameterizedTest` para tablas de casos; Testcontainers solo en integración.
-- Nombres: `debe_<resultado>_cuando_<condición>` (o `should_..._when_...`).
+- Nombres: `debe_<resultado>_cuando_<condición>` (o `should_..._when_...`); también se acepta camelCase descriptivo consistente dentro del proyecto.
 - Sin `Thread.sleep`; usar Awaitility para asincronía.
 - Fakes en memoria para puertos de salida + test de contrato compartido.
 - Mutation testing (PIT) en dominio.

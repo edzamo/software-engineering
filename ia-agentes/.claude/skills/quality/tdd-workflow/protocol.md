@@ -100,7 +100,7 @@ refactor: <descripción o "ninguno">
 ```
 
 ## Métricas de salida
-- Cobertura de líneas ≥ 85%, ramas ≥ 75%, dominio ≥ 95%.
+- Cobertura de líneas ≥ 85%, ramas ≥ 75%, dominio ≥ 95%. Salvedad: si no hay herramienta de cobertura configurada, se reporta como deuda y no bloquea, pero se debe proponer configurarla (JaCoCo, coverage.py, c8...).
 - Mutation score recomendado ≥ 70% en dominio.
 - Cero tests deshabilitados.
 
@@ -109,3 +109,13 @@ refactor: <descripción o "ninguno">
 2. **Test de arquitectura** (ArchUnit / NetArchTest / dependency-cruiser) creado en el primer ciclo y ejecutado en CI.
 3. **Test de transición de estado** por cada arista válida e inválida del agregado.
 4. **Test de contrato** compartido entre fake en memoria y adaptador real.
+
+## Patrones que funcionaron (lecciones de proyectos reales)
+- **Matriz de transiciones completa**: `@ParameterizedTest` + `@EnumSource(mode = EXCLUDE)` para todas las aristas válidas e inválidas; el original inmutable no cambia tras una transición.
+- **Contrato abstracto compartido** entre el fake en memoria y el adaptador JPA (p. ej. `OrdersContract`/`PaymentsContract`) para evitar deriva.
+- **Rollback multi-puerto**: test que fuerza el fallo del segundo puerto y comprueba que el primero no persistió (INV-18).
+- **Concurrencia**: `ExecutorService` + `CountDownLatch` confirman que solo un pago/transición concurrente tiene éxito.
+- **Exhaustividad de enums** dominio↔persistencia (además de la ida y vuelta, INV-11).
+- **Datos sensibles**: test que comprueba que el PAN no aparece en ninguna columna (INV-17).
+- **ArchUnit sin exclusiones**; reglas negativas que protegen decisiones ya retiradas (p. ej. `domain.model`) solo si no son ruido.
+- Un test que pasa a la primera se declara **caracterización/aceptación**, no RED; un RED de compilación se documenta.

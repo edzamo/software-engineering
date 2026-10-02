@@ -35,3 +35,13 @@ jobs:
           for b in bad: print(*b)
           sys.exit(1 if bad else 0)
           PY
+
+      - name: Consistency checks
+        run: |
+          set -e
+          # domain/model solo como anti-patron o decision retirada (lineas que lo niegan)
+          if grep -rn "domain/model" skills | grep -viE "sin|no |nunca|anti-patr|prohib|retirad|evita|without"; then
+            echo "domain/model referenced as valid structure"; exit 1
+          fi
+          grep -q "mapstruct.md" skills/stacks/java/index.md || { echo "mapstruct.md not linked from java index"; exit 1; }
+          grep -q "DECISIONS.md" skills/README.md || { echo "DECISIONS.md not linked from skills/README.md"; exit 1; }

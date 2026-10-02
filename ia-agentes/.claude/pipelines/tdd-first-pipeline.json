@@ -51,6 +51,9 @@
   "policies": {
     "no_production_change_without_red_evidence": true,
     "regression_test_required_for_every_bugfix": true,
+    "orchestrator_reruns_full_suite_before_accepting": true,
+    "first_run_pass_is_characterization_not_red": true,
+    "authorized_exceptions_recorded_as": "EXC-<n> | rule | reason | authorized_by | date",
     "max_cycles_before_human": 3
   }
 }

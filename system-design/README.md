@@ -16,9 +16,17 @@ Conceptos y patrones de diseño de sistemas a gran escala — la parte de "arqui
 | 8 | Diseño de un acortador de URLs | — | ⏳ |
 | 9 | Casos de estudio reales (Netflix, Uber, Twitter, etc.) | — | ⏳ |
 
+## Series
+
+| Serie | Carpeta | Estado |
+|---|---|---|
+| Playlist de **Warup Sensei** (YouTube) — un archivo por video | [`warup-sensei/`](warup-sensei/README.md) | 🚧 2 de 25 |
+
 ## Fuente
 
 Los módulos parten del curso **[System Design Interview — ByteByteGo](https://bytebytego.com/courses/system-design-interview)**, resumidos a lo esencial (no son transcripciones completas) y con diagramas propios en Mermaid.
+
+La serie de **Warup Sensei** vive en su propia subcarpeta, con numeración propia (sigue el orden de la playlist).
 
 ## Cómo seguimos trabajando
 

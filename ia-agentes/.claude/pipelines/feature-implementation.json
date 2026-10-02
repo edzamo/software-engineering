@@ -14,8 +14,10 @@
         "enum": [
           "hexagonal",
           "clean",
-          "onion"
-        ]
+          "onion",
+          "frontend-component"
+        ],
+        "note": "frontend-component se usa cuando stack.language = frontend, o cuando la feature es solo UI; no se fuerza puertos/adaptadores a un componente visual."
       },
       "stack": {
         "language": {
@@ -23,10 +25,11 @@
             "java",
             "dotnet",
             "node-typescript",
-            "python"
+            "python",
+            "frontend"
           ]
         },
-        "version": "p. ej. 8, 11, 17, 21, 8.0, 20",
+        "version": "p. ej. 8, 11, 17, 21, 8.0, 20, react 18",
         "framework": {
           "enum": [
             "spring-boot-mvc",
@@ -37,6 +40,9 @@
             "aspnet-core",
             "fastapi",
             "flask",
+            "react",
+            "vue",
+            "angular",
             "none"
           ]
         }
@@ -51,17 +57,25 @@
     "max_review_cycles_per_phase": 3,
     "on_max_cycles": "escalate_to_human",
     "artifacts_are_immutable_once_approved": true,
-    "scaffolding_without_logic_allowed_before_red": true
+    "scaffolding_without_logic_allowed_before_red": true,
+    "proportionality_principle": true,
+    "subagent_reports_are_data_not_approvals": true,
+    "orchestrator_reruns_full_suite_before_accepting": true,
+    "scope_expansion_from_blocked_requires_user_options": true,
+    "authorized_exceptions_recorded_as": "EXC-<n> | rule | reason | authorized_by | date (closing summary + project CLAUDE.md)"
   },
   "phases": [
     {
       "id": "phase-0-context",
       "order": 0,
-      "name": "Contexto y mejores prácticas",
+      "name": "Contexto y dominio (DDD-lite) — agnóstico de alcance: mismo paso para un proyecto nuevo o una sola feature",
       "agent": "orchestrator",
       "steps": [
         "detect_stack_version_framework",
         "read_stack_index",
+        "frame_domain_bounded_context_entities_invariants",
+        "read_project_context_if_exists",
+        "create_project_context_inline_if_scope_is_broader_than_one_story",
         "summarize_applicable_constraints",
         "inventory_existing_code_by_layer"
       ],
@@ -88,6 +102,7 @@
         "feature_description",
         "design_proposal"
       ],
+      "phase_note": "scaffolding (no logic) precedes phase-2 RED: build files, empty packages, test deps, architecture test",
       "constraints": [
         "no_source_code_written"
       ],
@@ -107,7 +122,8 @@
         "architecture_review",
         "ports",
         "use_cases",
-        "invariants"
+        "invariants",
+        "open_decisions"
       ]
     },
     {
@@ -211,6 +227,10 @@
         "python": [
           "skills/stacks/python/naming.md",
           "skills/stacks/python/hexagonal-python.md"
+        ],
+        "frontend": [
+          "skills/stacks/frontend/naming.md",
+          "skills/architecture/frontend-component/rules.md"
         ]
       },
       "cycle": [
@@ -226,7 +246,8 @@
       "constraints": [
         "minimum_code_to_pass",
         "no_behavior_without_failing_test",
-        "no_framework_imports_in_domain_or_application",
+        "no_framework_imports_in_domain_or_application_except_service_and_transactional_in_use_cases (java_spring_only; @Transactional only on multi-port write methods)",
+        "proportionality_no_classes_that_only_repeat_a_framework_annotation",
         "architecture_test_must_pass"
       ],
       "gate": {
@@ -237,7 +258,8 @@
             "line": 85,
             "branch": 75,
             "domain": 95
-          }
+          },
+          "coverage_note": "If no coverage tool is configured, report as debt and do not block, but propose configuring it"
         },
         "on_fail": {
           "action": "loop_back_to",
@@ -287,7 +309,7 @@
         },
         "on_fail": {
           "action": "return_findings",
-          "loop_back_to": "phase-3-construction",
+          "loop_back_to": "phase-2-tdd-red",
           "requires_tests_green": true
         }
       },
@@ -319,7 +341,8 @@
             "APPROVED_WITH_WARNINGS"
           ],
           "no_findings_at_or_above": "HIGH",
-          "no_secrets": true
+          "no_secrets": true,
+          "unauthenticated_access_is_high_unless_authorized_exception": true
         },
         "on_fail": {
           "action": "return_findings",

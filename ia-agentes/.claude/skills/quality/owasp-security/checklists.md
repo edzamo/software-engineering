@@ -105,3 +105,12 @@ Agnóstico de framework. Cada ítem se marca `PASS | FAIL | N/A` con evidencia (
 - [ ] No se almacena PAN completo ni CVV (PCI DSS): tokenizar o guardar últimos 4 dígitos.
 - [ ] Un fallo de negocio no devuelve 500 con detalle interno; `ProblemDetail` genérico + `traceId`.
 - [ ] Entrada validada en el borde (`@Valid`, cantidades > 0, listas no vacías, enums válidos).
+- [ ] Sin autenticación/IDOR = HIGH; solo se levanta con excepción autorizada registrada (`EXC-<n>`).
+- [ ] Concurrencia: `@Version` en agregados mutables; optimistic locking (`ObjectOptimisticLockingFailureException`) y `DataIntegrityViolationException` traducidos a `409`.
+- [ ] Validación de rangos en DTOs: cantidades (`Integer.MAX_VALUE`), años/fechas extremos, longitudes máximas de cadenas y listas.
+- [ ] `spring.jpa.hibernate.ddl-auto=validate` (o `none`) y `show-sql=false` por defecto; `create`/`update` y SQL visible solo en perfil `dev` aparte.
+- [ ] Scripts de seed con `DROP TABLE`/borrados acotados a perfil `dev` y sin `catch` genérico que trague excepciones.
+- [ ] PII (titular de tarjeta, email) fuera de `toString`, logs y respuestas innecesarias.
+- [ ] Sin credenciales por defecto (`root/root`, `password`) ni puertos de BD expuestos al host/red en compose/config.
+- [ ] Dockerfile: usuario no root y puerto coherente con `server.port`/compose.
+- [ ] SCA: si no hay red/herramienta y no se ejecutó, informarlo explícitamente (no marcar PASS).
