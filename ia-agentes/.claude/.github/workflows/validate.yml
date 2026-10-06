@@ -45,3 +45,32 @@ jobs:
           fi
           grep -q "mapstruct.md" skills/stacks/java/index.md || { echo "mapstruct.md not linked from java index"; exit 1; }
           grep -q "DECISIONS.md" skills/README.md || { echo "DECISIONS.md not linked from skills/README.md"; exit 1; }
+
+      - name: Validate native skills (SKILL.md frontmatter)
+        run: |
+          python3 - <<'PY'
+          import glob, re, sys
+          bad = []
+          for f in glob.glob("skills/*/SKILL.md"):
+              t = open(f, encoding="utf-8").read()
+              m = re.match(r"---\n(.*?)\n---\n", t, re.S)
+              if not m or "name:" not in m.group(1) or "description:" not in m.group(1):
+                  bad.append((f, "missing name/description in frontmatter"))
+          for b in bad: print(*b)
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Validate that referenced skill paths exist
+        run: |
+          python3 - <<'PY'
+          import glob, re, os, sys
+          pat = re.compile(r"(?:\.claude/)?((?:skills|agents|commands)/[A-Za-z0-9_\-./]+\.(?:md|json))")
+          missing = set()
+          files = glob.glob("agents/*.md") + glob.glob("commands/*.md") + glob.glob("skills/**/*.md", recursive=True)
+          for f in files:
+              for ref in pat.findall(open(f, encoding="utf-8").read()):
+                  if "${" in ref or "<" in ref or "/projects/" in ref: continue
+                  if not os.path.exists(ref): missing.add((f, ref))
+          for f, r in sorted(missing): print(f"{f}: missing {r}")
+          sys.exit(1 if missing else 0)
+          PY

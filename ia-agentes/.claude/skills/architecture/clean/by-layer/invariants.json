@@ -1,0 +1,303 @@
+{
+  "style": "clean-architecture-fullstack",
+  "version": "6.0.0",
+  "layers_order": {
+    "backend": [
+      "core",
+      "use-cases",
+      "controllers|frameworks"
+    ],
+    "frontend": [
+      "core",
+      "use-cases",
+      "hooks",
+      "ui|services"
+    ]
+  },
+  "structure": {
+    "backend": "src/{core/{entities,rules,errors,ports},use-cases/<domain>,controllers/{dtos,mappers},services,frameworks/{data-services/prisma,mail,pdf,drive,security,scheduler,http},configuration}; main.ts, app.module.ts; no shared/",
+    "frontend": "src/{core/{models,rules,errors,ports},use-cases/<feature>,hooks,ui/<feature>+{presenters,format,shared},services/{repositories,mappers,http,storage},composition,app}; tests in test/{unit,e2e,support}",
+    "omit_unneeded_layers": true,
+    "backend_domains": [
+      "consents",
+      "clients",
+      "auth",
+      "services"
+    ]
+  },
+  "layers": {
+    "backend": {
+      "core": {
+        "may_depend_on": []
+      },
+      "use-cases": {
+        "may_depend_on": [
+          "core"
+        ]
+      },
+      "controllers": {
+        "may_depend_on": [
+          "use-cases",
+          "core"
+        ]
+      },
+      "frameworks": {
+        "may_depend_on": [
+          "core",
+          "use-cases (only to trigger one, e.g. scheduler)"
+        ]
+      },
+      "services/app.module/main": {
+        "may_depend_on": [
+          "all (composition root)"
+        ]
+      }
+    },
+    "frontend": {
+      "core": {
+        "may_depend_on": []
+      },
+      "use-cases": {
+        "may_depend_on": [
+          "core"
+        ]
+      },
+      "hooks": {
+        "may_depend_on": [
+          "use-cases",
+          "core"
+        ]
+      },
+      "ui": {
+        "may_depend_on": [
+          "hooks",
+          "core",
+          "use-cases (types only)",
+          "composition"
+        ]
+      },
+      "services": {
+        "may_depend_on": [
+          "core"
+        ]
+      },
+      "composition": {
+        "may_depend_on": [
+          "core",
+          "use-cases",
+          "services"
+        ]
+      },
+      "app": {
+        "may_depend_on": [
+          "ui",
+          "composition"
+        ]
+      }
+    }
+  },
+  "forbidden_edges": {
+    "backend": [
+      {
+        "from": "core",
+        "to": [
+          "use-cases",
+          "controllers",
+          "frameworks",
+          "services"
+        ]
+      },
+      {
+        "from": "use-cases",
+        "to": [
+          "controllers",
+          "frameworks",
+          "services"
+        ]
+      },
+      {
+        "from": "controllers",
+        "to": [
+          "frameworks",
+          "services"
+        ]
+      },
+      {
+        "from": "frameworks",
+        "to": [
+          "controllers",
+          "services"
+        ]
+      },
+      {
+        "from": "use-cases/<domain>",
+        "to": [
+          "use-cases/<other domain>"
+        ]
+      }
+    ],
+    "frontend": [
+      {
+        "from": "core",
+        "to": [
+          "use-cases",
+          "hooks",
+          "ui",
+          "services",
+          "composition",
+          "app"
+        ]
+      },
+      {
+        "from": "use-cases",
+        "to": [
+          "hooks",
+          "ui",
+          "services",
+          "composition",
+          "app"
+        ]
+      },
+      {
+        "from": "hooks",
+        "to": [
+          "ui",
+          "services",
+          "composition",
+          "app"
+        ]
+      },
+      {
+        "from": "ui",
+        "to": [
+          "services",
+          "app"
+        ]
+      },
+      {
+        "from": "services",
+        "to": [
+          "use-cases",
+          "hooks",
+          "ui",
+          "composition",
+          "app"
+        ]
+      },
+      {
+        "from": "use-cases/<feature>",
+        "to": [
+          "use-cases/<other feature>"
+        ]
+      },
+      {
+        "from": "ui/<feature>",
+        "to": [
+          "ui/<other feature>"
+        ]
+      }
+    ]
+  },
+  "invariants": [
+    {
+      "id": "CA-01",
+      "severity": "block",
+      "rule": "backend: frameworks/controllers -> use-cases -> core only, controllers and frameworks never import each other. frontend: ui/services -> hooks -> use-cases -> core, ui and services never import each other"
+    },
+    {
+      "id": "CA-02",
+      "severity": "block",
+      "rule": "core is pure TypeScript: no frameworks, ORM, React or SDKs, no import of other layers"
+    },
+    {
+      "id": "CA-03",
+      "severity": "block",
+      "rule": "use-cases has no frameworks, ORM or React; imports only core; ports are injected by constructor"
+    },
+    {
+      "id": "CA-04",
+      "severity": "block",
+      "rule": "all external data (API/DB JSON, DTO, row) crosses a mapper (backend: controllers/mappers or frameworks/**/mappers; frontend: services/mappers); raw data never reaches use cases or core"
+    },
+    {
+      "id": "CA-05",
+      "severity": "block",
+      "rule": "DomainError and ApplicationError extend Error; infrastructure translates native errors (Prisma, Axios) to ApplicationError"
+    },
+    {
+      "id": "CA-06",
+      "severity": "block",
+      "rule": "a single global error translator in layer 4 (backend: frameworks/http; frontend: services/http translating network errors to typed core/errors)"
+    },
+    {
+      "id": "CA-07",
+      "severity": "block",
+      "rule": "backend: a use-cases/<domain> never imports another domain (share via core), no cycles (a Nest @Module may import another @Module). frontend: a use-cases/<feature> or ui/<feature> never imports another feature (share via core, hooks, ui/shared)"
+    },
+    {
+      "id": "CA-08",
+      "severity": "block",
+      "rule": "sensitive data never stored or serialized in clear (toString, logs)"
+    },
+    {
+      "id": "CA-09",
+      "severity": "block",
+      "rule": "use cases testable with in-memory fakes of their ports, without real infrastructure"
+    },
+    {
+      "id": "CA-10",
+      "severity": "block",
+      "rule": "tests live outside src in apps/<app>/test/{unit,integration,e2e,support}; unit/ mirrors src/ path; in-memory port fakes in test/support; no *.spec.ts(x) or testing/ folder inside src (enforced by lint:arch rule tests-outside-src)"
+    }
+  ],
+  "over_engineering": [
+    {
+      "id": "OE-01",
+      "severity": "warn",
+      "rule": "one interface per use case (ports are per external resource: repository, PDF, storage, hasher)"
+    },
+    {
+      "id": "OE-02",
+      "severity": "warn",
+      "rule": "subfolders per entity inside a layer (controllers/clients, core/entities/consent); use-cases grouped by domain or flow is fine, by entity is not"
+    },
+    {
+      "id": "OE-03",
+      "severity": "warn",
+      "rule": "hexagonal layout (in/, out/, adapter/in) or the word hexagonal"
+    },
+    {
+      "id": "OE-04",
+      "severity": "warn",
+      "rule": "patterns without a real problem (factories, events, CQRS, empty layers)"
+    },
+    {
+      "id": "OE-05",
+      "severity": "warn",
+      "rule": "mappers, presenters or duplicated entities without a real difference or formatting"
+    }
+  ],
+  "forbidden_symbols_in_core": [
+    "@nestjs/",
+    "@prisma/client",
+    "class-validator",
+    "class-transformer",
+    "playwright",
+    "nodemailer",
+    "googleapis",
+    "express",
+    "axios",
+    "next/",
+    "react"
+  ],
+  "core_layers": {
+    "backend": [
+      "core",
+      "use-cases"
+    ],
+    "frontend": [
+      "core",
+      "use-cases"
+    ]
+  }
+}

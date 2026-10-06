@@ -1,9 +1,12 @@
 # Agentes y Skills agnósticos para Claude Code
 
-Kit **copy-paste**: copia `CLAUDE.md` + `AGENTS.md` + la carpeta `.claude/` a la raíz de cualquier repositorio (Java hoy, TypeScript o Python mañana — es agnóstico de stack). Claude Code solo auto-carga `CLAUDE.md`/`CLAUDE.local.md` **al nivel raíz del proyecto** (nunca si está anidado dentro de `.claude/`); `agents/` y `commands/` sí se descubren dentro de `.claude/`. Los skills y pipelines (en carpetas jerárquicas) los leen los agentes y el orquestador por ruta explícita.
+Kit **central** de ingeniería asistida por IA: agentes, comandos, hook TDD, pipelines y skills agnósticos de stack. **Se instala una vez a nivel de usuario (symlinks a `~/.claude/`) y se usa desde cualquier proyecto** — ya no se copia `.claude/` a cada repo. Cada proyecto solo aporta su *corazón*: su `CLAUDE.md` y sus skills de negocio. El contrato completo está en [`PROJECT-CONTRACT.md`](PROJECT-CONTRACT.md).
 
-`AGENTS.md` es la fuente única de verdad (reglas del flujo); `CLAUDE.md` solo la importa (`@AGENTS.md`) para que Claude Code la cargue. Otras herramientas (Codex, Cursor, Copilot) leen `AGENTS.md` de forma nativa sin necesitar `CLAUDE.md`.
+Claude Code solo auto-descubre `agents/`, `commands/` y `skills/` en `~/.claude/` o en `<proyecto>/.claude/`; por eso `scripts/install.sh` enlaza el kit allí. Los skills de conocimiento (`architecture/`, `quality/`, `stacks/`) los leen los agentes **por ruta**, con esta resolución: primero `<proyecto>/.claude/…`, luego `~/.claude/kit/.claude/…`.
 
+`AGENTS.md` es la fuente única de las reglas del flujo; `CLAUDE.md` de este repo solo la importa (`@AGENTS.md`). Otras herramientas (Codex, Cursor, Copilot) leen `AGENTS.md` de forma nativa.
+
+Estructura del kit (este repositorio):
 ```
 <raíz del repo>/
 ├── CLAUDE.md                              # `@AGENTS.md` — puntero para que Claude Code la auto-cargue
@@ -25,9 +28,9 @@ Kit **copy-paste**: copia `CLAUDE.md` + `AGENTS.md` + la carpeta `.claude/` a la
     │   └── PROJECT.md                     # lo crea la Fase 0 de /feature-implementation si el alcance es > 1 historia
     ├── skills/                            # conocimiento reutilizable (ver skills/README.md)
     │   ├── DECISIONS.md                   # ADR-lite: decisiones vigentes y su porqué (crece con cada proyecto)
-    │   ├── architecture/{hexagonal,clean,onion,frontend-component}/
-    │   ├── quality/{tdd-workflow,clean-code,owasp-security,refactoring}/
-    │   └── stacks/{java,dotnet,node-typescript,python,frontend}/   # únicos con sintaxis/framework
+    │   ├── architecture/{hexagonal,clean(+by-layer),onion,frontend-component}/
+    │   ├── quality/{tdd-workflow,clean-code,owasp-security,refactoring,over-engineering}/
+    │   └── stacks/{java,dotnet,node-typescript,python,react-nextjs,frontend}/   # únicos con sintaxis/framework
     ├── commands/
     │   ├── feature-implementation.md      # /feature-implementation <descripción> — único punto de entrada
     │   └── tdd-first.md                   # /tdd-first <bug>
@@ -38,12 +41,21 @@ Kit **copy-paste**: copia `CLAUDE.md` + `AGENTS.md` + la carpeta `.claude/` a la
     └── .github/workflows/validate.yml     # copiar a <repo>/.github/workflows/ para activarlo
 ```
 
-## Al copiar este kit a un proyecto nuevo
-1. Copia `CLAUDE.md`, `AGENTS.md` **y** `.claude/` a la raíz del repo destino (no solo `.claude/`).
-2. Verifica que ambos quedaron como hermanos de `.claude/`, no dentro — si no, Claude Code no los carga.
-3. `.claude/skills/DECISIONS.md` empieza vacío o con las decisiones de este kit base; es específico de cada proyecto, no lo arrastres de otro repo.
-4. `.claude/metrics/runs.jsonl` también empieza vacío por proyecto — es la base de datos de kaizen de *ese* repo.
-5. `.claude/.tdd-state/` se crea solo (gitignored); no hace falta copiarlo.
+## Instalación (una vez por máquina)
+```bash
+scripts/install.sh --dry-run   # ver qué enlazaría
+scripts/install.sh             # crea ~/.claude/kit y los symlinks de agents/commands/skills
+```
+Idempotente, solo crea symlinks y **nunca pisa** un archivo real. Reinicia Claude Code después. Al agregar un agente/comando/skill nuevo al kit, vuelve a correrlo.
+
+## Proyecto nuevo
+1. Copia `templates/project/CLAUDE.md` a la raíz del repo y complétalo (stack, `Estilo:`, comandos, «Skills del proyecto», convenciones).
+2. Crea solo lo propio: `.claude/skills/projects/<proyecto>/` (reglas de negocio, seguridad), y — si hace falta — agentes/skills del cliente. **No copies agentes ni skills genéricos del kit.**
+3. Opcional: activar el hook TDD (ver `PROJECT-CONTRACT.md` §4) y adoptar `@~/.claude/kit/AGENTS.md`.
+4. `DECISIONS.md`, `context/PROJECT.md` y `metrics/runs.jsonl` son del proyecto: nacen vacíos allí, no se arrastran del kit.
+
+## Perfiles de arquitectura incluidos
+`hexagonal`, `clean` (genérico), **`clean/by-layer`** (por carpeta de capa en la raíz de `src/`, Fullstack TS; viene de Naru Consent), `onion`, `frontend-component`. Stacks: `java`, `dotnet`, `node-typescript`, `python`, `react-nextjs`, `frontend`.
 
 ## Uso
 Un solo punto de entrada, agnóstico de si es un proyecto nuevo completo, un sistema solo-backend, solo-frontend, o una feature suelta para un cliente — **siempre el mismo comando**, el orquestador ajusta cuánto contexto captura en la Fase 0:

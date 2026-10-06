@@ -7,6 +7,8 @@ Implementa la siguiente feature siguiendo el pipeline definido en `.claude/pipel
 
 Feature: $ARGUMENTS
 
+**Contrato del proyecto:** el flujo es del kit central (`~/.claude/kit`); lo propio del proyecto está en su `CLAUDE.md` (estilo de arquitectura, stack, comandos de test/lint/build, «Skills del proyecto»). Léelo antes de la Fase 0. Si falta una sección obligatoria (ver `PROJECT-CONTRACT.md` del kit), pídela al usuario en lugar de asumirla. Rutas `.claude/...`: primero el proyecto, luego `~/.claude/kit/.claude/...`.
+
 ## Fase 0 — Contexto y dominio (DDD-lite)
 Detecta stack, versión y framework (`pom.xml`/`build.gradle`, `*.csproj`, `package.json`, `pyproject.toml`; para frontend, `package.json` + config de React/Vue/Angular). Lee `.claude/skills/stacks/<lenguaje>/index.md` y los archivos que indique. Resume en 5 líneas las restricciones aplicables (versión de lenguaje, framework, herramienta de test y de arquitectura) **y** el encuadre de dominio: bounded context/agregado al que pertenece esta feature, entidades/VOs que toca, invariantes de negocio relevantes. Si el estilo no viene en los argumentos: `hexagonal` por defecto para backend, `frontend-component` si el stack es frontend; dilo explícitamente. Si el repo ya tiene código, lístalo por capas antes de diseñar.
 
