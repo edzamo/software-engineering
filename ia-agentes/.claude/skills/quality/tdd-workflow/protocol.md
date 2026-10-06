@@ -1,6 +1,6 @@
 # Protocolo TDD Estricto (RED → GREEN → REFACTOR)
 
-Agnóstico de lenguaje. La herramienta de test concreta se elige desde `skills/stacks/`.
+Agnóstico de lenguaje. La herramienta de test concreta se elige desde `skills/stacks/`. Para sitios estáticos (qué se prueba y qué no): `static-sites.md`.
 
 ## Ley fundamental
 > **No se escribe código de producción sin un test fallido que lo exija.**

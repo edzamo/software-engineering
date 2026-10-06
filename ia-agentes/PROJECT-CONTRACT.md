@@ -40,9 +40,12 @@ Opcional: `@~/.claude/kit/AGENTS.md` para que el proyecto adopte las reglas invi
 El estado efímero (`.claude/.tdd-state/`) vive en el proyecto y va en su `.gitignore`.
 
 ## 5. Orden del flujo (el que se quiere en cualquier stack)
-System Design → DDD → Arquitectura de capas → TDD → Implementación → Calidad/Seguridad. Hoy el kit cubre desde «DDD-lite + Arquitectura» en adelante; System Design y un skill de DDD propio son la siguiente mejora (ver `README.md`).
+System Design → DDD → Arquitectura de capas → TDD → Implementación → Calidad/Seguridad. Hoy el kit cubre desde «DDD-lite + Arquitectura» en adelante; System Design y un skill de DDD propio son la siguiente mejora.
 
-## 6. Cómo agregar conocimiento
+## 6. Verificación de referencias
+`scripts/check-project.py <raíz-del-repo>` lee los `CLAUDE.md` del proyecto y comprueba que cada ruta citada (`.claude/...`, `~/.claude/kit/...`, `stacks/...`, `architecture/...`, `quality/...`) resuelva en el proyecto o en el kit. Es la garantía de «solo referencias»: corre antes de commitear cambios de `CLAUDE.md` o del kit.
+
+## 7. Cómo agregar conocimiento
 - Reutilizable → un skill del kit (stack en `stacks/<stack>/` y listado en su `index.md`; patrón de calidad en `quality/`). Un agente nuevo solo si es un rol/fase con veredicto propio.
 - Del negocio de un proyecto → `skills/projects/<proyecto>/` en ese repo.
 - Los aprendizajes de un proyecto que merezcan subir al kit pasan por la retrospectiva (el usuario aprueba) y se llevan al kit en su propio commit.

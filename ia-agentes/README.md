@@ -48,6 +48,11 @@ scripts/install.sh             # crea ~/.claude/kit y los symlinks de agents/com
 ```
 Idempotente, solo crea symlinks y **nunca pisa** un archivo real. Reinicia Claude Code después. Al agregar un agente/comando/skill nuevo al kit, vuelve a correrlo.
 
+## Verificar un proyecto
+```bash
+scripts/check-project.py <raíz-del-repo>   # todas las rutas de sus CLAUDE.md resuelven en el proyecto o en el kit
+```
+
 ## Proyecto nuevo
 1. Copia `templates/project/CLAUDE.md` a la raíz del repo y complétalo (stack, `Estilo:`, comandos, «Skills del proyecto», convenciones).
 2. Crea solo lo propio: `.claude/skills/projects/<proyecto>/` (reglas de negocio, seguridad), y — si hace falta — agentes/skills del cliente. **No copies agentes ni skills genéricos del kit.**
@@ -55,7 +60,7 @@ Idempotente, solo crea symlinks y **nunca pisa** un archivo real. Reinicia Claud
 4. `DECISIONS.md`, `context/PROJECT.md` y `metrics/runs.jsonl` son del proyecto: nacen vacíos allí, no se arrastran del kit.
 
 ## Perfiles de arquitectura incluidos
-`hexagonal`, `clean` (genérico), **`clean/by-layer`** (por carpeta de capa en la raíz de `src/`, Fullstack TS; viene de Naru Consent), `onion`, `frontend-component`. Stacks: `java`, `dotnet`, `node-typescript`, `python`, `react-nextjs`, `frontend`.
+`hexagonal`, `clean` (genérico), **`clean/by-layer`** (por carpeta de capa en la raíz de `src/`, Fullstack TS; viene de Naru Consent), `onion`, `frontend-component`. Stacks: `java`, `dotnet`, `node-typescript`, `python`, `react-nextjs`, `astro`, `frontend`. Calidad web: `web-performance`, `web-analytics`, `owasp-security/static-sites`.
 
 ## Uso
 Un solo punto de entrada, agnóstico de si es un proyecto nuevo completo, un sistema solo-backend, solo-frontend, o una feature suelta para un cliente — **siempre el mismo comando**, el orquestador ajusta cuánto contexto captura en la Fase 0:
