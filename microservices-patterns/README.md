@@ -131,7 +131,7 @@ Cada instancia se **registra sola** al arrancar (y se da de baja al caer) — na
 
 ### Load Balancing
 
-Reparte tráfico entre instancias de un mismo servicio — algoritmos típicos: *round-robin* (una tras otra, por turno), *least connections* (a la que tiene menos carga activa), *IP hash* (mismo cliente siempre a la misma instancia, útil si hay estado de sesión local). En AWS es `ALB`/`NLB` (ver [`cloud-aws/`](../cloud-aws)) — acá el concepto es agnóstico de proveedor.
+Reparte tráfico entre instancias de un mismo servicio — algoritmos típicos: *round-robin* (una tras otra, por turno), *least connections* (a la que tiene menos carga activa), *IP hash* (mismo cliente siempre a la misma instancia, útil si hay estado de sesión local). En AWS es `ALB`/`NLB` (ver [`cloud/aws/`](../cloud/aws)) — acá el concepto es agnóstico de proveedor.
 
 ### Backends for Frontends (BFF)
 
@@ -218,7 +218,7 @@ Ejemplos de preguntas que calzan en este formato:
 
 Caso integrado: [`../system-design/caso-pasarela-pagos.md`](../system-design/caso-pasarela-pagos.md) (Outbox, Saga, Circuit Breaker, Bulkhead e idempotencia en una pasarela de pagos), y [`../messaging-streaming/`](../messaging-streaming) para la mensajería y los disparadores programados.
 
-Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para cómo se implementa la comunicación no bloqueante, [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB, API Gateway, ALB), y [`ddd/cqrs.md`](../ddd/cqrs.md) para CQRS como modelado de dominio (en este directorio, [`cqrs.md`](cqrs.md) cubre CQRS como patrón de microservicios con Kafka).
+Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para cómo se implementa la comunicación no bloqueante, [`cloud/aws/`](../cloud/aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB, API Gateway, ALB), y [`ddd/cqrs.md`](../ddd/cqrs.md) para CQRS como modelado de dominio (en este directorio, [`cqrs.md`](cqrs.md) cubre CQRS como patrón de microservicios con Kafka).
 
 ## Referencias
 

@@ -190,7 +190,7 @@ flowchart TB
 - Hay que **decidir a qué local va cada pedido**.
 - Aparecen los problemas duros de los sistemas distribuidos: la red falla, los relojes no coinciden, y no puedes tener consistencia perfecta y disponibilidad total a la vez → ver **CAP** en [`02-databases-sql-vs-nosql.md`](../02-databases-sql-vs-nosql.md).
 
-**Mapeo técnico:** multi-AZ, multi-región, CDN, réplicas geográficas. Comparar con la sección de capas de AWS en [`../../cloud-aws/`](../../cloud-aws).
+**Mapeo técnico:** multi-AZ, multi-región, CDN, réplicas geográficas. Comparar con la sección de capas de AWS en [`../../cloud/aws/`](../../cloud/aws).
 
 ---
 

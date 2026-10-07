@@ -260,7 +260,7 @@ Cuando hay que evitar el *lock-in* o correr en varias nubes o on-prem:
 - **Pagos en tiempo real 24/7:** los rieles de pago inmediato (transferencias instantáneas, billeteras) reducen la dependencia de los cortes diarios; la conciliación pasa a ser continua en lugar de nocturna.
 - **Costo por uso** en lugar de capacidad fija: hay que vigilar el costo a gran volumen.
 
-**Riesgos nuevos:** *lock-in*, límites propios de cada servicio (ver sección 4), dificultad para probar localmente (por eso LocalStack o emuladores; ver [`../cloud-aws/`](../cloud-aws)), y mayor dispersión de piezas que hay que observar de punta a punta.
+**Riesgos nuevos:** *lock-in*, límites propios de cada servicio (ver sección 4), dificultad para probar localmente (por eso LocalStack o emuladores; ver [`../cloud/aws/`](../cloud/aws)), y mayor dispersión de piezas que hay que observar de punta a punta.
 
 ## 11. Cómo contarlo en una entrevista
 
@@ -290,7 +290,7 @@ Cuando hay que evitar el *lock-in* o correr en varias nubes o on-prem:
 - Kafka y comparación de brokers: [`../messaging-streaming/kafka.md`](../messaging-streaming/kafka.md), [`../messaging-streaming/README.md`](../messaging-streaming/README.md)
 - Outbox, Saga, resiliencia: [`../microservices-patterns/`](../microservices-patterns)
 - CQRS: [`../ddd/cqrs.md`](../ddd/cqrs.md)
-- Servicios AWS y práctica con LocalStack: [`../cloud-aws/`](../cloud-aws)
+- Servicios AWS y práctica con LocalStack: [`../cloud/aws/`](../cloud/aws)
 - Escalado: [`01-scale-from-zero-to-millions.md`](01-scale-from-zero-to-millions.md)
 
 ## Fuentes consultadas

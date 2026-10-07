@@ -123,7 +123,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 | Jobs programados y disparadores (Quartz) | Media, sale por experiencia previa en pagos | [18 · Quartz](#s18) | [`messaging-streaming/quartz-scheduler.md`](../../messaging-streaming/quartz-scheduler.md) |
 | **System design de tu proyecto (pasarela de pagos)** | Alta: es tu historia de experiencia | [19 · System design](#s19) | [`system-design/caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md) y su versión cloud: [`caso-pasarela-pagos-cloud.md`](../../system-design/caso-pasarela-pagos-cloud.md) |
 | Node.js (+2 años) | Media | [08 · Node.js](#s08) | [`frameworks/nestjs/`](../../frameworks/nestjs) |
-| Azure (Functions, Service Bus, APIM, AKS, DevOps) | Media | [09 · Azure](#s09) | [`cloud-aws/`](../../cloud-aws) para comparar |
+| Azure (Functions, Service Bus, APIM, AKS, DevOps) | Media | [09 · Azure](#s09) | [`cloud/aws/`](../../cloud/aws) para comparar |
 | Pruebas unitarias e integración, agilidad | Media | [10 · Pruebas y agilidad](#s10) | [`tdd/`](../../tdd) |
 | GraphQL (deseable) | Baja | [11 · GraphQL](#s11) | Solo aquí |
 | Sistemas heredados y bases de datos (plus) | Plus | [12 · Legacy y BD](#s12) | [`system-design/02-databases-sql-vs-nosql.md`](../../system-design/02-databases-sql-vs-nosql.md) |

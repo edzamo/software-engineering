@@ -108,7 +108,7 @@ Heurística para responder cualquier pregunta de este tipo: *"la decisión corre
 | 3 | ¿Cómo asegurás calidad de código y performance? | Ver tabla debajo — es contenido nuevo, no estaba en el repo. |
 | 10 | ¿Cómo manejás fallas en sistemas distribuidos? | Retry con backoff + circuit breaker (Resilience4j) + DLQ + idempotency keys + graceful degradation. Ya cubierto en [`microservices-patterns/`](../../../microservices-patterns) sección 2. |
 | 11 | Contame de un proyecto que llevaste vos solo, de punta a punta. | Tené un ejemplo propio armado (migración monolito→microservicios, CI/CD, IaC, entrega sin supervisión constante) — ver [`fit-y-liderazgo.md`](fit-y-liderazgo.md) para cómo estructurar la respuesta con el framework STAR. |
-| 12 | ¿Cómo depurás un problema de performance en producción? | Orden: CloudWatch metrics → X-Ray traces → GC logs/heap dump → recién ahí optimizar la causa raíz. Detalle completo (nuevo) en [`cloud-aws/`](../../../cloud-aws) sección "Observabilidad y debugging". |
+| 12 | ¿Cómo depurás un problema de performance en producción? | Orden: CloudWatch metrics → X-Ray traces → GC logs/heap dump → recién ahí optimizar la causa raíz. Detalle completo (nuevo) en [`cloud/aws/`](../../../cloud/aws) sección "Observabilidad y debugging". |
 
 **Calidad de código y performance en Java (pregunta 3 — contenido nuevo):**
 
@@ -124,11 +124,11 @@ Heurística para responder cualquier pregunta de este tipo: *"la decisión corre
 
 | # | Pregunta | Respuesta relámpago |
 |---|---|---|
-| 4 | ¿Cómo diseñás almacenamiento de archivos con S3? | `S3AsyncClient` + keys con UUID + versioning/lifecycle + IAM/bucket policies + CloudFront. Detalle completo ya en [`cloud-aws/`](../../../cloud-aws) sección S3. |
-| 5 | ¿Buenas prácticas corriendo Java en EC2? | ASG + ALB/NLB + SSM Parameter Store + CloudWatch/X-Ray + AMI horneada con Packer. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección EC2. |
-| 6 | ¿DynamoDB vs RDS? | DynamoDB: NoSQL, latencia constante, escala automático, sin joins — alto volumen de escritura por clave. RDS: relacional, joins/transacciones. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección DynamoDB. |
-| 7 | ¿Cómo usás Elasticsearch desde Java? | Cliente REST para indexar/consultar, full-text search, sharding+replication, Kibana para visualizar. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección Elasticsearch. |
-| 8 | ¿CDK vs CloudFormation? | CDK es código (Java/TS/Python) que **compila a** CloudFormation — no lo reemplaza, le da abstracciones reales encima. Nuevo — en [`cloud-aws/`](../../../cloud-aws) sección IaC. |
+| 4 | ¿Cómo diseñás almacenamiento de archivos con S3? | `S3AsyncClient` + keys con UUID + versioning/lifecycle + IAM/bucket policies + CloudFront. Detalle completo ya en [`cloud/aws/`](../../../cloud/aws) sección S3. |
+| 5 | ¿Buenas prácticas corriendo Java en EC2? | ASG + ALB/NLB + SSM Parameter Store + CloudWatch/X-Ray + AMI horneada con Packer. Nuevo — en [`cloud/aws/`](../../../cloud/aws) sección EC2. |
+| 6 | ¿DynamoDB vs RDS? | DynamoDB: NoSQL, latencia constante, escala automático, sin joins — alto volumen de escritura por clave. RDS: relacional, joins/transacciones. Nuevo — en [`cloud/aws/`](../../../cloud/aws) sección DynamoDB. |
+| 7 | ¿Cómo usás Elasticsearch desde Java? | Cliente REST para indexar/consultar, full-text search, sharding+replication, Kibana para visualizar. Nuevo — en [`cloud/aws/`](../../../cloud/aws) sección Elasticsearch. |
+| 8 | ¿CDK vs CloudFormation? | CDK es código (Java/TS/Python) que **compila a** CloudFormation — no lo reemplaza, le da abstracciones reales encima. Nuevo — en [`cloud/aws/`](../../../cloud/aws) sección IaC. |
 | 9 | ¿Cómo diseñarías un sistema de gestión de órdenes escalable en AWS? | API Gateway → Lambda/EC2 (microservicios Spring Boot) → DynamoDB (lookups) + S3 (archivo) → SQS/Kafka (eventos async) → Elasticsearch (búsqueda) → CloudWatch/X-Ray/ELK (observabilidad) → Multi-AZ + retries + DLQs (resiliencia). Es literalmente juntar todas las píldoras de arriba en un solo diagrama — practicalo dibujándolo de memoria. |
 
 ## 01 · Programación reactiva
@@ -249,7 +249,7 @@ aws --endpoint-url=http://localhost:4566 s3 mb s3://practica-bucket
 
 > En Spring, apuntás el `S3AsyncClient`/`SqsAsyncClient` al endpoint de LocalStack (`http://localhost:4566`) con credenciales dummy (`test`/`test`) — el código de producción no cambia, solo el endpoint por config. Si en la entrevista te piden usar AWS, contá esto en voz alta: mostrás que sabés separar código de infraestructura.
 
-Docker-compose y script completo de práctica (fuera de este repo, ver sección de enlaces) en la carpeta local de referencia — comandos equivalentes documentados en [`cloud-aws/`](../../../cloud-aws).
+Docker-compose y script completo de práctica (fuera de este repo, ver sección de enlaces) en la carpeta local de referencia — comandos equivalentes documentados en [`cloud/aws/`](../../../cloud/aws).
 
 ---
 
@@ -438,7 +438,7 @@ Una vez pasada la entrevista, este archivo puede volver a achicarse a solo lo es
 | Spring Batch (Job/Step, chunk processing) | [`spring-boot/spring-batch.md`](../../../frameworks/spring-boot/spring-batch.md) |
 | DDD (Entities/VO, Aggregates, Repository, Domain Events/Service, Bounded Context, CQRS) | [`ddd/`](../../../ddd) |
 | Microservicios: comunicación, resiliencia, saga/outbox, OWASP | [`microservices-patterns/`](../../../microservices-patterns) |
-| AWS + práctica con LocalStack | [`cloud-aws/`](../../../cloud-aws) |
+| AWS + práctica con LocalStack | [`cloud/aws/`](../../../cloud/aws) |
 | Java como lenguaje: POO, estructuras de datos, interfaces funcionales, evolución 8→21 | [`java-core/`](../../../java-core) |
 | Arquitectura hexagonal | [`hexagonal-architecture.md`](../../../software-architectures/hexagonal-architecture.md) |
 | Escalar de 0 a millones de usuarios | [`system-design/`](../../../system-design) |

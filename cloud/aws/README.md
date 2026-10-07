@@ -269,7 +269,7 @@ Pregunta muy común en entrevista senior: *"¿cómo depurás un problema de perf
 
 **Frase para entrevista:** "no empiezo por adivinar — primero confirmo con métricas agregadas que hay un problema real, después uso tracing para ubicar el servicio/llamada exacta, y solo si el síntoma apunta a la JVM (no a un downstream) reviso GC/heap. Optimizar antes de medir es la forma más común de arreglar lo que no era el problema."
 
-Para el patrón de resiliencia frente a fallas de servicios downstream (retry con backoff, circuit breaker, DLQ, idempotencia) ver [`microservices-patterns/`](../microservices-patterns) sección 2 — es la contraparte de este debugging: cómo evitar que la falla se propague, no solo cómo diagnosticarla.
+Para el patrón de resiliencia frente a fallas de servicios downstream (retry con backoff, circuit breaker, DLQ, idempotencia) ver [`microservices-patterns/`](../../microservices-patterns) sección 2 — es la contraparte de este debugging: cómo evitar que la falla se propague, no solo cómo diagnosticarla.
 
 ## Entorno de práctica (LocalStack)
 
@@ -305,7 +305,7 @@ El patrón se repite para cualquier servicio AWS: mismo comando/SDK, apuntando a
 | 5 min | Explicar en voz alta el orden de pasos para depurar un problema de performance en producción: qué mirás primero, y por qué no empezás optimizando directamente. |
 | 4 min | ¿CDK reemplaza a CloudFormation o lo usa por debajo? ¿Qué implica eso para el rollback/drift? |
 
-Relacionado: [`microservices-patterns/`](../microservices-patterns) para cómo SQS/SNS se usan en patrones de comunicación event-driven, y para el patrón de resiliencia (retry/circuit breaker/DLQ/idempotencia) que complementa la sección de observabilidad de arriba.
+Relacionado: [`microservices-patterns/`](../../microservices-patterns) para cómo SQS/SNS se usan en patrones de comunicación event-driven, y para el patrón de resiliencia (retry/circuit breaker/DLQ/idempotencia) que complementa la sección de observabilidad de arriba.
 
 ## Referencias
 
