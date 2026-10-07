@@ -137,7 +137,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 03 · Java: lo que te van a preguntar
 
-> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 4](cheat-sheet.md#c4) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
+> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 1](cheat-sheet.md#c1) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
 
 Formato: **pregunta → respuesta corta que puedes decir en voz alta → ejemplo**.
 
@@ -184,7 +184,7 @@ Checked: el compilador te obliga a manejarlas, para errores recuperables. Unchec
 
 ### Los 5 principios, explicados simple
 
-> Misma explicación que en el [cheat sheet 4.15](cheat-sheet.md#c4) (código malo, código bueno y dibujos).
+> Misma explicación que en el [cheat sheet 1.15](cheat-sheet.md#c1) (código malo, código bueno y dibujos).
 
 **Para qué sirve SOLID, en palabras de la calle:** son 5 reglas para que el código **se pueda cambiar sin romper otras cosas**. Imagina una frutería: si el cajero también cuenta el dinero, empaca, limpia y hace la contabilidad, cuando falle algo no sabes por dónde empezar. SOLID es poner **a cada uno a hacer lo suyo**.
 
