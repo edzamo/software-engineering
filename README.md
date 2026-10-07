@@ -20,6 +20,7 @@ graph LR
     root --> arch["software-architectures/<br/>MVC, Clean, Onion, Hexagonal"]
     root --> sysdes["system-design/<br/>System Design"]
     root --> micro["microservices-patterns/<br/>Microservicios"]
+    root --> msg["messaging-streaming/<br/>Colas, pub/sub, Kafka"]
     root --> frameworks["frameworks/<br/>Spring Boot (WebFlux/Reactor), NestJS"]
     root --> aws["cloud-aws/<br/>AWS + LocalStack"]
     root --> tdd["tdd/<br/>TDD"]
@@ -35,6 +36,8 @@ graph LR
     ddd --> arch
     arch --> sysdes
     sysdes --> micro
+    micro --> msg
+    msg --> entrevistas
     arch --> micro
     arch --> frameworks
     micro --> frameworks
@@ -64,8 +67,9 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 | [`ddd/`](ddd) | Domain-Driven Design | ✅ Completo | Entities vs Value Objects, Aggregates, Repository pattern, Domain Events, Domain Service, Bounded Context, CQRS — con `Order` (coffee shop) y `Appointment` (citas médicas) como casos trabajados. |
 | [`uml/`](uml) | Notación UML | ✅ Completo | Cheatsheet de las 5 relaciones (herencia, asociación, agregación, composición, dependencia) con diagramas Mermaid. |
 | [`software-architectures/`](software-architectures) | Arquitecturas de software | 🟡 En progreso | **Cómo decide un arquitecto: trade-offs y ADRs** ([`decisiones-de-arquitectura.md`](software-architectures/decisiones-de-arquitectura.md)). MVC, Clean Architecture, Onion, Hexagonal (puertos/adaptadores) — comparadas entre sí. Mobile (MVVM/MVP/MVI) y web frontend (Flux/Redux) pendientes. |
-| [`system-design/`](system-design) | System Design | 🟡 En progreso | Escalar de 0 a millones de usuarios, SQL vs NoSQL (ACID/CAP theorem), REST vs GraphQL vs gRPC — basado en ByteByteGo. Se va sumando módulo a módulo. |
+| [`system-design/`](system-design) | System Design | 🟡 En progreso | **Caso integrado: pasarela de pagos con Quartz + Kafka + Outbox + CQRS** ([`caso-pasarela-pagos.md`](system-design/caso-pasarela-pagos.md)) y su versión cloud-native en AWS/Azure/GCP ([`caso-pasarela-pagos-cloud.md`](system-design/caso-pasarela-pagos-cloud.md)). Escalar de 0 a millones de usuarios, SQL vs NoSQL (ACID/CAP theorem), REST vs GraphQL vs gRPC — basado en ByteByteGo. Se va sumando módulo a módulo. |
 | [`microservices-patterns/`](microservices-patterns) | Patrones de microservicios | ✅ Completo | Comunicación sync/async, resiliencia (circuit breaker, retry, bulkhead), consistencia (saga, outbox), acceso/despliegue (API Gateway, service discovery, load balancing, BFF, sidecar, strangler fig), API-first, OWASP — con diagrama por patrón. |
+| [`messaging-streaming/`](messaging-streaming) | Mensajería y event streaming | ✅ Completo | Síncrono vs asíncrono, cola vs pub/sub vs log de eventos, comparación de tecnologías (Kafka, RabbitMQ, SQS/SNS, Service Bus, Event Hubs, IBM MQ) y **cuándo elegir cada una**. [`kafka.md`](messaging-streaming/kafka.md): cluster, KRaft (reemplazo de ZooKeeper), topics/particiones, productor/consumidor, estructura del registro (key, payload, headers), y uso en banca. [`glosario.md`](messaging-streaming/glosario.md): 50 términos con analogía de la frutería y nivel junior/mid/senior. [`quartz-scheduler.md`](messaging-streaming/quartz-scheduler.md): Quartz (tablas `QRTZ_*`, cluster, misfire) y el patrón Polling Publisher en una pasarela de pagos. |
 | [`frameworks/`](frameworks) | Spring Boot, NestJS | 🟡 En progreso | Un framework de backend por carpeta ([`spring-boot/`](frameworks/spring-boot), [`nestjs/`](frameworks/nestjs)): fundamentos, capa web, persistencia, seguridad. Spring Boot incluye la guía de WebFlux/Project Reactor en 2 partes ([`webflux.md`](frameworks/spring-boot/webflux.md) + [`webflux-operators.md`](frameworks/spring-boot/webflux-operators.md)) con frecuencia real de uso de operadores en microservicios en producción — y tabla de analogía punto a punto con NestJS. |
 | [`cloud-aws/`](cloud-aws) | Cloud (AWS) | ✅ Completo | Servicios AWS clave para un backend Java + cómo practicar con LocalStack (sin tarjeta ni cuenta real). |
 | [`tdd/`](tdd) | TDD | ✅ Completo | Ciclo red-green-refactor (diagrama de estados), pirámide de testing, patrón AAA. |
@@ -77,6 +81,7 @@ La progresión de aprendizaje sugerida sigue las flechas: primero fundamentos de
 
 - **Un tema por carpeta raíz.** Cada carpeta es autocontenida: un `README.md` como punto de entrada, con diagramas Mermaid y píldoras — sin código para compilar.
 - **Los resúmenes de curso se cargan incrementalmente**, módulo por módulo, para evitar documentos gigantes.
+- **Cada tema se explica de junior a senior, empezando con manzanas.** Los documentos nuevos abren con una cápsula "🍎 con manzanas" (la analogía continua de la frutería, ver [`messaging-streaming/glosario.md`](messaging-streaming/glosario.md)) y una tabla de qué debe dominar un 🟢 junior, un 🟡 mid y un 🔴 senior. Después viene el detalle técnico.
 - **Los diagramas se escriben en Mermaid**, no en imágenes ni ASCII art — GitHub los renderiza nativamente en el navegador, sin depender de herramientas externas (PlantUML, draw.io) para poder leerlos.
 - **El código de referencia vive fuera de este repo**, en una carpeta local aparte (`codigo-por-reorganizar/`) — proyectos completos en Java/JS que respaldaron esta documentación, pendientes de reorganizar en sus propios repos. No se versiona acá para que este repo se mantenga liviano y 100% enfocado en estudio.
 - Antes de crear una carpeta nueva para un tema, revisar si ya existe una carpeta similar y seguir el mismo patrón de organización.

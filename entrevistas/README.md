@@ -14,6 +14,7 @@ Los procesos cerrados se mueven a [`archivo/`](archivo).
 
 | Proceso | Rol | Stack | Estado | Carpeta |
 |---|---|---|---|---|
+| Arkano | Senior Java Developer | Java, REST, Kafka, OWASP Top 10, Node.js, Azure | En curso: pendiente de agenda de la técnica | [`arkano-senior-java-developer/`](arkano-senior-java-developer) |
 | SaludTools | Desarrollador(a) Senior | Java 21, Spring WebFlux, DDD, AWS, microservicios | Cerrado ([retrospectiva](kaizen/retrospectiva-2026-09-evaluacion-con-ia.md)) | [`archivo/saludtools-desarrollador-senior/`](archivo/saludtools-desarrollador-senior) |
 
 ## Cómo se arma cada proceso nuevo

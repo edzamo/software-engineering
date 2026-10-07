@@ -16,6 +16,15 @@ Conceptos y patrones de diseño de sistemas a gran escala — la parte de "arqui
 | 8 | Diseño de un acortador de URLs | — | ⏳ |
 | 9 | Casos de estudio reales (Netflix, Uber, Twitter, etc.) | — | ⏳ |
 
+## Casos de diseño propios
+
+Diseños completos de soluciones reales, con requisitos, diagramas, decisiones y modos de falla. Cada uno está vinculado con los temas de las demás carpetas.
+
+| Caso | Archivo | Qué integra |
+|---|---|---|
+| Pasarela de pagos con disparadores programados (Quartz) y eventos (Kafka) | [`caso-pasarela-pagos.md`](caso-pasarela-pagos.md) | Outbox, Polling Publisher, CQRS, Circuit Breaker, idempotencia, [`messaging-streaming/`](../messaging-streaming), [`microservices-patterns/`](../microservices-patterns) |
+| La misma pasarela **hoy**, con servicios gestionados de AWS, Azure y GCP (qué reemplaza a Quartz) | [`caso-pasarela-pagos-cloud.md`](caso-pasarela-pagos-cloud.md) | Tabla de equivalencias entre nubes, scheduler por pago vs polling, workflows, límites verificados, ruta de migración |
+
 ## Series
 
 | Serie | Carpeta | Estado |
@@ -34,7 +43,7 @@ La serie de **Warup Sensei** vive en su propia subcarpeta, con numeración propi
 2. Cada archivo prioriza diagramas y píldoras de repaso rápido sobre texto largo — este es material de consulta antes de una entrevista, no un libro.
 3. Este índice se actualiza con cada módulo agregado.
 
-Relacionado: [`microservices-patterns/`](../microservices-patterns) para patrones a nivel de comunicación entre servicios.
+Relacionado: [`microservices-patterns/`](../microservices-patterns) para patrones a nivel de comunicación entre servicios, y [`messaging-streaming/`](../messaging-streaming) para colas, Kafka y disparadores programados.
 
 ## Referencias
 
