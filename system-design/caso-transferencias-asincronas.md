@@ -4,6 +4,8 @@ Los dos servicios de producción que construiste en el banco: **transferencias i
 
 > Fuente: tus casos de estudio en el repo de Kafka ([`case-studies/`](https://github.com/edzamo/kafka-streaming-lab) · `async-interbank-transfer.md` y `async-abroad-transfer-order.md`). Aquí se **analiza la arquitectura**, se revisa con ojo crítico y se prepara para la entrevista. 🔎 = contrasta con tu memoria del proyecto.
 >
+> **Nuevo:** la [sección 10](#10--cómo-lo-diseñarías-hoy-en-la-nube-azure-primero-luego-aws-y-gcp) muestra este diseño en **Azure, AWS y GCP** con nombres de servicios.
+>
 > Relacionado: [`caso-pasarela-pagos.md`](caso-pasarela-pagos.md) (misma familia de problemas) · [`../messaging-streaming/kafka.md`](../messaging-streaming/kafka.md) · [`../messaging-streaming/practica-kafka-ejercicios.md`](../messaging-streaming/practica-kafka-ejercicios.md)
 
 ## 🍎 Con manzanas (empieza aquí)
@@ -153,6 +155,8 @@ flowchart TD
 
 ## 6. Cómo lo diseñarías hoy
 
+> Esta sección es **neutral a la nube** (patrones). La versión con **servicios concretos de Azure, AWS y GCP** está en la [sección 10](#10--cómo-lo-diseñarías-hoy-en-la-nube-azure-primero-luego-aws-y-gcp).
+
 ```mermaid
 flowchart LR
     T[("orders.approved.v1<br/>key = orderId")] --> C["Consumidor<br/>devuelve Mono / Uni<br/>offset al terminar"]
@@ -226,3 +230,186 @@ Detalle: [`../frameworks/quarkus/smallrye-reactive-messaging.md`](../frameworks/
 - ¿Quién publicaba las tareas programadas: un servicio propio, Quartz u otro?
 - ¿Cuántas órdenes por día y qué picos?
 - ¿Cómo se monitoreaba el lag y los mensajes en error?
+
+## 10 · Cómo lo diseñarías hoy en la nube (Azure primero, luego AWS y GCP)
+
+Mismo problema, pero armado con **servicios gestionados**. Para Arkano, **Azure es el primario**; AWS y GCP sirven para comparar.
+
+### 🍎 Con manzanas
+En el banco tú mismo **cuidabas el edificio**: el libro de ventas (Kafka en Event Hubs), la agenda de alarmas, el cuaderno de "ya despachado". Hoy **alquilas todo ya montado**: un libro con **bandeja de "revisar a mano" incluida**, alarmas que se programan **una por pedido**, y un coordinador que **recuerda en qué paso iba cada pedido**. Tú solo escribes las reglas del despacho.
+
+### 10.1 · La decisión más importante en Azure: ¿Event Hubs o Service Bus?
+
+Tu servicio usaba **Event Hubs** (por su protocolo Kafka). Para **ejecutar órdenes** (comandos que deben reintentarse, programarse y no duplicarse), en Azure suele encajar mejor **Service Bus**. Para **publicar hechos** (auditoría, analítica, notificaciones), Event Hubs.
+
+| Necesidad de este diseño | Event Hubs (Kafka) | Service Bus |
+|---|---|---|
+| **DLQ** para lo que siempre falla | **No tiene** una DLQ nativa: hay que montarla con otro hub o tópico | ✅ **DLQ integrada** en cada cola y suscripción |
+| **Reintentos** | Tópicos de reintento a mano | ✅ Cuenta de entregas y reintento automático; reencolado con retraso |
+| **Entrega programada** ("el día 5") | No | ✅ **Mensajes programados** |
+| **Orden por orden** | Por partición (clave) | ✅ **Sesiones** (`SessionId = orderId`) |
+| **Evitar duplicados** | Idempotencia en el consumidor | ✅ **Detección de duplicados** por `MessageId` en una ventana |
+| **Confirmar al terminar** | Checkpoint del offset | ✅ *Peek-lock*: se completa el mensaje al terminar; si falla, vuelve a la cola |
+| **Releer / auditoría / analítica** | ✅ Es un log | No |
+| **Altísimo volumen** | ✅ | Menor |
+| **Compactación de logs** | **No implementada** | No aplica |
+| **Transacciones y Kafka Streams** | En **vista previa** en Premium y Dedicated (según la documentación consultada) | No aplica |
+
+**Recomendación (híbrida):**
+- **Service Bus** para el flujo de ejecución de órdenes: comandos con reintentos, DLQ, programación y orden por sesión.
+- **Event Hubs** para los **eventos de negocio resultantes** (`OrdenEjecutada`, `OrdenRechazada`): auditoría, analítica, notificaciones, varios consumidores.
+
+> **Qué decir:** *"Event Hubs con protocolo Kafka me permitió reutilizar Spring Cloud Stream, pero no tiene DLQ, programación ni deduplicación nativas, así que las reimplementé a mano. Hoy usaría Service Bus para ejecutar las órdenes, porque ya trae DLQ, mensajes programados, sesiones y detección de duplicados, y dejaría Event Hubs para publicar los hechos."*
+
+**Migración sin dolor:** Spring Cloud Azure tiene *binder* para Service Bus (cambia la dependencia y los bindings; la lógica de negocio queda igual). En Quarkus, Service Bus habla **AMQP 1.0**, así que el conector AMQP de SmallRye es una opción (🔎 verifícalo antes de afirmarlo).
+
+### 10.2 · Azure: arquitectura
+
+```mermaid
+flowchart LR
+    CH["Canal / backoffice"] --> APIM["API Management<br/>+ Entra ID (OAuth2)"]
+    APIM --> ORD["Servicio de Órdenes<br/>Container Apps o AKS"]
+    ORD --> SQL[("Azure SQL / PostgreSQL<br/>orden + outbox + idempotencia")]
+    SQL -->|"Outbox relay"| SB[("Service Bus<br/>cola ordenes-aprobadas<br/>sesión = orderId<br/>DLQ + duplicados")]
+    SCH["Mensaje programado<br/>(Service Bus) o Durable timer"] --> SB
+    SB --> EXE["Ejecutor de órdenes<br/>Container Apps (escala con KEDA)<br/>o Function con trigger de Service Bus"]
+    EXE --> DF["Durable Functions<br/>(un paso por ítem, reintentos,<br/>compensación)"]
+    DF --> APIS["APIs de producto,<br/>negocio y motor de órdenes"]
+    EXE --> IDM[("Cosmos DB o Azure SQL<br/>idempotencia por orden e ítem")]
+    EXE -->|"hechos"| EH[("Event Hubs<br/>ordenes-ejecutadas")]
+    EH --> NOT["Notificaciones<br/>Web PubSub / SignalR"]
+    EH --> AUD["Auditoría y analítica<br/>(Capture → Data Lake / Synapse)"]
+    KV["Key Vault<br/>+ Managed Identity"] -.-> EXE
+    AI["Application Insights<br/>+ OpenTelemetry"] -.-> EXE
+```
+
+| Pieza del diseño original | Servicio en Azure | Por qué |
+|---|---|---|
+| Tópico de órdenes (Event Hubs/Kafka) | **Service Bus** (cola o tópico con sesiones) | DLQ, programación, orden, deduplicación |
+| Hechos publicados | **Event Hubs** (con o sin protocolo Kafka) | Log releíble para varios consumidores |
+| Consumidor + orquestación (Spring Cloud Stream) | **Container Apps** o **AKS**; o **Azure Functions** con trigger de Service Bus | Autoescalado; la Function completa el mensaje cuando termina |
+| Escalar con la carga | **KEDA** (escalador de Service Bus o de Event Hubs, por backlog o lag; viene integrado en Container Apps) | Más réplicas cuando crece la cola |
+| Reintento con espera creciente (`segIntervalError`) | Entrega con reintento de Service Bus, o **política de reintentos de Durable Functions** | Sin `Thread.sleep` ni republicar a mano |
+| Un fallo por ítem y compensación | **Durable Functions** (orquestación, una actividad por ítem, compensaciones) | Recuerda en qué ítem iba |
+| Tareas programadas | **Mensajes programados de Service Bus**, **timers duraderos** o Timer trigger | El reloj ya no es un servicio propio |
+| Idempotencia | **Detección de duplicados** (`MessageId` = código de operación) + tabla de idempotencia en **Cosmos DB** o Azure SQL | Doble red de seguridad |
+| Consistencia BD ↔ mensajería | **Outbox** (relay o CDC) | Guardar y publicar sin inconsistencias |
+| Redis pub/sub para avisar a la UI | **Azure Web PubSub / SignalR Service** (push a navegadores) o Azure Cache for Redis | Aviso en tiempo real gestionado |
+| Gateway | **API Management** + **Front Door/WAF** | Auth, límites, políticas |
+| Identidad y secretos | **Managed Identity** + **Entra ID** + **Key Vault** (autenticación `OAUTHBEARER` en el endpoint Kafka de Event Hubs) | Sin claves compartidas en archivos |
+| Esquemas de eventos | **Schema Registry de Event Hubs** | Contratos con compatibilidad |
+| Trazabilidad (headers + MDC) | **Application Insights** + **OpenTelemetry** (`traceparent`) | Trazas distribuidas gestionadas |
+| Red | **Private Link** y VNet | Los brokers no salen a internet |
+| DR | Geo-recuperación de Event Hubs/Service Bus, varias zonas | Continuidad |
+| CI/CD | **Azure DevOps** (pipelines) | Lo que menciona el job description |
+
+**Cómo se resuelve cada riesgo de la sección 5 en Azure:**
+
+| Riesgo | Solución en Azure |
+|---|---|
+| 1 · Mensaje perdido por ack temprano | *Peek-lock*: el mensaje se **completa solo al terminar**; si falla, reaparece. Con Functions, el trigger completa al terminar con éxito |
+| 2 · Duplicados por fallo parcial | Detección de duplicados + estado por ítem + clave de idempotencia |
+| 3 · `Thread.sleep` y orden roto | Reintento gestionado y sesiones; sin bloquear el consumidor |
+| 4 · Sin DLQ | **DLQ integrada** con alerta |
+| 5 · Sin clave de partición | `SessionId = orderId` (o clave de partición en Event Hubs) |
+| 6 · Dos tipos de evento en un tópico | Dos colas, o **filtros** en las suscripciones de un tópico |
+| 7 · Tres sistemas sin transacción | **Durable Functions** como Saga con compensaciones |
+| 8 · Sin `group` | Grupos de consumidores (Event Hubs) o suscripciones (Service Bus) |
+| 10 · Claves compartidas | **Managed Identity** + Entra ID |
+
+### 10.3 · AWS: arquitectura
+
+```mermaid
+flowchart LR
+    CH["Canal"] --> GW["API Gateway + WAF<br/>Cognito"]
+    GW --> ORD["Servicio de Órdenes<br/>ECS Fargate o EKS"]
+    ORD --> AUR[("Aurora PostgreSQL<br/>orden + outbox")]
+    ORD --> DDB[("DynamoDB<br/>idempotencia, escritura condicional + TTL")]
+    AUR -->|"Outbox / CDC (DMS)"| SQS[("SQS FIFO<br/>MessageGroupId = orderId<br/>DLQ")]
+    EBS["EventBridge Scheduler<br/>(una vez por orden)"] --> SQS
+    SQS --> EXE["Ejecutor<br/>ECS (escala por profundidad de cola)<br/>o Lambda"]
+    EXE --> SF["Step Functions<br/>Map por ítem + Retry/Catch<br/>+ Wait + compensación"]
+    SF --> APIS["APIs de producto y negocio"]
+    EXE -->|"hechos"| SNS["SNS / MSK / Kinesis"]
+    SNS --> NOT["Notificaciones<br/>API Gateway WebSocket / AppSync"]
+    SNS --> AUD["Auditoría: S3 + Athena"]
+    SM["Secrets Manager + KMS<br/>+ roles de IAM"] -.-> EXE
+    CW["CloudWatch + X-Ray<br/>(OpenTelemetry)"] -.-> EXE
+```
+
+| Pieza | Servicio en AWS |
+|---|---|
+| Cola de ejecución con DLQ y orden | **SQS FIFO** (`MessageGroupId = orderId`, deduplicación de 5 minutos) + DLQ integrada |
+| Hechos / log | **MSK** (Kafka gestionado), **Kinesis** o **SNS** para fan-out |
+| Programación | **EventBridge Scheduler** (una vez por orden) |
+| Orquestación y compensación | **Step Functions** (estado `Map`, `Retry`, `Catch`, `Wait`) |
+| Idempotencia | **DynamoDB** con escritura condicional y TTL |
+| Escalado | Autoescalado de ECS por profundidad de cola, o KEDA en EKS |
+| Aviso a la UI | **API Gateway WebSocket** o **AppSync** |
+| Identidad y secretos | **IAM**, **Cognito**, **Secrets Manager**, **KMS** |
+| Observabilidad | **CloudWatch**, **X-Ray** (u OpenTelemetry) |
+
+### 10.4 · GCP: arquitectura
+
+```mermaid
+flowchart LR
+    CH["Canal"] --> GW["Cloud Armor + API Gateway o Apigee<br/>Identity Platform"]
+    GW --> ORD["Servicio de Órdenes<br/>Cloud Run o GKE"]
+    ORD --> SQ[("Cloud SQL / AlloyDB / Spanner<br/>orden + outbox")]
+    ORD --> FS[("Firestore<br/>idempotencia")]
+    SQ -->|"Outbox / Datastream"| PS[("Pub/Sub<br/>ordering key = orderId<br/>dead-letter topic")]
+    CT["Cloud Tasks<br/>(scheduleTime, control de ritmo)"] --> EXE
+    PS --> EXE["Ejecutor<br/>Cloud Run (escala por backlog)"]
+    EXE --> WF["Workflows<br/>pasos por ítem, reintentos, espera"]
+    WF --> APIS["APIs de producto y negocio"]
+    EXE -->|"hechos"| PS2[("Pub/Sub o Kafka gestionado<br/>ordenes-ejecutadas")]
+    PS2 --> NOT["Notificaciones"]
+    PS2 --> AUD["Auditoría: BigQuery"]
+    SMG["Secret Manager + Cloud KMS<br/>+ Workload Identity"] -.-> EXE
+    TR["Cloud Logging + Trace"] -.-> EXE
+```
+
+| Pieza | Servicio en GCP |
+|---|---|
+| Cola/bus con orden y DLQ | **Pub/Sub** (ordering keys, dead-letter topic); la entrega sigue siendo *at-least-once* |
+| Programación | **Cloud Tasks** (`scheduleTime` hasta 30 días, control de tasa hacia el destino) y **Cloud Scheduler** para cron |
+| Orquestación | **Workflows** |
+| Idempotencia | **Firestore** o Spanner |
+| Cómputo | **Cloud Run** o **GKE** |
+| Log estilo Kafka | **Pub/Sub** o **Managed Service for Apache Kafka** |
+| Identidad y secretos | **Workload Identity**, **Secret Manager**, **Cloud KMS** |
+
+### 10.5 · Tabla de equivalencias rápida (para memorizar)
+
+| Pieza | **Azure** | AWS | GCP |
+|---|---|---|---|
+| Cola de comandos con DLQ | **Service Bus** | SQS (FIFO) | Pub/Sub (dead-letter) |
+| Log de eventos | **Event Hubs** | MSK / Kinesis | Pub/Sub / Kafka gestionado |
+| Disparo programado por orden | **Mensaje programado de Service Bus** | EventBridge Scheduler | Cloud Tasks |
+| Cron | **Timer trigger / Logic Apps** | EventBridge Scheduler | Cloud Scheduler |
+| Orquestación con compensación | **Durable Functions** | Step Functions | Workflows |
+| Cómputo | **Container Apps / AKS / Functions** | ECS / EKS / Lambda | Cloud Run / GKE |
+| Idempotencia | **Cosmos DB / Azure SQL** | DynamoDB | Firestore / Spanner |
+| Aviso en tiempo real a la UI | **Web PubSub / SignalR** | API Gateway WebSocket / AppSync | Firebase / Pub/Sub + WebSocket |
+| API Gateway | **API Management** | API Gateway | API Gateway / Apigee |
+| Identidad | **Entra ID + Managed Identity** | Cognito + IAM | Identity Platform + Workload Identity |
+| Secretos | **Key Vault** | Secrets Manager | Secret Manager |
+| Observabilidad | **Application Insights** | CloudWatch / X-Ray | Cloud Logging / Trace |
+
+### 10.6 · Cómo contarlo en la entrevista (Azure, 60 segundos)
+
+> "Hoy lo diseñaría en Azure con un enfoque híbrido. Para **ejecutar las órdenes** usaría **Service Bus**, porque ya trae DLQ, mensajes programados, sesiones por orden y detección de duplicados, justo lo que en el banco tuve que reimplementar a mano. Los consumidores irían en **Container Apps** con **KEDA**, escalando por el backlog de la cola, y la orquestación por ítem con **Durable Functions**, que da reintentos, compensación y timers. La idempotencia con `MessageId` más una tabla en **Cosmos DB**. Los **hechos** resultantes los publicaría en **Event Hubs** para auditoría, analítica y notificaciones. Todo detrás de **API Management** con **Entra ID**, con **Managed Identity** y **Key Vault** para no tener claves en archivos, y **Application Insights** para la trazabilidad."
+
+### Escalera de respuesta
+
+| Pregunta | 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|---|
+| **¿Qué usarías en Azure en lugar de lo que hiciste?** | "Service Bus para las órdenes y Event Hubs para publicar eventos." | "Service Bus trae DLQ, programación, sesiones y deduplicación; Event Hubs no tiene DLQ." | "Híbrido: comandos en Service Bus, hechos en Event Hubs, orquestación en Durable Functions, y Managed Identity en vez de claves." |
+| **¿Cómo escalarías el consumidor?** | "Con más instancias." | "Container Apps con KEDA escalando por backlog de la cola." | "Limitado por sesiones o particiones; cuido que el destino aguante la concurrencia." |
+| **¿Cómo programas una orden para otro día?** | "Con una tarea programada." | "Un mensaje programado de Service Bus." | "Un disparo por orden en vez de sondear una tabla; el cron solo para lotes." |
+| **¿Cómo evitas duplicados en Azure?** | "Con un id único." | "Detección de duplicados por `MessageId` y tabla de idempotencia." | "Y la llave de idempotencia hacia el destino; nada sustituye la idempotencia de negocio." |
+| **¿Y en AWS o GCP?** | "SQS y Step Functions / Pub/Sub y Workflows." | "SQS FIFO con DLQ y EventBridge Scheduler / Pub/Sub con dead-letter y Cloud Tasks." | "Es el mismo diseño: cambia el soporte. Lo que no cambia es la idempotencia y el estado por ítem." |
+
+> **Verificado en la documentación consultada:** Event Hubs no implementa compactación de logs; sus transacciones y Kafka Streams estaban en **vista previa** en Premium y Dedicated; admite autenticación con Entra ID y `OAUTHBEARER` con identidades administradas; KEDA tiene escaladores de primera parte para Service Bus y Event Hubs; Service Bus ofrece DLQ, mensajes programados, sesiones y detección de duplicados. **No verificado:** los límites exactos y precios de cada servicio, y el soporte del conector AMQP de SmallRye con Service Bus. Los nombres y el estado de las funciones cambian: confírmalo antes de citar números.
+
+Más contexto de equivalencias entre nubes: [`caso-pasarela-pagos-cloud.md`](caso-pasarela-pagos-cloud.md).

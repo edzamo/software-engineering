@@ -817,6 +817,7 @@ El job description menciona más cosas que la lista de Lourdes. Respuestas míni
 | **Node.js** | Un hilo con event loop no bloqueante: ideal para I/O, no para CPU; `async/await`; NestJS parecido a Spring |
 | **GraphQL** | El cliente pide los campos que necesita; resuelve over/under-fetching; riesgos: N+1 (DataLoader) y consultas abusivas |
 | **Azure** | Functions (serverless), Service Bus (colas/topics), Event Hubs (compatible con Kafka), API Management (gateway), AKS (Kubernetes), DevOps (CI/CD), Key Vault, Entra ID |
+| **Tu diseño en Azure hoy** | **Service Bus** para ejecutar órdenes (DLQ, programación, sesiones, duplicados) + **Event Hubs** para publicar hechos + **Container Apps/KEDA** + **Durable Functions** (orquestación por ítem) + **Managed Identity/Key Vault**. Event Hubs **no tiene DLQ nativa ni compactación**. Detalle y AWS/GCP: [`caso-transferencias-asincronas.md` §10](../../system-design/caso-transferencias-asincronas.md) |
 | **Ágil** | Scrum (sprints, planning, daily, review, retro); ten un ejemplo de retro o de cambio de alcance |
 | **Legacy** | Adapter, Anti-Corruption Layer, Strangler Fig |
 | **Documentar APIs** | OpenAPI/Swagger |
