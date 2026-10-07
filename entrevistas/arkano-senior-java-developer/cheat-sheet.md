@@ -681,6 +681,120 @@ Detalle: [sección 23](README.md#s23) · [`hexagonal-architecture.md`](../../sof
 
 ## 6 · Kafka: repaso de 15 minutos (lo usaste en el banco, hace tiempo)
 
+### 🖼️ El dibujo de la arquitectura de Kafka (apréndelo de memoria)
+
+**Cómo dibujarlo en 30 segundos:** (1) un cuadro grande, el **cluster**, con **3 brokers**; (2) un **topic** cortado en **3 particiones** repartidas entre los brokers, cada una con un **líder** y una **réplica**; (3) a la izquierda los **productores**; (4) a la derecha los **grupos de consumidores**; (5) abajo, el **controlador**.
+
+```mermaid
+flowchart LR
+    subgraph PROD[" PRODUCTORES (Producer) "]
+        P1["Servicio de pagos"]
+        P2["Otro servicio"]
+    end
+    subgraph CLUSTER[" CLUSTER KAFKA (3 brokers) "]
+        subgraph B1[" Broker 1 "]
+            B1P0["Topic pagos · P0<br/>LÍDER"]
+            B1P1["Topic pagos · P1<br/>réplica"]
+        end
+        subgraph B2[" Broker 2 "]
+            B2P1["Topic pagos · P1<br/>LÍDER"]
+            B2P2["Topic pagos · P2<br/>réplica"]
+        end
+        subgraph B3[" Broker 3 "]
+            B3P2["Topic pagos · P2<br/>LÍDER"]
+            B3P0["Topic pagos · P0<br/>réplica"]
+        end
+        CTRL["Controlador (KRaft)<br/>decide quién es líder de qué<br/>y elige otro si un broker cae"]
+    end
+    subgraph CONS[" CONSUMIDORES (Consumer) "]
+        subgraph GA[" Grupo A: antifraude "]
+            A1["Consumer 1"]
+            A2["Consumer 2"]
+        end
+        subgraph GB[" Grupo B: notificaciones "]
+            C1["Consumer 1"]
+        end
+    end
+    P1 -->|"key = cuenta"| B1P0
+    P2 -->|"key = cuenta"| B2P1
+    B1P0 --> A1
+    B2P1 --> A1
+    B3P2 --> A2
+    B1P0 --> C1
+    B2P1 --> C1
+    B3P2 --> C1
+    B1P0 -.->|"replica"| B3P0
+    B2P1 -.->|"replica"| B1P1
+    B3P2 -.->|"replica"| B2P2
+```
+
+**Cómo contarlo mientras lo trazas:** "Los **productores** escriben en un **topic**. El topic se divide en **particiones**, y cada partición vive en un **broker** que es su **líder**; otros brokers guardan **réplicas** por si el líder cae. El conjunto de brokers es el **cluster**, y el **controlador** (KRaft) sabe quién lidera qué. Los **consumidores** se agrupan en **grupos**: dentro de un grupo, cada partición la lee **un solo** consumidor; grupos distintos leen todo de forma independiente."
+
+#### El viaje de un mensaje (de ida y vuelta)
+
+```mermaid
+sequenceDiagram
+    participant P as Productor
+    participant L as Broker líder (partición 1)
+    participant F as Broker réplica
+    participant C as Consumidor (grupo A)
+    P->>L: send(key, value, headers)
+    Note over P,L: la key decide la partición: hash(key) % número de particiones
+    L->>F: replica el mensaje
+    F-->>L: confirmado (ISR)
+    L-->>P: ack (con acks=all)
+    C->>L: poll()
+    L-->>C: mensajes con offset 40, 41, 42...
+    C->>C: procesa
+    C->>L: commit del offset 43 (hasta dónde leyó)
+```
+
+#### Qué lleva un mensaje (record)
+
+```mermaid
+flowchart LR
+    subgraph REC[" Mensaje (record) "]
+        K["KEY<br/>decide la partición<br/>y el orden"]
+        V["VALUE (payload)<br/>el evento: JSON, Avro, Protobuf"]
+        H["HEADERS<br/>metadatos: correlation-id,<br/>tipo de evento, versión"]
+        T["TIMESTAMP"]
+    end
+    BR["Lo añade Kafka:<br/>OFFSET + PARTICIÓN + TOPIC"] -.-> REC
+```
+
+#### Diccionario de nombres (para no quedarte en blanco)
+
+| Nombre | Qué es (en 5 palabras) | 🍎 |
+|---|---|---|
+| **Producer** | Quien escribe mensajes | La caja que anota |
+| **Consumer** | Quien lee mensajes | Contabilidad |
+| **Consumer group** | Equipo que se reparte lectura | El equipo de contadores |
+| **Broker** | Un servidor Kafka | Una oficina |
+| **Cluster** | Conjunto de brokers | Las oficinas juntas |
+| **Controller (KRaft)** | Coordina el cluster | El comité que reparte secciones |
+| **Topic** | Canal con nombre | Un cuaderno |
+| **Partition** | Trozo ordenado del topic | Una sección del cuaderno |
+| **Leader / Follower (réplica)** | Principal / copia de la partición | La original / la fotocopia |
+| **Replication factor** | Cuántas copias (típico 3) | Fotocopias en 3 oficinas |
+| **ISR** | Réplicas al día con el líder | Oficinas que ya copiaron |
+| **Offset** | Posición dentro de la partición | Número de línea |
+| **Key** | Decide la partición | El nombre del cliente |
+| **Record** | El mensaje completo | La nota |
+| **Header** | Metadatos del mensaje | Etiquetas pegadas |
+| **Retention** | Cuánto se conservan | Cuánto se guarda el cuaderno |
+| **Log compaction** | Solo el último valor por key | Se queda la última anotación |
+| **Lag** | Mensajes pendientes por leer | Líneas sin leer |
+| **Rebalance** | Reasignar particiones | Un contador se enferma |
+| **Schema Registry** | Guarda formatos de mensaje | El formulario oficial |
+| **Kafka Connect** | Mueve datos desde y hacia Kafka | Un mensajero con conectores |
+| **Kafka Streams** | Procesa flujos dentro de tu app | Calculadora sobre el libro |
+
+**Regla para acordarte del orden:** **Productor → Broker (cluster) → Topic → Partición (líder y réplicas) → Offset → Consumidor (grupo)**. Si te quedas en blanco, dibuja ese recorrido.
+
+**Los 4 números que conviene recordar:** brokers **3** (mínimo en producción) · replication factor **3** · `min.insync.replicas` **2** · `acks` = **all** (para no perder datos).
+
+Detalle de cada pieza: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, KRaft, retención, headers y banca).
+
 ### Cómo presentarlo con honestidad
 
 > "En el banco construí **consumidores de eventos en producción** con Spring Cloud Stream sobre Azure Event Hubs (protocolo Kafka): transferencias interbancarias y al exterior, con orquestación reactiva, reintentos y trazabilidad por headers. Además hice **pruebas de concepto propias**: el cliente Java puro, Spring Kafka y **Spring Cloud Stream contra Azure Event Hubs por su endpoint de Kafka**, con dos binders y cabeceras de trazabilidad. Con SmallRye Reactive Messaging no he trabajado, pero Spring Cloud Stream es su equivalente: bindings y `StreamBridge` son los canales y el `Emitter`."

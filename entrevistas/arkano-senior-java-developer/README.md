@@ -500,6 +500,8 @@ Una regla útil: **más consumidores que particiones en un grupo = consumidores 
 
 ### Arquitectura en 30 segundos (banca incluida)
 
+> 🖼️ **Dibujo completo de la arquitectura de Kafka** (cluster con brokers, topic con particiones, líder y réplicas, controlador, productores y grupos de consumidores) y el viaje de un mensaje: [`cheat-sheet.md` sección 6](cheat-sheet.md#c6).
+
 - **Cluster** = varios brokers (mínimo 3). Cada **topic** se parte en **particiones**, y cada partición se **replica** (RF=3) con un líder y seguidoras.
 - **ZooKeeper → KRaft:** antes un cluster aparte coordinaba los metadatos; ahora un quórum de controladores con Raft dentro de Kafka lo hace (ZooKeeper desapareció en Kafka 4.0).
 - **Registro:** `key` (decide la partición y el orden), `value` (payload en JSON, Avro o Protobuf), `headers` (metadatos: correlationId, tipo de evento, versión del esquema, traza) y `timestamp`; Kafka añade offset y partición.
