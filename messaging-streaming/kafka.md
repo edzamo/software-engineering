@@ -161,7 +161,7 @@ Flujo: serializa clave y valor → el **particionador** elige la partición → 
 | `acks` | Nivel de confirmación (ver arriba) |
 | `enable.idempotence=true` | Evita duplicados por reintentos del productor (usa un id de productor y número de secuencia). Es el valor por defecto en versiones recientes |
 | `retries` y `delivery.timeout.ms` | Reintentos y tiempo máximo total de entrega |
-| `linger.ms` y `batch.size` | Espera un poco para juntar más registros en un lote: más throughput, algo más de latencia |
+| `linger.ms` y `batch.size` | Espera un poco para juntar más registros en un lote: más throughput, algo más de latencia. **Es el trade-off latencia vs rendimiento:** lotes pequeños = menos latencia; lotes grandes = más rendimiento |
 | `compression.type` | `lz4`, `zstd`, `snappy`, `gzip`: menos red y disco |
 | `max.in.flight.requests.per.connection` | Peticiones simultáneas sin confirmar; con idempotencia (≤5) se mantiene el orden |
 | `transactional.id` | Habilita **transacciones**: escribir en varios topics/particiones de forma atómica |
@@ -329,6 +329,19 @@ Es donde más se usa: volumen alto, necesidad de auditoría, desacoplar sistemas
 - **Límite:** esa garantía es **dentro de Kafka**. Si el efecto es externo (llamar a una API, escribir en una BD), necesitas **idempotencia propia**. Por eso en la práctica: *at-least-once + consumidor idempotente*.
 
 ## 11. Ecosistema
+
+```mermaid
+flowchart LR
+    SV["Tus servicios (Producer API)"] --> K
+    DB1["Bases de datos, archivos (S3)"] --> CS["Kafka Connect<br/>conector FUENTE"] --> K[("Kafka<br/>topics y particiones")]
+    K --> CK["Kafka Connect<br/>conector DESTINO"] --> DB2["Bases de datos, Snowflake, S3"]
+    K --> STR["Procesamiento en streaming"]
+    K --> SV2["Tus servicios (Consumer API)"]
+```
+> Dibujo de la arquitectura con **ZooKeeper (la versión clásica)** y su equivalente **actual con KRaft**: [`cheat-sheet.md` sección 6](../entrevistas/arkano-senior-java-developer/cheat-sheet.md#c6).
+
+**Dos formas de conectarte a Kafka:** con una **API propia** (tu servicio usa Producer y Consumer) o con **Kafka Connect**, que te permite **descargar conectores ya hechos** (MySQL, PostgreSQL, Snowflake, S3...) y registrarlos con un archivo de configuración JSON. Hay conectores **fuente** (meten datos a Kafka) y **destino** (sacan datos de Kafka).
+
 
 | Pieza | Para qué |
 |---|---|
