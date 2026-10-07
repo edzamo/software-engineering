@@ -1,12 +1,24 @@
 # Cheat sheet — Arkano, entrevista técnica
 
-Dos usos: **(1) durante la entrevista**, busca con `Ctrl+F` (o `Cmd+F`) una palabra clave y lee la respuesta de una o dos líneas; **(2) antes**, haz el entrenamiento rápido de la sección 11.
+Dos usos: **(1) durante la entrevista**, busca con `Ctrl+F` (o `Cmd+F`) una palabra clave y lee la respuesta de una o dos líneas; **(2) antes**, haz el entrenamiento rápido de la sección 10.
 
 > Guía completa: [`README.md`](README.md) · Todas las respuestas están **de junior a senior**: empieza con la frase 🟢, baja a 🟡 y 🔴 solo si te piden más. Analogía de todo: la **frutería de manzanas** ([`glosario.md`](../../messaging-streaming/glosario.md)).
 
-## Índice rápido
+## Índice rápido (en el orden en que suelen preguntar)
 
-[0 · Tu presentación](#c0) · [1 · Respuestas relámpago A-Z](#c1) · [2 · Kafka: repaso para quien lo usó hace tiempo](#c2) · [3 · Quarkus y SmallRye](#c3) · [4 · Java y POO](#c4) · [5 · Resiliencia](#c5) · [6 · JPA, Hibernate y PostgreSQL](#c6) · [7 · Hexagonal](#c7) · [8 · Testing](#c8) · [9 · Extras del job description](#c9) · [10 · Tu proyecto de pagos](#c10) · [11 · Entrenamiento rápido](#c11) · [12 · Cuando no sabes](#c12) · [13 · Preguntas para hacerles](#c13) · [14 · Galería de dibujos](#c14)
+**Primero, lo que casi seguro preguntan:** [0 · Tu presentación](#c0) · [1 · **Java y POO**](#c1) (clases, modificadores, pilares, sobrecarga, abstracta vs interfaz, colecciones, Java 17/21, **SOLID**)
+
+**Después, el stack y los datos:** [2 · Quarkus, Spring Boot y SmallRye](#c2) · [3 · JPA, Hibernate y PostgreSQL](#c3) · [4 · Testing](#c4)
+
+**Arquitectura y mensajería:** [5 · Hexagonal](#c5) · [6 · Kafka](#c6) · [7 · Resiliencia](#c7)
+
+**Tu experiencia y extras:** [8 · Tus proyectos del banco](#c8) · [9 · Extras del job description](#c9)
+
+**Práctica:** [10 · Entrenamiento rápido (26 preguntas)](#c10) · [11 · Cuando no sabes](#c11) · [12 · Preguntas para hacerles](#c12)
+
+**Referencia (para buscar con `Cmd+F`):** [13 · Respuestas relámpago A-Z](#c13) · [14 · Galería de dibujos](#c14)
+
+> **Orden del documento:** va de lo **básico a lo avanzado**. Primero Java y programación orientada a objetos (lo que se pregunta al inicio de casi toda entrevista), luego el framework y los datos, después arquitectura y mensajería. Términos como CQRS, Outbox o Saga están al final como referencia, porque no suelen ser lo primero que preguntan.
 
 **Contexto del proceso:** más de 100 personas aplicaron a la vacante, así que lo que te diferencia no es recitar definiciones, sino **explicar con claridad y respaldar con un proyecto real** (tu pasarela de pagos en un banco). Glassdoor no trae preguntas técnicas de Arkano (solo 3 reseñas, sin detalle), así que esta preparación sigue la lista de Lourdes y el job description.
 
@@ -26,146 +38,7 @@ Plantilla: **quién eres → qué has hecho → qué te trae aquí**. Completa l
 
 <a id="c1"></a>
 
-## 1 · Respuestas relámpago (A-Z)
-
-Formato: **término → qué es en una frase** (🟢) · *con manzanas*.
-
-| Término | Respuesta |
-|---|---|
-| **ACID** | Atomicidad, Consistencia, Aislamiento, Durabilidad: garantías de una transacción. *La venta se anota completa o no se anota* |
-| **Adapter (patrón)** | Traduce una interfaz a otra; clave para integrar legacy. *Un enchufe adaptador* |
-| **At-least-once** | Nunca se pierde, puede duplicarse; exige idempotencia. *Gritas el pedido hasta que confirmen* |
-| **Bulkhead** | Aislar recursos por dependencia para que una lenta no hunda a las demás. *Una caja por tipo de cliente* |
-| **CAP** | Ante una partición de red eliges consistencia o disponibilidad |
-| **Circuit Breaker** | Corta las llamadas a un servicio que falla; estados cerrado, abierto, semiabierto. *El fusible de la casa* |
-| **Clean Code** | Nombres claros, funciones pequeñas, sin duplicación, con tests |
-| **CQRS** | Un modelo para escribir y otro para consultar. *Libro de ventas y pizarra de resumen* |
-| **Dead Letter Queue** | Destino de lo que siempre falla, para no bloquear. *La bandeja "revisar a mano"* |
-| **DIP (SOLID)** | Depender de abstracciones, no de clases concretas. *Enchufas a un puerto, no a un banco* |
-| **Dirty checking** | Hibernate detecta cambios en entidades gestionadas y hace el `UPDATE` al flush, sin `save` |
-| **DRY / KISS / YAGNI** | No repetir / mantenerlo simple / no construir lo que aún no necesitas |
-| **Eventual consistency** | Los datos se alinean con un pequeño retraso |
-| **Event Sourcing** | El estado es la suma de eventos. *El stock se calcula del libro* |
-| **Hexagonal** | Negocio al centro; puertos (interfaces) y adaptadores (REST, BD, Kafka). *La tienda con enchufes y cables* |
-| **Idempotencia** | Repetir da el mismo resultado que hacerlo una vez. *El sello "YA COBRADO"* |
-| **Idempotency-Key** | Id único por intento de pago; el mismo id dos veces es la misma operación |
-| **ISP (SOLID)** | Interfaces pequeñas y específicas |
-| **Jitter** | Azar en el tiempo de reintento para que no reintenten todos a la vez |
-| **JPA vs Hibernate** | JPA es la especificación; Hibernate, la implementación |
-| **KRaft** | Quórum de controladores de Kafka basado en Raft; reemplazó a ZooKeeper (eliminado en Kafka 4.0) |
-| **Lazy loading** | La relación se carga al usarla; `LazyInitializationException` si es fuera de la transacción |
-| **LSP (SOLID)** | Una subclase debe poder sustituir a su padre sin romper nada |
-| **Mock vs Stub vs Spy vs Fake** | Verifica llamadas / devuelve respuestas / real vigilado / implementación simple |
-| **MVCC (PostgreSQL)** | Cada transacción ve su versión de los datos: leer no bloquea escribir |
-| **N+1** | 1 consulta de lista + N por cada relación. Arreglo: `JOIN FETCH`, `@EntityGraph`, DTO |
-| **OCP (SOLID)** | Abierto a extensión, cerrado a modificación (Strategy en vez de `switch`) |
-| **Outbox** | Guardar dato y evento en la misma transacción; otro proceso publica. *Misma hoja: "vendí" y "avisar"* |
-| **Panache** | Capa de Quarkus sobre Hibernate (equivale a Spring Data) |
-| **Polling Publisher** | Un proceso revisa una tabla cada cierto tiempo y publica lo pendiente |
-| **Proxy (patrón)** | Controla el acceso; así funcionan `@Transactional` y el lazy loading |
-| **Record (Java 17)** | Clase inmutable de datos, con `equals`/`hashCode` generados |
-| **Retry + backoff** | Reintentar espaciando (1 s, 2 s, 4 s) |
-| **Saga** | Operación larga en pasos, con compensación si falla uno. *Vender → cobrar → despachar; si falla, devolver* |
-| **Sealed class** | Jerarquía cerrada; el `switch` exige cubrir todos los casos |
-| **SRP (SOLID)** | Una clase, una razón para cambiar |
-| **Strategy (patrón)** | Algoritmos intercambiables en vez de `if/else`: método de pago, descuento |
-| **Timeout** | No esperar para siempre |
-| **Virtual threads (Java 21)** | Hilos baratos: código bloqueante simple con alta concurrencia |
-| **`@Blocking` (Quarkus)** | Ejecutar en un worker thread porque el código bloquea (JDBC) |
-| **`@Version`** | Bloqueo optimista: si la versión cambió al guardar, falla |
-
-**Patrones GoF:** son **23** → 5 creacionales (Factory Method, Abstract Factory, Builder, Prototype, Singleton), 7 estructurales (Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy), 11 de comportamiento (Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor). Detalle: [sección 04](README.md#s04).
-
----
-
-<a id="c2"></a>
-
-## 2 · Kafka: repaso de 15 minutos (lo usaste en el banco, hace tiempo)
-
-### Cómo presentarlo con honestidad
-
-> "En el banco construí **consumidores de eventos en producción** con Spring Cloud Stream sobre Azure Event Hubs (protocolo Kafka): transferencias interbancarias y al exterior, con orquestación reactiva, reintentos y trazabilidad por headers. Además hice **pruebas de concepto propias**: el cliente Java puro, Spring Kafka y **Spring Cloud Stream contra Azure Event Hubs por su endpoint de Kafka**, con dos binders y cabeceras de trazabilidad. Con SmallRye Reactive Messaging no he trabajado, pero Spring Cloud Stream es su equivalente: bindings y `StreamBridge` son los canales y el `Emitter`."
-
-Eso es **verdad y suficiente** (tus 4 ejercicios: [`practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md)). Solo di lo que sea cierto: con dos preguntas se nota.
-
-### Los 12 conceptos (léelos hasta poder decirlos sin mirar)
-
-| # | Concepto | 🟢 Frase | 🍎 Manzanas |
-|---|---|---|---|
-| 1 | **Kafka** | Log distribuido de eventos: se escribe al final y se **lee sin borrar** | El libro de ventas con líneas numeradas |
-| 2 | **Topic** | Canal con nombre para un tipo de evento | Un cuaderno |
-| 3 | **Partición** | División del topic; **el orden solo vale dentro de una** | Secciones del cuaderno |
-| 4 | **Key** | Decide la partición; misma key, mismo orden | El nombre del cliente decide la sección |
-| 5 | **Offset** | Posición del mensaje en su partición | Número de línea |
-| 6 | **Consumer group** | Consumidores que se reparten las particiones; cada partición la lee **uno** del grupo | Equipo de contadores |
-| 7 | **Replicación + `acks=all` + `min.insync.replicas=2`** | No pierdes datos si cae un servidor | Fotocopias en 3 oficinas |
-| 8 | **Commit de offsets** | Marcar hasta dónde leíste; confirmar **después de procesar** | El marcador del libro |
-| 9 | **At-least-once + idempotencia** | Puede llegar dos veces: el consumidor ignora duplicados con el `eventId` | El sello "YA COBRADO" |
-| 10 | **Rebalanceo y lag** | Reasignar particiones al entrar o salir un consumidor; lag = lo que falta por leer | Un contador se enferma; líneas sin leer |
-| 11 | **DLT y reintentos** | El mensaje que siempre falla va a otro topic, tras reintentos con backoff | Bandeja "revisar a mano" |
-| 12 | **Outbox** | Guardar dato y evento en la misma transacción; otro proceso publica | Misma hoja: "vendí" y "avisar" |
-
-### Las preguntas que más caen (respuesta de una línea)
-
-| Pregunta | Respuesta |
-|---|---|
-| ¿Cómo garantizas el orden? | Con una key (cuenta, pedido): sus eventos van a la misma partición |
-| ¿Qué pasa si hay más consumidores que particiones? | Los sobrantes quedan ociosos |
-| ¿Cómo no pierdes mensajes? | Productor `acks=all` e idempotente; consumidor con commit manual tras procesar; RF=3 |
-| ¿Cómo evitas duplicados? | At-least-once más consumidor idempotente (`eventId` con restricción única) |
-| ¿Exactly-once? | Existe dentro de Kafka (idempotencia y transacciones); con sistemas externos necesitas idempotencia propia |
-| ¿Qué haces con un mensaje que falla? | Reintento con backoff y luego Dead Letter Topic con alerta |
-| ¿Kafka vs RabbitMQ/SQS? | Kafka es un log que se relee, con alto volumen y orden por clave; RabbitMQ es una cola con enrutamiento rico y ack por mensaje que se consume y desaparece; una cola gestionada (SQS, Service Bus) es lo más simple. Tabla completa: [`messaging-streaming/README.md` sección 5b](../../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica) |
-| ¿Qué es ZooKeeper/KRaft? | Coordinaba el cluster; hoy lo hace KRaft integrado en Kafka |
-| ¿Qué es Schema Registry? | Guarda los esquemas y valida que los cambios sean compatibles |
-| ¿Cómo publicas y guardas en BD sin inconsistencias? | Outbox |
-| ¿Qué es el consumer lag? | Mensajes pendientes por consumir; la métrica clave |
-| ¿Qué es log compaction? | Conserva solo el último valor por key |
-
-### Con SmallRye (Quarkus), en 10 líneas
-
-```java
-@Incoming("pedidos")  @Blocking @Transactional
-public void procesar(PedidoCreado e) { ... }              // consume; ack al terminar el método
-
-@Inject @Channel("despachos") Emitter<DespachoCreado> emitter;
-emitter.send(evento);                                      // produce
-```
-```properties
-mp.messaging.incoming.pedidos.connector=smallrye-kafka
-mp.messaging.incoming.pedidos.failure-strategy=dead-letter-queue    # fail (por defecto) | ignore | dead-letter-queue | delayed-retry-topic
-mp.messaging.outgoing.despachos.acks=all
-```
-Ack por defecto al terminar el método; commit `throttled`; pruebas con `InMemoryConnector`; equivalente Spring: `@KafkaListener` + `KafkaTemplate`. Detalle: [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md).
-
-Más profundidad si te la piden: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, headers, banca).
-
----
-
-<a id="c3"></a>
-
-## 3 · Quarkus y SmallRye
-
-| Pregunta | Respuesta |
-|---|---|
-| ¿Qué es Quarkus? | Framework Java para microservicios y cloud: arranca rápido y gasta poca memoria porque hace la configuración **en el build** |
-| ¿Spring vs Quarkus? | Mismos patrones; Spring configura en runtime, Quarkus en build; DI con CDI; tiene dev mode, Dev Services e imagen nativa |
-| ¿DI? | CDI: `@Inject`, `@ApplicationScoped` |
-| ¿Endpoint? | `@Path` + `@GET` (Jakarta REST) |
-| ¿Persistencia? | Hibernate ORM con **Panache** |
-| ¿Config? | `application.properties`, `@ConfigProperty`, perfiles `%dev` `%test` `%prod` |
-| ¿Reactivo? | `Uni` (0 o 1) y `Multi` (0 a N) de Mutiny; equivalen a `Mono` y `Flux`; el event loop no se bloquea |
-| ¿Código bloqueante? | `@Blocking`, o un endpoint imperativo, o virtual threads |
-| ¿Qué es SmallRye Reactive Messaging? | La librería de Quarkus para mensajería (`@Incoming`, `@Outgoing`, `Emitter`) con conectores (Kafka, AMQP...) |
-| ¿Pruebas? | `@QuarkusTest`, `@InjectMock`, RestAssured, Dev Services |
-
-Tabla de equivalencias completa: [sección 20](README.md#s20) · [`quarkus/README.md`](../../frameworks/quarkus/README.md).
-
----
-
-<a id="c4"></a>
-
-## 4 · Java y POO (cápsulas para responder rápido)
+## 1 · Java y POO (cápsulas para responder rápido)
 
 > Todo lo esencial está **aquí**, sin tener que saltar a otro documento. Si te piden más profundidad: [`java-core/`](../../java-core) · [`oop-in-java.md`](../../java-core/oop-in-java.md).
 
@@ -174,7 +47,7 @@ Tabla de equivalencias completa: [sección 20](README.md#s20) · [`quarkus/READM
 
 *(Algunos dicen "tres pilares" y omiten la abstracción; di "cuatro" y menciona que la abstracción a veces se agrupa con la encapsulación.)*
 
-### 4.1 · Lo básico, con manzanas
+### 1.1 · Lo básico, con manzanas
 
 | Concepto | 🟢 En una frase | 🍎 Con manzanas | Código |
 |---|---|---|---|
@@ -202,7 +75,7 @@ public class Manzana {
 }
 ```
 
-### 4.2 · Los tipos de variable (pregunta muy frecuente)
+### 1.2 · Los tipos de variable (pregunta muy frecuente)
 
 | Tipo | Dónde vive | Valor por defecto | Alcance | Ejemplo |
 |---|---|---|---|---|
@@ -227,7 +100,28 @@ flowchart LR
     GC["Garbage Collector<br/>libera objetos sin referencias"] -.-> heap
 ```
 
-### 4.3 · Los 4 pilares
+### 1.3 · Modificadores de acceso y otras palabras clave
+
+| Modificador | Misma clase | Mismo paquete | Subclase (otro paquete) | Todos |
+|---|:-:|:-:|:-:|:-:|
+| `private` | ✅ | ❌ | ❌ | ❌ |
+| *(sin modificador)* | ✅ | ✅ | ❌ | ❌ |
+| `protected` | ✅ | ✅ | ✅ | ❌ |
+| `public` | ✅ | ✅ | ✅ | ✅ |
+
+| Palabra | Qué hace |
+|---|---|
+| `static` | Pertenece a la **clase**, no al objeto; se comparte |
+| `final` | **Variable:** no se reasigna · **método:** no se sobrescribe · **clase:** no se hereda |
+| `abstract` | Sin implementación; obliga a la subclase a completarla |
+| `this` | El objeto actual; también `this(...)` para encadenar constructores |
+| `super` | El padre: `super.metodo()` y `super(...)` (primer paso del constructor) |
+| `instanceof` | Comprueba el tipo real (en 17 con patrón: `if (f instanceof Manzana m)`) |
+| `synchronized` / `volatile` | Exclusión mutua / visibilidad entre hilos |
+
+**Constructores:** no se heredan. Si no escribes ninguno, Java crea uno por defecto sin parámetros. El primer paso de cualquier constructor es llamar a `super(...)` (implícito si no lo escribes).
+
+### 1.4 · Los 4 pilares
 
 | Pilar | 🟢 En una frase | 🍎 Con manzanas | Cómo se logra en Java |
 |---|---|---|---|
@@ -270,7 +164,7 @@ for (Fruta f : List.of(f1, f2)) {
 
 **Por qué importa el polimorfismo:** puedes escribir código que depende de `Fruta` o `Vendible` y funciona con cualquier tipo nuevo **sin modificarlo** (Open/Closed).
 
-### 4.4 · Sobrecarga vs sobrescritura (la pregunta clásica)
+### 1.5 · Sobrecarga vs sobrescritura (la pregunta clásica)
 
 | | **Sobrecarga** (*overloading*) | **Sobrescritura** (*overriding*) |
 |---|---|---|
@@ -298,7 +192,7 @@ class Banana extends Fruta {
 
 **Regla mnemotécnica:** *sobre**carga** = otro menú de parámetros en la misma carta (decide el compilador); sobre**escritura** = la hija reescribe la receta del padre (decide la JVM al ejecutar).*
 
-### 4.5 · Clase abstracta vs interfaz
+### 1.6 · Clase abstracta vs interfaz
 
 | | **Clase abstracta** | **Interfaz** |
 |---|---|---|
@@ -312,7 +206,7 @@ class Banana extends Fruta {
 
 🟢 **Frase:** *"Interfaz para el contrato, clase abstracta cuando hay código y estado compartido. Y prefiero interfaces: permiten varias implementaciones y facilitan los tests."*
 
-### 4.6 · Herencia vs composición
+### 1.7 · Herencia vs composición
 
 | | **Herencia** (`extends`) | **Composición** (atributo) |
 |---|---|---|
@@ -323,28 +217,7 @@ class Banana extends Fruta {
 
 🟢 **Frase:** *"Prefiero composición sobre herencia: heredo solo cuando de verdad es una relación 'es un' y la subclase puede sustituir al padre sin romper nada (Liskov)."*
 
-### 4.7 · Modificadores de acceso y otras palabras clave
-
-| Modificador | Misma clase | Mismo paquete | Subclase (otro paquete) | Todos |
-|---|:-:|:-:|:-:|:-:|
-| `private` | ✅ | ❌ | ❌ | ❌ |
-| *(sin modificador)* | ✅ | ✅ | ❌ | ❌ |
-| `protected` | ✅ | ✅ | ✅ | ❌ |
-| `public` | ✅ | ✅ | ✅ | ✅ |
-
-| Palabra | Qué hace |
-|---|---|
-| `static` | Pertenece a la **clase**, no al objeto; se comparte |
-| `final` | **Variable:** no se reasigna · **método:** no se sobrescribe · **clase:** no se hereda |
-| `abstract` | Sin implementación; obliga a la subclase a completarla |
-| `this` | El objeto actual; también `this(...)` para encadenar constructores |
-| `super` | El padre: `super.metodo()` y `super(...)` (primer paso del constructor) |
-| `instanceof` | Comprueba el tipo real (en 17 con patrón: `if (f instanceof Manzana m)`) |
-| `synchronized` / `volatile` | Exclusión mutua / visibilidad entre hilos |
-
-**Constructores:** no se heredan. Si no escribes ninguno, Java crea uno por defecto sin parámetros. El primer paso de cualquier constructor es llamar a `super(...)` (implícito si no lo escribes).
-
-### 4.8 · La clase `Object`, `==` vs `equals`, `String`
+### 1.8 · La clase `Object`, `==` vs `equals`, `String`
 
 | Tema | Respuesta |
 |---|---|
@@ -355,7 +228,7 @@ class Banana extends Fruta {
 | **String pool** | `"a" == "a"` es `true` (mismo literal); `new String("a") == "a"` es `false` |
 | **`record`** | Genera `equals`, `hashCode` y `toString` por ti |
 
-### 4.9 · Clases anidadas, enums, genéricos
+### 1.9 · Clases anidadas, enums, genéricos
 
 | Tema | Respuesta |
 |---|---|
@@ -366,7 +239,7 @@ class Banana extends Fruta {
 | **Genéricos** | Seguridad de tipos en compilación (`List<Manzana>`); **type erasure**: en ejecución se borran los tipos |
 | **Comodines (PECS)** | `? extends T`: **produces** (lees); `? super T`: **consumes** (escribes) |
 
-### 4.10 · Excepciones
+### 1.10 · Excepciones
 
 ```mermaid
 classDiagram
@@ -394,7 +267,7 @@ classDiagram
 | **`final` vs `finally` vs `finalize`** | Constante o no-sobrescribible · bloque que siempre se ejecuta · método del GC (obsoleto, no usar) |
 | **Buena práctica** | Excepciones propias de negocio (unchecked), nunca tragarse una excepción, y no usarlas para control de flujo |
 
-### 4.11 · Colecciones: cuál elegir
+### 1.11 · Colecciones: cuál elegir
 
 ```mermaid
 flowchart TD
@@ -418,7 +291,7 @@ flowchart TD
 | **`HashSet`** | Por dentro es un `HashMap`; usa `equals`/`hashCode` |
 | **Inmutables** | `List.of(...)`, `Map.of(...)`: no se modifican |
 
-### 4.12 · Lambdas, interfaces funcionales y Streams
+### 1.12 · Lambdas, interfaces funcionales y Streams
 
 | Interfaz funcional | Método | Para qué |
 |---|---|---|
@@ -446,7 +319,7 @@ List<String> nombres = manzanas.stream()
 - **`map` vs `flatMap`:** `map` transforma 1 a 1; `flatMap` aplana (1 a muchos).
 - **`Optional`:** para retornos que pueden no tener valor; no para campos ni parámetros. Usar `map`, `orElse`, `orElseThrow`, no `get()` a ciegas.
 
-### 4.13 · Java 17 y Java 21 (con ejemplos)
+### 1.13 · Java 17 y Java 21 (con ejemplos)
 
 | Novedad | Versión final | Ejemplo y para qué |
 |---|---|---|
@@ -481,7 +354,7 @@ String describir(Fruta f) {                          // Java 21
 
 **Record vs clase normal:** un record es **inmutable**, no puede extender otra clase (sí implementar interfaces) y sirve para DTOs y objetos de valor. **Java 17 es LTS**; **21** también.
 
-### 4.14 · Concurrencia y memoria (lo básico)
+### 1.14 · Concurrencia y memoria (lo básico)
 
 | Tema | Respuesta |
 |---|---|
@@ -496,7 +369,7 @@ String describir(Fruta f) {                          // Java 21
 | **Fuga de memoria** | Referencias que ya no necesitas (caches estáticos, listeners sin remover) |
 | **Inmutabilidad** | Campos `final`, sin setters, copias defensivas: más seguro entre hilos |
 
-### 4.15 · SOLID explicado simple (con código malo, código bueno y dibujos)
+### 1.15 · SOLID explicado simple (con código malo, código bueno y dibujos)
 
 **Para qué sirve SOLID, en palabras de la calle:** son 5 reglas para que el código **se pueda cambiar sin romper otras cosas**. Imagina una frutería: si el cajero también cuenta el dinero, empaca, limpia y hace la contabilidad, cuando falle algo no sabes por dónde empezar. SOLID es poner **a cada uno a hacer lo suyo**.
 
@@ -695,7 +568,7 @@ flowchart LR
 
 **Las 3 preguntas que más caen:** *"¿Un ejemplo de SRP?"* → `Factura` con pagar e imprimir, dividida. *"¿Para qué sirve D?"* → poder cambiar de implementación y hacer pruebas con mocks. *"¿Qué relación tiene D con Spring o Quarkus?"* → la inyección de dependencias es aplicar D: el framework te entrega la implementación.
 
-### 4.16 · Preguntas trampa de Java (respuesta corta)
+### 1.16 · Preguntas trampa de Java (respuesta corta)
 
 | Pregunta | Respuesta |
 |---|---|
@@ -718,28 +591,30 @@ Detalle: [`java-core/`](../../java-core) · [`java-version-evolution.md`](../../
 
 ---
 
-<a id="c5"></a>
+<a id="c2"></a>
 
-## 5 · Resiliencia
+## 2 · Quarkus, Spring Boot y SmallRye
 
-| Patrón | Frase |
+| Pregunta | Respuesta |
 |---|---|
-| **Timeout** | Lo primero: no esperar para siempre |
-| **Retry** | Solo operaciones idempotentes, con backoff y jitter |
-| **Circuit Breaker** | **Cerrado** (mide fallos) → **abierto** (corta y usa fallback) → **semiabierto** (prueba unas llamadas) → cerrado o abierto |
-| **Bulkhead** | Aislar recursos por dependencia |
-| **Fallback** | Plan B honesto (caché, "pendiente de confirmar") |
-| **Rate limiter / load shedding** | Proteger al servicio |
+| ¿Qué es Quarkus? | Framework Java para microservicios y cloud: arranca rápido y gasta poca memoria porque hace la configuración **en el build** |
+| ¿Spring vs Quarkus? | Mismos patrones; Spring configura en runtime, Quarkus en build; DI con CDI; tiene dev mode, Dev Services e imagen nativa |
+| ¿DI? | CDI: `@Inject`, `@ApplicationScoped` |
+| ¿Endpoint? | `@Path` + `@GET` (Jakarta REST) |
+| ¿Persistencia? | Hibernate ORM con **Panache** |
+| ¿Config? | `application.properties`, `@ConfigProperty`, perfiles `%dev` `%test` `%prod` |
+| ¿Reactivo? | `Uni` (0 o 1) y `Multi` (0 a N) de Mutiny; equivalen a `Mono` y `Flux`; el event loop no se bloquea |
+| ¿Código bloqueante? | `@Blocking`, o un endpoint imperativo, o virtual threads |
+| ¿Qué es SmallRye Reactive Messaging? | La librería de Quarkus para mensajería (`@Incoming`, `@Outgoing`, `Emitter`) con conectores (Kafka, AMQP...) |
+| ¿Pruebas? | `@QuarkusTest`, `@InjectMock`, RestAssured, Dev Services |
 
-**Quarkus:** `@Timeout`, `@Retry`, `@CircuitBreaker`, `@Bulkhead`, `@Fallback` (SmallRye Fault Tolerance). **Spring:** Resilience4j. **Trampa:** un timeout dispara el reintento y cuenta como fallo del circuit breaker.
-
-**Respuesta modelo (servicio lento satura mis hilos):** *timeout corto → bulkhead → circuit breaker con fallback → reintentos idempotentes con backoff y jitter → monitoreo de p99, tasa de fallos y estado del breaker.* Detalle: [sección 16](README.md#s16) y [24](README.md#s24).
+Tabla de equivalencias completa: [sección 20](README.md#s20) · [`quarkus/README.md`](../../frameworks/quarkus/README.md).
 
 ---
 
-<a id="c6"></a>
+<a id="c3"></a>
 
-## 6 · JPA, Hibernate y PostgreSQL
+## 3 · JPA, Hibernate y PostgreSQL
 
 | Pregunta | Respuesta |
 |---|---|
@@ -762,27 +637,9 @@ Detalle: [sección 22](README.md#s22) · [`persistencia-hibernate-postgresql.md`
 
 ---
 
-<a id="c7"></a>
+<a id="c4"></a>
 
-## 7 · Hexagonal
-
-| Pregunta | Respuesta |
-|---|---|
-| ¿Qué es? | Negocio al centro; **puertos** (interfaces que define el núcleo) y **adaptadores** (REST, JPA, Kafka, cliente del banco) que los implementan |
-| Regla de oro | La dependencia apunta **hacia adentro**; el dominio no conoce frameworks |
-| Puerto IN / OUT | IN: lo que el sistema ofrece (`CrearPagoUseCase`); OUT: lo que necesita (`PagoRepository`, `BancoPort`) |
-| Entidad de dominio vs entidad JPA | Distintas, con un mapper; el modelo de negocio no queda atado a la tabla |
-| ¿Dónde va `@Transactional`? | En el caso de uso |
-| ¿Cómo se prueba? | Dominio sin mocks; casos de uso con mocks de los puertos; adaptadores con integración |
-| ¿Cuándo no? | CRUD sin lógica de negocio (sobreingeniería) |
-
-Detalle: [sección 23](README.md#s23) · [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md).
-
----
-
-<a id="c8"></a>
-
-## 8 · Testing
+## 4 · Testing (JUnit 5 y Mockito)
 
 | Pregunta | Respuesta |
 |---|---|
@@ -799,6 +656,237 @@ Detalle: [sección 23](README.md#s23) · [`hexagonal-architecture.md`](../../sof
 | Cobertura | Indicador, no objetivo; importan los caminos de error |
 
 Detalle: [sección 25](README.md#s25) · [`junit5-mockito.md`](../../tdd/junit5-mockito.md).
+
+---
+
+<a id="c5"></a>
+
+## 5 · Arquitectura hexagonal
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Qué es? | Negocio al centro; **puertos** (interfaces que define el núcleo) y **adaptadores** (REST, JPA, Kafka, cliente del banco) que los implementan |
+| Regla de oro | La dependencia apunta **hacia adentro**; el dominio no conoce frameworks |
+| Puerto IN / OUT | IN: lo que el sistema ofrece (`CrearPagoUseCase`); OUT: lo que necesita (`PagoRepository`, `BancoPort`) |
+| Entidad de dominio vs entidad JPA | Distintas, con un mapper; el modelo de negocio no queda atado a la tabla |
+| ¿Dónde va `@Transactional`? | En el caso de uso |
+| ¿Cómo se prueba? | Dominio sin mocks; casos de uso con mocks de los puertos; adaptadores con integración |
+| ¿Cuándo no? | CRUD sin lógica de negocio (sobreingeniería) |
+
+Detalle: [sección 23](README.md#s23) · [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md).
+
+---
+
+<a id="c6"></a>
+
+## 6 · Kafka: repaso de 15 minutos (lo usaste en el banco, hace tiempo)
+
+### 🖼️ El dibujo de la arquitectura de Kafka (apréndelo de memoria)
+
+**Cómo dibujarlo en 30 segundos:** (1) un cuadro grande, el **cluster**, con **3 brokers**; (2) un **topic** cortado en **3 particiones** repartidas entre los brokers, cada una con un **líder** y una **réplica**; (3) a la izquierda los **productores**; (4) a la derecha los **grupos de consumidores**; (5) abajo, el **controlador**.
+
+```mermaid
+flowchart LR
+    subgraph PROD[" PRODUCTORES (Producer) "]
+        P1["Servicio de pagos"]
+        P2["Otro servicio"]
+    end
+    subgraph CLUSTER[" CLUSTER KAFKA (3 brokers) "]
+        subgraph B1[" Broker 1 "]
+            B1P0["Topic pagos · P0<br/>LÍDER"]
+            B1P1["Topic pagos · P1<br/>réplica"]
+        end
+        subgraph B2[" Broker 2 "]
+            B2P1["Topic pagos · P1<br/>LÍDER"]
+            B2P2["Topic pagos · P2<br/>réplica"]
+        end
+        subgraph B3[" Broker 3 "]
+            B3P2["Topic pagos · P2<br/>LÍDER"]
+            B3P0["Topic pagos · P0<br/>réplica"]
+        end
+        CTRL["Controlador (KRaft)<br/>decide quién es líder de qué<br/>y elige otro si un broker cae"]
+    end
+    subgraph CONS[" CONSUMIDORES (Consumer) "]
+        subgraph GA[" Grupo A: antifraude "]
+            A1["Consumer 1"]
+            A2["Consumer 2"]
+        end
+        subgraph GB[" Grupo B: notificaciones "]
+            C1["Consumer 1"]
+        end
+    end
+    P1 -->|"key = cuenta"| B1P0
+    P2 -->|"key = cuenta"| B2P1
+    B1P0 --> A1
+    B2P1 --> A1
+    B3P2 --> A2
+    B1P0 --> C1
+    B2P1 --> C1
+    B3P2 --> C1
+    B1P0 -.->|"replica"| B3P0
+    B2P1 -.->|"replica"| B1P1
+    B3P2 -.->|"replica"| B2P2
+```
+
+**Cómo contarlo mientras lo trazas:** "Los **productores** escriben en un **topic**. El topic se divide en **particiones**, y cada partición vive en un **broker** que es su **líder**; otros brokers guardan **réplicas** por si el líder cae. El conjunto de brokers es el **cluster**, y el **controlador** (KRaft) sabe quién lidera qué. Los **consumidores** se agrupan en **grupos**: dentro de un grupo, cada partición la lee **un solo** consumidor; grupos distintos leen todo de forma independiente."
+
+#### El viaje de un mensaje (de ida y vuelta)
+
+```mermaid
+sequenceDiagram
+    participant P as Productor
+    participant L as Broker líder (partición 1)
+    participant F as Broker réplica
+    participant C as Consumidor (grupo A)
+    P->>L: send(key, value, headers)
+    Note over P,L: la key decide la partición: hash(key) % número de particiones
+    L->>F: replica el mensaje
+    F-->>L: confirmado (ISR)
+    L-->>P: ack (con acks=all)
+    C->>L: poll()
+    L-->>C: mensajes con offset 40, 41, 42...
+    C->>C: procesa
+    C->>L: commit del offset 43 (hasta dónde leyó)
+```
+
+#### Qué lleva un mensaje (record)
+
+```mermaid
+flowchart LR
+    subgraph REC[" Mensaje (record) "]
+        K["KEY<br/>decide la partición<br/>y el orden"]
+        V["VALUE (payload)<br/>el evento: JSON, Avro, Protobuf"]
+        H["HEADERS<br/>metadatos: correlation-id,<br/>tipo de evento, versión"]
+        T["TIMESTAMP"]
+    end
+    BR["Lo añade Kafka:<br/>OFFSET + PARTICIÓN + TOPIC"] -.-> REC
+```
+
+#### Diccionario de nombres (para no quedarte en blanco)
+
+| Nombre | Qué es (en 5 palabras) | 🍎 |
+|---|---|---|
+| **Producer** | Quien escribe mensajes | La caja que anota |
+| **Consumer** | Quien lee mensajes | Contabilidad |
+| **Consumer group** | Equipo que se reparte lectura | El equipo de contadores |
+| **Broker** | Un servidor Kafka | Una oficina |
+| **Cluster** | Conjunto de brokers | Las oficinas juntas |
+| **Controller (KRaft)** | Coordina el cluster | El comité que reparte secciones |
+| **Topic** | Canal con nombre | Un cuaderno |
+| **Partition** | Trozo ordenado del topic | Una sección del cuaderno |
+| **Leader / Follower (réplica)** | Principal / copia de la partición | La original / la fotocopia |
+| **Replication factor** | Cuántas copias (típico 3) | Fotocopias en 3 oficinas |
+| **ISR** | Réplicas al día con el líder | Oficinas que ya copiaron |
+| **Offset** | Posición dentro de la partición | Número de línea |
+| **Key** | Decide la partición | El nombre del cliente |
+| **Record** | El mensaje completo | La nota |
+| **Header** | Metadatos del mensaje | Etiquetas pegadas |
+| **Retention** | Cuánto se conservan | Cuánto se guarda el cuaderno |
+| **Log compaction** | Solo el último valor por key | Se queda la última anotación |
+| **Lag** | Mensajes pendientes por leer | Líneas sin leer |
+| **Rebalance** | Reasignar particiones | Un contador se enferma |
+| **Schema Registry** | Guarda formatos de mensaje | El formulario oficial |
+| **Kafka Connect** | Mueve datos desde y hacia Kafka | Un mensajero con conectores |
+| **Kafka Streams** | Procesa flujos dentro de tu app | Calculadora sobre el libro |
+
+**Regla para acordarte del orden:** **Productor → Broker (cluster) → Topic → Partición (líder y réplicas) → Offset → Consumidor (grupo)**. Si te quedas en blanco, dibuja ese recorrido.
+
+**Los 4 números que conviene recordar:** brokers **3** (mínimo en producción) · replication factor **3** · `min.insync.replicas` **2** · `acks` = **all** (para no perder datos).
+
+Detalle de cada pieza: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, KRaft, retención, headers y banca).
+
+### Cómo presentarlo con honestidad
+
+> "En el banco construí **consumidores de eventos en producción** con Spring Cloud Stream sobre Azure Event Hubs (protocolo Kafka): transferencias interbancarias y al exterior, con orquestación reactiva, reintentos y trazabilidad por headers. Además hice **pruebas de concepto propias**: el cliente Java puro, Spring Kafka y **Spring Cloud Stream contra Azure Event Hubs por su endpoint de Kafka**, con dos binders y cabeceras de trazabilidad. Con SmallRye Reactive Messaging no he trabajado, pero Spring Cloud Stream es su equivalente: bindings y `StreamBridge` son los canales y el `Emitter`."
+
+Eso es **verdad y suficiente** (tus 4 ejercicios: [`practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md)). Solo di lo que sea cierto: con dos preguntas se nota.
+
+### Los 12 conceptos (léelos hasta poder decirlos sin mirar)
+
+| # | Concepto | 🟢 Frase | 🍎 Manzanas |
+|---|---|---|---|
+| 1 | **Kafka** | Log distribuido de eventos: se escribe al final y se **lee sin borrar** | El libro de ventas con líneas numeradas |
+| 2 | **Topic** | Canal con nombre para un tipo de evento | Un cuaderno |
+| 3 | **Partición** | División del topic; **el orden solo vale dentro de una** | Secciones del cuaderno |
+| 4 | **Key** | Decide la partición; misma key, mismo orden | El nombre del cliente decide la sección |
+| 5 | **Offset** | Posición del mensaje en su partición | Número de línea |
+| 6 | **Consumer group** | Consumidores que se reparten las particiones; cada partición la lee **uno** del grupo | Equipo de contadores |
+| 7 | **Replicación + `acks=all` + `min.insync.replicas=2`** | No pierdes datos si cae un servidor | Fotocopias en 3 oficinas |
+| 8 | **Commit de offsets** | Marcar hasta dónde leíste; confirmar **después de procesar** | El marcador del libro |
+| 9 | **At-least-once + idempotencia** | Puede llegar dos veces: el consumidor ignora duplicados con el `eventId` | El sello "YA COBRADO" |
+| 10 | **Rebalanceo y lag** | Reasignar particiones al entrar o salir un consumidor; lag = lo que falta por leer | Un contador se enferma; líneas sin leer |
+| 11 | **DLT y reintentos** | El mensaje que siempre falla va a otro topic, tras reintentos con backoff | Bandeja "revisar a mano" |
+| 12 | **Outbox** | Guardar dato y evento en la misma transacción; otro proceso publica | Misma hoja: "vendí" y "avisar" |
+
+### Las preguntas que más caen (respuesta de una línea)
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Cómo garantizas el orden? | Con una key (cuenta, pedido): sus eventos van a la misma partición |
+| ¿Qué pasa si hay más consumidores que particiones? | Los sobrantes quedan ociosos |
+| ¿Cómo no pierdes mensajes? | Productor `acks=all` e idempotente; consumidor con commit manual tras procesar; RF=3 |
+| ¿Cómo evitas duplicados? | At-least-once más consumidor idempotente (`eventId` con restricción única) |
+| ¿Exactly-once? | Existe dentro de Kafka (idempotencia y transacciones); con sistemas externos necesitas idempotencia propia |
+| ¿Qué haces con un mensaje que falla? | Reintento con backoff y luego Dead Letter Topic con alerta |
+| ¿Kafka vs RabbitMQ/SQS? | Kafka es un log que se relee, con alto volumen y orden por clave; RabbitMQ es una cola con enrutamiento rico y ack por mensaje que se consume y desaparece; una cola gestionada (SQS, Service Bus) es lo más simple. Tabla completa: [`messaging-streaming/README.md` sección 5b](../../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica) |
+| ¿Qué es ZooKeeper/KRaft? | Coordinaba el cluster; hoy lo hace KRaft integrado en Kafka |
+| ¿Qué es Schema Registry? | Guarda los esquemas y valida que los cambios sean compatibles |
+| ¿Cómo publicas y guardas en BD sin inconsistencias? | Outbox |
+| ¿Qué es el consumer lag? | Mensajes pendientes por consumir; la métrica clave |
+| ¿Qué es log compaction? | Conserva solo el último valor por key |
+
+### Con SmallRye (Quarkus), en 10 líneas
+
+```java
+@Incoming("pedidos")  @Blocking @Transactional
+public void procesar(PedidoCreado e) { ... }              // consume; ack al terminar el método
+
+@Inject @Channel("despachos") Emitter<DespachoCreado> emitter;
+emitter.send(evento);                                      // produce
+```
+```properties
+mp.messaging.incoming.pedidos.connector=smallrye-kafka
+mp.messaging.incoming.pedidos.failure-strategy=dead-letter-queue    # fail (por defecto) | ignore | dead-letter-queue | delayed-retry-topic
+mp.messaging.outgoing.despachos.acks=all
+```
+Ack por defecto al terminar el método; commit `throttled`; pruebas con `InMemoryConnector`; equivalente Spring: `@KafkaListener` + `KafkaTemplate`. Detalle: [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md).
+
+Más profundidad si te la piden: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, headers, banca).
+
+---
+
+<a id="c7"></a>
+
+## 7 · Resiliencia
+
+| Patrón | Frase |
+|---|---|
+| **Timeout** | Lo primero: no esperar para siempre |
+| **Retry** | Solo operaciones idempotentes, con backoff y jitter |
+| **Circuit Breaker** | **Cerrado** (mide fallos) → **abierto** (corta y usa fallback) → **semiabierto** (prueba unas llamadas) → cerrado o abierto |
+| **Bulkhead** | Aislar recursos por dependencia |
+| **Fallback** | Plan B honesto (caché, "pendiente de confirmar") |
+| **Rate limiter / load shedding** | Proteger al servicio |
+
+**Quarkus:** `@Timeout`, `@Retry`, `@CircuitBreaker`, `@Bulkhead`, `@Fallback` (SmallRye Fault Tolerance). **Spring:** Resilience4j. **Trampa:** un timeout dispara el reintento y cuenta como fallo del circuit breaker.
+
+**Respuesta modelo (servicio lento satura mis hilos):** *timeout corto → bulkhead → circuit breaker con fallback → reintentos idempotentes con backoff y jitter → monitoreo de p99, tasa de fallos y estado del breaker.* Detalle: [sección 16](README.md#s16) y [24](README.md#s24).
+
+---
+
+<a id="c8"></a>
+
+## 8 · Tus proyectos del banco (úsalos como ejemplo de casi todo)
+
+1. "Era una **pasarela de pagos**: recibía órdenes, las procesaba contra el banco y devolvía el resultado."
+2. "Usábamos **mensajería con tópicos de entrada y salida** para desacoplar y absorber picos."
+3. "**Quartz** disparaba procesos a una hora configurada: leía una tabla de pendientes y publicaba al tópico; era un *Polling Publisher*."
+4. "Como todo es *at-least-once*, el diseño era **idempotente**: id único por pago, estado condicional y consumidores que ignoran duplicados."
+5. "Si el banco no respondía, el pago quedaba **pendiente de confirmación** y se resolvía por consulta o conciliación; nunca se reintentaba a ciegas."
+
+**Segundo proyecto (transferencias asíncronas):** "Una orden de transferencia se ejecutaba por **evento**, no en la petición del usuario. Un consumidor con Spring Cloud Stream y Reactor **orquestaba** la ejecución llamando a varias APIs. Si algo fallaba, reintentaba con espera creciente; las órdenes con fecha futura usaban un **servicio de tareas programadas** que republicaba el evento al vencer. Todo con headers de trazabilidad. **Al revisarlo hoy** cambiaría los reintentos por tópicos escalonados y DLQ, añadiría idempotencia por ítem y `key = orderId`." Análisis: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
+
+Sirve para: Kafka, idempotencia, resiliencia, transacciones, arquitectura, concurrencia y testing. Detalle y dibujo: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md) (🔎 contrasta con tu memoria lo que no recuerdes con certeza).
 
 ---
 
@@ -828,165 +916,175 @@ Detalle: secciones [07](README.md#s07), [08](README.md#s08), [09](README.md#s09)
 
 <a id="c10"></a>
 
-## 10 · Tu proyecto de pagos en 5 frases (úsalo como ejemplo de casi todo)
-
-1. "Era una **pasarela de pagos**: recibía órdenes, las procesaba contra el banco y devolvía el resultado."
-2. "Usábamos **mensajería con tópicos de entrada y salida** para desacoplar y absorber picos."
-3. "**Quartz** disparaba procesos a una hora configurada: leía una tabla de pendientes y publicaba al tópico; era un *Polling Publisher*."
-4. "Como todo es *at-least-once*, el diseño era **idempotente**: id único por pago, estado condicional y consumidores que ignoran duplicados."
-5. "Si el banco no respondía, el pago quedaba **pendiente de confirmación** y se resolvía por consulta o conciliación; nunca se reintentaba a ciegas."
-
-**Segundo proyecto (transferencias asíncronas):** "Una orden de transferencia se ejecutaba por **evento**, no en la petición del usuario. Un consumidor con Spring Cloud Stream y Reactor **orquestaba** la ejecución llamando a varias APIs. Si algo fallaba, reintentaba con espera creciente; las órdenes con fecha futura usaban un **servicio de tareas programadas** que republicaba el evento al vencer. Todo con headers de trazabilidad. **Al revisarlo hoy** cambiaría los reintentos por tópicos escalonados y DLQ, añadiría idempotencia por ítem y `key = orderId`." Análisis: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
-
-Sirve para: Kafka, idempotencia, resiliencia, transacciones, arquitectura, concurrencia y testing. Detalle y dibujo: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md) (🔎 contrasta con tu memoria lo que no recuerdes con certeza).
-
----
-
-<a id="c11"></a>
-
-## 11 · Entrenamiento rápido (30 minutos)
+## 10 · Entrenamiento rápido (30 minutos)
 
 **Cómo usarlo:** lee la pregunta, **contesta en voz alta**, y luego despliega la respuesta. Cuenta cuántas dijiste con la frase 🟢 clara.
 
-<details><summary><b>1.</b> ¿Qué es Kafka y en qué se diferencia de una cola?</summary>
+**Están ordenadas como suele ir la entrevista: de lo básico (Java y POO) a lo avanzado (Kafka y diseño).**
 
-🟢 Un log distribuido de eventos: se escribe al final y se lee sin borrar; varios consumidores leen con su propio offset. 🟡 En una cola el mensaje se consume y desaparece. 🔴 Elijo Kafka por volumen, orden por clave y poder releer; una cola si solo reparto tareas.
+#### Java y POO
+
+<details><summary><b>1.</b> Explícame los 4 pilares de la POO.</summary>
+
+🟢 Encapsulación (esconder el estado y controlar el acceso), abstracción (mostrar qué hace, esconder cómo), herencia (reutilizar con relación "es un") y polimorfismo (la misma llamada, distinto comportamiento según el objeto real). 🟡 Con ejemplo: una `Fruta` abstracta con `precio()`; `Manzana` y `Banana` lo sobrescriben, y un `for` sobre `List<Fruta>` llama a cada uno. 🔴 Prefiero composición sobre herencia y programar contra interfaces; heredo solo si se cumple Liskov.
 </details>
 
-<details><summary><b>2.</b> ¿Cómo garantizas el orden en Kafka?</summary>
+<details><summary><b>2.</b> ¿Diferencia entre sobrecarga y sobrescritura?</summary>
 
-🟢 Solo dentro de una partición. 🟡 Uso una key (la cuenta) para que sus eventos vayan a la misma partición. 🔴 No hay orden global; una key muy popular crea una partición caliente; cambiar el número de particiones rompe el reparto.
+🟢 Sobrecarga: mismo nombre y distintos parámetros en la misma clase; la resuelve el compilador. Sobrescritura: la subclase redefine un método del padre con la misma firma; la resuelve la JVM en ejecución. 🟡 `@Override` verifica la sobrescritura; el retorno puede ser covariante; no se puede reducir la visibilidad; `static`, `private` y `final` no se sobrescriben. 🔴 La sobrescritura es el polimorfismo dinámico (*dynamic dispatch*) que sostiene Open/Closed.
 </details>
 
-<details><summary><b>3.</b> ¿Cómo evitas procesar un mensaje dos veces?</summary>
+<details><summary><b>3.</b> ¿Clase abstracta o interfaz?</summary>
 
-🟢 Guardo el id del mensaje procesado. 🟡 Tabla de `eventId` con restricción única, en la misma transacción que el efecto. 🔴 Es at-least-once: lo hago idempotente de punta a punta y confirmo el offset solo después de persistir.
+🟢 Interfaz para un contrato; clase abstracta cuando varias clases comparten código y estado. 🟡 Una clase extiende solo una clase pero implementa varias interfaces; desde Java 8 las interfaces tienen métodos `default`. 🔴 Prefiero interfaces: permiten varias implementaciones, facilitan los tests y son los puertos de la arquitectura hexagonal.
 </details>
 
-<details><summary><b>4.</b> ¿Qué es SmallRye Reactive Messaging?</summary>
+<details><summary><b>4.</b> ¿Java pasa los objetos por valor o por referencia?</summary>
 
-🟢 La librería de Quarkus para mensajería: `@Incoming`, `@Outgoing` y `Emitter`. 🟡 Canales y conectores (`smallrye-kafka`), con estrategias de ack y de fallo. 🔴 Abstrae el broker sobre flujos Mutiny; el equivalente en Spring es `@KafkaListener` más `KafkaTemplate` o Spring Cloud Stream.
+🟢 Siempre por valor. 🟡 Con objetos se copia el valor de la referencia: el método puede modificar el objeto al que apunta, pero no reasignar tu variable. 🔴 Por eso conviene inmutabilidad y copias defensivas en las APIs.
 </details>
 
-<details><summary><b>5.</b> Un mensaje falla siempre, ¿qué haces?</summary>
+<details><summary><b>5.</b> ¿Qué es un record y cuándo lo usas?</summary>
 
-🟢 Lo mando a otro topic. 🟡 `failure-strategy=dead-letter-queue`, o `delayed-retry-topic` si es transitorio, con alerta. 🔴 Distingo transitorio de permanente, y mi consumidor es idempotente porque el reproceso es inevitable.
+🟢 Una clase inmutable de datos con `equals`, `hashCode` y `toString` generados (Java 16). 🟡 Ideal para DTOs, eventos y objetos de valor; puede implementar interfaces pero no extender clases; el constructor compacto valida. 🔴 Junto con `sealed` y el pattern matching de `switch` (Java 21) modelo dominios cerrados y el compilador exige cubrir todos los casos.
 </details>
 
-<details><summary><b>6.</b> ¿Qué es el patrón Outbox?</summary>
 
-🟢 Guardar el dato y el evento en la misma transacción. 🟡 Un relay o CDC publica después a Kafka. 🔴 Evita la inconsistencia entre base de datos y broker sin transacción distribuida; la entrega queda at-least-once.
+#### SOLID y patrones
+
+<details><summary><b>6.</b> Explícame SOLID con un ejemplo.</summary>
+
+🟢 Cinco reglas para que el código se pueda cambiar sin romper otras partes. Ejemplo de **S**: una clase `Factura` que calcula, paga e imprime se divide en tres: la factura, quien la paga y quien la imprime. 🟡 **O**: un descuento nuevo es una clase nueva, no un `if` más. **L**: el hijo reemplaza al padre sin romper nada (un pingüino no debería heredar `volar()`). **I**: interfaces pequeñas. **D**: depender de una interfaz (`MedioDePago`), no de `new PagoConTarjeta()`. 🔴 No son leyes: aplicarlos de más es sobreingeniería (KISS y YAGNI). **D** es la base de la inyección de dependencias de Spring y Quarkus. Detalle: [1.15](#c1).
 </details>
 
-<details><summary><b>7.</b> Explícame los estados del Circuit Breaker.</summary>
+<details><summary><b>7.</b> ¿Qué patrón de diseño has usado y dónde?</summary>
 
-🟢 Cerrado: pasa todo y mide fallos. Abierto: corta y usa fallback. Semiabierto: prueba unas llamadas. 🟡 Abre al superar el umbral de fallos y vuelve a probar tras un tiempo. 🔴 Lo combino con timeout, bulkhead y reintentos idempotentes; el fallback debe ser honesto.
+Elige **tres con un caso real**: Strategy (métodos de pago), Adapter (integrar un sistema externo), Proxy (`@Transactional`), Observer/Command/Template Method. Cierra con cuándo **no** lo usarías (sobreingeniería).
 </details>
 
-<details><summary><b>8.</b> ¿Qué es el problema N+1 y cómo lo resuelves?</summary>
 
-🟢 Una consulta de lista que dispara una extra por cada elemento. 🟡 `JOIN FETCH`, `@EntityGraph` o `@BatchSize`. 🔴 Para lecturas uso proyecciones/DTO y lo detecto contando consultas en tests.
-</details>
+#### Quarkus y Spring
 
-<details><summary><b>9.</b> ¿Lazy o eager? ¿Qué es `LazyInitializationException`?</summary>
-
-🟢 Lazy carga al usar; eager siempre; la excepción es acceder a una relación lazy fuera de la transacción. 🟡 Pongo `LAZY` y traigo lo necesario por consulta. 🔴 Devuelvo DTOs en lugar de entidades y no uso "open session in view".
-</details>
-
-<details><summary><b>10.</b> ¿Cómo evitas que dos usuarios pisen el mismo registro?</summary>
-
-🟢 Con un campo de versión. 🟡 `@Version` (optimista); si falla, reintento. 🔴 Optimista por defecto; pesimista (`FOR UPDATE`) con alta contención, como saldos.
-</details>
-
-<details><summary><b>11.</b> ¿Qué es la arquitectura hexagonal?</summary>
-
-🟢 Separar el negocio de los detalles técnicos con puertos y adaptadores. 🟡 El núcleo define interfaces; REST, JPA y Kafka son adaptadores. 🔴 Invierte la dependencia hacia el dominio: facilita probar y cambiar tecnología; el costo son mapeos extra y solo vale con lógica de negocio real.
-</details>
-
-<details><summary><b>12.</b> ¿Quarkus o Spring Boot? ¿Por qué?</summary>
+<details><summary><b>8.</b> ¿Quarkus o Spring Boot? ¿Por qué?</summary>
 
 🟢 Quarkus arranca más rápido y gasta menos memoria. 🟡 Configura en el build, usa CDI, tiene dev mode e imagen nativa; Spring tiene el ecosistema más grande. 🔴 Elijo según el contexto: arranque y memoria críticos, Quarkus; equipo y ecosistema ya en Spring, Spring. Los patrones son los mismos.
 </details>
 
-<details><summary><b>13.</b> ¿Reactivo o imperativo?</summary>
+<details><summary><b>9.</b> ¿Reactivo o imperativo?</summary>
 
 🟢 Reactivo usa `Uni`/`Multi` y no bloquea. 🟡 El event loop no puede bloquearse; con JDBC uso `@Blocking`. 🔴 Reactivo solo si todo el camino es no bloqueante y hay alta concurrencia; si no, imperativo o virtual threads (Java 21).
 </details>
+
+
+#### Datos: Hibernate y PostgreSQL
+
+<details><summary><b>10.</b> ¿Qué es el problema N+1 y cómo lo resuelves?</summary>
+
+🟢 Una consulta de lista que dispara una extra por cada elemento. 🟡 `JOIN FETCH`, `@EntityGraph` o `@BatchSize`. 🔴 Para lecturas uso proyecciones/DTO y lo detecto contando consultas en tests.
+</details>
+
+<details><summary><b>11.</b> ¿Lazy o eager? ¿Qué es `LazyInitializationException`?</summary>
+
+🟢 Lazy carga al usar; eager siempre; la excepción es acceder a una relación lazy fuera de la transacción. 🟡 Pongo `LAZY` y traigo lo necesario por consulta. 🔴 Devuelvo DTOs en lugar de entidades y no uso "open session in view".
+</details>
+
+<details><summary><b>12.</b> ¿Cómo evitas que dos usuarios pisen el mismo registro?</summary>
+
+🟢 Con un campo de versión. 🟡 `@Version` (optimista); si falla, reintento. 🔴 Optimista por defecto; pesimista (`FOR UPDATE`) con alta contención, como saldos.
+</details>
+
+<details><summary><b>13.</b> ¿Cómo pruebas el acceso a datos?</summary>
+
+🟢 Con una base de pruebas. 🟡 PostgreSQL real en contenedor (Dev Services o Testcontainers). 🔴 Evito H2 como sustituto de PostgreSQL porque difiere en SQL y tipos.
+</details>
+
+
+#### Testing
 
 <details><summary><b>14.</b> ¿Qué es un mock y qué mockeas?</summary>
 
 🟢 Un objeto falso que reemplaza una dependencia. 🟡 Mockito programa con `when` y verifica con `verify`; distingo mock, stub, spy y fake. 🔴 Mockeo mis puertos, no tipos de terceros; demasiados mocks acoplan la prueba a la implementación.
 </details>
 
-<details><summary><b>15.</b> ¿Cómo pruebas el acceso a datos?</summary>
 
-🟢 Con una base de pruebas. 🟡 PostgreSQL real en contenedor (Dev Services o Testcontainers). 🔴 Evito H2 como sustituto de PostgreSQL porque difiere en SQL y tipos.
+#### Arquitectura hexagonal
+
+<details><summary><b>15.</b> ¿Qué es la arquitectura hexagonal?</summary>
+
+🟢 Separar el negocio de los detalles técnicos con puertos y adaptadores. 🟡 El núcleo define interfaces; REST, JPA y Kafka son adaptadores. 🔴 Invierte la dependencia hacia el dominio: facilita probar y cambiar tecnología; el costo son mapeos extra y solo vale con lógica de negocio real.
 </details>
 
-<details><summary><b>16.</b> Explícame SOLID con un ejemplo.</summary>
 
-🟢 Cinco reglas para que el código se pueda cambiar sin romper otras partes. Ejemplo de **S**: una clase `Factura` que calcula, paga e imprime se divide en tres: la factura, quien la paga y quien la imprime. 🟡 **O**: un descuento nuevo es una clase nueva, no un `if` más. **L**: el hijo reemplaza al padre sin romper nada (un pingüino no debería heredar `volar()`). **I**: interfaces pequeñas. **D**: depender de una interfaz (`MedioDePago`), no de `new PagoConTarjeta()`. 🔴 No son leyes: aplicarlos de más es sobreingeniería (KISS y YAGNI). **D** es la base de la inyección de dependencias de Spring y Quarkus. Detalle: [4.15](#c4).
+#### Kafka y mensajería
+
+<details><summary><b>16.</b> ¿Qué es Kafka y en qué se diferencia de una cola?</summary>
+
+🟢 Un log distribuido de eventos: se escribe al final y se lee sin borrar; varios consumidores leen con su propio offset. 🟡 En una cola el mensaje se consume y desaparece. 🔴 Elijo Kafka por volumen, orden por clave y poder releer; una cola si solo reparto tareas.
 </details>
 
-<details><summary><b>17.</b> ¿Qué patrón de diseño has usado y dónde?</summary>
+<details><summary><b>17.</b> ¿Cómo garantizas el orden en Kafka?</summary>
 
-Elige **tres con un caso real**: Strategy (métodos de pago), Adapter (integrar un sistema externo), Proxy (`@Transactional`), Observer/Command/Template Method. Cierra con cuándo **no** lo usarías (sobreingeniería).
+🟢 Solo dentro de una partición. 🟡 Uso una key (la cuenta) para que sus eventos vayan a la misma partición. 🔴 No hay orden global; una key muy popular crea una partición caliente; cambiar el número de particiones rompe el reparto.
 </details>
 
-<details><summary><b>18.</b> ¿Qué haces si el banco no responde a un cobro?</summary>
+<details><summary><b>18.</b> ¿Cómo evitas procesar un mensaje dos veces?</summary>
+
+🟢 Guardo el id del mensaje procesado. 🟡 Tabla de `eventId` con restricción única, en la misma transacción que el efecto. 🔴 Es at-least-once: lo hago idempotente de punta a punta y confirmo el offset solo después de persistir.
+</details>
+
+<details><summary><b>19.</b> ¿Qué es SmallRye Reactive Messaging?</summary>
+
+🟢 La librería de Quarkus para mensajería: `@Incoming`, `@Outgoing` y `Emitter`. 🟡 Canales y conectores (`smallrye-kafka`), con estrategias de ack y de fallo. 🔴 Abstrae el broker sobre flujos Mutiny; el equivalente en Spring es `@KafkaListener` más `KafkaTemplate` o Spring Cloud Stream.
+</details>
+
+<details><summary><b>20.</b> Un mensaje falla siempre, ¿qué haces?</summary>
+
+🟢 Lo mando a otro topic. 🟡 `failure-strategy=dead-letter-queue`, o `delayed-retry-topic` si es transitorio, con alerta. 🔴 Distingo transitorio de permanente, y mi consumidor es idempotente porque el reproceso es inevitable.
+</details>
+
+<details><summary><b>21.</b> ¿Qué es el patrón Outbox?</summary>
+
+🟢 Guardar el dato y el evento en la misma transacción. 🟡 Un relay o CDC publica después a Kafka. 🔴 Evita la inconsistencia entre base de datos y broker sin transacción distribuida; la entrega queda at-least-once.
+</details>
+
+
+#### Resiliencia y pagos
+
+<details><summary><b>22.</b> Explícame los estados del Circuit Breaker.</summary>
+
+🟢 Cerrado: pasa todo y mide fallos. Abierto: corta y usa fallback. Semiabierto: prueba unas llamadas. 🟡 Abre al superar el umbral de fallos y vuelve a probar tras un tiempo. 🔴 Lo combino con timeout, bulkhead y reintentos idempotentes; el fallback debe ser honesto.
+</details>
+
+<details><summary><b>23.</b> ¿Qué haces si el banco no responde a un cobro?</summary>
 
 🟢 No reintento a ciegas: puedo cobrar dos veces. 🟡 Estado `PENDIENTE_CONFIRMACION` y consulta de estado. 🔴 Conciliación, llave de idempotencia hacia el banco, circuit breaker y alerta por antigüedad de pendientes.
 </details>
 
-<details><summary><b>19.</b> ¿Por qué Quartz y no `@Scheduled`?</summary>
+
+#### Tus proyectos
+
+<details><summary><b>24.</b> ¿Por qué Quartz y no `@Scheduled`?</summary>
 
 🟢 Con varias instancias `@Scheduled` corre en todas. 🟡 Quartz persiste en BD, tiene cluster, misfire y programación dinámica. 🔴 Los locks de BD limitan la escala; hoy usaría un scheduler gestionado y un disparo por pago.
 </details>
 
-<details><summary><b>20b.</b> En tu servicio de transferencias, ¿qué mejorarías?</summary>
+<details><summary><b>25.</b> En tu servicio de transferencias, ¿qué mejorarías?</summary>
 
 🟢 Los reintentos: esperar con `Thread.sleep` bloquea el consumidor. 🟡 Usaría tópicos de reintento escalonados y una DLQ, y `key = orderId` para conservar el orden. 🔴 Lo más importante: **idempotencia por ítem** (un fallo parcial reejecutaba todo y podía duplicar transferencias) y confirmar el **offset al terminar** la cadena reactiva, no antes. Detalle: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
 </details>
 
-<details><summary><b>20.</b> Cuéntame un proyecto del que estés orgulloso.</summary>
+<details><summary><b>26.</b> Cuéntame un proyecto del que estés orgulloso.</summary>
 
-Usa la sección 10 de este documento: problema → arquitectura → decisión clave y por qué → un problema real (duplicados, timeout del banco, picos) → resultado.
+Usa la sección 8 de este documento: problema → arquitectura → decisión clave y por qué → un problema real (duplicados, timeout del banco, picos) → resultado.
 </details>
 
-**Java y POO (5 más):**
-
-<details><summary><b>21.</b> Explícame los 4 pilares de la POO.</summary>
-
-🟢 Encapsulación (esconder el estado y controlar el acceso), abstracción (mostrar qué hace, esconder cómo), herencia (reutilizar con relación "es un") y polimorfismo (la misma llamada, distinto comportamiento según el objeto real). 🟡 Con ejemplo: una `Fruta` abstracta con `precio()`; `Manzana` y `Banana` lo sobrescriben, y un `for` sobre `List<Fruta>` llama a cada uno. 🔴 Prefiero composición sobre herencia y programar contra interfaces; heredo solo si se cumple Liskov.
-</details>
-
-<details><summary><b>22.</b> ¿Diferencia entre sobrecarga y sobrescritura?</summary>
-
-🟢 Sobrecarga: mismo nombre y distintos parámetros en la misma clase; la resuelve el compilador. Sobrescritura: la subclase redefine un método del padre con la misma firma; la resuelve la JVM en ejecución. 🟡 `@Override` verifica la sobrescritura; el retorno puede ser covariante; no se puede reducir la visibilidad; `static`, `private` y `final` no se sobrescriben. 🔴 La sobrescritura es el polimorfismo dinámico (*dynamic dispatch*) que sostiene Open/Closed.
-</details>
-
-<details><summary><b>23.</b> ¿Clase abstracta o interfaz?</summary>
-
-🟢 Interfaz para un contrato; clase abstracta cuando varias clases comparten código y estado. 🟡 Una clase extiende solo una clase pero implementa varias interfaces; desde Java 8 las interfaces tienen métodos `default`. 🔴 Prefiero interfaces: permiten varias implementaciones, facilitan los tests y son los puertos de la arquitectura hexagonal.
-</details>
-
-<details><summary><b>24.</b> ¿Java pasa los objetos por valor o por referencia?</summary>
-
-🟢 Siempre por valor. 🟡 Con objetos se copia el valor de la referencia: el método puede modificar el objeto al que apunta, pero no reasignar tu variable. 🔴 Por eso conviene inmutabilidad y copias defensivas en las APIs.
-</details>
-
-<details><summary><b>25.</b> ¿Qué es un record y cuándo lo usas?</summary>
-
-🟢 Una clase inmutable de datos con `equals`, `hashCode` y `toString` generados (Java 16). 🟡 Ideal para DTOs, eventos y objetos de valor; puede implementar interfaces pero no extender clases; el constructor compacto valida. 🔴 Junto con `sealed` y el pattern matching de `switch` (Java 21) modelo dominios cerrados y el compilador exige cubrir todos los casos.
-</details>
-
-**Resultado:** 20 o más (de 25) con la frase 🟢 clara = estás listo. Si fallas en un bloque, vuelve a su sección arriba y repítelo.
+**Resultado:** 21 o más (de 26) con la frase 🟢 clara = estás listo. Si fallas en un bloque, vuelve a su sección arriba y repítelo.
 
 ---
 
-<a id="c12"></a>
+<a id="c11"></a>
 
-## 12 · Cuando no sabes
+## 11 · Cuando no sabes
 
 1. **Di lo que sí sabes cerca:** *"No he usado X en producción, pero conozco Y, que resuelve lo mismo, y funciona así..."*
 2. **Razona en voz alta:** el entrevistador evalúa cómo piensas más que el dato exacto.
@@ -1000,9 +1098,9 @@ Usa la sección 10 de este documento: problema → arquitectura → decisión cl
 
 ---
 
-<a id="c13"></a>
+<a id="c12"></a>
 
-## 13 · Preguntas para hacerles (elige 3)
+## 12 · Preguntas para hacerles (elige 3)
 
 - ¿El proyecto usa **Quarkus o Spring Boot**, y qué parte del stack es nueva o heredada?
 - ¿Cómo está organizado el equipo y cómo se hacen las **revisiones de código** y los despliegues?
@@ -1013,23 +1111,76 @@ Usa la sección 10 de este documento: problema → arquitectura → decisión cl
 
 ---
 
+<a id="c13"></a>
+
+## 13 · Respuestas relámpago (A-Z): glosario para buscar con Cmd+F
+
+Formato: **término → qué es en una frase** (🟢) · *con manzanas*.
+
+| Término | Respuesta |
+|---|---|
+| **ACID** | Atomicidad, Consistencia, Aislamiento, Durabilidad: garantías de una transacción. *La venta se anota completa o no se anota* |
+| **Adapter (patrón)** | Traduce una interfaz a otra; clave para integrar legacy. *Un enchufe adaptador* |
+| **At-least-once** | Nunca se pierde, puede duplicarse; exige idempotencia. *Gritas el pedido hasta que confirmen* |
+| **Bulkhead** | Aislar recursos por dependencia para que una lenta no hunda a las demás. *Una caja por tipo de cliente* |
+| **CAP** | Ante una partición de red eliges consistencia o disponibilidad |
+| **Circuit Breaker** | Corta las llamadas a un servicio que falla; estados cerrado, abierto, semiabierto. *El fusible de la casa* |
+| **Clean Code** | Nombres claros, funciones pequeñas, sin duplicación, con tests |
+| **CQRS** | Un modelo para escribir y otro para consultar. *Libro de ventas y pizarra de resumen* |
+| **Dead Letter Queue** | Destino de lo que siempre falla, para no bloquear. *La bandeja "revisar a mano"* |
+| **DIP (SOLID)** | Depender de abstracciones, no de clases concretas. *Enchufas a un puerto, no a un banco* |
+| **Dirty checking** | Hibernate detecta cambios en entidades gestionadas y hace el `UPDATE` al flush, sin `save` |
+| **DRY / KISS / YAGNI** | No repetir / mantenerlo simple / no construir lo que aún no necesitas |
+| **Eventual consistency** | Los datos se alinean con un pequeño retraso |
+| **Event Sourcing** | El estado es la suma de eventos. *El stock se calcula del libro* |
+| **Hexagonal** | Negocio al centro; puertos (interfaces) y adaptadores (REST, BD, Kafka). *La tienda con enchufes y cables* |
+| **Idempotencia** | Repetir da el mismo resultado que hacerlo una vez. *El sello "YA COBRADO"* |
+| **Idempotency-Key** | Id único por intento de pago; el mismo id dos veces es la misma operación |
+| **ISP (SOLID)** | Interfaces pequeñas y específicas |
+| **Jitter** | Azar en el tiempo de reintento para que no reintenten todos a la vez |
+| **JPA vs Hibernate** | JPA es la especificación; Hibernate, la implementación |
+| **KRaft** | Quórum de controladores de Kafka basado en Raft; reemplazó a ZooKeeper (eliminado en Kafka 4.0) |
+| **Lazy loading** | La relación se carga al usarla; `LazyInitializationException` si es fuera de la transacción |
+| **LSP (SOLID)** | Una subclase debe poder sustituir a su padre sin romper nada |
+| **Mock vs Stub vs Spy vs Fake** | Verifica llamadas / devuelve respuestas / real vigilado / implementación simple |
+| **MVCC (PostgreSQL)** | Cada transacción ve su versión de los datos: leer no bloquea escribir |
+| **N+1** | 1 consulta de lista + N por cada relación. Arreglo: `JOIN FETCH`, `@EntityGraph`, DTO |
+| **OCP (SOLID)** | Abierto a extensión, cerrado a modificación (Strategy en vez de `switch`) |
+| **Outbox** | Guardar dato y evento en la misma transacción; otro proceso publica. *Misma hoja: "vendí" y "avisar"* |
+| **Panache** | Capa de Quarkus sobre Hibernate (equivale a Spring Data) |
+| **Polling Publisher** | Un proceso revisa una tabla cada cierto tiempo y publica lo pendiente |
+| **Proxy (patrón)** | Controla el acceso; así funcionan `@Transactional` y el lazy loading |
+| **Record (Java 17)** | Clase inmutable de datos, con `equals`/`hashCode` generados |
+| **Retry + backoff** | Reintentar espaciando (1 s, 2 s, 4 s) |
+| **Saga** | Operación larga en pasos, con compensación si falla uno. *Vender → cobrar → despachar; si falla, devolver* |
+| **Sealed class** | Jerarquía cerrada; el `switch` exige cubrir todos los casos |
+| **SRP (SOLID)** | Una clase, una razón para cambiar |
+| **Strategy (patrón)** | Algoritmos intercambiables en vez de `if/else`: método de pago, descuento |
+| **Timeout** | No esperar para siempre |
+| **Virtual threads (Java 21)** | Hilos baratos: código bloqueante simple con alta concurrencia |
+| **`@Blocking` (Quarkus)** | Ejecutar en un worker thread porque el código bloquea (JDBC) |
+| **`@Version`** | Bloqueo optimista: si la versión cambió al guardar, falla |
+
+**Patrones GoF:** son **23** → 5 creacionales (Factory Method, Abstract Factory, Builder, Prototype, Singleton), 7 estructurales (Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy), 11 de comportamiento (Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor). Detalle: [sección 04](README.md#s04).
+
+---
+
 <a id="c14"></a>
 
 ## 14 · Galería de dibujos (para explicar dibujando)
 
 Cada dibujo trae **cómo contarlo mientras lo trazas**. Si la entrevista es por videollamada, ofrece compartir pantalla o dibujar: demuestra que entiendes el mecanismo, no solo la definición.
 
-### 14.1 · Circuit Breaker (estados)
+### 14.1 · Patrones de diseño: dónde mirar
 
 ```mermaid
-stateDiagram-v2
-    [*] --> CERRADO
-    CERRADO --> ABIERTO: fallos superan el umbral
-    ABIERTO --> SEMIABIERTO: pasa el tiempo de espera
-    SEMIABIERTO --> CERRADO: las llamadas de prueba salen bien
-    SEMIABIERTO --> ABIERTO: alguna llamada de prueba falla
+flowchart TD
+    GOF["Patrones GoF (23)"]
+    GOF --> CRE["Creacionales (5)<br/>Factory Method, Abstract Factory,<br/>Builder, Prototype, Singleton"]
+    GOF --> EST["Estructurales (7)<br/>Adapter, Bridge, Composite,<br/>Decorator, Facade, Flyweight, Proxy"]
+    GOF --> COM["De comportamiento (11)<br/>Strategy, Observer, Command, State,<br/>Template Method, Chain of Responsibility…"]
 ```
-**Cuéntalo:** "Cerrado: todo pasa y mido fallos. Si superan el umbral, abre: corto las llamadas y uso el fallback. Pasado un tiempo, semiabierto: dejo pasar unas pocas de prueba; si salen bien, cierro; si no, vuelvo a abrir." *(El fusible de la casa.)*
+**Los 4 que más sirven:** **Strategy** (reemplaza `if/else` por tipo), **Adapter** (integrar legacy), **Proxy** (`@Transactional`), **Observer** (eventos). Tabla de dónde aplicarlos: [sección 04](README.md#s04).
 
 ### 14.2 · Arquitectura hexagonal
 
@@ -1058,7 +1209,68 @@ flowchart LR
 ```
 **Cuéntalo:** "El negocio está en el centro y no conoce frameworks. Define puertos, que son interfaces; REST, JPA y Kafka son adaptadores que los implementan. **La dependencia apunta hacia adentro.** Cambiar de base de datos es cambiar un adaptador."
 
-### 14.3 · Kafka: topic, particiones y consumer groups
+### 14.3 · JPA: estados de una entidad
+
+```mermaid
+stateDiagram-v2
+    [*] --> Transient: new
+    Transient --> Managed: persist
+    Managed --> Managed: cambias un campo (dirty checking)
+    Managed --> Detached: termina la transacción
+    Detached --> Managed: merge
+    Managed --> Removed: remove
+    Removed --> [*]: commit
+```
+**Cuéntalo:** "Dentro de la transacción, una entidad *managed* está vigilada: si cambio un campo, Hibernate detecta el cambio y hace el `UPDATE` al hacer flush; no necesito `save`."
+
+### 14.4 · El problema N+1
+
+```mermaid
+flowchart LR
+    subgraph malo[" Con N+1 "]
+        A1["1 consulta: lista de clientes"] --> A2["+ 1 consulta por cada cliente<br/>para sus pedidos"]
+    end
+    subgraph bueno[" Con JOIN FETCH o DTO "]
+        B1["1 consulta con join<br/>trae clientes y pedidos"]
+    end
+```
+**Cuéntalo:** "Pido 50 clientes y, por cada uno, Hibernate hace otra consulta para sus pedidos: 51 consultas en lugar de una. Se arregla con `JOIN FETCH`, `@EntityGraph` o una proyección DTO. Lo detecto con el log de SQL."
+
+### 14.5 · Pirámide de pruebas
+
+```mermaid
+flowchart TB
+    E2E["Pocas: end-to-end"]
+    INT["Algunas: integración<br/>(PostgreSQL y Kafka reales en contenedor)"]
+    UNI["Muchas: unitarias rápidas<br/>(dominio sin mocks; casos de uso con mocks de puertos)"]
+    E2E --- INT --- UNI
+```
+**Cuéntalo:** "Muchas unitarias porque son rápidas; el dominio sin frameworks y los casos de uso con mocks de los puertos. Integración con la base de datos real en contenedor, no H2. Pocas end-to-end."
+
+### 14.6 · Quarkus: event loop y código bloqueante
+
+```mermaid
+flowchart LR
+    REQ["Petición"] --> EL["Event loop<br/>(pocos hilos, NO bloquear)"]
+    EL -->|"código no bloqueante: Uni / Multi"| R["Respuesta"]
+    EL -->|"@Blocking o JDBC"| W["Worker thread"]
+    W --> R
+```
+**Cuéntalo:** "Quarkus atiende con pocos hilos del event loop, que nunca deben bloquearse. Si mi código usa JDBC o Hibernate ORM, va a un worker thread con `@Blocking` o con un endpoint imperativo. Con Java 21, los virtual threads dan escala con código simple."
+
+### 14.7 · SmallRye: de Kafka a tu código
+
+```mermaid
+flowchart LR
+    K1[("Kafka<br/>topic pedidos")] -->|"conector smallrye-kafka"| C1(["canal pedidos"])
+    C1 --> M["@Incoming('pedidos')<br/>tu método"]
+    M --> E["Emitter + @Channel('despachos')"]
+    E --> C2(["canal despachos"])
+    C2 -->|"conector smallrye-kafka"| K2[("Kafka<br/>topic despachos")]
+```
+**Cuéntalo:** "Un canal es un nombre; el conector `smallrye-kafka` une el canal con un topic. `@Incoming` consume, `Emitter` produce. En Spring el equivalente es `@KafkaListener` más `KafkaTemplate`, o Spring Cloud Stream con bindings y `StreamBridge`."
+
+### 14.8 · Kafka: topic, particiones y consumer groups
 
 ```mermaid
 flowchart LR
@@ -1084,109 +1296,7 @@ flowchart LR
 ```
 **Cuéntalo:** "El topic se divide en particiones; la key decide la partición, así que el orden vale **por partición**. Dentro de un grupo, cada partición la lee **un solo** consumidor; grupos distintos leen todo de forma independiente. Más consumidores que particiones, quedan ociosos."
 
-### 14.4 · Outbox (guardar y publicar sin inconsistencias)
-
-```mermaid
-sequenceDiagram
-    participant S as Servicio
-    participant DB as Base de datos
-    participant R as Relay
-    participant K as Kafka
-    S->>DB: guarda pago + evento en la tabla outbox (UNA transacción)
-    R->>DB: lee eventos pendientes
-    R->>K: publica el evento
-    R->>DB: marca como publicado
-```
-**Cuéntalo:** "Si guardo en la base de datos y publico a Kafka por separado, uno puede fallar y quedo inconsistente. Con Outbox guardo el dato y el evento en la misma transacción, y otro proceso publica después. La entrega queda *at-least-once*, así que el consumidor es idempotente."
-
-### 14.5 · Pago con timeout del banco (el estado que más se pregunta)
-
-```mermaid
-stateDiagram-v2
-    [*] --> CREADO
-    CREADO --> EN_PROCESO
-    EN_PROCESO --> AUTORIZADO: el banco aprueba
-    EN_PROCESO --> RECHAZADO: el banco rechaza
-    EN_PROCESO --> PENDIENTE_CONFIRMACION: timeout del banco
-    PENDIENTE_CONFIRMACION --> AUTORIZADO: consulta o conciliación
-    PENDIENTE_CONFIRMACION --> RECHAZADO: consulta o conciliación
-```
-**Cuéntalo:** "Si el banco no responde no sé si cobró. **No reintento a ciegas**, porque podría cobrar dos veces: dejo el pago pendiente de confirmación y lo resuelvo consultando el estado o en la conciliación."
-
-### 14.6 · CQRS
-
-```mermaid
-flowchart LR
-    C["Comando<br/>CrearPago"] --> W["Modelo de escritura<br/>(reglas, transacción)"]
-    W --> WDB[("BD de escritura")]
-    WDB -->|"evento"| P["Proyector"]
-    P --> RDB[("Vista de lectura<br/>desnormalizada")]
-    Q["Consulta<br/>EstadoDelPago"] --> RDB
-```
-**Cuéntalo:** "Separo quién cambia el estado de quién lo consulta. Empiezo separando casos de uso en el mismo servicio, y solo muevo a bases distintas, con consistencia eventual, si la carga de lectura lo justifica."
-
-### 14.7 · Pirámide de pruebas
-
-```mermaid
-flowchart TB
-    E2E["Pocas: end-to-end"]
-    INT["Algunas: integración<br/>(PostgreSQL y Kafka reales en contenedor)"]
-    UNI["Muchas: unitarias rápidas<br/>(dominio sin mocks; casos de uso con mocks de puertos)"]
-    E2E --- INT --- UNI
-```
-**Cuéntalo:** "Muchas unitarias porque son rápidas; el dominio sin frameworks y los casos de uso con mocks de los puertos. Integración con la base de datos real en contenedor, no H2. Pocas end-to-end."
-
-### 14.8 · JPA: estados de una entidad
-
-```mermaid
-stateDiagram-v2
-    [*] --> Transient: new
-    Transient --> Managed: persist
-    Managed --> Managed: cambias un campo (dirty checking)
-    Managed --> Detached: termina la transacción
-    Detached --> Managed: merge
-    Managed --> Removed: remove
-    Removed --> [*]: commit
-```
-**Cuéntalo:** "Dentro de la transacción, una entidad *managed* está vigilada: si cambio un campo, Hibernate detecta el cambio y hace el `UPDATE` al hacer flush; no necesito `save`."
-
-### 14.9 · El problema N+1
-
-```mermaid
-flowchart LR
-    subgraph malo[" Con N+1 "]
-        A1["1 consulta: lista de clientes"] --> A2["+ 1 consulta por cada cliente<br/>para sus pedidos"]
-    end
-    subgraph bueno[" Con JOIN FETCH o DTO "]
-        B1["1 consulta con join<br/>trae clientes y pedidos"]
-    end
-```
-**Cuéntalo:** "Pido 50 clientes y, por cada uno, Hibernate hace otra consulta para sus pedidos: 51 consultas en lugar de una. Se arregla con `JOIN FETCH`, `@EntityGraph` o una proyección DTO. Lo detecto con el log de SQL."
-
-### 14.10 · Quarkus: event loop y código bloqueante
-
-```mermaid
-flowchart LR
-    REQ["Petición"] --> EL["Event loop<br/>(pocos hilos, NO bloquear)"]
-    EL -->|"código no bloqueante: Uni / Multi"| R["Respuesta"]
-    EL -->|"@Blocking o JDBC"| W["Worker thread"]
-    W --> R
-```
-**Cuéntalo:** "Quarkus atiende con pocos hilos del event loop, que nunca deben bloquearse. Si mi código usa JDBC o Hibernate ORM, va a un worker thread con `@Blocking` o con un endpoint imperativo. Con Java 21, los virtual threads dan escala con código simple."
-
-### 14.11 · SmallRye: de Kafka a tu código
-
-```mermaid
-flowchart LR
-    K1[("Kafka<br/>topic pedidos")] -->|"conector smallrye-kafka"| C1(["canal pedidos"])
-    C1 --> M["@Incoming('pedidos')<br/>tu método"]
-    M --> E["Emitter + @Channel('despachos')"]
-    E --> C2(["canal despachos"])
-    C2 -->|"conector smallrye-kafka"| K2[("Kafka<br/>topic despachos")]
-```
-**Cuéntalo:** "Un canal es un nombre; el conector `smallrye-kafka` une el canal con un topic. `@Incoming` consume, `Emitter` produce. En Spring el equivalente es `@KafkaListener` más `KafkaTemplate`, o Spring Cloud Stream con bindings y `StreamBridge`."
-
-### 14.12 · Kafka vs una cola
+### 14.9 · Kafka vs una cola
 
 ```mermaid
 flowchart LR
@@ -1203,7 +1313,60 @@ flowchart LR
 ```
 **Cuéntalo:** "En una cola, el mensaje es una tarea que se consume y desaparece, y los workers compiten por ella. En Kafka es un hecho que se queda; cada grupo lleva su offset y puede releer. Elijo por el problema: tareas, cola; hechos que varios consumen o quiero reprocesar, log."
 
-### 14.13 · Pasarela de pagos (tu proyecto)
+### 14.10 · Outbox (guardar y publicar sin inconsistencias)
+
+```mermaid
+sequenceDiagram
+    participant S as Servicio
+    participant DB as Base de datos
+    participant R as Relay
+    participant K as Kafka
+    S->>DB: guarda pago + evento en la tabla outbox (UNA transacción)
+    R->>DB: lee eventos pendientes
+    R->>K: publica el evento
+    R->>DB: marca como publicado
+```
+**Cuéntalo:** "Si guardo en la base de datos y publico a Kafka por separado, uno puede fallar y quedo inconsistente. Con Outbox guardo el dato y el evento en la misma transacción, y otro proceso publica después. La entrega queda *at-least-once*, así que el consumidor es idempotente."
+
+### 14.11 · Circuit Breaker (estados)
+
+```mermaid
+stateDiagram-v2
+    [*] --> CERRADO
+    CERRADO --> ABIERTO: fallos superan el umbral
+    ABIERTO --> SEMIABIERTO: pasa el tiempo de espera
+    SEMIABIERTO --> CERRADO: las llamadas de prueba salen bien
+    SEMIABIERTO --> ABIERTO: alguna llamada de prueba falla
+```
+**Cuéntalo:** "Cerrado: todo pasa y mido fallos. Si superan el umbral, abre: corto las llamadas y uso el fallback. Pasado un tiempo, semiabierto: dejo pasar unas pocas de prueba; si salen bien, cierro; si no, vuelvo a abrir." *(El fusible de la casa.)*
+
+### 14.12 · Pago con timeout del banco (el estado que más se pregunta)
+
+```mermaid
+stateDiagram-v2
+    [*] --> CREADO
+    CREADO --> EN_PROCESO
+    EN_PROCESO --> AUTORIZADO: el banco aprueba
+    EN_PROCESO --> RECHAZADO: el banco rechaza
+    EN_PROCESO --> PENDIENTE_CONFIRMACION: timeout del banco
+    PENDIENTE_CONFIRMACION --> AUTORIZADO: consulta o conciliación
+    PENDIENTE_CONFIRMACION --> RECHAZADO: consulta o conciliación
+```
+**Cuéntalo:** "Si el banco no responde no sé si cobró. **No reintento a ciegas**, porque podría cobrar dos veces: dejo el pago pendiente de confirmación y lo resuelvo consultando el estado o en la conciliación."
+
+### 14.13 · CQRS
+
+```mermaid
+flowchart LR
+    C["Comando<br/>CrearPago"] --> W["Modelo de escritura<br/>(reglas, transacción)"]
+    W --> WDB[("BD de escritura")]
+    WDB -->|"evento"| P["Proyector"]
+    P --> RDB[("Vista de lectura<br/>desnormalizada")]
+    Q["Consulta<br/>EstadoDelPago"] --> RDB
+```
+**Cuéntalo:** "Separo quién cambia el estado de quién lo consulta. Empiezo separando casos de uso en el mismo servicio, y solo muevo a bases distintas, con consistencia eventual, si la carga de lectura lo justifica."
+
+### 14.14 · Pasarela de pagos (tu proyecto)
 
 ```mermaid
 flowchart LR
@@ -1217,15 +1380,4 @@ flowchart LR
     PROC --> DB
     K --> NOTI[Notificaciones]
 ```
-**Cuéntalo:** [sección 10](#c10). Detalle: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md).
-
-### 14.14 · Patrones de diseño: dónde mirar
-
-```mermaid
-flowchart TD
-    GOF["Patrones GoF (23)"]
-    GOF --> CRE["Creacionales (5)<br/>Factory Method, Abstract Factory,<br/>Builder, Prototype, Singleton"]
-    GOF --> EST["Estructurales (7)<br/>Adapter, Bridge, Composite,<br/>Decorator, Facade, Flyweight, Proxy"]
-    GOF --> COM["De comportamiento (11)<br/>Strategy, Observer, Command, State,<br/>Template Method, Chain of Responsibility…"]
-```
-**Los 4 que más sirven:** **Strategy** (reemplaza `if/else` por tipo), **Adapter** (integrar legacy), **Proxy** (`@Transactional`), **Observer** (eventos). Tabla de dónde aplicarlos: [sección 04](README.md#s04).
+**Cuéntalo:** [sección 8](#c8). Detalle: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md).

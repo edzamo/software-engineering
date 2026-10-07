@@ -23,7 +23,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 🚨 Prioridad para hoy (lo que te confirmaron por WhatsApp)
 
-> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](cheat-sheet.md): respuestas relámpago A-Z, repaso de Kafka para quien lo usó hace tiempo, tu proyecto de pagos en 5 frases y un **simulacro de 20 preguntas** con respuesta oculta. Esta guía es la profunda; el cheat sheet es la de bolsillo.
+> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](cheat-sheet.md): **Java y POO primero** (clases, modificadores, pilares, SOLID), luego framework, datos, arquitectura y Kafka; tus proyectos del banco; un **simulacro de 26 preguntas** ordenado de lo básico a lo avanzado, y al final el glosario A-Z y los dibujos. Esta guía es la profunda; el cheat sheet es la de bolsillo.
 
 **Lista oficial de Lourdes:** Java 17+ con Quarkus o Spring Boot · Kafka con SmallRye Reactive Messaging o equivalente · PostgreSQL con JPA/Hibernate · Arquitectura hexagonal · Resiliencia · Testing con JUnit 5 y Mockito.
 
@@ -137,7 +137,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 03 · Java: lo que te van a preguntar
 
-> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 4](cheat-sheet.md#c4) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
+> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 1](cheat-sheet.md#c1) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
 
 Formato: **pregunta → respuesta corta que puedes decir en voz alta → ejemplo**.
 
@@ -184,7 +184,7 @@ Checked: el compilador te obliga a manejarlas, para errores recuperables. Unchec
 
 ### Los 5 principios, explicados simple
 
-> Misma explicación que en el [cheat sheet 4.15](cheat-sheet.md#c4) (código malo, código bueno y dibujos).
+> Misma explicación que en el [cheat sheet 1.15](cheat-sheet.md#c1) (código malo, código bueno y dibujos).
 
 **Para qué sirve SOLID, en palabras de la calle:** son 5 reglas para que el código **se pueda cambiar sin romper otras cosas**. Imagina una frutería: si el cajero también cuenta el dinero, empaca, limpia y hace la contabilidad, cuando falle algo no sabes por dónde empezar. SOLID es poner **a cada uno a hacer lo suyo**.
 
@@ -499,6 +499,8 @@ Una regla útil: **más consumidores que particiones en un grupo = consumidores 
 - **Consumer lag:** diferencia entre el último offset y el consumido. Es la métrica clave para monitorear.
 
 ### Arquitectura en 30 segundos (banca incluida)
+
+> 🖼️ **Dibujo completo de la arquitectura de Kafka** (cluster con brokers, topic con particiones, líder y réplicas, controlador, productores y grupos de consumidores) y el viaje de un mensaje: [`cheat-sheet.md` sección 6](cheat-sheet.md#c6).
 
 - **Cluster** = varios brokers (mínimo 3). Cada **topic** se parte en **particiones**, y cada partición se **replica** (RF=3) con un líder y seguidoras.
 - **ZooKeeper → KRaft:** antes un cluster aparte coordinaba los metadatos; ahora un quórum de controladores con Raft dentro de Kafka lo hace (ZooKeeper desapareció en Kafka 4.0).
