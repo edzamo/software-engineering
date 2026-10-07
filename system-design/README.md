@@ -23,6 +23,7 @@ Diseños completos de soluciones reales, con requisitos, diagramas, decisiones y
 | Caso | Archivo | Qué integra |
 |---|---|---|
 | Pasarela de pagos con disparadores programados (Quartz) y eventos (Kafka) | [`caso-pasarela-pagos.md`](caso-pasarela-pagos.md) | Outbox, Polling Publisher, CQRS, Circuit Breaker, idempotencia, [`messaging-streaming/`](../messaging-streaming), [`microservices-patterns/`](../microservices-patterns) |
+| Transferencias asíncronas con eventos en banca (los 2 servicios de producción: interbancaria y exterior), con **revisión crítica** y rediseño actual | [`caso-transferencias-asincronas.md`](caso-transferencias-asincronas.md) | Consumidores Spring Cloud Stream, reintento con espera, tareas programadas, idempotencia, DLQ, offset y ack; **§10: el diseño en Azure (Service Bus + Event Hubs + Durable Functions), AWS y GCP** |
 | La misma pasarela **hoy**, con servicios gestionados de AWS, Azure y GCP (qué reemplaza a Quartz) | [`caso-pasarela-pagos-cloud.md`](caso-pasarela-pagos-cloud.md) | Tabla de equivalencias entre nubes, scheduler por pago vs polling, workflows, límites verificados, ruta de migración |
 
 ## Series

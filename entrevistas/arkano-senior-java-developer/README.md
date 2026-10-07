@@ -38,6 +38,8 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 **¿Y la programación reactiva / WebFlux?** No está en la lista, pero **SmallRye Reactive Messaging y Quarkus son reactivos por debajo** (Mutiny: `Uni` y `Multi`, equivalentes a `Mono` y `Flux`). Basta con saber **qué es, por qué existe y cuándo usarla**; ver [20](#s20) y [21](#s21). No necesitas dominar operadores. Si te preguntan, tu base de WebFlux ([`webflux.md`](../../frameworks/spring-boot/webflux.md)) aplica casi 1 a 1.
 
+**Tus 2 servicios de producción en el banco (transferencias asíncronas con Kafka/Event Hubs), con revisión crítica y rediseño, y su versión en Azure, AWS y GCP (Service Bus + Event Hubs + Durable Functions):** [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md). **Tu práctica con Kafka:** tienes 4 pruebas de concepto (cliente Java, Spring Kafka, Spring Cloud Stream, multi-binder con Azure Event Hubs): [`practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md). **Kafka vs RabbitMQ vs cola:** [`messaging-streaming/README.md` sección 5b](../../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica).
+
 **Sobre lo que NO conoces ("SmallRye"):** no lo has usado y está bien. La lista dice **"o equivalente"**: tu experiencia con `spring-kafka` cuenta. Dilo así: *"Con Spring usé `@KafkaListener` y `KafkaTemplate`; SmallRye es el equivalente en Quarkus con `@Incoming` y `Emitter`, y los conceptos (grupos, offsets, DLQ, idempotencia) son los mismos."* (solo si es verdad).
 
 **Qué se sabe del proceso de Arkano (Glassdoor):** hay solo **3 reseñas** públicas, 67% con experiencia positiva y dificultad promedio **2,3 sobre 5**; **ninguna trae preguntas técnicas**. No hay un banco de preguntas reales de Arkano; lo más fiable es la lista de Lourdes. Para ese tipo de rol, una entrevista de ese estilo suele combinar fundamentos de Java, el framework, base de datos, pruebas y diseño, y pedirte ejemplos de tu experiencia.
@@ -135,6 +137,8 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 03 · Java: lo que te van a preguntar
 
+> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 4](cheat-sheet.md#c4) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
+
 Formato: **pregunta → respuesta corta que puedes decir en voz alta → ejemplo**.
 
 ### ¿Qué experiencia tienes con Java y qué versiones usaste?
@@ -178,15 +182,206 @@ Checked: el compilador te obliga a manejarlas, para errores recuperables. Unchec
 
 ## 04 · SOLID, patrones y código limpio
 
-### Los 5 principios, cada uno con su ejemplo
+### Los 5 principios, explicados simple
 
-| Principio | Idea en una frase | Ejemplo concreto |
+> Misma explicación que en el [cheat sheet 4.15](cheat-sheet.md#c4) (código malo, código bueno y dibujos).
+
+**Para qué sirve SOLID, en palabras de la calle:** son 5 reglas para que el código **se pueda cambiar sin romper otras cosas**. Imagina una frutería: si el cajero también cuenta el dinero, empaca, limpia y hace la contabilidad, cuando falle algo no sabes por dónde empezar. SOLID es poner **a cada uno a hacer lo suyo**.
+
+| Letra | Nombre | En una frase simple |
 |---|---|---|
-| **S** · Single Responsibility | Una clase, una razón para cambiar | `OrderService` que valida, calcula impuestos, guarda y manda correos. Sepáralo en validador, calculadora, repositorio y notificador. |
-| **O** · Open/Closed | Abierto a extensión, cerrado a modificación | Un `switch` por tipo de pago. Reemplázalo por una interfaz `PaymentMethod` y una clase por tipo. Un tipo nuevo no toca código existente. |
-| **L** · Liskov | Una subclase debe poder sustituir a su padre sin romper nada | `Square extends Rectangle` rompe cuando alguien hace `setWidth` y espera que el alto no cambie. |
-| **I** · Interface Segregation | Interfaces pequeñas y específicas | Una interfaz `Worker` con `work()` y `eat()` obliga a un robot a implementar `eat()`. Sepárala. |
-| **D** · Dependency Inversion | Depende de abstracciones, no de implementaciones | El servicio recibe un `PaymentGateway` (interfaz) por constructor, no hace `new StripeClient()`. Facilita tests con mocks. |
+| **S** | Responsabilidad única | **Cada clase hace UNA sola cosa** |
+| **O** | Abierto/Cerrado | Para agregar algo nuevo, **agregas una clase; no editas lo que ya funciona** |
+| **L** | Liskov | Si un hijo reemplaza al padre, **todo debe seguir funcionando** |
+| **I** | Interfaces pequeñas | **No obligues a nadie a hacer cosas que no le corresponden** |
+| **D** | Dependencias hacia el "enchufe" | **Depende de un enchufe (interfaz), no de un aparato concreto** |
+
+#### S · Responsabilidad única: "cada clase, una sola cosa"
+
+**El problema:** tengo una clase `Factura` que **calcula**, **cobra**, **imprime** y **guarda en la base de datos**. Si mañana cambia el formato de impresión, tengo que **abrir la misma clase** donde está la lógica de cobro, y puedo romperla sin querer.
+
+```java
+// ❌ MALO: una clase que hace de todo
+class Factura {
+    double calcularTotal() { ... }
+    void pagar()           { ... }
+    void imprimir()        { ... }
+    void guardarEnBD()     { ... }
+}
+```
+
+```java
+// ✅ BUENO: cada clase hace UNA cosa
+class Factura          { double calcularTotal() { ... } }   // solo datos y cálculo
+class ServicioDePago   { void pagar(Factura f)  { ... } }   // solo cobrar
+class ImpresoraFactura { void imprimir(Factura f) { ... } } // solo imprimir
+class FacturaRepositorio { void guardar(Factura f) { ... } } // solo guardar
+```
+
+```mermaid
+flowchart LR
+    subgraph malo[" ❌ Una clase hace todo "]
+        F1["Factura<br/>calcular + pagar + imprimir + guardar"]
+    end
+    subgraph bueno[" ✅ Cada una, lo suyo "]
+        F2["Factura<br/>calcular"]
+        P["ServicioDePago<br/>pagar"]
+        I["ImpresoraFactura<br/>imprimir"]
+        R["FacturaRepositorio<br/>guardar"]
+    end
+    malo -.->|"se divide en"| bueno
+```
+
+**Cómo darte cuenta:** describe la clase en voz alta. Si dices **"y"** ("calcula **y** cobra **y** imprime"), hay que dividirla.
+**🍎 Con manzanas:** el cajero cobra, el empacador empaca y el contador anota. Si el empacador cambia de método, el cajero ni se entera.
+
+#### O · Abierto/Cerrado: "agregas, no editas"
+
+**El problema:** calculo descuentos con una cadena de `if`. Cada descuento nuevo me obliga a **abrir y editar** código que ya funcionaba, y cada edición puede romperlo.
+
+```java
+// ❌ MALO: cada descuento nuevo = editar este método
+double descuento(String tipo, double total) {
+    if (tipo.equals("NAVIDAD")) return total * 0.10;
+    else if (tipo.equals("VIP")) return total * 0.20;
+    // y mañana otro más...
+}
+```
+
+```java
+// ✅ BUENO: cada descuento nuevo = una clase nueva. Lo anterior no se toca.
+interface Descuento { double aplicar(double total); }
+class DescuentoNavidad implements Descuento { public double aplicar(double t) { return t * 0.10; } }
+class DescuentoVip     implements Descuento { public double aplicar(double t) { return t * 0.20; } }
+// mañana: class DescuentoCumple implements Descuento { ... }  ← no editas nada de lo que ya funciona
+```
+
+```mermaid
+classDiagram
+    class Descuento {
+        <<interface>>
+        +aplicar(total) double
+    }
+    Descuento <|.. DescuentoNavidad
+    Descuento <|.. DescuentoVip
+    Descuento <|.. DescuentoCumple : nuevo, sin tocar lo demás
+```
+
+**Cómo darte cuenta:** si para agregar un caso nuevo tienes que **modificar un `if` o un `switch` que ya existe**, rompes este principio. *(Este patrón se llama **Strategy**.)*
+**🍎 Con manzanas:** un descuento nuevo es **una tarjeta nueva en la caja**; no hay que desarmar la caja registradora.
+
+#### L · Liskov: "el reemplazo no debe romper nada"
+
+**El problema:** si digo "un `Pingüino` es un `Ave`", pero el `Ave` sabe `volar()` y el pingüino no, **cualquier código que mande volar a un ave se rompe** cuando recibe un pingüino.
+
+```java
+// ❌ MALO: el hijo no puede cumplir lo que promete el padre
+class Ave { void volar() { ... } }
+class Pinguino extends Ave { void volar() { throw new RuntimeException("no puedo volar"); } }
+```
+
+```java
+// ✅ BUENO: solo "vuelan" las que de verdad vuelan
+class Ave { void comer() { ... } }
+interface Voladora { void volar(); }
+class Gorrion  extends Ave implements Voladora { public void volar() { ... } }
+class Pinguino extends Ave { }          // no promete volar
+```
+
+```mermaid
+classDiagram
+    class Ave { +comer() }
+    class Voladora { <<interface>> +volar() }
+    Ave <|-- Gorrion
+    Ave <|-- Pinguino
+    Voladora <|.. Gorrion : solo este vuela
+```
+
+**Cómo darte cuenta:** si un hijo **lanza error, no hace nada o hace algo raro** en un método heredado, no debería heredar de ese padre.
+**🍎 Con manzanas:** si la receta pide "una fruta con jugo" y te dan una que no tiene jugo, la receta falla. **Un reemplazo tiene que servir para lo mismo.**
+
+#### I · Interfaces pequeñas: "no obligues a nadie a hacer lo que no le toca"
+
+**El problema:** una interfaz `Trabajador` obliga a **trabajar y comer**. Si un `Robot` la implementa, **tiene que inventar un `comer()`** que no tiene sentido.
+
+```java
+// ❌ MALO: una interfaz grande obliga a todos a todo
+interface Trabajador { void trabajar(); void comer(); }
+class Robot implements Trabajador {
+    public void trabajar() { ... }
+    public void comer()    { /* un robot no come... ¿qué pongo aquí? */ }
+}
+```
+
+```java
+// ✅ BUENO: interfaces chicas; cada clase firma solo lo suyo
+interface Trabajable { void trabajar(); }
+interface Alimentable { void comer(); }
+class Robot   implements Trabajable { public void trabajar() { ... } }
+class Persona implements Trabajable, Alimentable { /* ambas */ }
+```
+
+```mermaid
+classDiagram
+    class Trabajable { <<interface>> +trabajar() }
+    class Alimentable { <<interface>> +comer() }
+    Trabajable <|.. Robot
+    Trabajable <|.. Persona
+    Alimentable <|.. Persona
+```
+
+**Cómo darte cuenta:** si al implementar una interfaz dejas métodos **vacíos o con "no soportado"**, la interfaz es demasiado grande: pártela.
+**🍎 Con manzanas:** el contrato del cajero no debería obligarlo a "cargar camiones".
+
+#### D · Dependencias hacia el enchufe: "usa el enchufe, no el aparato"
+
+**El problema:** mi `Pedido` crea por dentro un `PagoConTarjeta` con `new`. Si mañana quiero pagar con efectivo, o **probar sin cobrar de verdad**, tengo que **cambiar `Pedido`**.
+
+```java
+// ❌ MALO: Pedido está pegado a UNA forma de pago
+class Pedido {
+    private PagoConTarjeta pago = new PagoConTarjeta();
+    void cobrar() { pago.cobrar(); }
+}
+```
+
+```java
+// ✅ BUENO: Pedido pide "un medio de pago" (el enchufe); le dan el que sea
+interface MedioDePago { void cobrar(); }
+class PagoConTarjeta implements MedioDePago { public void cobrar() { ... } }
+class PagoEnEfectivo implements MedioDePago { public void cobrar() { ... } }
+
+class Pedido {
+    private final MedioDePago pago;
+    Pedido(MedioDePago pago) { this.pago = pago; }     // se lo dan desde afuera
+    void cobrar() { pago.cobrar(); }
+}
+// En las pruebas le pasas un MedioDePago de mentira (un mock): no cobras de verdad.
+```
+
+```mermaid
+flowchart LR
+    subgraph malo[" ❌ Pegado a uno concreto "]
+        A["Pedido"] --> B["PagoConTarjeta"]
+    end
+    subgraph bueno[" ✅ Depende del enchufe "]
+        C["Pedido"] --> D(["MedioDePago<br/>(interfaz)"])
+        E["PagoConTarjeta"] --> D
+        F["PagoEnEfectivo"] --> D
+        G["PagoDeMentira<br/>(para pruebas)"] --> D
+    end
+```
+
+**Cómo darte cuenta:** si dentro de una clase ves `new` de una clase concreta de **otra capa** (base de datos, banco, correo), está pegada a ella.
+**🍎 Con manzanas:** la caja usa **"un lector de pagos"**, el que sea; no solo la marca X. En las pruebas le pones un lector de mentira. *(Esto es lo que usan Spring y Quarkus al "inyectar dependencias".)*
+
+#### Cómo responderlo en la entrevista (30 segundos)
+
+> "SOLID son cinco reglas para que el código se pueda cambiar sin romper otras partes. **S**: cada clase hace una sola cosa; por ejemplo, separo `Factura` de quien la paga y de quien la imprime. **O**: para agregar algo nuevo agrego una clase, no edito la que ya funciona; por ejemplo, un descuento nuevo es una clase nueva. **L**: un hijo debe poder reemplazar al padre sin romper nada. **I**: interfaces pequeñas, para que nadie implemente lo que no usa. **D**: las clases dependen de interfaces y no de implementaciones concretas, y así puedo cambiar de proveedor y hacer pruebas con mocks. **No son leyes:** aplicarlos de más produce código innecesariamente complicado."
+
+**Trampa común:** querer aplicarlo todo desde el primer día. Si el programa es pequeño y simple, **no lo partas en diez clases** (principio KISS/YAGNI: no construyas lo que aún no necesitas).
+
+**Las 3 preguntas que más caen:** *"¿Un ejemplo de SRP?"* → `Factura` con pagar e imprimir, dividida. *"¿Para qué sirve D?"* → poder cambiar de implementación y hacer pruebas con mocks. *"¿Qué relación tiene D con Spring o Quarkus?"* → la inyección de dependencias es aplicar D: el framework te entrega la implementación.
 
 **"¿Para qué sirven?"** Para que el código sea fácil de cambiar, probar y entender cuando el sistema crece y el equipo rota. No son leyes: aplicarlos de más produce sobreingeniería (por eso existen KISS y YAGNI, ver [`clean-code/dry-kiss-yagni.md`](../../clean-code/dry-kiss-yagni.md)).
 
