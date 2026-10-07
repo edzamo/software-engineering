@@ -1,4 +1,4 @@
-# Tu práctica con Kafka: 4 pruebas de concepto
+# Tu práctica con Kafka: 4 pruebas de concepto y 2 servicios de producción
 
 Resumen de los ejercicios de tu repositorio local `~/Documents/Personal/github/kafka` (cada uno tiene su propio `README.md` con el detalle), qué demuestra cada uno y **cómo contarlo en la entrevista**.
 
@@ -17,11 +17,22 @@ Es la frutería con cuatro formas de usar el libro de ventas: **a mano** (client
 | 3 | **Spring Cloud Stream funcional**: `Consumer<Message<String>>` y `StreamBridge` contra **Event Hubs** | Modelo de funciones y bindings; Kafka sobre Azure | Canales de SmallRye |
 | 4 | **Multi-binder**: dos binders (`kafka1`, `kafka2`), cabeceras de banca, envelope CloudEvents, WebFlux | Varias conexiones en una app; headers de trazabilidad; mensaje de pago de archivos | Canales con distinta configuración y `OutgoingKafkaRecordMetadata` |
 
+## Los 2 servicios de producción (banca)
+
+Además de las pruebas de concepto, construiste **dos consumidores de eventos en producción**: transferencias interbancarias y órdenes de transferencia al exterior (Spring Cloud Stream, Reactor, Azure Event Hubs con protocolo Kafka). Análisis completo, con riesgos y rediseño actual: [`../system-design/caso-transferencias-asincronas.md`](../system-design/caso-transferencias-asincronas.md).
+
+| Servicio | Lo más rescatable |
+|---|---|
+| **Interbancaria** | Orquestación reactiva paso a paso, reintento con espera creciente **dentro del evento**, trazabilidad con headers y MDC, aviso por Redis |
+| **Exterior** | Un tópico con dos tipos de evento, **tareas programadas** que vuelven como evento, flujo normal vs con exención, coherencia entre 3 sistemas |
+
+**Tu frase más fuerte:** *"En producción construí consumidores de eventos con Spring Cloud Stream sobre Event Hubs con protocolo Kafka. Al revisarlos vi sus límites: la espera con `Thread.sleep` bloquea la partición, sin idempotencia un fallo parcial duplica, y hay que confirmar el offset al terminar. Hoy usaría tópicos de reintento, DLQ y clave de idempotencia."*
+
 ## Qué te permite decir en la entrevista
 
 | Pregunta probable | Tu respuesta apoyada en la práctica |
 |---|---|
-| **¿Has usado Kafka?** | "Sí: en el banco y en pruebas de concepto propias, desde el cliente Java puro hasta Spring Cloud Stream." |
+| **¿Has usado Kafka?** | "Sí: en producción en el banco, con dos servicios consumidores de eventos (transferencias), y en pruebas de concepto propias, desde el cliente Java puro hasta Spring Cloud Stream con varios binders." |
 | **¿Has usado SmallRye Reactive Messaging o algo equivalente?** | "El equivalente en Spring: Spring Cloud Stream. Usé el modelo funcional, bindings y `StreamBridge`, que son los canales y el `Emitter` de SmallRye." |
 | **¿Has usado Kafka en Azure?** | "Sí, con **Event Hubs por su endpoint compatible con Kafka**: `SASL_SSL` con la cadena de conexión como usuario, y dos binders porque cada hub tiene su política de acceso." |
 | **¿Cómo viajan los metadatos?** | "Con headers: en una prueba copié cabeceras de canal, dispositivo, sesión y trazabilidad al mensaje." |

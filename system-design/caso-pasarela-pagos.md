@@ -33,6 +33,8 @@ Glosario: [`../messaging-streaming/glosario.md`](../messaging-streaming/glosario
 | 🟡 **Mid** | Outbox y por qué; Quartz como disparador y su riesgo de duplicados; reintentos con backoff; DLT; Circuit Breaker; la máquina de estados |
 | 🔴 **Senior** | Justificar cada decisión con su alternativa; el estado desconocido ante un timeout del banco; consistencia por capas; modos de falla; escalado y cuellos de botella; seguridad y PCI; cómo migrarlo a la nube |
 
+> **Caso hermano:** los servicios de transferencias que construiste en el banco, con su revisión crítica: [`caso-transferencias-asincronas.md`](caso-transferencias-asincronas.md).
+
 ## Mapa de vínculos (cada pieza tiene su documento de detalle)
 
 ```mermaid

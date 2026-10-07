@@ -84,7 +84,7 @@ Formato: **término → qué es en una frase** (🟢) · *con manzanas*.
 
 ### Cómo presentarlo con honestidad
 
-> "En el banco usé Kafka en una pasarela de pagos: 🔎 tópicos de entrada y salida, 🔎 consumidores y productores con Spring. Además hice **pruebas de concepto propias**: el cliente Java puro, Spring Kafka y **Spring Cloud Stream contra Azure Event Hubs por su endpoint de Kafka**, con dos binders y cabeceras de trazabilidad. Con SmallRye Reactive Messaging no he trabajado, pero Spring Cloud Stream es su equivalente: bindings y `StreamBridge` son los canales y el `Emitter`."
+> "En el banco construí **consumidores de eventos en producción** con Spring Cloud Stream sobre Azure Event Hubs (protocolo Kafka): transferencias interbancarias y al exterior, con orquestación reactiva, reintentos y trazabilidad por headers. Además hice **pruebas de concepto propias**: el cliente Java puro, Spring Kafka y **Spring Cloud Stream contra Azure Event Hubs por su endpoint de Kafka**, con dos binders y cabeceras de trazabilidad. Con SmallRye Reactive Messaging no he trabajado, pero Spring Cloud Stream es su equivalente: bindings y `StreamBridge` son los canales y el `Emitter`."
 
 Eso es **verdad y suficiente** (tus 4 ejercicios: [`practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md)). Solo di lo que sea cierto: con dos preguntas se nota.
 
@@ -835,6 +835,8 @@ Detalle: secciones [07](README.md#s07), [08](README.md#s08), [09](README.md#s09)
 4. "Como todo es *at-least-once*, el diseño era **idempotente**: id único por pago, estado condicional y consumidores que ignoran duplicados."
 5. "Si el banco no respondía, el pago quedaba **pendiente de confirmación** y se resolvía por consulta o conciliación; nunca se reintentaba a ciegas."
 
+**Segundo proyecto (transferencias asíncronas):** "Una orden de transferencia se ejecutaba por **evento**, no en la petición del usuario. Un consumidor con Spring Cloud Stream y Reactor **orquestaba** la ejecución llamando a varias APIs. Si algo fallaba, reintentaba con espera creciente; las órdenes con fecha futura usaban un **servicio de tareas programadas** que republicaba el evento al vencer. Todo con headers de trazabilidad. **Al revisarlo hoy** cambiaría los reintentos por tópicos escalonados y DLQ, añadiría idempotencia por ítem y `key = orderId`." Análisis: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
+
 Sirve para: Kafka, idempotencia, resiliencia, transacciones, arquitectura, concurrencia y testing. Detalle y dibujo: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md) (🔎 contrasta con tu memoria lo que no recuerdes con certeza).
 
 ---
@@ -938,6 +940,11 @@ Elige **tres con un caso real**: Strategy (métodos de pago), Adapter (integrar 
 <details><summary><b>19.</b> ¿Por qué Quartz y no `@Scheduled`?</summary>
 
 🟢 Con varias instancias `@Scheduled` corre en todas. 🟡 Quartz persiste en BD, tiene cluster, misfire y programación dinámica. 🔴 Los locks de BD limitan la escala; hoy usaría un scheduler gestionado y un disparo por pago.
+</details>
+
+<details><summary><b>20b.</b> En tu servicio de transferencias, ¿qué mejorarías?</summary>
+
+🟢 Los reintentos: esperar con `Thread.sleep` bloquea el consumidor. 🟡 Usaría tópicos de reintento escalonados y una DLQ, y `key = orderId` para conservar el orden. 🔴 Lo más importante: **idempotencia por ítem** (un fallo parcial reejecutaba todo y podía duplicar transferencias) y confirmar el **offset al terminar** la cadena reactiva, no antes. Detalle: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
 </details>
 
 <details><summary><b>20.</b> Cuéntame un proyecto del que estés orgulloso.</summary>
