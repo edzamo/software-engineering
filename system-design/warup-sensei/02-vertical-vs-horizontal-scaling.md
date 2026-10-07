@@ -51,7 +51,7 @@ sequenceDiagram
 - **Qué ganas:** el proveedor se encarga en gran parte de la configuración, los ajustes y la fiabilidad.
 - **Qué cambia para ti:** dejas de preocuparte por el hardware y te enfocas en los **requisitos del negocio**.
 
-**⚠️ Ojo:** el video dice "no hay diferencia entre un desktop y la nube". Es cierto en esencia (son computadoras), pero la diferencia real es **elasticidad y operación**: puedes crear o destruir máquinas en minutos y pagas por uso. Más en [`../../cloud-aws/`](../../cloud-aws).
+**⚠️ Ojo:** el video dice "no hay diferencia entre un desktop y la nube". Es cierto en esencia (son computadoras), pero la diferencia real es **elasticidad y operación**: puedes crear o destruir máquinas en minutos y pagas por uso. Más en [`../../cloud/aws/`](../../cloud/aws).
 
 ---
 

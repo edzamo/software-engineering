@@ -176,4 +176,4 @@ Cuando escalar el master verticalmente ya no alcanza (aunque existan instancias 
 - [ ] Separar responsabilidades en servicios independientes.
 - [ ] Monitorear (logs + métricas) y automatizar el pipeline.
 
-Relacionado: [`microservices-patterns/`](../microservices-patterns) profundiza en cómo se comunican esos servicios independientes entre sí (colas, eventos, resiliencia), y [`cloud-aws/`](../cloud-aws) en los servicios AWS concretos que implementan cada pieza de este diagrama (ELB, RDS + réplicas, ElastiCache, CloudFront, SQS/SNS, DynamoDB).
+Relacionado: [`microservices-patterns/`](../microservices-patterns) profundiza en cómo se comunican esos servicios independientes entre sí (colas, eventos, resiliencia), y [`cloud/aws/`](../cloud/aws) en los servicios AWS concretos que implementan cada pieza de este diagrama (ELB, RDS + réplicas, ElastiCache, CloudFront, SQS/SNS, DynamoDB).
