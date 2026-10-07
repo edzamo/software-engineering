@@ -2,6 +2,8 @@
 
 Los cinco principios SOLID de diseño orientado a objetos, cada uno con un diagrama "violación vs aplicado" — agnóstico de lenguaje, aunque los ejemplos usan sintaxis Java por ser la más común en la industria.
 
+> 🍎 **Versión para principiantes** (lenguaje simple, código malo vs bueno y dibujos, pensada para explicarlo en una entrevista): [`entrevistas/arkano-senior-java-developer/cheat-sheet.md` sección 4.15](../entrevistas/arkano-senior-java-developer/cheat-sheet.md#c4).
+
 ## ¿Qué es SOLID?
 
 SOLID es un acrónimo mnemotécnico de cinco principios de diseño pensados para que el software sea más entendible, flexible y mantenible.

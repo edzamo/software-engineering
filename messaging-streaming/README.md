@@ -127,6 +127,45 @@ flowchart TD
 
 **Frase de seguridad:** *"No hay mejor tecnología en abstracto: Kafka es un log de eventos y brilla con alto volumen, orden por clave y reprocesamiento; una cola como SQS o Service Bus es más simple y suficiente para repartir trabajo. Lo importante es elegir por el problema, y no usar Kafka para algo que resuelve una cola."*
 
+## 5b. Kafka vs RabbitMQ vs cola gestionada (la pregunta clásica)
+
+### 🍎 Con manzanas
+- **RabbitMQ** es una **oficina de correos**: llega una carta, el cartero la **lleva al buzón** correcto (según reglas de reparto) y, cuando el destinatario firma de recibido, la carta **se destruye**.
+- **Kafka** es el **libro de ventas**: cada hecho se anota en una línea numerada y **se queda**; cada área lleva su marcador y puede volver a leer desde donde quiera.
+- **SQS / Service Bus** son una **oficina de correos que alquilas**: hace lo mismo que RabbitMQ pero no te ocupas del edificio.
+
+### Tabla de diferencias
+
+| Aspecto | Kafka | RabbitMQ | Cola gestionada (SQS, Service Bus) |
+|---|---|---|---|
+| **Modelo** | **Log distribuido**, particionado y replicado | **Broker de mensajes** (AMQP): exchange → cola → consumidor | Cola o topic gestionado |
+| **Qué pasa al consumir** | El mensaje **se queda**; el consumidor solo mueve su **offset** | El mensaje **se elimina** al confirmarse (ack) | Se elimina al confirmarse o pasa por *visibility timeout* |
+| **Releer / reprocesar** | **Sí**, por offset o por fecha | No (las colas clásicas); las *streams* de RabbitMQ sí | No |
+| **Cómo llega el mensaje** | El consumidor **pide** (*pull*) | El broker **empuja** (*push*) con *prefetch* | Pull (SQS) / push o pull (Service Bus) |
+| **Orden** | **Por partición** | Por cola, mientras haya un solo consumidor; con varios consumidores o reencolados se pierde | FIFO opcional con límites (SQS FIFO, sesiones de Service Bus) |
+| **Escalar consumidores** | Hasta el **número de particiones** del topic | Añades consumidores a la cola (*competing consumers*) | Igual: añades consumidores |
+| **Enrutamiento** | Simple: topic y key; el filtrado lo hace el consumidor | **Muy rico**: direct, topic, fanout y headers exchanges | Básico (filtros en topics de Service Bus) |
+| **Confirmación** | Commit de **offsets** (por posición, no por mensaje) | **Ack/nack por mensaje** | Ack por mensaje |
+| **Funciones por mensaje** | No hay prioridades, TTL por mensaje ni entrega retrasada nativa | Prioridades, TTL, dead-letter exchanges, entrega retrasada con plugin | DLQ, retrasos (SQS hasta 15 min), mensajes programados (Service Bus) |
+| **Rendimiento** | **Muy alto** (millones de mensajes/s en un cluster) | Alto, pero menor | Alto, escalado automático |
+| **Operación** | Compleja (cluster, particiones, retención) | Moderada | **Ninguna** (servicio gestionado) |
+| **Ideal para** | Event streaming, CDC, auditoría, event sourcing, analítica, muchos consumidores independientes | Colas de trabajo, tareas en segundo plano, RPC, enrutamiento complejo | Colas simples y sin operar infraestructura |
+
+### Tres preguntas para decidir
+1. **¿Necesito releer o reprocesar los eventos, o tener varios consumidores independientes?** Sí → **Kafka**.
+2. **¿Es trabajo que se reparte entre workers, con reglas de enrutamiento, prioridades o TTL?** Sí → **RabbitMQ** (o una cola gestionada).
+3. **¿No quiero operar infraestructura?** → **SQS / Service Bus / Event Hubs** (gestionado).
+
+### Escalera de respuesta
+
+| 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|
+| "RabbitMQ es una cola: el mensaje se consume y desaparece. Kafka es un log: los mensajes se quedan y se pueden volver a leer." | "Kafka escala con particiones y garantiza orden por partición; RabbitMQ tiene enrutamiento flexible, ack por mensaje, prioridades y TTL. Kafka el consumidor pide; RabbitMQ empuja." | "No compiten en lo mismo: Kafka para streaming de eventos con alto volumen y reprocesamiento; RabbitMQ para colas de trabajo con enrutamiento complejo. Y no uso Kafka donde una cola resuelve el problema, por el costo operativo. Hoy RabbitMQ también ofrece *streams* y Kafka no deja de necesitar idempotencia: ninguno da *exactly-once* de punta a punta." |
+
+**Frase para cerrar:** *"Elijo por el problema: si es un hecho que varios sistemas consumen y quizá quiera releer, un log; si es trabajo que se reparte, una cola."*
+
+Tu experiencia práctica con Kafka (clientes, Spring y Cloud Stream con Event Hubs): [`practica-kafka-ejercicios.md`](practica-kafka-ejercicios.md).
+
 ## 6. Garantías y problemas comunes (aplican a cualquier broker)
 
 | Concepto | Qué significa |
