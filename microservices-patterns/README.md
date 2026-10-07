@@ -205,6 +205,8 @@ Ejemplos de preguntas que calzan en este formato:
 | 5 min | "Una app mobile y un dashboard web consumen el mismo dominio, pero el mobile se queja de payloads gigantes. ¿Qué patrón aplicás?" (BFF) |
 | 6 min | "Migrá (en palabras) un endpoint de un monolito a un microservicio nuevo, sin downtime, ruta por ruta." (strangler fig) |
 
+Caso integrado: [`../system-design/caso-pasarela-pagos.md`](../system-design/caso-pasarela-pagos.md) (Outbox, Saga, Circuit Breaker, Bulkhead e idempotencia en una pasarela de pagos), y [`../messaging-streaming/`](../messaging-streaming) para la mensajería y los disparadores programados.
+
 Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para cómo se implementa la comunicación no bloqueante, [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB, API Gateway, ALB), y [`ddd/cqrs.md`](../ddd/cqrs.md) para CQRS en profundidad (acá solo se cubren los patrones de comunicación/resiliencia/despliegue, CQRS es modelado de dominio).
 
 ## Referencias

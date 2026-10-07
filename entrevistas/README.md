@@ -14,6 +14,7 @@ Los procesos cerrados se mueven a [`archivo/`](archivo).
 
 | Proceso | Rol | Stack | Estado | Carpeta |
 |---|---|---|---|---|
+| Arkano | Senior Java Developer | Java 17+, Quarkus/Spring Boot, Kafka con SmallRye, PostgreSQL con JPA/Hibernate, hexagonal, resiliencia, JUnit 5 y Mockito | En curso: **técnica conversacional agendada para hoy** | [`arkano-senior-java-developer/`](arkano-senior-java-developer) ([`cheat-sheet.md`](arkano-senior-java-developer/cheat-sheet.md) para consulta en vivo) |
 | SaludTools | Desarrollador(a) Senior | Java 21, Spring WebFlux, DDD, AWS, microservicios | Cerrado ([retrospectiva](kaizen/retrospectiva-2026-09-evaluacion-con-ia.md)) | [`archivo/saludtools-desarrollador-senior/`](archivo/saludtools-desarrollador-senior) |
 
 ## Cómo se arma cada proceso nuevo

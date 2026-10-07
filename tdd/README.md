@@ -107,6 +107,8 @@ class FizzBuzz {
 }
 ```
 
+Ampliación para entrevistas: [`junit5-mockito.md`](junit5-mockito.md) (JUnit 5, Mockito, qué probar por capa, Quarkus y Spring).
+
 Relacionado: [`microservices-patterns/`](../microservices-patterns) y [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) tienen sus propias secciones de testing (`StepVerifier`, Testcontainers) para los casos que van más allá de un test unitario simple.
 
 ## Referencias

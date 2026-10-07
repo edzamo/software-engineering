@@ -15,6 +15,7 @@ Píldoras de framework de backend, una carpeta por framework — separadas de la
 graph LR
     root["frameworks/"] --> sb["spring-boot/<br/>Java — Spring Boot"]
     root --> nest["nestjs/<br/>TypeScript — NestJS"]
+    root --> qk["quarkus/<br/>Java — Quarkus"]
 
     sb --- sbnote["fundamentals, webflux,<br/>spring-data, spring-batch,<br/>security"]
     nest --- nestnote["fundamentals, request-lifecycle<br/>(pipes/guards/interceptors),<br/>auth, persistence"]
@@ -23,6 +24,7 @@ graph LR
 | Framework | Carpeta | Lenguaje/runtime | Cobertura |
 |---|---|---|---|
 | **Spring Boot** | [`spring-boot/`](spring-boot) | Java (JVM) | Fundamentos, WebFlux, Spring Data (JPA/R2DBC), Spring Batch, Spring Security. |
+| **Quarkus** | [`quarkus/`](quarkus) | Java (JVM) | Visión general y equivalencias con Spring Boot, modelo imperativo vs reactivo (Mutiny), SmallRye Fault Tolerance, [SmallRye Reactive Messaging con Kafka](quarkus/smallrye-reactive-messaging.md) y [JPA/Hibernate/Panache con PostgreSQL](quarkus/persistencia-hibernate-postgresql.md). |
 | **NestJS** | [`nestjs/`](nestjs) | TypeScript (Node.js) | Fundamentos, ciclo de vida del request (Pipes/Guards/Interceptors/Filters), Auth (Passport/JWT/Auth0), persistencia (TypeORM/Prisma). |
 
 Cada carpeta trae su propio `README.md` con la tabla completa de temas documentados y pendientes.
