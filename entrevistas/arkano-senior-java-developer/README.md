@@ -601,6 +601,8 @@ El rol mezcla Java y Node. Prepárate para comparar.
 
 No te piden ser experto, pero conoce el mapa y compáralo con lo que sabes de AWS.
 
+> 📚 **Carpeta completa de Azure, con manzanas y peras:** [`cloud/azure/`](../../cloud/azure/README.md) · mensajería y Kafka ([Event Hubs, Service Bus, Event Grid](../../cloud/azure/mensajeria-event-hubs-service-bus.md)) · [AKS y Kubernetes](../../cloud/azure/aks-kubernetes.md) · [Redis](../../cloud/azure/redis-cache.md) · [Cosmos DB, Key Vault, Managed Identity, Application Insights y DevOps](../../cloud/azure/datos-seguridad-y-devops.md). Comparación de las tres nubes: [`cloud/README.md`](../../cloud/README.md).
+
 | Servicio Azure | Para qué | Equivalente aproximado en AWS |
 |---|---|---|
 | **Azure Functions** | Funciones serverless por evento | Lambda |
@@ -870,6 +872,7 @@ Con este nivel de entrevistador, **el "por qué" y los trade-offs pesan más que
 |---|---|---|
 | **¿Monolito o microservicios?** | Que no dices "microservicios" por moda | Monolito modular primero si el equipo es chico o el dominio no está claro. Microservicios cuando hay equipos independientes, escalado distinto por módulo o ciclos de despliegue diferentes. Costo: complejidad operativa, consistencia, observabilidad |
 | **¿Cómo manejas transacciones entre servicios?** | Saga, no transacciones distribuidas | **Saga** (coreografía u orquestación) con compensaciones, **Outbox** para publicar de forma confiable, **idempotencia** en consumidores. Consistencia eventual |
+| **Una pantalla consulta datos de varios servicios y es lenta, ¿qué haces?** | Conocer **CQRS** y su costo | Una **vista de lectura** desnormalizada que un **proyector idempotente** actualiza con eventos de Kafka (consistencia eventual). Alternativa más simple: *API Composition*. Ver [`microservices-patterns/cqrs.md`](../../microservices-patterns/cqrs.md) |
 | **Teorema CAP** | Entenderlo con matices | Ante una partición de red eliges entre consistencia y disponibilidad. Es una elección por operación, no por sistema |
 | **¿Sincrónico o asíncrono entre servicios?** | Acoplamiento temporal | REST/gRPC para consultas que necesitan respuesta inmediata; eventos (Kafka, Service Bus) para desacoplar y absorber picos |
 | **¿Cómo escalas un servicio?** | Qué se puede escalar y qué no | Stateless detrás de un balanceador, caché, réplicas de lectura, particionado, colas para absorber picos. Identifica el cuello de botella con métricas antes de escalar |
@@ -884,9 +887,9 @@ Con este nivel de entrevistador, **el "por qué" y los trade-offs pesan más que
 
 **Prepara 3 historias propias de peso senior:** una decisión de arquitectura que defendiste, un incidente en producción que ayudaste a resolver, y algo que mejoraste en el equipo (proceso, calidad, mentoría).
 
-### CQRS (Command Query Responsibility Segregation)
+### CQRS (Command Query Responsibility Segregation) — patrón de datos en microservicios
 
-> No confundir con **SQS** (la cola de AWS). CQRS es un patrón de arquitectura. Detalle en [`ddd/cqrs.md`](../../ddd/cqrs.md).
+> No confundir con **SQS** (la cola de AWS). CQRS es un **patrón de arquitectura de gestión de datos**: en microservicios va **junto a Saga y Outbox** (los tres resuelven "cómo mantengo datos coherentes entre servicios sin una transacción distribuida"). Detalle como **patrón de microservicios con Kafka**: [`microservices-patterns/cqrs.md`](../../microservices-patterns/cqrs.md). Como **modelado de dominio** (puertos, agregados): [`ddd/cqrs.md`](../../ddd/cqrs.md).
 
 **Idea:** separar las operaciones que **cambian** estado (*commands*) de las que **leen** (*queries*), con modelos distintos: uno de escritura que protege las reglas de negocio y otro de lectura plano y rápido.
 

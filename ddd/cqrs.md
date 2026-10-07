@@ -2,6 +2,8 @@
 
 La pregunta que dispara este documento: *"¿por qué mi endpoint de listado de citas médicas (`GET /appointments?patientId=...&status=...`) tiene que pasar por el `Appointment` Aggregate completo, con todas sus invariantes, solo para mostrar 4 campos en una tabla?"* — y la respuesta es que probablemente no debería: leer y escribir son necesidades distintas, y CQRS es el patrón que las separa explícitamente.
 
+> **Dos enfoques del mismo patrón:** esta página es CQRS como **modelado de dominio** (puertos, agregados, niveles de separación dentro de un servicio). Como **patrón de microservicios con Kafka** (proyectores idempotentes, orden y duplicados, *replay*, consistencia eventual, nube) está en [`../microservices-patterns/cqrs.md`](../microservices-patterns/cqrs.md).
+
 ## La idea central
 
 **CQRS** (Command Query Responsibility Segregation, Greg Young) propone que las operaciones que **cambian** estado (Commands) y las que **leen** estado (Queries) usen modelos distintos, en vez de forzar que el mismo Aggregate rico sirva a ambos casos.

@@ -85,7 +85,17 @@ sequenceDiagram
 
 - **Saga pattern** — una transacción de negocio que cruza varios servicios se modela como una secuencia de pasos locales, cada uno con su "compensación" si algo falla después (ej: reservar stock → cobrar → si falla el cobro, liberar el stock). Puede ser **orquestada** (un coordinador central dice qué sigue) o **coreografiada** (cada servicio reacciona a eventos del anterior, sin coordinador) — orquestada es más fácil de seguir/debuggear; coreografiada es más desacoplada pero más difícil de rastrear "qué pasó" ante un bug.
 - **Outbox pattern** — para publicar un evento de forma consistente con un cambio en la base de datos: se guarda el evento en una tabla "outbox" dentro de la misma transacción SQL, y un proceso aparte lo publica a la cola. Evita el problema de "guardé en DB pero no llegué a publicar el evento" (o viceversa).
-- **Consistencia eventual** — aceptar que, tras un evento, otros servicios se actualizan "poco después" y no instantáneamente — es el trade-off central de ir event-driven en vez de una transacción distribuida (2PC, poco usada hoy por su costo operativo).
+- **Consistencia eventual** — aceptar que, tras un evento, otros servicios se actualizan "poco después" y no instantáneamente — es el trade-off central de ir event-driven en vez de una transacción distribuida (2PC, poco usada hoy su costo operativo).
+- **CQRS** — separar quién **cambia** los datos (comandos) de quién los **consulta** (vistas), y mantener la vista actualizada con **eventos de Kafka**. Detalle completo, con diagramas, reglas del proyector y la nube: [`cqrs.md`](cqrs.md).
+
+```mermaid
+flowchart LR
+    CMD["Comando"] --> W["Servicio de escritura"] --> WDB[("BD de escritura")]
+    WDB -->|"Outbox"| K[("Kafka")]
+    K --> P["Proyector<br/>(idempotente)"] --> RDB[("Vista de lectura")]
+    Q["Consulta"] --> RDB
+```
+*CQRS: la escritura protege las reglas; la lectura va a una vista rápida, que se actualiza con eventos (consistencia eventual).*
 
 ## 4. Patrones de acceso y despliegue — el resto del catálogo típico de entrevista
 
@@ -204,10 +214,11 @@ Ejemplos de preguntas que calzan en este formato:
 | 5 min | "¿Cómo hace un load balancer para saber a qué instancia mandar tráfico si escalaste de 2 a 5 instancias hace 10 segundos?" (service discovery) |
 | 5 min | "Una app mobile y un dashboard web consumen el mismo dominio, pero el mobile se queja de payloads gigantes. ¿Qué patrón aplicás?" (BFF) |
 | 6 min | "Migrá (en palabras) un endpoint de un monolito a un microservicio nuevo, sin downtime, ruta por ruta." (strangler fig) |
+| 5 min | "Una pantalla necesita datos de 4 servicios y es lenta. ¿Qué patrón aplicás y cómo mantenés la vista actualizada con Kafka?" (CQRS, ver [`cqrs.md`](cqrs.md)) |
 
 Caso integrado: [`../system-design/caso-pasarela-pagos.md`](../system-design/caso-pasarela-pagos.md) (Outbox, Saga, Circuit Breaker, Bulkhead e idempotencia en una pasarela de pagos), y [`../messaging-streaming/`](../messaging-streaming) para la mensajería y los disparadores programados.
 
-Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para cómo se implementa la comunicación no bloqueante, [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB, API Gateway, ALB), y [`ddd/cqrs.md`](../ddd/cqrs.md) para CQRS en profundidad (acá solo se cubren los patrones de comunicación/resiliencia/despliegue, CQRS es modelado de dominio).
+Relacionado: [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md) para la estructura interna de cada servicio, [`frameworks/spring-boot/webflux.md`](../frameworks/spring-boot/webflux.md) para cómo se implementa la comunicación no bloqueante, [`cloud-aws/`](../cloud-aws) para los servicios AWS que sostienen estos patrones (SQS, SNS, DynamoDB, API Gateway, ALB), y [`ddd/cqrs.md`](../ddd/cqrs.md) para CQRS como modelado de dominio (en este directorio, [`cqrs.md`](cqrs.md) cubre CQRS como patrón de microservicios con Kafka).
 
 ## Referencias
 
