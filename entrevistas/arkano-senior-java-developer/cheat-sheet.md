@@ -14,7 +14,7 @@ Dos usos: **(1) durante la entrevista**, busca con `Ctrl+F` (o `Cmd+F`) una pala
 
 **Tu experiencia y extras:** [8 · Tus proyectos del banco](#c8) · [9 · Extras del job description](#c9)
 
-**Práctica:** [10 · Entrenamiento rápido (26 preguntas)](#c10) · [11 · Cuando no sabes](#c11) · [12 · Preguntas para hacerles](#c12)
+**Práctica:** [10 · Entrenamiento rápido (28 preguntas)](#c10) · [11 · Cuando no sabes](#c11) · [12 · Preguntas para hacerles](#c12)
 
 **Referencia (para buscar con `Cmd+F`):** [13 · Respuestas relámpago A-Z](#c13) · [14 · Galería de dibujos](#c14)
 
@@ -793,6 +793,143 @@ flowchart LR
 
 **Los 4 números que conviene recordar:** brokers **3** (mínimo en producción) · replication factor **3** · `min.insync.replicas` **2** · `acks` = **all** (para no perder datos).
 
+#### 💊 Píldoras clave (del video "Kafka en 10 minutos")
+
+**En una frase:** *Kafka es un sistema distribuido que permite **procesar y almacenar eventos en tiempo real**, para comunicar sistemas entre sí.*
+
+| # | Píldora | Qué recordar | 🍎 |
+|---|---|---|---|
+| 1 | **Origen** | Lo creó **LinkedIn**: las bases de datos tradicionales no aguantaban el volumen de información que movían. Hoy es **open source** y de la **Fundación Apache** | El libro de ventas nació cuando el cuaderno normal ya no alcanzaba |
+| 2 | **Un mensaje es solo bytes** | Para Kafka es un **arreglo de bytes sin significado**; el formato (JSON, Avro, Protobuf) lo decides tú. Puede llevar **key** y esquema | Kafka guarda la nota sin leerla |
+| 3 | **Los topics comunican servicios** | Un topic agrupa mensajes del mismo tipo y es lo que conecta a **distintos servicios entre sí** | Un cuaderno que varias áreas comparten |
+| 4 | **Retención** | Los mensajes se guardan de forma **persistente**: indefinida, o con borrado **por tiempo** (ej. 7 días) o **por tamaño** (ej. 10 GB) | Cuánto tiempo o cuántas hojas guardas |
+| 5 | **Particiones = escalar** | Los mensajes se reparten por la **key**; así las escrituras se reparten entre servidores y escalas **horizontalmente** | Varias secciones del cuaderno, cada una en otra oficina |
+| 6 | **El orden** | Garantizado **dentro de una partición**, **no** dentro de todo el topic | El orden vale por sección |
+| 7 | **Offset** | Un **entero** por mensaje y partición; los consumidores guardan **por dónde van**, y lo hacen **en el propio Kafka** (topic interno `__consumer_offsets`) | El marcador del libro |
+| 8 | **Una partición, un consumidor** | Un consumidor puede leer **varias particiones**, pero **una partición no tiene varios consumidores dentro del mismo grupo** | Una sección la lee un solo contador del equipo |
+| 9 | **Réplicas** | Cada partición tiene un **líder** (recibe las escrituras) y **réplicas**: si un broker cae, otro toma el relevo | Fotocopias por si se quema una oficina |
+| 10 | **Broker y cluster** | Un **broker** es un servidor que corre Kafka; varios forman el **cluster** y se reparten lectura y escritura | Las oficinas que guardan el libro |
+| 11 | **Kafka Connect** | Evita programar cada integración: **descargas un conector ya hecho** (MySQL, PostgreSQL, Snowflake, S3...) y lo registras con un **archivo de configuración JSON** | Un empleado con adaptadores listos |
+| 12 | **Dos tipos de conector** | **Fuente (source):** meten datos a Kafka · **Destino (sink):** sacan datos de Kafka a otro sistema | Entrada y salida del libro |
+| 13 | **Dos formas de conectarte** | **API propia** (tu servicio publica y lee con Producer/Consumer) o **Kafka Connect** para fuentes que ya tienen conector | Escribir tú la nota, o usar el mensajero |
+| 14 | **Los datos de las empresas** | Cada empresa genera información; Kafka permite **tomar decisiones con datos casi al instante** | El dueño ve las ventas mientras ocurren |
+
+##### ⚖️ El trade-off: latencia vs rendimiento (throughput)
+
+Los mensajes se envían **en lotes** (batches) para ser más eficientes. Ahí hay un compromiso:
+
+```mermaid
+flowchart LR
+    subgraph L[" Lotes PEQUEÑOS "]
+        L1["Se envían rápido"] --> L2["✅ Menos latencia<br/>❌ Menos rendimiento"]
+    end
+    subgraph G[" Lotes GRANDES "]
+        G1["Esperan a llenarse"] --> G2["✅ Más rendimiento<br/>❌ Más latencia"]
+    end
+```
+
+| Si lo que importa es... | Haz... | Config del productor |
+|---|---|---|
+| **Latencia** (pagos, fraude, notificaciones) | Lotes pequeños, enviar casi de inmediato | `linger.ms` bajo (0 a unos ms), `batch.size` moderado |
+| **Rendimiento** (ingesta masiva, analítica, logs) | Lotes grandes y compresión | `linger.ms` más alto, `batch.size` grande, `compression.type` (`lz4`, `zstd`) |
+
+🟢 **Frase:** *"Los lotes grandes dan más rendimiento pero más latencia; ajusto `linger.ms` y `batch.size` según el caso: en pagos priorizo latencia, en analítica rendimiento."*
+
+##### 🔌 El dibujo del ecosistema: entradas → Kafka → salidas (con Kafka Connect)
+
+```mermaid
+flowchart LR
+    subgraph IN[" ENTRADAS "]
+        SV["Tus servicios<br/>(Producer API)"]
+        DB1["Bases de datos<br/>(MySQL, PostgreSQL)"]
+        S3["Archivos (S3)"]
+    end
+    subgraph CIN[" Kafka Connect<br/>conectores FUENTE (source) "]
+        CS["Conector fuente<br/>(config JSON)"]
+    end
+    subgraph KAFKA[" KAFKA (cluster de brokers) "]
+        T["Topics → particiones → mensajes"]
+    end
+    subgraph COUT[" Kafka Connect<br/>conectores DESTINO (sink) "]
+        CK["Conector destino<br/>(config JSON)"]
+    end
+    subgraph OUT[" SALIDAS "]
+        DB2["Bases de datos,<br/>Snowflake, S3"]
+        STR["Procesamiento<br/>en streaming"]
+        SV2["Tus servicios<br/>(Consumer API)"]
+    end
+    SV --> T
+    DB1 --> CS
+    S3 --> CS
+    CS --> T
+    T --> CK
+    CK --> DB2
+    T --> STR
+    T --> SV2
+```
+**Cuéntalo:** "Por la izquierda entran los datos: mis servicios publican con la API de Producer, y las bases de datos o archivos entran con **conectores fuente** de Kafka Connect, sin código. Kafka los guarda en topics y particiones. Por la derecha salen: mis servicios consumen, hay procesamiento en streaming, y los **conectores destino** llevan los datos a otras bases de datos o a Snowflake o S3."
+
+##### 🏗️ La arquitectura del video (con ZooKeeper) y cómo es hoy (con KRaft)
+
+**Versión del video:** dos clusters. El **cluster de Kafka** (los brokers) y, aparte, el **cluster de ZooKeeper**, que guarda los **metadatos** y deja que los brokers se coordinen entre sí. Por la izquierda entran los datos (con **Kafka Connect** o con la **API**) y por la derecha salen (igual, con **Kafka Connect** o con la **API**).
+
+```mermaid
+flowchart LR
+    subgraph ZK[" ZooKeeper cluster<br/>metadatos y coordinación "]
+        Z1["ZooKeeper 1"]
+        Z2["ZooKeeper 2"]
+        Z3["ZooKeeper 3"]
+    end
+    subgraph KC[" Kafka cluster "]
+        B1["Broker 1"]
+        B2["Broker 2"]
+        B3["Broker 3"]
+        B4["Broker 4"]
+    end
+    IN(("Fuentes<br/>de datos"))
+    OUT(("Fuentes<br/>de datos<br/>(destinos)"))
+    IN -->|"Kafka Connect<br/>(conector fuente)"| KC
+    IN -->|"API<br/>(Producer)"| KC
+    KC -->|"Kafka Connect<br/>(conector destino)"| OUT
+    KC -->|"API<br/>(Consumer)"| OUT
+    ZK <-->|"metadatos:<br/>quién es líder de qué"| KC
+```
+
+**Versión actual (Kafka 4.0 en adelante):** ya **no existe el cluster aparte de ZooKeeper**; los **controladores KRaft** viven dentro de Kafka y hacen ese mismo trabajo.
+
+```mermaid
+flowchart LR
+    subgraph KC2[" Kafka cluster (hoy) "]
+        subgraph CT[" Controladores KRaft<br/>(quórum de 3) "]
+            C1["Controlador 1"]
+            C2["Controlador 2"]
+            C3["Controlador 3"]
+        end
+        subgraph BR[" Brokers "]
+            D1["Broker 1"]
+            D2["Broker 2"]
+            D3["Broker 3"]
+            D4["Broker 4"]
+        end
+        CT <-->|"metadatos"| BR
+    end
+    IN2(("Fuentes<br/>de datos")) -->|"Connect o API"| BR
+    BR -->|"Connect o API"| OUT2(("Destinos"))
+```
+
+**Cuéntalo:** "Un cluster de Kafka son varios brokers. Para coordinarse necesitan guardar los metadatos del cluster (qué broker lidera cada partición, qué topics existen, qué consumidor lee qué): antes eso lo hacía un **cluster aparte de ZooKeeper**; hoy lo hacen los **controladores KRaft**, integrados en Kafka, que simplifica la operación. Los datos entran y salen o con la **API** (mis servicios) o con **Kafka Connect** (conectores ya hechos)."
+
+> **Ojo con la lámina del video:** los tres cuadros verdes del cluster de ZooKeeper aparecen rotulados "Broker", pero son **servidores de ZooKeeper** (un *ensemble*, normalmente 3 o 5, para tener quórum). **Los brokers son los del cluster de Kafka (azul).** No lo confundas si te piden dibujarlo.
+
+##### ⚠️ Dos matices del video que conviene saber (para no equivocarte)
+
+| El video dice | Lo actual y más preciso |
+|---|---|
+| Los brokers necesitan **Apache ZooKeeper** para coordinarse | Era así, pero hoy lo hace **KRaft**, integrado en Kafka; **ZooKeeper se eliminó en Kafka 4.0**. Si te preguntan, explica **ambos**: *"antes ZooKeeper guardaba los metadatos y coordinaba a los brokers; hoy KRaft hace lo mismo dentro de Kafka"* |
+| "Réplicas de **lectura**" | Las réplicas son sobre todo para **tolerancia a fallos y disponibilidad**: por defecto los consumidores leen del **líder** (existe lectura desde réplicas cercanas, pero es una opción) |
+| "Una partición nunca tendrá muchos consumidores" | Es cierto **dentro de un mismo grupo**; **varios grupos** pueden leer la misma partición cada uno por su cuenta |
+
+
 Detalle de cada pieza: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, KRaft, retención, headers y banca).
 
 ### Cómo presentarlo con honestidad
@@ -1047,15 +1184,25 @@ Elige **tres con un caso real**: Strategy (métodos de pago), Adapter (integrar 
 🟢 Guardar el dato y el evento en la misma transacción. 🟡 Un relay o CDC publica después a Kafka. 🔴 Evita la inconsistencia entre base de datos y broker sin transacción distribuida; la entrega queda at-least-once.
 </details>
 
+<details><summary><b>22.</b> ¿Una partición puede tener varios consumidores?</summary>
+
+🟢 Dentro de un mismo grupo, no: cada partición la lee un solo consumidor, aunque un consumidor sí puede leer varias particiones. 🟡 Grupos distintos leen la misma partición cada uno por su cuenta, con su propio offset; si hay más consumidores que particiones en un grupo, los sobrantes quedan ociosos. 🔴 Por eso el número de particiones es el techo del paralelismo de un grupo y hay que dimensionarlo desde el inicio.
+</details>
+
+<details><summary><b>23.</b> ¿Cuál es el trade-off entre latencia y rendimiento en Kafka?</summary>
+
+🟢 Los mensajes se envían en lotes: lotes grandes dan más rendimiento pero más latencia. 🟡 Se ajusta con `linger.ms` (cuánto espera para llenar el lote), `batch.size` y la compresión. 🔴 En pagos o fraude priorizo latencia (lotes pequeños, `linger.ms` bajo); en analítica o ingestas masivas, rendimiento (lotes grandes y compresión); lo decido midiendo p99.
+</details>
+
 
 #### Resiliencia y pagos
 
-<details><summary><b>22.</b> Explícame los estados del Circuit Breaker.</summary>
+<details><summary><b>24.</b> Explícame los estados del Circuit Breaker.</summary>
 
 🟢 Cerrado: pasa todo y mide fallos. Abierto: corta y usa fallback. Semiabierto: prueba unas llamadas. 🟡 Abre al superar el umbral de fallos y vuelve a probar tras un tiempo. 🔴 Lo combino con timeout, bulkhead y reintentos idempotentes; el fallback debe ser honesto.
 </details>
 
-<details><summary><b>23.</b> ¿Qué haces si el banco no responde a un cobro?</summary>
+<details><summary><b>25.</b> ¿Qué haces si el banco no responde a un cobro?</summary>
 
 🟢 No reintento a ciegas: puedo cobrar dos veces. 🟡 Estado `PENDIENTE_CONFIRMACION` y consulta de estado. 🔴 Conciliación, llave de idempotencia hacia el banco, circuit breaker y alerta por antigüedad de pendientes.
 </details>
@@ -1063,22 +1210,22 @@ Elige **tres con un caso real**: Strategy (métodos de pago), Adapter (integrar 
 
 #### Tus proyectos
 
-<details><summary><b>24.</b> ¿Por qué Quartz y no `@Scheduled`?</summary>
+<details><summary><b>26.</b> ¿Por qué Quartz y no `@Scheduled`?</summary>
 
 🟢 Con varias instancias `@Scheduled` corre en todas. 🟡 Quartz persiste en BD, tiene cluster, misfire y programación dinámica. 🔴 Los locks de BD limitan la escala; hoy usaría un scheduler gestionado y un disparo por pago.
 </details>
 
-<details><summary><b>25.</b> En tu servicio de transferencias, ¿qué mejorarías?</summary>
+<details><summary><b>27.</b> En tu servicio de transferencias, ¿qué mejorarías?</summary>
 
 🟢 Los reintentos: esperar con `Thread.sleep` bloquea el consumidor. 🟡 Usaría tópicos de reintento escalonados y una DLQ, y `key = orderId` para conservar el orden. 🔴 Lo más importante: **idempotencia por ítem** (un fallo parcial reejecutaba todo y podía duplicar transferencias) y confirmar el **offset al terminar** la cadena reactiva, no antes. Detalle: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
 </details>
 
-<details><summary><b>26.</b> Cuéntame un proyecto del que estés orgulloso.</summary>
+<details><summary><b>28.</b> Cuéntame un proyecto del que estés orgulloso.</summary>
 
 Usa la sección 8 de este documento: problema → arquitectura → decisión clave y por qué → un problema real (duplicados, timeout del banco, picos) → resultado.
 </details>
 
-**Resultado:** 21 o más (de 26) con la frase 🟢 clara = estás listo. Si fallas en un bloque, vuelve a su sección arriba y repítelo.
+**Resultado:** 23 o más (de 28) con la frase 🟢 clara = estás listo. Si fallas en un bloque, vuelve a su sección arriba y repítelo.
 
 ---
 
