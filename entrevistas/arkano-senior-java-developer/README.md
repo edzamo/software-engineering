@@ -2,20 +2,58 @@
 
 > **Documento temporal de estudio.** Entrevista conversacional (te preguntan, tú explicas con tus palabras y das un ejemplo). Cuando el proceso cierre, mover a `archivo/` y registrar la retrospectiva en [`kaizen/`](../kaizen).
 
-Java + REST + Node.js + Kafka + OWASP Top 10 + Azure, para una consultora que construye soluciones para clientes de la región.
+Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging**, **PostgreSQL con JPA/Hibernate**, **arquitectura hexagonal**, **resiliencia** y **testing con JUnit 5 y Mockito**, para una consultora que construye soluciones para clientes de la región.
+
+> El job description original hablaba de Node.js, OWASP y Azure; **los temas que te confirmaron por WhatsApp son otros** (los de arriba). Para la técnica de hoy, **manda la lista de WhatsApp**. El resto de las secciones sirve de respaldo.
 
 ## Estado del proceso
 
 | Etapa | Con quién | Foco | Estado |
 |---|---|---|---|
 | 1 · Competencias | Lourdes Moreno (Talent Acquisition) | Experiencia, habilidades, alineación con el rol | Hecha, avanzas |
-| 2 · Evaluación técnica | Por confirmar: según lo que entendiste, un Tech Lead o Principal Engineer | Conversacional: Java, SOLID, patrones, resiliencia, Kafka, OWASP, REST, arquitectura | **Pendiente de agenda** |
+| 2 · Evaluación técnica | Por confirmar: Lourdes no dijo quién (según lo que entendiste, un Tech Lead o Principal Engineer) | **Conversacional.** Temas confirmados por WhatsApp: Java 17+ con Quarkus/Spring Boot, Kafka con SmallRye Reactive Messaging, PostgreSQL con JPA/Hibernate, hexagonal, resiliencia, JUnit 5 y Mockito | **Agendada para hoy (14:00 o 15:00)** |
 | 3 · Fit cultural | Por definir | Valores, forma de trabajo | Pendiente |
 | 4 · Test de integridad | Plataforma externa | Aprobarlo cierra el proceso | Pendiente |
 
 **Requisitos al final (excluyentes):** certificado de antecedentes financieros (score superior a 550 puntos, con informe), penales y judiciales sin registros. Conviene empezar a gestionarlos ya; no esperes a la etapa 4.
 
 **Ritmo:** el proceso dura entre 4 y 10 días hábiles y hay urgencia. Prepárate como si la técnica pudiera caer esta misma semana.
+
+---
+
+## 🚨 Prioridad para hoy (lo que te confirmaron por WhatsApp)
+
+> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](cheat-sheet.md): respuestas relámpago A-Z, repaso de Kafka para quien lo usó hace tiempo, tu proyecto de pagos en 5 frases y un **simulacro de 20 preguntas** con respuesta oculta. Esta guía es la profunda; el cheat sheet es la de bolsillo.
+
+**Lista oficial de Lourdes:** Java 17+ con Quarkus o Spring Boot · Kafka con SmallRye Reactive Messaging o equivalente · PostgreSQL con JPA/Hibernate · Arquitectura hexagonal · Resiliencia · Testing con JUnit 5 y Mockito.
+
+| # | Tema que evaluarán | Aquí (resumen y preguntas) | Detalle |
+|---|---|---|---|
+| 1 | **Java 17+ con Quarkus / Spring Boot** | [20 · Java 17+ y Quarkus](#s20) | [`frameworks/quarkus/`](../../frameworks/quarkus), [`frameworks/spring-boot/`](../../frameworks/spring-boot), [`java-core/`](../../java-core) |
+| 2 | **Kafka con SmallRye Reactive Messaging** | [21 · SmallRye + Kafka](#s21), [06 · Kafka](#s06) | [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md), [`messaging-streaming/kafka.md`](../../messaging-streaming/kafka.md) |
+| 3 | **PostgreSQL con JPA/Hibernate** | [22 · JPA, Hibernate y PostgreSQL](#s22) | [`persistencia-hibernate-postgresql.md`](../../frameworks/quarkus/persistencia-hibernate-postgresql.md) |
+| 4 | **Arquitectura hexagonal** | [23 · Hexagonal](#s23) | [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) |
+| 5 | **Resiliencia** | [16 · Resiliencia](#s16), [24 · En Quarkus](#s24) | [`microservices-patterns/`](../../microservices-patterns) |
+| 6 | **Testing: JUnit 5 y Mockito** | [25 · Testing](#s25) | [`tdd/junit5-mockito.md`](../../tdd/junit5-mockito.md) |
+
+**¿Y la programación reactiva / WebFlux?** No está en la lista, pero **SmallRye Reactive Messaging y Quarkus son reactivos por debajo** (Mutiny: `Uni` y `Multi`, equivalentes a `Mono` y `Flux`). Basta con saber **qué es, por qué existe y cuándo usarla**; ver [20](#s20) y [21](#s21). No necesitas dominar operadores. Si te preguntan, tu base de WebFlux ([`webflux.md`](../../frameworks/spring-boot/webflux.md)) aplica casi 1 a 1.
+
+**Sobre lo que NO conoces ("SmallRye"):** no lo has usado y está bien. La lista dice **"o equivalente"**: tu experiencia con `spring-kafka` cuenta. Dilo así: *"Con Spring usé `@KafkaListener` y `KafkaTemplate`; SmallRye es el equivalente en Quarkus con `@Incoming` y `Emitter`, y los conceptos (grupos, offsets, DLQ, idempotencia) son los mismos."* (solo si es verdad).
+
+**Qué se sabe del proceso de Arkano (Glassdoor):** hay solo **3 reseñas** públicas, 67% con experiencia positiva y dificultad promedio **2,3 sobre 5**; **ninguna trae preguntas técnicas**. No hay un banco de preguntas reales de Arkano; lo más fiable es la lista de Lourdes. Para ese tipo de rol, una entrevista de ese estilo suele combinar fundamentos de Java, el framework, base de datos, pruebas y diseño, y pedirte ejemplos de tu experiencia.
+
+### Plan para hoy (con el tiempo que haya antes de las 14:00)
+
+| Orden | Qué | Cuánto | Cómo |
+|---|---|---|---|
+| 1 | Secciones **20 a 25** de esta guía: solo las cápsulas "con manzanas" y las escaleras de respuesta | 60 min | Responde en voz alta, una capa por vez |
+| 2 | **Equivalencias Spring → Quarkus** ([20](#s20)) | 15 min | Memoriza la tabla |
+| 3 | **Kafka: garantías, ack/commit/DLQ** ([21](#s21) y [06](#s06)) | 30 min | Explica a un "compañero imaginario" |
+| 4 | **Hibernate: N+1, lazy, transacciones, `@Version`** ([22](#s22)) | 20 min | |
+| 5 | **Tu proyecto de pagos** ([19](#s19)): historia de 3 minutos | 20 min | Es tu mejor ejemplo para casi cualquier tema |
+| 6 | Respirar y revisar las preguntas para hacerles ([14](#s14)) | 10 min | |
+
+**Antes de que empiece:** pregunta si la entrevista es con stack **Quarkus o Spring**, y qué ven más en el proyecto. Te ayuda a enfocar y es una buena pregunta.
 
 ---
 
@@ -48,11 +86,12 @@ Java + REST + Node.js + Kafka + OWASP Top 10 + Azure, para una consultora que co
 
 ## 01 · La empresa en 2 minutos
 
-- **Qué es:** consultora de TI uruguaya (fundada a fines de 2006), con más de 200 personas y equipos en unos 9 países de Latinoamérica. Partner de Microsoft desde hace 20 años.
+- **Qué es:** consultora de TI uruguaya (fundada a fines de 2006), partner de Microsoft. Las fuentes difieren en las cifras: **"más de 18 años" y "más de 100 personas"** en una versión de la vacante, **"20 años" y "+200 personas"** en LinkedIn; con equipos en Uruguay, Argentina, Chile, Perú, Paraguay, Colombia, México y más países. No cites una cifra exacta, di "casi 20 años" y "más de 100 personas".
 - **Qué hace:** proyectos sobre **Azure, Dynamics 365 y Microsoft 365**, con foco en Cloud, Data e IA (Copilot, agentes, low-code).
 - **Clientes (según prensa):** Unilever, Coca-Cola, Deloitte, YPF, Falabella, Ternium, Scotiabank. Sectores: recursos naturales, manufactura, servicios financieros, farma, retail.
 - **Modelo:** consultoría y staff augmentation. Entras a un proyecto de un cliente, con equipos regionales y multiculturales.
-- **Lo que ofrecen:** certificaciones Microsoft pagadas al 100%, evaluación cada 6 meses, remoto o híbrido, bono por referidos.
+- **Lo que ofrecen:** certificaciones Microsoft pagadas al 100%, evaluación cada 6 meses, remoto o híbrido (en ciudades con oficinas), bono por referidos y herramienta de trabajo provista o subsidio para adquirirla.
+- **Competencia:** más de 100 personas aplicaron a la vacante. Lo que diferencia es **explicar con claridad y respaldar con un proyecto real**, no recitar definiciones.
 
 **Qué implica para la entrevista:**
 1. **Azure pesa mucho.** Es su identidad. Aunque el rol sea Java, espera preguntas sobre cómo despliegas y consumes servicios en Azure.
@@ -66,6 +105,8 @@ Java + REST + Node.js + Kafka + OWASP Top 10 + Azure, para una consultora que co
 <a id="s02"></a>
 
 ## 02 · Mapa del job description → qué estudiar
+
+> Este mapa sale del **job description original**. Los temas confirmados para la técnica están en [🚨 Prioridad para hoy](#-prioridad-para-hoy-lo-que-te-confirmaron-por-whatsapp); usa este mapa como respaldo.
 
 | Requisito del JD | Prioridad | Aquí en esta guía | Para profundizar |
 |---|---|---|---|
@@ -746,6 +787,296 @@ Cambio de mentalidad: de **sondear una tabla por lote** a **un disparo por pago*
 **Cómo conecta con lo que pide Arkano:** Java + Kafka + seguridad (OWASP) + patrones de resiliencia + integración con sistemas externos, y en Azure se traduce a Functions Timer o Service Bus programado, Event Hubs y APIM (sección 14 del caso).
 
 **Úsalo como respuesta a "cuéntame un proyecto que hayas hecho":** problema → arquitectura (el dibujo) → decisión clave y su porqué → un problema real que resolviste (duplicados, timeout del banco, picos) → resultado.
+
+---
+
+<a id="s20"></a>
+
+## 20 · Java 17+ y Quarkus / Spring Boot
+
+> Detalle: [`frameworks/quarkus/README.md`](../../frameworks/quarkus/README.md) · [`java-core/java-version-evolution.md`](../../java-core/java-version-evolution.md)
+
+### 🍎 Con manzanas
+Dos fruterías abren a las 8:00. **Spring Boot** llega a las 7:00 y, al abrir, revisa qué preparar. **Quarkus** hizo ese trabajo **la noche anterior** (en el build): abre al instante y gasta menos. Mismos productos, distinta preparación.
+
+### Java 17+: lo que se pregunta
+| Versión | Novedades que debes poder nombrar y usar |
+|---|---|
+| **17 (LTS)** | **Records** (datos inmutables), **sealed classes** (jerarquía cerrada), **text blocks**, `instanceof` con patrón, `switch` con flechas |
+| **21 (LTS)** | **Virtual threads** (hilos baratos para código bloqueante), **pattern matching en `switch`**, record patterns, `SequencedCollection` |
+| Siempre | Streams, `Optional`, `CompletableFuture`, `var`, `java.time` |
+
+```java
+public record CrearPagoComando(String idempotencyKey, String origen, String destino, BigDecimal monto) {}
+
+public sealed interface ResultadoBanco permits Aprobado, Rechazado, SinRespuesta {}
+String texto = switch (resultado) {                 // el compilador exige cubrir todos los casos
+    case Aprobado a    -> "ok";
+    case Rechazado r   -> "rechazado: " + r.motivo();
+    case SinRespuesta s -> "pendiente de confirmación";
+};
+```
+
+### Quarkus vs Spring Boot en 5 líneas
+- **Build vs runtime:** Quarkus procesa configuración y anotaciones **en el build**; Spring, **al arrancar** con reflexión.
+- **DI:** Quarkus usa **CDI** (`@Inject`, `@ApplicationScoped`); Spring, `@Autowired` y `@Service`.
+- **Arranque y memoria:** Quarkus gana, y soporta **imagen nativa** con GraalVM.
+- **Desarrollo:** Quarkus tiene **dev mode** con recarga en vivo y **Dev Services** (levanta PostgreSQL o Kafka solo).
+- **Ecosistema:** Spring es más grande; Quarkus es más ligero. Los **patrones son los mismos**.
+
+| Spring Boot | Quarkus |
+|---|---|
+| `@Service` | `@ApplicationScoped` |
+| `@Autowired` | `@Inject` |
+| `@Value` | `@ConfigProperty` |
+| `@RestController` + `@GetMapping` | `@Path` + `@GET` |
+| `JpaRepository` | `PanacheRepository` |
+| `@KafkaListener` / `KafkaTemplate` | `@Incoming` / `Emitter` |
+| Resilience4j | SmallRye Fault Tolerance |
+| `@MockBean` | `@InjectMock` |
+| `@SpringBootTest` | `@QuarkusTest` |
+
+### Programación reactiva en dos minutos (por si preguntan)
+- **Qué es:** procesar flujos de datos **sin bloquear hilos**: en vez de esperar, registras qué hacer cuando llegue el resultado.
+- **Por qué existe:** con pocos hilos (event loop) atiendes muchas conexiones; útil con mucho I/O.
+- **Quarkus:** `Uni<T>` (0 o 1 resultado) y `Multi<T>` (0 a N), de la librería **Mutiny**. Spring: `Mono` y `Flux`.
+- **Reglas:** es **perezoso** (nada corre hasta suscribirse), **no bloquees el event loop**, `map` transforma y `transformToUni`/`flatMap` encadena otra operación asíncrona.
+- **Cuándo sí:** mucha concurrencia de I/O con todo el camino no bloqueante. **Cuándo no:** CRUD con JDBC bloqueante; ahí el estilo imperativo, o **virtual threads** (Java 21), es más simple.
+
+### Escalera de respuesta
+| Pregunta | 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|---|
+| **¿Qué es Quarkus?** | "Un framework Java que arranca rápido y gasta poca memoria." | "Configura en el build, usa CDI, tiene dev mode, Dev Services e imagen nativa." | "Optimiza arranque y memoria, que importa en Kubernetes y serverless; a cambio, ecosistema menor que Spring." |
+| **¿Qué trae Java 17 / 21?** | "Records, text blocks; en 21, virtual threads." | "Sealed classes y pattern matching hacen el dominio más expresivo y seguro." | "Virtual threads permiten escalar código bloqueante sin pasar a reactivo; lo uso donde WebFlux sería sobreingeniería." |
+| **¿Reactivo o imperativo?** | "Reactivo usa `Uni`/`Multi` y no bloquea." | "El event loop no puede bloquearse; con JDBC uso `@Blocking`." | "Reactivo solo si todo el camino es no bloqueante y hay alta concurrencia; si no, imperativo o virtual threads." |
+
+---
+
+<a id="s21"></a>
+
+## 21 · Kafka con SmallRye Reactive Messaging
+
+> Detalle: [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md) · Kafka base: [sección 06](#s06) y [`kafka.md`](../../messaging-streaming/kafka.md)
+
+### 🍎 Con manzanas
+Kafka es el **libro de ventas**. SmallRye es **el empleado que lo escribe y lo lee por ti**: tú dices "lo que llegue al canal *pedidos*, procésalo" (`@Incoming`) y "lo que produzca va al canal *despachos*" (`@Outgoing`). El **conector** une cada canal con un topic.
+
+### Lo esencial
+```java
+@Incoming("pedidos")                          // consumir
+@Blocking @Transactional                      // si usas JDBC/Hibernate
+public void procesar(PedidoCreado e) { service.procesar(e); }
+
+@Inject @Channel("despachos") Emitter<DespachoCreado> emitter;   // producir
+emitter.send(evento);
+```
+```properties
+mp.messaging.incoming.pedidos.connector=smallrye-kafka
+mp.messaging.incoming.pedidos.topic=pedidos.creados.v1
+mp.messaging.incoming.pedidos.group.id=bodega
+mp.messaging.incoming.pedidos.failure-strategy=dead-letter-queue
+mp.messaging.outgoing.despachos.connector=smallrye-kafka
+mp.messaging.outgoing.despachos.acks=all
+```
+
+| Tema | Respuesta corta |
+|---|---|
+| **Ack** | Por defecto, se confirma **al terminar** el método (`POST_PROCESSING`). Manual con `Message<T>` y `msg.ack()` / `nack()` |
+| **Commit de offsets** | `throttled` por defecto (confirma el mayor offset consecutivo procesado); Quarkus desactiva el auto-commit de Kafka |
+| **Si falla** | `failure-strategy`: `fail` (por defecto, se detiene), `ignore`, **`dead-letter-queue`**, `delayed-retry-topic` |
+| **Código bloqueante** | `@Blocking` (o `@RunOnVirtualThread`); no bloquear el event loop |
+| **Key y headers** | `OutgoingKafkaRecordMetadata` al producir; `IncomingKafkaRecordMetadata` al consumir |
+| **Pruebas** | `InMemoryConnector` (sin broker) y Dev Services (Kafka real en contenedor) |
+| **Garantía** | At-least-once: el consumidor debe ser **idempotente** |
+| **Publicar tras guardar en BD** | **Outbox**, no "guardo y publico" |
+
+**Equivalente en Spring:** `@KafkaListener` + `KafkaTemplate`, `DefaultErrorHandler` + `DeadLetterPublishingRecoverer`, y Spring Cloud Stream para el estilo de canales.
+
+### Escalera de respuesta
+| Pregunta | 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|---|
+| **¿Qué es SmallRye Reactive Messaging?** | "La librería de Quarkus para enviar y recibir mensajes con `@Incoming` y `@Outgoing`." | "Implementa MicroProfile Reactive Messaging: canales, conectores (`smallrye-kafka`) y mensajes." | "Abstrae el broker sobre flujos Mutiny; el mismo código sirve con Kafka, AMQP o memoria para tests." |
+| **¿Cómo manejas un mensaje que falla?** | "Lo mando a otro topic." | "`dead-letter-queue` o `delayed-retry-topic`, y alerto sobre la DLT." | "Distingo transitorio de permanente y mi consumidor es idempotente porque el reproceso es inevitable." |
+| **¿Cómo evitas duplicados?** | "Guardo el id del mensaje procesado." | "Tabla de `eventId` con restricción única, en la misma transacción." | "At-least-once más idempotencia; confirmo el offset solo tras persistir." |
+
+---
+
+<a id="s22"></a>
+
+## 22 · PostgreSQL con JPA / Hibernate
+
+> Detalle: [`persistencia-hibernate-postgresql.md`](../../frameworks/quarkus/persistencia-hibernate-postgresql.md)
+
+### 🍎 Con manzanas
+PostgreSQL es el **archivo de fichas** de la frutería. JPA es el **reglamento** para pasar de objeto a ficha; Hibernate es el **empleado** que lo cumple y lleva una **libreta de lo que tocaste**: al terminar la transacción, escribe solo los cambios. **N+1** es ir al archivo 50 veces en lugar de una.
+
+### Lo esencial
+| Tema | Respuesta corta |
+|---|---|
+| **JPA vs Hibernate** | JPA es la especificación; Hibernate, la implementación |
+| **Estados de una entidad** | Transient → Managed (`persist`) → Detached → Removed |
+| **Dirty checking** | En una transacción, si cambias una entidad *managed*, Hibernate emite el `UPDATE` al hacer flush; no hace falta `save` |
+| **N+1** | 1 consulta de lista + N consultas por relación. Solución: `JOIN FETCH`, `@EntityGraph`, `@BatchSize` o **proyecciones/DTO** |
+| **Lazy vs Eager** | Lazy carga al usar; eager siempre. Poner `LAZY` y traer lo necesario por consulta. `LazyInitializationException` = acceso fuera de la transacción |
+| **`@Transactional`** | Rollback en excepciones *runtime*; propagación `REQUIRED` por defecto; no funciona en autoinvocación; ponerla en la capa de aplicación |
+| **Concurrencia** | Optimista con `@Version` (lo habitual) o pesimista con `SELECT ... FOR UPDATE` (`SKIP LOCKED` para colas) |
+| **Aislamiento en PostgreSQL** | `READ COMMITTED` por defecto; usa **MVCC** (lecturas no bloquean escrituras) |
+| **Índices** | B-tree por defecto; compuestos respetan el orden; revisar con `EXPLAIN (ANALYZE)` |
+| **Esquema** | **Flyway o Liquibase**; en producción `database.generation=none` |
+| **Panache** | `PanacheRepository<T>` o Active Record; equivale a Spring Data |
+| **Dinero y enums** | `BigDecimal`; `@Enumerated(STRING)` |
+
+### Escalera de respuesta
+| Pregunta | 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|---|
+| **¿Qué es el N+1 y cómo lo arreglas?** | "Una consulta que dispara una extra por cada elemento; se arregla trayendo todo junto." | "`JOIN FETCH` o `@EntityGraph`; lo detecto con el log de SQL." | "Para lecturas uso proyecciones; cuido la paginación con `JOIN FETCH` de colecciones, y lo vigilo contando consultas en tests." |
+| **¿Cómo evitas que dos usuarios pisen un registro?** | "Con un campo de versión." | "`@Version`; si falla, reintento." | "Optimista por defecto; pesimista solo con alta contención, como saldos." |
+| **¿Qué hace `@Transactional`?** | "Abre una transacción y hace commit al terminar." | "Rollback en runtime exceptions; ojo con la autoinvocación." | "Transacciones cortas sin llamadas de red adentro; Outbox para publicar eventos atómicamente." |
+
+---
+
+<a id="s23"></a>
+
+## 23 · Arquitectura hexagonal
+
+> Detalle y comparación con Clean, Onion y MVC: [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) · [`software-architectures/`](../../software-architectures)
+
+### 🍎 Con manzanas
+La frutería (el **negocio**) está en el centro y no sabe quién la visita ni qué banco usa. Tiene **enchufes** (los **puertos**) que dicen "aquí entra un pedido" y "aquí necesito cobrar". Los **adaptadores** son los **cables**: uno conecta la web (REST), otro el banco real, otro el archivo (PostgreSQL). Cambias de banco cambiando de cable; la frutería no se toca.
+
+```mermaid
+flowchart LR
+    subgraph entrada[" Adaptadores de entrada "]
+        REST["REST (@Path)"]
+        KIN["Kafka @Incoming"]
+    end
+    subgraph hex[" Hexágono "]
+        PIN["Puerto IN<br/>CrearPagoUseCase"]
+        APP["Caso de uso"]
+        DOM["Dominio<br/>Pago, reglas"]
+        POUT["Puertos OUT<br/>PagoRepository, BancoPort, EventPublisher"]
+    end
+    subgraph salida[" Adaptadores de salida "]
+        JPA["Panache / PostgreSQL"]
+        BANCO["Cliente HTTP del banco"]
+        KOUT["Emitter Kafka"]
+    end
+    REST --> PIN
+    KIN --> PIN
+    PIN --> APP --> DOM
+    APP --> POUT
+    POUT --> JPA
+    POUT --> BANCO
+    POUT --> KOUT
+```
+
+**Estructura de paquetes (Quarkus):**
+```text
+pagos/
+  domain/                 ← sin anotaciones de framework: Pago, EstadoPago, reglas
+  application/
+    port/in/              ← CrearPagoUseCase (interfaz)
+    port/out/             ← PagoRepository, BancoPort, EventPublisher (interfaces)
+    service/              ← CrearPagoService (implementa el caso de uso)
+  infrastructure/
+    adapter/in/rest/      ← PagoResource (@Path), DTOs
+    adapter/in/messaging/ ← @Incoming
+    adapter/out/persistence/ ← PagoEntity, PagoRepositoryImpl (Panache), mapper
+    adapter/out/bank/     ← cliente REST del banco (con @CircuitBreaker)
+    adapter/out/messaging/ ← Emitter (Outbox)
+```
+
+**Reglas que se preguntan:**
+1. **La dependencia apunta hacia adentro:** infraestructura conoce a aplicación y dominio; **nunca al revés**.
+2. **El dominio no tiene anotaciones de JPA, Jackson ni CDI** (o las mínimas).
+3. **Entidad de dominio ≠ entidad JPA:** se mapean entre sí (un mapper); así el modelo de negocio no queda atado a la tabla.
+4. **Los DTOs de REST no entran al dominio.**
+5. **Puerto = interfaz definida por el núcleo; adaptador = implementación en infraestructura.**
+6. **Testing:** dominio y casos de uso se prueban con mocks de los puertos, en milisegundos, sin arrancar Quarkus ([25](#s25)).
+
+**Cuándo no:** CRUD simple sin lógica de negocio: la capa extra es sobreingeniería (YAGNI).
+
+### Escalera de respuesta
+| Pregunta | 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|---|
+| **¿Qué es la arquitectura hexagonal?** | "Separar el negocio de los detalles técnicos con puertos y adaptadores." | "El núcleo define interfaces (puertos); REST, JPA o Kafka son adaptadores que las implementan." | "Invierte la dependencia hacia el dominio: facilita probar y cambiar tecnología; el costo es mapeos extra, que solo vale la pena con lógica de negocio real." |
+| **¿Dónde va `@Transactional`?** | "En el servicio." | "En el caso de uso (capa de aplicación), no en el controlador." | "Y publico eventos con Outbox para que base de datos y Kafka queden consistentes." |
+| **Hexagonal vs capas clásicas** | "Hexagonal usa puertos; capas, no." | "En capas el dominio suele depender de la persistencia; en hexagonal, al revés." | "Son compatibles: hexagonal es una forma de aplicar capas con la dependencia invertida." |
+
+---
+
+<a id="s24"></a>
+
+## 24 · Resiliencia en Quarkus
+
+> Teoría completa (estados del Circuit Breaker, backoff, bulkhead): [sección 16](#s16) · Anotaciones: [`frameworks/quarkus/README.md`](../../frameworks/quarkus/README.md)
+
+**Con manzanas:** si el banco no contesta, no sigues llamando sin parar: pones un **tiempo límite**, **reintentas con pausa**, y si falla mucho, **dejas de llamar un rato** (el fusible), con un **plan B** honesto.
+
+```java
+@Retry(maxRetries = 3, delay = 200, jitter = 100)          // reintentar con pausa y azar
+@Timeout(2000)                                              // no esperar para siempre
+@CircuitBreaker(requestVolumeThreshold = 10, failureRatio = 0.5, delay = 10000)
+@Fallback(fallbackMethod = "pendiente")                     // plan B
+public ResultadoBanco cobrar(Pago pago) { return banco.cobrar(pago); }
+```
+
+| Anotación | Qué hace |
+|---|---|
+| `@Timeout` | Corta si tarda demasiado |
+| `@Retry` | Reintenta (`maxRetries`, `delay`, `jitter`) |
+| `@CircuitBreaker` | Abre tras un umbral de fallos; estados cerrado, abierto, semiabierto |
+| `@Bulkhead` | Limita llamadas concurrentes |
+| `@Fallback` | Alternativa si todo falla |
+
+**La trampa:** un `TimeoutException` **dispara el reintento** (si hay `@Retry`) y **cuenta como fallo** para el circuit breaker. Reintentar solo operaciones **idempotentes**.
+
+**Resiliencia en Kafka:** DLQ, `delayed-retry-topic`, consumidor idempotente, `acks=all`. **En Spring:** Resilience4j con anotaciones equivalentes.
+
+---
+
+<a id="s25"></a>
+
+## 25 · Testing con JUnit 5 y Mockito
+
+> Detalle: [`tdd/junit5-mockito.md`](../../tdd/junit5-mockito.md)
+
+### 🍎 Con manzanas
+**JUnit** es la lista de comprobación ("3 manzanas a 2 soles = 6"). **Mockito** es un **banco de mentira** que contesta lo que le indiques para probar tu caja sin llamar al banco real. Tres pasos: **preparar, actuar, comprobar** (AAA).
+
+```java
+@ExtendWith(MockitoExtension.class)
+class CobrarPagoServiceTest {
+    @Mock BancoPort banco;
+    @Mock PagoRepository repo;
+    @InjectMocks CobrarPagoService service;
+
+    @Test
+    void siElBancoNoResponde_quedaPendiente() {
+        when(banco.cobrar(any())).thenThrow(new TimeoutException());   // Arrange
+        service.cobrar(pago);                                            // Act
+        verify(repo).guardar(argThat(p -> p.estado() == PENDIENTE_CONFIRMACION)); // Assert
+    }
+}
+```
+
+| Tema | Respuesta corta |
+|---|---|
+| **JUnit 5** | `@Test`, `@BeforeEach`, `@ParameterizedTest`, `@Nested`, `@DisplayName`, `assertThrows`, `assertAll` |
+| **Mockito** | `@Mock`, `@InjectMocks`, `when/thenReturn`, `verify`, `ArgumentCaptor`, `@Spy` |
+| **Mock vs Stub vs Spy vs Fake** | Mock verifica llamadas; stub devuelve respuestas; spy es un real vigilado; fake es una implementación simple (repositorio en memoria) |
+| **Qué mockear** | Los **puertos** propios; no tipos de terceros ni el dominio |
+| **Pirámide** | Muchos unitarios, algunos de integración con BD y Kafka reales en contenedor, pocos end-to-end |
+| **Quarkus** | `@QuarkusTest`, `@InjectMock`, RestAssured, Dev Services, `InMemoryConnector` |
+| **Spring** | `@SpringBootTest`, `@MockBean`, `@WebMvcTest`, Testcontainers |
+| **Por capa** | Dominio sin mocks; casos de uso con mocks de puertos; adaptadores con integración |
+
+### Escalera de respuesta
+| Pregunta | 🟢 Junior | 🟡 Mid | 🔴 Senior |
+|---|---|---|---|
+| **¿Qué es un mock?** | "Un objeto falso para aislar la prueba." | "Mockito programa respuestas con `when` y verifica con `verify`." | "Mockeo mis puertos; demasiados mocks acoplan la prueba a la implementación." |
+| **¿Cómo pruebas una llamada al banco?** | "Mockeo el cliente." | "Pruebo aprobado, rechazado y timeout con el puerto mockeado." | "Unitaria con mocks más una de integración del adaptador contra un banco simulado." |
+| **¿Cómo pruebas el acceso a datos?** | "Con una base de pruebas." | "Integración con PostgreSQL real en contenedor." | "Evito H2 como sustituto: difiere de PostgreSQL." |
 
 ---
 
