@@ -23,7 +23,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 🚨 Prioridad para hoy (lo que te confirmaron por WhatsApp)
 
-> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](cheat-sheet.md): respuestas relámpago A-Z, repaso de Kafka para quien lo usó hace tiempo, tu proyecto de pagos en 5 frases y un **simulacro de 20 preguntas** con respuesta oculta. Esta guía es la profunda; el cheat sheet es la de bolsillo.
+> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](cheat-sheet.md): **Java y POO primero** (clases, modificadores, pilares, SOLID), luego framework, datos, arquitectura y Kafka; tus proyectos del banco; un **simulacro de 26 preguntas** ordenado de lo básico a lo avanzado, y al final el glosario A-Z y los dibujos. Esta guía es la profunda; el cheat sheet es la de bolsillo.
 
 **Lista oficial de Lourdes:** Java 17+ con Quarkus o Spring Boot · Kafka con SmallRye Reactive Messaging o equivalente · PostgreSQL con JPA/Hibernate · Arquitectura hexagonal · Resiliencia · Testing con JUnit 5 y Mockito.
 
