@@ -68,8 +68,25 @@ Además de OpenAPI first: cambios **aditivos** o versionados para no romper cons
 - [ ] Repasar el ciclo de petición de NestJS: [`../../frameworks/nestjs/request-lifecycle.md`](../../frameworks/nestjs/request-lifecycle.md)
 - [ ] Practicar la respuesta de 30 segundos en voz alta
 
-## Fases siguientes del proceso
+## El proceso según el correo de Talent Acquisition (6-oct-2026)
 
-> 🔎 Según lo conversado: Recursos Humanos → Tech Lead → una fase final (posiblemente de *fit* cultural o con el cliente). No está confirmado por Arkano; preguntar al reclutador.
+| # | Etapa | Estado |
+|---|---|---|
+| 1 | Entrevista por competencias (RR. HH.) | ✅ |
+| 2 | Evaluación técnica (Tech Lead) | ✅ 7-oct, veredicto pendiente |
+| 3 | Fit cultural | ⏳ si se avanza |
+| 4 | Test de Integridad en plataforma externa | ⏳ con su aprobación el proceso queda finalizado |
 
-Si se confirma, probablemente toquen: motivación y por qué Arkano, trabajo con clientes, manejo de conflictos, expectativa salarial y disponibilidad, y ejemplos STAR (situación, tarea, acción, resultado) con casos reales de la pasarela de pagos.
+**Después, requisitos excluyentes:** certificado de antecedentes financieros (score superior a 550 puntos más el informe), antecedentes penales y judiciales, todos sin registros recientes.
+
+**Plazos:** el proceso se completa en 4 a 10 días hábiles desde el 6-oct, es decir, entre el lunes 12 y el lunes 20 de octubre. El correo no promete un día concreto para el resultado.
+
+## Qué esperar en el fit cultural
+
+Probablemente: motivación y por qué Arkano, trabajo con clientes, manejo de conflictos, y 2 o 3 historias STAR (situación, tarea, acción, resultado) con casos reales de la pasarela de pagos.
+
+## Papeles por adelantar
+
+- [ ] Revisar tu score financiero y pedir el informe (🔎 verificar dónde se emite y cuánto demora)
+- [ ] Certificado de antecedentes penales
+- [ ] Certificado de antecedentes judiciales
