@@ -70,6 +70,53 @@ El Tech Lead, el Delivery Manager y el cliente **no son roles de Scrum**, pero c
 | **Sprint Backlog** | **Sprint Goal** | Items elegidos + plan del sprint |
 | **Incremento** | **Definition of Done** | Resultado utilizable, terminado de verdad |
 
+### 🚪 Las dos puertas: Definition of Ready → Definition of Done
+
+> Píldora para leer rápido. **Ready = puerta de entrada** (¿puede entrar al sprint?). **Done = puerta de salida** (¿de verdad está terminado?).
+
+```mermaid
+flowchart LR
+    I[Idea / pedido] --> PB[Product Backlog]
+    PB --> RF[Refinement]
+    RF --> R{¿Cumple la<br/>Definition of READY?}
+    R -- No --> RF
+    R -- Sí --> SP[Sprint Planning]
+    SP --> W[En desarrollo<br/>y pruebas]
+    W --> D{¿Cumple la<br/>Definition of DONE?}
+    D -- No --> W
+    D -- "No llega al cierre<br/>del sprint" --> CO[Carry over:<br/>vuelve al backlog y se reestima]
+    D -- Sí --> INC[Incremento<br/>entregable]
+    INC --> SR[Sprint Review]
+    CO --> PB
+```
+
+| | 🚪 Definition of **Ready** | 🚪 Definition of **Done** |
+|---|---|---|
+| Pregunta | ¿Entiendo lo bastante para empezar? | ¿Está terminado de verdad? |
+| Cuándo | Antes de entrar al sprint (refinement) | Al cerrar el item y el sprint |
+| De quién | PO y equipo | Todo el equipo, igual para todos los items |
+| En la Guía de Scrum | No: es una práctica | Sí: es el compromiso del Incremento |
+| En la frutería | El pedido está claro: qué fruta, cuánta, para cuándo | Fruta lavada, empacada, etiquetada y entregada |
+| Si no se cumple | Vuelve a refinement | Sigue en desarrollo o es carry over |
+
+**Ready típico** (checklist de entrada):
+- [ ] Historia escrita ("Como… quiero… para…") y entendida por todos
+- [ ] Criterios de aceptación claros
+- [ ] Estimada (puntos) y de un tamaño que cabe en un sprint
+- [ ] Dependencias identificadas (otro equipo, API, accesos)
+- [ ] Diseño o contrato definido (por ejemplo OpenAPI)
+- [ ] Datos de prueba o ambiente disponibles
+
+**Done típico** (checklist de salida):
+- [ ] Código terminado y revisado por otra persona (PR)
+- [ ] Pruebas unitarias y de integración en verde
+- [ ] Criterios de aceptación verificados por el PO
+- [ ] Sin vulnerabilidades ni deuda nueva evidente (análisis estático)
+- [ ] Documentación y contrato actualizados
+- [ ] Desplegado en el ambiente acordado
+
+**Cómo recordarlo:** *Ready entra, Done sale.* Sin Ready, el equipo empieza a ciegas y se arrastra trabajo; sin Done, "terminado" significa cosas distintas para cada persona.
+
 ## 2. Pistas rápidas: términos que se olvidan
 
 | Término | Qué es | Se confunde con |
