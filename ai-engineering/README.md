@@ -99,6 +99,8 @@ La progresión es deliberada: no se puede razonar sobre RAG (Fase 2) sin dominar
 
 ## 8 · Cómo se va a completar esta carpeta
 
+> 📚 **Curso en curso:** [`claude/`](claude) — apuntes clase a clase sobre Claude, LLMs, agentes, harness (Claude Code) y MCP. Es la parte práctica con Claude de las Fases 1 y 3. Índice: [`claude/README.md`](claude/README.md).
+
 Mismo criterio incremental que [`system-design/`](../system-design): cada fase suma su propio archivo (`00-fundamentos.md`, `01-llms-y-prompting.md`, etc.) a medida que se estudia y se practica con un caso concreto — no se documenta teoría sin haberla ejercitado. Este `README.md` es el índice y la justificación formal del plan; se actualiza la tabla de la sección 5 con el estado real (⏳ pendiente / ✅ hecho) a medida que cada fase se completa.
 
 | Fase | Estado |
