@@ -338,7 +338,7 @@ flowchart LR
     K --> STR["Procesamiento en streaming"]
     K --> SV2["Tus servicios (Consumer API)"]
 ```
-> Dibujo de la arquitectura con **ZooKeeper (la versión clásica)** y su equivalente **actual con KRaft**: [`cheat-sheet.md` sección 6](../entrevistas/arkano-senior-java-developer/cheat-sheet.md#c6).
+> Dibujo de la arquitectura con **ZooKeeper (la versión clásica)** y su equivalente **actual con KRaft**: [`cheat-sheet.md` sección 6](../entrevistas/cheat-sheet.md#c6).
 
 **Dos formas de conectarte a Kafka:** con una **API propia** (tu servicio usa Producer y Consumer) o con **Kafka Connect**, que te permite **descargar conectores ya hechos** (MySQL, PostgreSQL, Snowflake, S3...) y registrarlos con un archivo de configuración JSON. Hay conectores **fuente** (meten datos a Kafka) y **destino** (sacan datos de Kafka).
 

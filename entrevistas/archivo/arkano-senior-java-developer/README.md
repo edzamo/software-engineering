@@ -1,6 +1,6 @@
 # Arkano — Senior Java Developer
 
-> **Documento temporal de estudio.** Entrevista conversacional (te preguntan, tú explicas con tus palabras y das un ejemplo). Cuando el proceso cierre, mover a `archivo/` y registrar la retrospectiva en [`kaizen/`](../kaizen).
+> **Proceso cerrado con oferta (9-oct-2026).** Arkano me ofreció Senior Java Developer (Application Developer III) para el cliente Yape Perú, inicio el 21-oct-2026. Lo aprendido está en [`retro-entrevista-tecnica.md`](retro-entrevista-tecnica.md) y en [`kaizen/`](../../kaizen). Este documento queda como material de consulta; la versión de bolsillo vive en [`../../cheat-sheet.md`](../../cheat-sheet.md).
 
 Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging**, **PostgreSQL con JPA/Hibernate**, **arquitectura hexagonal**, **resiliencia** y **testing con JUnit 5 y Mockito**, para una consultora que construye soluciones para clientes de la región.
 
@@ -11,9 +11,10 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 | Etapa | Con quién | Foco | Estado |
 |---|---|---|---|
 | 1 · Competencias | Lourdes Moreno (Talent Acquisition) | Experiencia, habilidades, alineación con el rol | Hecha, avanzas |
-| 2 · Evaluación técnica | Por confirmar: Lourdes no dijo quién (según lo que entendiste, un Tech Lead o Principal Engineer) | **Conversacional.** Temas confirmados por WhatsApp: Java 17+ con Quarkus/Spring Boot, Kafka con SmallRye Reactive Messaging, PostgreSQL con JPA/Hibernate, hexagonal, resiliencia, JUnit 5 y Mockito | **Agendada para hoy (14:00 o 15:00)** |
-| 3 · Fit cultural | Por definir | Valores, forma de trabajo | Pendiente |
-| 4 · Test de integridad | Plataforma externa | Aprobarlo cierra el proceso | Pendiente |
+| 2 · Evaluación técnica | Por confirmar: Lourdes no dijo quién (según lo que entendiste, un Tech Lead o Principal Engineer) | **Conversacional.** Temas confirmados por WhatsApp: Java 17+ con Quarkus/Spring Boot, Kafka con SmallRye Reactive Messaging, PostgreSQL con JPA/Hibernate, hexagonal, resiliencia, JUnit 5 y Mockito | Hecha el 7-oct con el Tech Lead |
+| 3 · Fit cultural | Delivery Manager | Valores, forma de trabajo | Hecha |
+| 4 · Test de integridad | Plataforma externa | Aprobarlo cierra el proceso | Hecha |
+| Oferta | Lourdes Moreno (Talent Acquisition) | USD 3,200 mensual bruto, pago por OnTop con factura, 3 meses de prueba | **Recibida el 9-oct-2026** |
 
 **Requisitos al final (excluyentes):** certificado de antecedentes financieros (score superior a 550 puntos, con informe), penales y judiciales sin registros. Conviene empezar a gestionarlos ya; no esperes a la etapa 4.
 
@@ -23,22 +24,22 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 🚨 Prioridad para hoy (lo que te confirmaron por WhatsApp)
 
-> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](cheat-sheet.md): **Java y POO primero** (clases, modificadores, pilares, SOLID), luego framework, datos, arquitectura y Kafka; tus proyectos del banco; un **simulacro de 26 preguntas** ordenado de lo básico a lo avanzado, y al final el glosario A-Z y los dibujos. Esta guía es la profunda; el cheat sheet es la de bolsillo.
+> ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](../../cheat-sheet.md): **Java y POO primero** (clases, modificadores, pilares, SOLID), luego framework, datos, arquitectura y Kafka; tus proyectos del banco; un **simulacro de 26 preguntas** ordenado de lo básico a lo avanzado, y al final el glosario A-Z y los dibujos. Esta guía es la profunda; el cheat sheet es la de bolsillo.
 
 **Lista oficial de Lourdes:** Java 17+ con Quarkus o Spring Boot · Kafka con SmallRye Reactive Messaging o equivalente · PostgreSQL con JPA/Hibernate · Arquitectura hexagonal · Resiliencia · Testing con JUnit 5 y Mockito.
 
 | # | Tema que evaluarán | Aquí (resumen y preguntas) | Detalle |
 |---|---|---|---|
-| 1 | **Java 17+ con Quarkus / Spring Boot** | [20 · Java 17+ y Quarkus](#s20) | [`frameworks/quarkus/`](../../frameworks/quarkus), [`frameworks/spring-boot/`](../../frameworks/spring-boot), [`java-core/`](../../java-core) |
-| 2 | **Kafka con SmallRye Reactive Messaging** | [21 · SmallRye + Kafka](#s21), [06 · Kafka](#s06) | [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md), [`messaging-streaming/kafka.md`](../../messaging-streaming/kafka.md) |
-| 3 | **PostgreSQL con JPA/Hibernate** | [22 · JPA, Hibernate y PostgreSQL](#s22) | [`persistencia-hibernate-postgresql.md`](../../frameworks/quarkus/persistencia-hibernate-postgresql.md) |
-| 4 | **Arquitectura hexagonal** | [23 · Hexagonal](#s23) | [`software-architectures/hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) |
-| 5 | **Resiliencia** | [16 · Resiliencia](#s16), [24 · En Quarkus](#s24) | [`microservices-patterns/`](../../microservices-patterns) |
-| 6 | **Testing: JUnit 5 y Mockito** | [25 · Testing](#s25) | [`tdd/junit5-mockito.md`](../../tdd/junit5-mockito.md) |
+| 1 | **Java 17+ con Quarkus / Spring Boot** | [20 · Java 17+ y Quarkus](#s20) | [`frameworks/quarkus/`](../../../frameworks/quarkus), [`frameworks/spring-boot/`](../../../frameworks/spring-boot), [`java-core/`](../../../java-core) |
+| 2 | **Kafka con SmallRye Reactive Messaging** | [21 · SmallRye + Kafka](#s21), [06 · Kafka](#s06) | [`smallrye-reactive-messaging.md`](../../../frameworks/quarkus/smallrye-reactive-messaging.md), [`messaging-streaming/kafka.md`](../../../messaging-streaming/kafka.md) |
+| 3 | **PostgreSQL con JPA/Hibernate** | [22 · JPA, Hibernate y PostgreSQL](#s22) | [`persistencia-hibernate-postgresql.md`](../../../frameworks/quarkus/persistencia-hibernate-postgresql.md) |
+| 4 | **Arquitectura hexagonal** | [23 · Hexagonal](#s23) | [`software-architectures/hexagonal-architecture.md`](../../../software-architectures/hexagonal-architecture.md) |
+| 5 | **Resiliencia** | [16 · Resiliencia](#s16), [24 · En Quarkus](#s24) | [`microservices-patterns/`](../../../microservices-patterns) |
+| 6 | **Testing: JUnit 5 y Mockito** | [25 · Testing](#s25) | [`tdd/junit5-mockito.md`](../../../tdd/junit5-mockito.md) |
 
-**¿Y la programación reactiva / WebFlux?** No está en la lista, pero **SmallRye Reactive Messaging y Quarkus son reactivos por debajo** (Mutiny: `Uni` y `Multi`, equivalentes a `Mono` y `Flux`). Basta con saber **qué es, por qué existe y cuándo usarla**; ver [20](#s20) y [21](#s21). No necesitas dominar operadores. Si te preguntan, tu base de WebFlux ([`webflux.md`](../../frameworks/spring-boot/webflux.md)) aplica casi 1 a 1.
+**¿Y la programación reactiva / WebFlux?** No está en la lista, pero **SmallRye Reactive Messaging y Quarkus son reactivos por debajo** (Mutiny: `Uni` y `Multi`, equivalentes a `Mono` y `Flux`). Basta con saber **qué es, por qué existe y cuándo usarla**; ver [20](#s20) y [21](#s21). No necesitas dominar operadores. Si te preguntan, tu base de WebFlux ([`webflux.md`](../../../frameworks/spring-boot/webflux.md)) aplica casi 1 a 1.
 
-**Tus 2 servicios de producción en el banco (transferencias asíncronas con Kafka/Event Hubs), con revisión crítica y rediseño, y su versión en Azure, AWS y GCP (Service Bus + Event Hubs + Durable Functions):** [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md). **Tu práctica con Kafka:** tienes 4 pruebas de concepto (cliente Java, Spring Kafka, Spring Cloud Stream, multi-binder con Azure Event Hubs): [`practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md). **Kafka vs RabbitMQ vs cola:** [`messaging-streaming/README.md` sección 5b](../../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica).
+**Tus 2 servicios de producción en el banco (transferencias asíncronas con Kafka/Event Hubs), con revisión crítica y rediseño, y su versión en Azure, AWS y GCP (Service Bus + Event Hubs + Durable Functions):** [`caso-transferencias-asincronas.md`](../../../system-design/caso-transferencias-asincronas.md). **Tu práctica con Kafka:** tienes 4 pruebas de concepto (cliente Java, Spring Kafka, Spring Cloud Stream, multi-binder con Azure Event Hubs): [`practica-kafka-ejercicios.md`](../../../messaging-streaming/practica-kafka-ejercicios.md). **Kafka vs RabbitMQ vs cola:** [`messaging-streaming/README.md` sección 5b](../../../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica).
 
 **Sobre lo que NO conoces ("SmallRye"):** no lo has usado y está bien. La lista dice **"o equivalente"**: tu experiencia con `spring-kafka` cuenta. Dilo así: *"Con Spring usé `@KafkaListener` y `KafkaTemplate`; SmallRye es el equivalente en Quarkus con `@Incoming` y `Emitter`, y los conceptos (grupos, offsets, DLQ, idempotencia) son los mismos."* (solo si es verdad).
 
@@ -61,7 +62,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## Cómo estudiar esta guía (de junior a senior)
 
-**Regla del repo:** todo se explica primero **con manzanas** (la analogía de la frutería, ver [`glosario.md`](../../messaging-streaming/glosario.md)) y después con el detalle técnico. Si no puedes contarlo con manzanas, todavía no lo entiendes lo bastante para contarlo en una entrevista.
+**Regla del repo:** todo se explica primero **con manzanas** (la analogía de la frutería, ver [`glosario.md`](../../../messaging-streaming/glosario.md)) y después con el detalle técnico. Si no puedes contarlo con manzanas, todavía no lo entiendes lo bastante para contarlo en una entrevista.
 
 **Tres pasadas:**
 
@@ -112,21 +113,21 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 | Requisito del JD | Prioridad | Aquí en esta guía | Para profundizar |
 |---|---|---|---|
-| 4+ años backend, Java sólido | Alta | [03 · Java](#s03) | [`java-core/`](../../java-core) |
-| Servicios RESTful y APIs | Alta | [05 · REST](#s05) | [`frameworks/spring-boot/`](../../frameworks/spring-boot) |
-| Patrones de diseño y código limpio | Alta | [04 · SOLID y patrones](#s04) | [`design-pattern/`](../../design-pattern), [`clean-code/`](../../clean-code), [`solid-principles/`](../../solid-principles) |
-| Kafka (streaming de eventos) | Alta | [06 · Kafka](#s06) | [`messaging-streaming/kafka.md`](../../messaging-streaming/kafka.md) (cluster, KRaft, topics, payload, headers, banca) y [`messaging-streaming/`](../../messaging-streaming) (cuándo elegir cada tecnología) |
-| OWASP Top 10 | Alta | [07 · OWASP](#s07) | [`frameworks/spring-boot/security.md`](../../frameworks/spring-boot/security.md) |
-| Resiliencia (Circuit Breaker, Retry, Bulkhead) | Alta, la suele preguntar un Tech Lead | [16 · Resiliencia](#s16) | [`microservices-patterns/`](../../microservices-patterns) |
-| Decisiones de arquitectura y trade-offs | Alta, nivel Principal Engineer | [17 · Arquitectura](#s17) | [`software-architectures/`](../../software-architectures) |
-| CQRS y Saga/Outbox como patrones de arquitectura | Alta, nivel Principal Engineer | [17 · Arquitectura](#s17) | [`ddd/cqrs.md`](../../ddd/cqrs.md), [`microservices-patterns/`](../../microservices-patterns) |
-| Jobs programados y disparadores (Quartz) | Media, sale por experiencia previa en pagos | [18 · Quartz](#s18) | [`messaging-streaming/quartz-scheduler.md`](../../messaging-streaming/quartz-scheduler.md) |
-| **System design de tu proyecto (pasarela de pagos)** | Alta: es tu historia de experiencia | [19 · System design](#s19) | [`system-design/caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md) y su versión cloud: [`caso-pasarela-pagos-cloud.md`](../../system-design/caso-pasarela-pagos-cloud.md) |
-| Node.js (+2 años) | Media | [08 · Node.js](#s08) | [`frameworks/nestjs/`](../../frameworks/nestjs) |
-| Azure (Functions, Service Bus, APIM, AKS, DevOps) | Media | [09 · Azure](#s09) | [`cloud/aws/`](../../cloud/aws) para comparar |
-| Pruebas unitarias e integración, agilidad | Media | [10 · Pruebas y agilidad](#s10) | [`tdd/`](../../tdd) |
+| 4+ años backend, Java sólido | Alta | [03 · Java](#s03) | [`java-core/`](../../../java-core) |
+| Servicios RESTful y APIs | Alta | [05 · REST](#s05) | [`frameworks/spring-boot/`](../../../frameworks/spring-boot) |
+| Patrones de diseño y código limpio | Alta | [04 · SOLID y patrones](#s04) | [`design-pattern/`](../../../design-pattern), [`clean-code/`](../../../clean-code), [`solid-principles/`](../../../solid-principles) |
+| Kafka (streaming de eventos) | Alta | [06 · Kafka](#s06) | [`messaging-streaming/kafka.md`](../../../messaging-streaming/kafka.md) (cluster, KRaft, topics, payload, headers, banca) y [`messaging-streaming/`](../../../messaging-streaming) (cuándo elegir cada tecnología) |
+| OWASP Top 10 | Alta | [07 · OWASP](#s07) | [`frameworks/spring-boot/security.md`](../../../frameworks/spring-boot/security.md) |
+| Resiliencia (Circuit Breaker, Retry, Bulkhead) | Alta, la suele preguntar un Tech Lead | [16 · Resiliencia](#s16) | [`microservices-patterns/`](../../../microservices-patterns) |
+| Decisiones de arquitectura y trade-offs | Alta, nivel Principal Engineer | [17 · Arquitectura](#s17) | [`software-architectures/`](../../../software-architectures) |
+| CQRS y Saga/Outbox como patrones de arquitectura | Alta, nivel Principal Engineer | [17 · Arquitectura](#s17) | [`ddd/cqrs.md`](../../../ddd/cqrs.md), [`microservices-patterns/`](../../../microservices-patterns) |
+| Jobs programados y disparadores (Quartz) | Media, sale por experiencia previa en pagos | [18 · Quartz](#s18) | [`messaging-streaming/quartz-scheduler.md`](../../../messaging-streaming/quartz-scheduler.md) |
+| **System design de tu proyecto (pasarela de pagos)** | Alta: es tu historia de experiencia | [19 · System design](#s19) | [`system-design/caso-pasarela-pagos.md`](../../../system-design/caso-pasarela-pagos.md) y su versión cloud: [`caso-pasarela-pagos-cloud.md`](../../../system-design/caso-pasarela-pagos-cloud.md) |
+| Node.js (+2 años) | Media | [08 · Node.js](#s08) | [`frameworks/nestjs/`](../../../frameworks/nestjs) |
+| Azure (Functions, Service Bus, APIM, AKS, DevOps) | Media | [09 · Azure](#s09) | [`cloud/aws/`](../../../cloud/aws) para comparar |
+| Pruebas unitarias e integración, agilidad | Media | [10 · Pruebas y agilidad](#s10) | [`tdd/`](../../../tdd) |
 | GraphQL (deseable) | Baja | [11 · GraphQL](#s11) | Solo aquí |
-| Sistemas heredados y bases de datos (plus) | Plus | [12 · Legacy y BD](#s12) | [`system-design/02-databases-sql-vs-nosql.md`](../../system-design/02-databases-sql-vs-nosql.md) |
+| Sistemas heredados y bases de datos (plus) | Plus | [12 · Legacy y BD](#s12) | [`system-design/02-databases-sql-vs-nosql.md`](../../../system-design/02-databases-sql-vs-nosql.md) |
 | Competencias y fit | Media | [13 · STAR](#s13), [14 · Preguntas a ellos](#s14) | |
 
 **Búsqueda rápida durante la prueba:** [Circuit Breaker](#s16) · [SOLID](#s04) · [Patrones GoF](#s04) · [Garantías de entrega Kafka](#s06) · [OWASP](#s07) · [Saga y Outbox](#s17) · [Azure vs AWS](#s09) · [N+1](#s12) · [CQRS](#s17) · [Quartz](#s18) · [Pasarela de pagos](#s19) · [Plan de estudio](#s15)
@@ -137,7 +138,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 ## 03 · Java: lo que te van a preguntar
 
-> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 1](cheat-sheet.md#c1) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
+> ⚡ **Versión de bolsillo con POO completa, dibujos y ejemplos de manzanas:** [`cheat-sheet.md` sección 1](../../cheat-sheet.md#c1) (clase, objeto, atributo, variables, los 4 pilares, sobrecarga vs sobrescritura, abstracta vs interfaz, composición, `equals`/`hashCode`, colecciones, streams, Java 17/21, concurrencia y preguntas trampa).
 
 Formato: **pregunta → respuesta corta que puedes decir en voz alta → ejemplo**.
 
@@ -151,13 +152,13 @@ Responde con tu experiencia real (proyectos, versión, tamaño del equipo). Si p
 | 17 | Records, sealed classes, text blocks, pattern matching para `instanceof`, LTS |
 | 21 | Virtual threads, pattern matching en `switch`, record patterns, sequenced collections, LTS |
 
-Detalle en [`java-core/java-version-evolution.md`](../../java-core/java-version-evolution.md).
+Detalle en [`java-core/java-version-evolution.md`](../../../java-core/java-version-evolution.md).
 
 ### Diferencia entre `==` y `equals()`; contrato `equals`/`hashCode`
 `==` compara referencias; `equals()` compara contenido si se sobrescribe. Si dos objetos son `equals`, deben tener el mismo `hashCode`. Si lo rompes, un `HashMap` o `HashSet` no encuentra el objeto. Un record lo genera por ti.
 
 ### `ArrayList` vs `LinkedList`; `HashMap` por dentro
-`ArrayList` accede por índice en O(1) y es lo que se usa casi siempre. `LinkedList` casi nunca gana en la práctica. `HashMap` calcula el índice con el hash de la clave, resuelve colisiones con lista y, desde Java 8, con árbol rojo-negro cuando el bucket crece. Promedio O(1). No es thread-safe: usa `ConcurrentHashMap`. Ver [`java-core/collections-and-streams.md`](../../java-core/collections-and-streams.md).
+`ArrayList` accede por índice en O(1) y es lo que se usa casi siempre. `LinkedList` casi nunca gana en la práctica. `HashMap` calcula el índice con el hash de la clave, resuelve colisiones con lista y, desde Java 8, con árbol rojo-negro cuando el bucket crece. Promedio O(1). No es thread-safe: usa `ConcurrentHashMap`. Ver [`java-core/collections-and-streams.md`](../../../java-core/collections-and-streams.md).
 
 ### ¿Cómo funciona el garbage collector?
 Libera memoria de objetos inalcanzables. La memoria se divide en generaciones (young y old), porque la mayoría de los objetos muere joven. G1 es el colector por defecto, ZGC apunta a pausas muy bajas. Una fuga de memoria en Java es mantener referencias que ya no necesitas (caches estáticos, listeners sin remover).
@@ -184,7 +185,7 @@ Checked: el compilador te obliga a manejarlas, para errores recuperables. Unchec
 
 ### Los 5 principios, explicados simple
 
-> Misma explicación que en el [cheat sheet 1.15](cheat-sheet.md#c1) (código malo, código bueno y dibujos).
+> Misma explicación que en el [cheat sheet 1.15](../../cheat-sheet.md#c1) (código malo, código bueno y dibujos).
 
 **Para qué sirve SOLID, en palabras de la calle:** son 5 reglas para que el código **se pueda cambiar sin romper otras cosas**. Imagina una frutería: si el cajero también cuenta el dinero, empaca, limpia y hace la contabilidad, cuando falle algo no sabes por dónde empezar. SOLID es poner **a cada uno a hacer lo suyo**.
 
@@ -383,7 +384,7 @@ flowchart LR
 
 **Las 3 preguntas que más caen:** *"¿Un ejemplo de SRP?"* → `Factura` con pagar e imprimir, dividida. *"¿Para qué sirve D?"* → poder cambiar de implementación y hacer pruebas con mocks. *"¿Qué relación tiene D con Spring o Quarkus?"* → la inyección de dependencias es aplicar D: el framework te entrega la implementación.
 
-**"¿Para qué sirven?"** Para que el código sea fácil de cambiar, probar y entender cuando el sistema crece y el equipo rota. No son leyes: aplicarlos de más produce sobreingeniería (por eso existen KISS y YAGNI, ver [`clean-code/dry-kiss-yagni.md`](../../clean-code/dry-kiss-yagni.md)).
+**"¿Para qué sirven?"** Para que el código sea fácil de cambiar, probar y entender cuando el sistema crece y el equipo rota. No son leyes: aplicarlos de más produce sobreingeniería (por eso existen KISS y YAGNI, ver [`clean-code/dry-kiss-yagni.md`](../../../clean-code/dry-kiss-yagni.md)).
 
 **Tu ejemplo propio:** prepara uno de tu trabajo real donde aplicaste DIP u OCP. Es lo que más convence.
 
@@ -426,10 +427,10 @@ Además existen patrones **arquitectónicos** (Layered, Hexagonal, CQRS, Event S
 - *"¿Singleton es un antipatrón?"* Manual, muchas veces sí: estado global, hilos, tests difíciles. Gestionado por un contenedor de inyección de dependencias, no.
 - *"¿Un patrón que hayas usado y te haya salido mal?"* Prepara una historia honesta de sobreingeniería y lo que aprendiste.
 
-Detalle de cada patrón en [`design-pattern/`](../../design-pattern). Interpreter, Mediator, Memento, Observer, State y Template Method todavía no están documentados allí: con lo de arriba alcanza para una entrevista conversacional, pero conviene ampliarlo después.
+Detalle de cada patrón en [`design-pattern/`](../../../design-pattern). Interpreter, Mediator, Memento, Observer, State y Template Method todavía no están documentados allí: con lo de arriba alcanza para una entrevista conversacional, pero conviene ampliarlo después.
 
 ### Código limpio en una respuesta
-Nombres que revelan intención, funciones pequeñas con un solo nivel de abstracción, sin duplicación (DRY) pero sin abstraer demasiado pronto, pocos parámetros, errores con excepciones y no con códigos de retorno, y tests que documentan el comportamiento. Ver [`clean-code/`](../../clean-code).
+Nombres que revelan intención, funciones pequeñas con un solo nivel de abstracción, sin duplicación (DRY) pero sin abstraer demasiado pronto, pocos parámetros, errores con excepciones y no con códigos de retorno, y tests que documentan el comportamiento. Ver [`clean-code/`](../../../clean-code).
 
 ---
 
@@ -444,7 +445,7 @@ Nombres que revelan intención, funciones pequeñas con un solo nivel de abstrac
 - **Paginación:** por `offset/limit` o, mejor para datasets grandes, por cursor.
 - **Documentación:** OpenAPI/Swagger. El JD lo pide explícitamente ("documentación para facilitar la integración de APIs").
 - **Errores consistentes:** formato único, idealmente Problem Details (RFC 9457), sin stack traces.
-- **Spring Boot:** controladores finos, lógica en servicios, DTOs en la frontera, validación con Bean Validation (`@Valid`). Ver [`frameworks/spring-boot/`](../../frameworks/spring-boot).
+- **Spring Boot:** controladores finos, lógica en servicios, DTOs en la frontera, validación con Bean Validation (`@Valid`). Ver [`frameworks/spring-boot/`](../../../frameworks/spring-boot).
 
 ---
 
@@ -452,7 +453,7 @@ Nombres que revelan intención, funciones pequeñas con un solo nivel de abstrac
 
 ## 06 · Kafka (estudia esto con cuidado)
 
-> Aquí queda lo esencial para consultar rápido. El detalle completo está en [`messaging-streaming/kafka.md`](../../messaging-streaming/kafka.md) y la comparación de tecnologías de mensajería en [`messaging-streaming/README.md`](../../messaging-streaming).
+> Aquí queda lo esencial para consultar rápido. El detalle completo está en [`messaging-streaming/kafka.md`](../../../messaging-streaming/kafka.md) y la comparación de tecnologías de mensajería en [`messaging-streaming/README.md`](../../../messaging-streaming).
 
 ### Cuándo elegir cada tecnología (cola, pub/sub o log)
 
@@ -500,7 +501,7 @@ Una regla útil: **más consumidores que particiones en un grupo = consumidores 
 
 ### Arquitectura en 30 segundos (banca incluida)
 
-> 🖼️ **Dibujo completo de la arquitectura de Kafka** (cluster con brokers, topic con particiones, líder y réplicas, controlador, productores y grupos de consumidores) y el viaje de un mensaje: [`cheat-sheet.md` sección 6](cheat-sheet.md#c6).
+> 🖼️ **Dibujo completo de la arquitectura de Kafka** (cluster con brokers, topic con particiones, líder y réplicas, controlador, productores y grupos de consumidores) y el viaje de un mensaje: [`cheat-sheet.md` sección 6](../../cheat-sheet.md#c6).
 
 - **Cluster** = varios brokers (mínimo 3). Cada **topic** se parte en **particiones**, y cada partición se **replica** (RF=3) con un líder y seguidoras.
 - **ZooKeeper → KRaft:** antes un cluster aparte coordinaba los metadatos; ahora un quórum de controladores con Raft dentro de Kafka lo hace (ZooKeeper desapareció en Kafka 4.0).
@@ -578,7 +579,7 @@ La lista que Arkano menciona es la clásica. **Verifica cuál versión usan** (l
 - **Manejo de secretos:** variables de entorno o un gestor (**Azure Key Vault** en este contexto), nunca en el repo.
 - **Autenticación vs autorización:** quién eres vs qué puedes hacer. OAuth2 delega acceso; OpenID Connect añade identidad. En Azure, **Microsoft Entra ID** es el proveedor.
 
-Detalle de Spring Security en [`frameworks/spring-boot/security.md`](../../frameworks/spring-boot/security.md).
+Detalle de Spring Security en [`frameworks/spring-boot/security.md`](../../../frameworks/spring-boot/security.md).
 
 ---
 
@@ -591,7 +592,7 @@ El rol mezcla Java y Node. Prepárate para comparar.
 - **Event loop:** Node ejecuta JavaScript en un hilo, con I/O no bloqueante. Es excelente para I/O (APIs, gateways), malo para CPU intensiva (usa `worker_threads` o un servicio aparte).
 - **Promesas y `async/await`:** manejo de errores con `try/catch`; `Promise.all` para paralelo, `Promise.allSettled` si no quieres que un fallo cancele todo.
 - **Cuándo Java y cuándo Node:** Java para lógica de negocio pesada, tipado fuerte y ecosistema empresarial; Node para capas de integración, BFF y APIs ligeras con mucho I/O.
-- **TypeScript** y **NestJS** (arquitectura por módulos, inyección de dependencias, parecido a Spring): ver [`frameworks/nestjs/`](../../frameworks/nestjs).
+- **TypeScript** y **NestJS** (arquitectura por módulos, inyección de dependencias, parecido a Spring): ver [`frameworks/nestjs/`](../../../frameworks/nestjs).
 
 ---
 
@@ -601,7 +602,7 @@ El rol mezcla Java y Node. Prepárate para comparar.
 
 No te piden ser experto, pero conoce el mapa y compáralo con lo que sabes de AWS.
 
-> 📚 **Carpeta completa de Azure, con manzanas y peras:** [`cloud/azure/`](../../cloud/azure/README.md) · mensajería y Kafka ([Event Hubs, Service Bus, Event Grid](../../cloud/azure/mensajeria-event-hubs-service-bus.md)) · [AKS y Kubernetes](../../cloud/azure/aks-kubernetes.md) · [Redis](../../cloud/azure/redis-cache.md) · [Cosmos DB, Key Vault, Managed Identity, Application Insights y DevOps](../../cloud/azure/datos-seguridad-y-devops.md). Comparación de las tres nubes: [`cloud/README.md`](../../cloud/README.md).
+> 📚 **Carpeta completa de Azure, con manzanas y peras:** [`cloud/azure/`](../../../cloud/azure/README.md) · mensajería y Kafka ([Event Hubs, Service Bus, Event Grid](../../../cloud/azure/mensajeria-event-hubs-service-bus.md)) · [AKS y Kubernetes](../../../cloud/azure/aks-kubernetes.md) · [Redis](../../../cloud/azure/redis-cache.md) · [Cosmos DB, Key Vault, Managed Identity, Application Insights y DevOps](../../../cloud/azure/datos-seguridad-y-devops.md). Comparación de las tres nubes: [`cloud/README.md`](../../../cloud/README.md).
 
 | Servicio Azure | Para qué | Equivalente aproximado en AWS |
 |---|---|---|
@@ -628,7 +629,7 @@ Si no has usado Azure, **no inventes**. Di qué conoces conceptualmente y que la
 
 - **Pirámide de tests:** muchos unitarios (rápidos, aislados), menos de integración (con BD real vía Testcontainers), pocos end-to-end.
 - **Java:** JUnit 5, Mockito, AssertJ, Testcontainers, `@SpringBootTest` y `@WebMvcTest`.
-- **TDD:** rojo → verde → refactor. Ver [`tdd/`](../../tdd).
+- **TDD:** rojo → verde → refactor. Ver [`tdd/`](../../../tdd).
 - **Mocks vs fakes:** un mock verifica interacciones; un fake es una implementación simple y funcional (BD en memoria). Abusar de los mocks hace tests frágiles.
 - **Contratos:** si el frontend y el backend se desarrollan en paralelo, pruebas de contrato (Pact) o un OpenAPI como fuente de verdad.
 - **Agilidad:** Scrum (sprints, planning, daily, review, retro) y Kanban. Prepara un ejemplo de cómo aportaste en una retro o cómo manejaste un cambio de alcance a mitad de sprint.
@@ -723,7 +724,7 @@ El JD dice "integrar sistemas heredados": en una consultora es el pan de cada d�
 | Fortaleza | Joins, transacciones, integridad | Escala horizontal, esquema flexible, alto volumen |
 | Ejemplos | PostgreSQL, SQL Server, Azure SQL | MongoDB, Cosmos DB, Redis, DynamoDB |
 
-Regla: empieza por relacional salvo que haya una razón concreta (volumen enorme, esquema muy variable, latencia mínima). Detalle en [`system-design/02-databases-sql-vs-nosql.md`](../../system-design/02-databases-sql-vs-nosql.md).
+Regla: empieza por relacional salvo que haya una razón concreta (volumen enorme, esquema muy variable, latencia mínima). Detalle en [`system-design/02-databases-sql-vs-nosql.md`](../../../system-design/02-databases-sql-vs-nosql.md).
 
 **ACID** (Atomicidad, Consistencia, Aislamiento, Durabilidad) vs **BASE** (Basically Available, Soft state, Eventual consistency).
 
@@ -858,7 +859,7 @@ private Pago pagoPendiente(Orden orden, Throwable t) {
 
 **Cómo se ve en Azure:** API Management permite políticas de `retry`, `rate-limit` y `circuit-breaker` en el gateway; AKS con probes de liveness y readiness; en Service Bus, dead-letter queue y reintentos de entrega. Con service mesh (Istio, Linkerd) estas políticas se mueven al sidecar sin tocar el código.
 
-Más contexto en [`microservices-patterns/`](../../microservices-patterns), sección 2.
+Más contexto en [`microservices-patterns/`](../../../microservices-patterns), sección 2.
 
 ---
 
@@ -872,15 +873,15 @@ Con este nivel de entrevistador, **el "por qué" y los trade-offs pesan más que
 |---|---|---|
 | **¿Monolito o microservicios?** | Que no dices "microservicios" por moda | Monolito modular primero si el equipo es chico o el dominio no está claro. Microservicios cuando hay equipos independientes, escalado distinto por módulo o ciclos de despliegue diferentes. Costo: complejidad operativa, consistencia, observabilidad |
 | **¿Cómo manejas transacciones entre servicios?** | Saga, no transacciones distribuidas | **Saga** (coreografía u orquestación) con compensaciones, **Outbox** para publicar de forma confiable, **idempotencia** en consumidores. Consistencia eventual |
-| **Una pantalla consulta datos de varios servicios y es lenta, ¿qué haces?** | Conocer **CQRS** y su costo | Una **vista de lectura** desnormalizada que un **proyector idempotente** actualiza con eventos de Kafka (consistencia eventual). Alternativa más simple: *API Composition*. Ver [`microservices-patterns/cqrs.md`](../../microservices-patterns/cqrs.md) |
+| **Una pantalla consulta datos de varios servicios y es lenta, ¿qué haces?** | Conocer **CQRS** y su costo | Una **vista de lectura** desnormalizada que un **proyector idempotente** actualiza con eventos de Kafka (consistencia eventual). Alternativa más simple: *API Composition*. Ver [`microservices-patterns/cqrs.md`](../../../microservices-patterns/cqrs.md) |
 | **Teorema CAP** | Entenderlo con matices | Ante una partición de red eliges entre consistencia y disponibilidad. Es una elección por operación, no por sistema |
 | **¿Sincrónico o asíncrono entre servicios?** | Acoplamiento temporal | REST/gRPC para consultas que necesitan respuesta inmediata; eventos (Kafka, Service Bus) para desacoplar y absorber picos |
 | **¿Cómo escalas un servicio?** | Qué se puede escalar y qué no | Stateless detrás de un balanceador, caché, réplicas de lectura, particionado, colas para absorber picos. Identifica el cuello de botella con métricas antes de escalar |
 | **¿Cómo versionas una API sin romper clientes?** | Compatibilidad | Cambios aditivos, versionado explícito, política de deprecación, contratos (OpenAPI, pruebas de contrato) |
-| **¿Qué es la arquitectura hexagonal?** | Dependencias hacia el dominio | El dominio no depende de frameworks ni de la infraestructura; puertos (interfaces) y adaptadores. Facilita pruebas y cambios de tecnología. Ver [`software-architectures/`](../../software-architectures) |
+| **¿Qué es la arquitectura hexagonal?** | Dependencias hacia el dominio | El dominio no depende de frameworks ni de la infraestructura; puertos (interfaces) y adaptadores. Facilita pruebas y cambios de tecnología. Ver [`software-architectures/`](../../../software-architectures) |
 | **¿Cómo haces que un sistema sea observable?** | Más que "logs" | Logs estructurados con correlation id, métricas (RED/USE), trazas distribuidas con OpenTelemetry, alertas sobre síntomas (latencia, errores) y no sobre causas |
 | **¿Cómo detectas y resuelves un cuello de botella en producción?** | Método, no intuición | Medir primero (métricas y trazas), aislar el componente, hipótesis, cambio mínimo, medir de nuevo. Conecta con tu historia de rendimiento de la sección 03 |
-| **¿Cómo haces una revisión de código?** | Criterio y trato al equipo | Correctitud, legibilidad, pruebas, seguridad; comentarios sobre el código y no sobre la persona; automatizar lo mecánico (linters, CI). Ver [`clean-code/code-review.md`](../../clean-code/code-review.md) |
+| **¿Cómo haces una revisión de código?** | Criterio y trato al equipo | Correctitud, legibilidad, pruebas, seguridad; comentarios sobre el código y no sobre la persona; automatizar lo mecánico (linters, CI). Ver [`clean-code/code-review.md`](../../../clean-code/code-review.md) |
 | **¿Cómo usas IA en tu trabajo?** | Criterio, no dependencia | Para borradores, pruebas y exploración, **revisando cada resultado** contra las reglas de la arquitectura y la seguridad. La responsabilidad sigue siendo tuya |
 
 **Cómo responder cuando no sabes:** "No lo he usado en producción, pero entiendo el concepto así..., y para un caso real lo abordaría de esta manera..." Un principal engineer detecta el humo en segundos; la honestidad con razonamiento puntúa mejor.
@@ -889,7 +890,7 @@ Con este nivel de entrevistador, **el "por qué" y los trade-offs pesan más que
 
 ### CQRS (Command Query Responsibility Segregation) — patrón de datos en microservicios
 
-> No confundir con **SQS** (la cola de AWS). CQRS es un **patrón de arquitectura de gestión de datos**: en microservicios va **junto a Saga y Outbox** (los tres resuelven "cómo mantengo datos coherentes entre servicios sin una transacción distribuida"). Detalle como **patrón de microservicios con Kafka**: [`microservices-patterns/cqrs.md`](../../microservices-patterns/cqrs.md). Como **modelado de dominio** (puertos, agregados): [`ddd/cqrs.md`](../../ddd/cqrs.md).
+> No confundir con **SQS** (la cola de AWS). CQRS es un **patrón de arquitectura de gestión de datos**: en microservicios va **junto a Saga y Outbox** (los tres resuelven "cómo mantengo datos coherentes entre servicios sin una transacción distribuida"). Detalle como **patrón de microservicios con Kafka**: [`microservices-patterns/cqrs.md`](../../../microservices-patterns/cqrs.md). Como **modelado de dominio** (puertos, agregados): [`ddd/cqrs.md`](../../../ddd/cqrs.md).
 
 **Idea:** separar las operaciones que **cambian** estado (*commands*) de las que **leen** (*queries*), con modelos distintos: uno de escritura que protege las reglas de negocio y otro de lectura plano y rápido.
 
@@ -923,7 +924,7 @@ graph LR
 
 ## 18 · Quartz y jobs programados (disparadores por tabla)
 
-> Contexto: experiencia previa con una pasarela de pagos donde Quartz disparaba procesos a una hora configurada. Detalle completo en [`messaging-streaming/quartz-scheduler.md`](../../messaging-streaming/quartz-scheduler.md). Nombre correcto: **Quartz** (no "Quark"; Quarkus es otro framework).
+> Contexto: experiencia previa con una pasarela de pagos donde Quartz disparaba procesos a una hora configurada. Detalle completo en [`messaging-streaming/quartz-scheduler.md`](../../../messaging-streaming/quartz-scheduler.md). Nombre correcto: **Quartz** (no "Quark"; Quarkus es otro framework).
 
 **Qué es:** librería Java para ejecutar trabajo por **tiempo** (cron o intervalos), con **persistencia en BD**, **clustering**, **misfire** y programación dinámica.
 
@@ -947,7 +948,7 @@ graph LR
 
 ## 19 · Tu proyecto como system design: pasarela de pagos
 
-> Detalle completo (requisitos, modelo de datos, estados, flujos, fallas, Azure): [`system-design/caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md). Es una **reconstrucción**: contrástala con lo que recuerdas del proyecto real (sección 16 de ese documento).
+> Detalle completo (requisitos, modelo de datos, estados, flujos, fallas, Azure): [`system-design/caso-pasarela-pagos.md`](../../../system-design/caso-pasarela-pagos.md). Es una **reconstrucción**: contrástala con lo que recuerdas del proyecto real (sección 16 de ese documento).
 
 ```mermaid
 flowchart LR
@@ -973,7 +974,7 @@ flowchart LR
 5. **Timeout del banco → `PENDIENTE_CONFIRMACION`**: se consulta o concilia, nunca se reintenta a ciegas.
 6. **Resiliencia:** timeout, circuit breaker, bulkhead, DLT, y vigilar el lag.
 
-**¿Y hoy, con la nube? (la pregunta natural de un Principal Engineer)** Detalle en [`caso-pasarela-pagos-cloud.md`](../../system-design/caso-pasarela-pagos-cloud.md). Quartz hacía **tres trabajos**, y las nubes los separan:
+**¿Y hoy, con la nube? (la pregunta natural de un Principal Engineer)** Detalle en [`caso-pasarela-pagos-cloud.md`](../../../system-design/caso-pasarela-pagos-cloud.md). Quartz hacía **tres trabajos**, y las nubes los separan:
 
 | Trabajo de Quartz | AWS | Azure | GCP |
 |---|---|---|---|
@@ -994,7 +995,7 @@ Cambio de mentalidad: de **sondear una tabla por lote** a **un disparo por pago*
 
 ## 20 · Java 17+ y Quarkus / Spring Boot
 
-> Detalle: [`frameworks/quarkus/README.md`](../../frameworks/quarkus/README.md) · [`java-core/java-version-evolution.md`](../../java-core/java-version-evolution.md)
+> Detalle: [`frameworks/quarkus/README.md`](../../../frameworks/quarkus/README.md) · [`java-core/java-version-evolution.md`](../../../java-core/java-version-evolution.md)
 
 ### 🍎 Con manzanas
 Dos fruterías abren a las 8:00. **Spring Boot** llega a las 7:00 y, al abrir, revisa qué preparar. **Quarkus** hizo ese trabajo **la noche anterior** (en el build): abre al instante y gasta menos. Mismos productos, distinta preparación.
@@ -1056,7 +1057,7 @@ String texto = switch (resultado) {                 // el compilador exige cubri
 
 ## 21 · Kafka con SmallRye Reactive Messaging
 
-> Detalle: [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md) · Kafka base: [sección 06](#s06) y [`kafka.md`](../../messaging-streaming/kafka.md)
+> Detalle: [`smallrye-reactive-messaging.md`](../../../frameworks/quarkus/smallrye-reactive-messaging.md) · Kafka base: [sección 06](#s06) y [`kafka.md`](../../../messaging-streaming/kafka.md)
 
 ### 🍎 Con manzanas
 Kafka es el **libro de ventas**. SmallRye es **el empleado que lo escribe y lo lee por ti**: tú dices "lo que llegue al canal *pedidos*, procésalo" (`@Incoming`) y "lo que produzca va al canal *despachos*" (`@Outgoing`). El **conector** une cada canal con un topic.
@@ -1105,7 +1106,7 @@ mp.messaging.outgoing.despachos.acks=all
 
 ## 22 · PostgreSQL con JPA / Hibernate
 
-> Detalle: [`persistencia-hibernate-postgresql.md`](../../frameworks/quarkus/persistencia-hibernate-postgresql.md)
+> Detalle: [`persistencia-hibernate-postgresql.md`](../../../frameworks/quarkus/persistencia-hibernate-postgresql.md)
 
 ### 🍎 Con manzanas
 PostgreSQL es el **archivo de fichas** de la frutería. JPA es el **reglamento** para pasar de objeto a ficha; Hibernate es el **empleado** que lo cumple y lleva una **libreta de lo que tocaste**: al terminar la transacción, escribe solo los cambios. **N+1** es ir al archivo 50 veces en lugar de una.
@@ -1139,7 +1140,7 @@ PostgreSQL es el **archivo de fichas** de la frutería. JPA es el **reglamento**
 
 ## 23 · Arquitectura hexagonal
 
-> Detalle y comparación con Clean, Onion y MVC: [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md) · [`software-architectures/`](../../software-architectures)
+> Detalle y comparación con Clean, Onion y MVC: [`hexagonal-architecture.md`](../../../software-architectures/hexagonal-architecture.md) · [`software-architectures/`](../../../software-architectures)
 
 ### 🍎 Con manzanas
 La frutería (el **negocio**) está en el centro y no sabe quién la visita ni qué banco usa. Tiene **enchufes** (los **puertos**) que dicen "aquí entra un pedido" y "aquí necesito cobrar". Los **adaptadores** son los **cables**: uno conecta la web (REST), otro el banco real, otro el archivo (PostgreSQL). Cambias de banco cambiando de cable; la frutería no se toca.
@@ -1209,7 +1210,7 @@ pagos/
 
 ## 24 · Resiliencia en Quarkus
 
-> Teoría completa (estados del Circuit Breaker, backoff, bulkhead): [sección 16](#s16) · Anotaciones: [`frameworks/quarkus/README.md`](../../frameworks/quarkus/README.md)
+> Teoría completa (estados del Circuit Breaker, backoff, bulkhead): [sección 16](#s16) · Anotaciones: [`frameworks/quarkus/README.md`](../../../frameworks/quarkus/README.md)
 
 **Con manzanas:** si el banco no contesta, no sigues llamando sin parar: pones un **tiempo límite**, **reintentas con pausa**, y si falla mucho, **dejas de llamar un rato** (el fusible), con un **plan B** honesto.
 
@@ -1239,7 +1240,7 @@ public ResultadoBanco cobrar(Pago pago) { return banco.cobrar(pago); }
 
 ## 25 · Testing con JUnit 5 y Mockito
 
-> Detalle: [`tdd/junit5-mockito.md`](../../tdd/junit5-mockito.md)
+> Detalle: [`tdd/junit5-mockito.md`](../../../tdd/junit5-mockito.md)
 
 ### 🍎 Con manzanas
 **JUnit** es la lista de comprobación ("3 manzanas a 2 soles = 6"). **Mockito** es un **banco de mentira** que contesta lo que le indiques para probar tu caja sin llamar al banco real. Tres pasos: **preparar, actuar, comprobar** (AAA).

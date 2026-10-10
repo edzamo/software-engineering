@@ -1,7 +1,7 @@
 # Agile y Scrum — guía rápida de consulta
 
 > Para repasar en 5 minutos antes de una entrevista o una reunión. Primero la analogía, después los términos, al final las preguntas típicas con respuesta corta.
-> Relacionado: [`../entrevistas/arkano-senior-java-developer/README.md`](../entrevistas/arkano-senior-java-developer/README.md) · [`../microservices-patterns/`](../microservices-patterns/README.md) (API-first, contratos) · [`../tdd/`](../tdd/README.md)
+> Relacionado: [`../entrevistas/archivo/arkano-senior-java-developer/README.md`](../entrevistas/archivo/arkano-senior-java-developer/README.md) · [`../microservices-patterns/`](../microservices-patterns/README.md) (API-first, contratos) · [`../tdd/`](../tdd/README.md)
 
 ## 🍎 Con manzanas
 
@@ -192,5 +192,5 @@ flowchart LR
 ## 6. Por completar
 
 - [ ] Ejemplo real de un sprint de mi proyecto (con historias, puntos y un carry over)
-- [ ] Mis 3 historias STAR de [`../entrevistas/arkano-senior-java-developer/retro-entrevista-tecnica.md`](../entrevistas/arkano-senior-java-developer/retro-entrevista-tecnica.md)
+- [ ] Mis 3 historias STAR de [`../entrevistas/archivo/arkano-senior-java-developer/retro-entrevista-tecnica.md`](../entrevistas/archivo/arkano-senior-java-developer/retro-entrevista-tecnica.md)
 - [ ] 🔎 Verificar duraciones con la Guía oficial de Scrum 2020 (scrumguides.org)

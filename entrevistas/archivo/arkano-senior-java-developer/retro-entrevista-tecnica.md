@@ -1,7 +1,7 @@
 # Retrospectiva — entrevista técnica con el Tech Lead (Arkano)
 
-> **Estado:** realizada el 7-oct-2026 · veredicto **pendiente** · sin correo de rechazo hasta la fecha de este documento.
-> Volver a la guía: [`README.md`](README.md) · consulta rápida: [`cheat-sheet.md`](cheat-sheet.md)
+> **Estado:** realizada el 7-oct-2026 · **avanzó**: el proceso cerró con oferta el 9-oct-2026. Los pendientes de estudio de esta retro quedaron en [`../../README.md`](../../README.md#pendientes-de-estudio-post-arkano).
+> Volver a la guía: [`README.md`](README.md) · consulta rápida: [`cheat-sheet.md`](../../cheat-sheet.md)
 
 ## 🍎 Con manzanas
 
@@ -39,12 +39,12 @@ flowchart LR
 ```
 
 - **Productor:** `acks=all`, `enable.idempotence=true`, `retries` con `retry.backoff.ms` y un tope en `delivery.timeout.ms`. La idempotencia evita que un reintento duplique el mensaje en la partición.
-- **Kafka caído un buen rato:** el evento no se pierde porque quedó en la tabla outbox junto al dato; el publicador lo reenvía al volver. Ver [`../../microservices-patterns/`](../../microservices-patterns/README.md).
+- **Kafka caído un buen rato:** el evento no se pierde porque quedó en la tabla outbox junto al dato; el publicador lo reenvía al volver. Ver [`../../microservices-patterns/`](../../../microservices-patterns/README.md).
 - **Consumidor:** reintentos con backoff y, al agotarlos, DLQ. Como la entrega es *at-least-once*, el consumidor debe ser idempotente (por ejemplo, guardar el id del evento procesado).
 - **Orden:** si se reintenta un mensaje y otro de la misma clave pasa por delante, se rompe el orden. Con idempotencia y `max.in.flight.requests.per.connection ≤ 5` Kafka lo conserva por partición.
-- **Quarkus:** `mp.messaging.incoming.<canal>.failure-strategy=dead-letter-queue`. Ver [`../../frameworks/quarkus/smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md).
+- **Quarkus:** `mp.messaging.incoming.<canal>.failure-strategy=dead-letter-queue`. Ver [`../../frameworks/quarkus/smallrye-reactive-messaging.md`](../../../frameworks/quarkus/smallrye-reactive-messaging.md).
 - **Spring:** `DefaultErrorHandler` con `DeadLetterPublishingRecoverer` y `ExponentialBackOff`.
-- Más detalle: [`../../messaging-streaming/kafka.md`](../../messaging-streaming/kafka.md).
+- Más detalle: [`../../messaging-streaming/kafka.md`](../../../messaging-streaming/kafka.md).
 
 **Respuesta de 30 segundos:** "El productor reintenta con backoff e idempotencia para no duplicar; si Kafka sigue caído, el evento queda en la tabla outbox y se publica después. En el consumidor reintento con espera y, si agota, va a una DLQ; y lo hago idempotente porque la entrega es at-least-once."
 
@@ -54,7 +54,7 @@ Pides 100 pedidos y, por cada uno, el resolver consulta su cliente: **1 consulta
 
 ### 3. Node.js y NestJS
 
-- Nest se parece a Spring Boot: módulos, controllers, providers (servicios) e inyección de dependencias. Documentado en [`../../frameworks/nestjs/`](../../frameworks/nestjs/README.md).
+- Nest se parece a Spring Boot: módulos, controllers, providers (servicios) e inyección de dependencias. Documentado en [`../../frameworks/nestjs/`](../../../frameworks/nestjs/README.md).
 - Lo propio de Node es el **event loop** de un solo hilo: nada bloquea, por eso `async/await` y Promises son la norma. Se usa mucho en web por la concurrencia de I/O.
 
 ### 4. Cambio de contrato (reforzar)
@@ -63,9 +63,9 @@ Además de OpenAPI first: cambios **aditivos** o versionados para no romper cons
 
 ## Plan de refuerzo
 
-- [ ] Hacer el ejercicio de reintento + DLQ en [`../../messaging-streaming/practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md)
+- [ ] Hacer el ejercicio de reintento + DLQ en [`../../messaging-streaming/practica-kafka-ejercicios.md`](../../../messaging-streaming/practica-kafka-ejercicios.md)
 - [ ] Un ejemplo corto con DataLoader
-- [ ] Repasar el ciclo de petición de NestJS: [`../../frameworks/nestjs/request-lifecycle.md`](../../frameworks/nestjs/request-lifecycle.md)
+- [ ] Repasar el ciclo de petición de NestJS: [`../../frameworks/nestjs/request-lifecycle.md`](../../../frameworks/nestjs/request-lifecycle.md)
 - [ ] Practicar la respuesta de 30 segundos en voz alta
 
 ## El proceso según el correo de Talent Acquisition (6-oct-2026)

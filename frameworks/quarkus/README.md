@@ -147,7 +147,7 @@ public ResultadoBanco cobrar(Pago pago) { return bancoClient.cobrar(pago); }
 ResultadoBanco pendiente(Pago pago) { return ResultadoBanco.pendienteConfirmacion(pago.id()); }
 ```
 
-**Cómo interactúan (la trampa que preguntan):** un `TimeoutException` **dispara el reintento** si hay `@Retry`, y **cuenta como fallo** para el `@CircuitBreaker`. Por eso se combinan con cuidado. Los patrones (estados del Circuit Breaker, backoff, bulkhead) están en [`../../entrevistas/arkano-senior-java-developer/README.md`](../../entrevistas/arkano-senior-java-developer/README.md) sección 16.
+**Cómo interactúan (la trampa que preguntan):** un `TimeoutException` **dispara el reintento** si hay `@Retry`, y **cuenta como fallo** para el `@CircuitBreaker`. Por eso se combinan con cuidado. Los patrones (estados del Circuit Breaker, backoff, bulkhead) están en [`../../entrevistas/archivo/arkano-senior-java-developer/README.md`](../../entrevistas/archivo/arkano-senior-java-developer/README.md) sección 16.
 
 ## 5. Otras piezas que conviene nombrar
 

@@ -1,7 +1,7 @@
 # Fit cultural con Arkano — guía de consulta rápida
 
 > Para abrir justo antes (o durante) la entrevista con la Delivery Manager. Frases cortas, listas para decir en voz alta.
-> Relacionado: [`retro-entrevista-tecnica.md`](retro-entrevista-tecnica.md) · [`../../agile/README.md`](../../agile/README.md) (Scrum, DoR/DoD, carry over) · [`README.md`](README.md)
+> Relacionado: [`retro-entrevista-tecnica.md`](retro-entrevista-tecnica.md) · [`../../agile/README.md`](../../../agile/README.md) (Scrum, DoR/DoD, carry over) · [`README.md`](README.md)
 
 ## 🍎 Con manzanas
 
@@ -62,7 +62,7 @@ En la entrevista técnica probaron si sabes escoger y cortar la fruta. En el fit
 
 ## 4. Preguntas de Scrum y metodología
 
-Detalle completo en [`../../agile/README.md`](../../agile/README.md). Resumen de 20 segundos:
+Detalle completo en [`../../agile/README.md`](../../../agile/README.md). Resumen de 20 segundos:
 
 | Si preguntan | Responde |
 |---|---|

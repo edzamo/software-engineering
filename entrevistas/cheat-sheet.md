@@ -2,7 +2,7 @@
 
 Dos usos: **(1) durante la entrevista**, busca con `Ctrl+F` (o `Cmd+F`) una palabra clave y lee la respuesta de una o dos líneas; **(2) antes**, haz el entrenamiento rápido de la sección 10.
 
-> Guía completa: [`README.md`](README.md) · Todas las respuestas están **de junior a senior**: empieza con la frase 🟢, baja a 🟡 y 🔴 solo si te piden más. Analogía de todo: la **frutería de manzanas** ([`glosario.md`](../../messaging-streaming/glosario.md)).
+> Guía completa: [`README.md`](archivo/arkano-senior-java-developer/README.md) · Todas las respuestas están **de junior a senior**: empieza con la frase 🟢, baja a 🟡 y 🔴 solo si te piden más. Analogía de todo: la **frutería de manzanas** ([`glosario.md`](../messaging-streaming/glosario.md)).
 
 ## Índice rápido (en el orden en que suelen preguntar)
 
@@ -40,7 +40,7 @@ Plantilla: **quién eres → qué has hecho → qué te trae aquí**. Completa l
 
 ## 1 · Java y POO (cápsulas para responder rápido)
 
-> Todo lo esencial está **aquí**, sin tener que saltar a otro documento. Si te piden más profundidad: [`java-core/`](../../java-core) · [`oop-in-java.md`](../../java-core/oop-in-java.md).
+> Todo lo esencial está **aquí**, sin tener que saltar a otro documento. Si te piden más profundidad: [`java-core/`](../java-core) · [`oop-in-java.md`](../java-core/oop-in-java.md).
 
 **Atajo de 60 segundos si te dicen "explícame POO":**
 > "La programación orientada a objetos organiza el código en **objetos** que juntan **datos (atributos) y comportamiento (métodos)**. Una **clase** es el molde y el **objeto** es una instancia concreta. Se apoya en cuatro pilares: **encapsulación** (proteger el estado y exponer solo métodos), **abstracción** (mostrar qué hace y esconder cómo), **herencia** (una clase reutiliza a otra: relación 'es un') y **polimorfismo** (la misma llamada se comporta distinto según el objeto real). Prefiero **composición sobre herencia** y programar contra **interfaces**."
@@ -587,7 +587,7 @@ flowchart LR
 
 **Pregunta de experiencia típica:** *"Cuéntame un problema de rendimiento que resolviste."* → situación → cómo lo mediste → causa → solución → resultado con números. Usa un caso real tuyo (por ejemplo, un N+1 o un cuello de botella en pagos).
 
-Detalle: [`java-core/`](../../java-core) · [`java-version-evolution.md`](../../java-core/java-version-evolution.md) · [`oop-in-java.md`](../../java-core/oop-in-java.md) · [sección 03](README.md#s03) · [20](README.md#s20).
+Detalle: [`java-core/`](../java-core) · [`java-version-evolution.md`](../java-core/java-version-evolution.md) · [`oop-in-java.md`](../java-core/oop-in-java.md) · [sección 03](archivo/arkano-senior-java-developer/README.md#s03) · [20](archivo/arkano-senior-java-developer/README.md#s20).
 
 ---
 
@@ -608,7 +608,7 @@ Detalle: [`java-core/`](../../java-core) · [`java-version-evolution.md`](../../
 | ¿Qué es SmallRye Reactive Messaging? | La librería de Quarkus para mensajería (`@Incoming`, `@Outgoing`, `Emitter`) con conectores (Kafka, AMQP...) |
 | ¿Pruebas? | `@QuarkusTest`, `@InjectMock`, RestAssured, Dev Services |
 
-Tabla de equivalencias completa: [sección 20](README.md#s20) · [`quarkus/README.md`](../../frameworks/quarkus/README.md).
+Tabla de equivalencias completa: [sección 20](archivo/arkano-senior-java-developer/README.md#s20) · [`quarkus/README.md`](../frameworks/quarkus/README.md).
 
 ---
 
@@ -633,7 +633,7 @@ Tabla de equivalencias completa: [sección 20](README.md#s20) · [`quarkus/READM
 | Paginación grande | Por cursor/keyset, no `OFFSET` |
 | Upsert | `INSERT ... ON CONFLICT` (clave para idempotencia) |
 
-Detalle: [sección 22](README.md#s22) · [`persistencia-hibernate-postgresql.md`](../../frameworks/quarkus/persistencia-hibernate-postgresql.md).
+Detalle: [sección 22](archivo/arkano-senior-java-developer/README.md#s22) · [`persistencia-hibernate-postgresql.md`](../frameworks/quarkus/persistencia-hibernate-postgresql.md).
 
 ---
 
@@ -655,7 +655,7 @@ Detalle: [sección 22](README.md#s22) · [`persistencia-hibernate-postgresql.md`
 | TDD | Rojo, verde, refactor |
 | Cobertura | Indicador, no objetivo; importan los caminos de error |
 
-Detalle: [sección 25](README.md#s25) · [`junit5-mockito.md`](../../tdd/junit5-mockito.md).
+Detalle: [sección 25](archivo/arkano-senior-java-developer/README.md#s25) · [`junit5-mockito.md`](../tdd/junit5-mockito.md).
 
 ---
 
@@ -673,7 +673,7 @@ Detalle: [sección 25](README.md#s25) · [`junit5-mockito.md`](../../tdd/junit5-
 | ¿Cómo se prueba? | Dominio sin mocks; casos de uso con mocks de los puertos; adaptadores con integración |
 | ¿Cuándo no? | CRUD sin lógica de negocio (sobreingeniería) |
 
-Detalle: [sección 23](README.md#s23) · [`hexagonal-architecture.md`](../../software-architectures/hexagonal-architecture.md).
+Detalle: [sección 23](archivo/arkano-senior-java-developer/README.md#s23) · [`hexagonal-architecture.md`](../software-architectures/hexagonal-architecture.md).
 
 ---
 
@@ -930,13 +930,13 @@ flowchart LR
 | "Una partición nunca tendrá muchos consumidores" | Es cierto **dentro de un mismo grupo**; **varios grupos** pueden leer la misma partición cada uno por su cuenta |
 
 
-Detalle de cada pieza: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, KRaft, retención, headers y banca).
+Detalle de cada pieza: [`kafka.md`](../messaging-streaming/kafka.md) (arquitectura, KRaft, retención, headers y banca).
 
 ### Cómo presentarlo con honestidad
 
 > "En el banco construí **consumidores de eventos en producción** con Spring Cloud Stream sobre Azure Event Hubs (protocolo Kafka): transferencias interbancarias y al exterior, con orquestación reactiva, reintentos y trazabilidad por headers. Además hice **pruebas de concepto propias**: el cliente Java puro, Spring Kafka y **Spring Cloud Stream contra Azure Event Hubs por su endpoint de Kafka**, con dos binders y cabeceras de trazabilidad. Con SmallRye Reactive Messaging no he trabajado, pero Spring Cloud Stream es su equivalente: bindings y `StreamBridge` son los canales y el `Emitter`."
 
-Eso es **verdad y suficiente** (tus 4 ejercicios: [`practica-kafka-ejercicios.md`](../../messaging-streaming/practica-kafka-ejercicios.md)). Solo di lo que sea cierto: con dos preguntas se nota.
+Eso es **verdad y suficiente** (tus 4 ejercicios: [`practica-kafka-ejercicios.md`](../messaging-streaming/practica-kafka-ejercicios.md)). Solo di lo que sea cierto: con dos preguntas se nota.
 
 ### Los 12 conceptos (léelos hasta poder decirlos sin mirar)
 
@@ -965,7 +965,7 @@ Eso es **verdad y suficiente** (tus 4 ejercicios: [`practica-kafka-ejercicios.md
 | ¿Cómo evitas duplicados? | At-least-once más consumidor idempotente (`eventId` con restricción única) |
 | ¿Exactly-once? | Existe dentro de Kafka (idempotencia y transacciones); con sistemas externos necesitas idempotencia propia |
 | ¿Qué haces con un mensaje que falla? | Reintento con backoff y luego Dead Letter Topic con alerta |
-| ¿Kafka vs RabbitMQ/SQS? | Kafka es un log que se relee, con alto volumen y orden por clave; RabbitMQ es una cola con enrutamiento rico y ack por mensaje que se consume y desaparece; una cola gestionada (SQS, Service Bus) es lo más simple. Tabla completa: [`messaging-streaming/README.md` sección 5b](../../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica) |
+| ¿Kafka vs RabbitMQ/SQS? | Kafka es un log que se relee, con alto volumen y orden por clave; RabbitMQ es una cola con enrutamiento rico y ack por mensaje que se consume y desaparece; una cola gestionada (SQS, Service Bus) es lo más simple. Tabla completa: [`messaging-streaming/README.md` sección 5b](../messaging-streaming/README.md#5b-kafka-vs-rabbitmq-vs-cola-gestionada-la-pregunta-clásica) |
 | ¿Qué es ZooKeeper/KRaft? | Coordinaba el cluster; hoy lo hace KRaft integrado en Kafka |
 | ¿Qué es Schema Registry? | Guarda los esquemas y valida que los cambios sean compatibles |
 | ¿Cómo publicas y guardas en BD sin inconsistencias? | Outbox |
@@ -986,9 +986,9 @@ mp.messaging.incoming.pedidos.connector=smallrye-kafka
 mp.messaging.incoming.pedidos.failure-strategy=dead-letter-queue    # fail (por defecto) | ignore | dead-letter-queue | delayed-retry-topic
 mp.messaging.outgoing.despachos.acks=all
 ```
-Ack por defecto al terminar el método; commit `throttled`; pruebas con `InMemoryConnector`; equivalente Spring: `@KafkaListener` + `KafkaTemplate`. Detalle: [`smallrye-reactive-messaging.md`](../../frameworks/quarkus/smallrye-reactive-messaging.md).
+Ack por defecto al terminar el método; commit `throttled`; pruebas con `InMemoryConnector`; equivalente Spring: `@KafkaListener` + `KafkaTemplate`. Detalle: [`smallrye-reactive-messaging.md`](../frameworks/quarkus/smallrye-reactive-messaging.md).
 
-Más profundidad si te la piden: [`kafka.md`](../../messaging-streaming/kafka.md) (arquitectura, headers, banca).
+Más profundidad si te la piden: [`kafka.md`](../messaging-streaming/kafka.md) (arquitectura, headers, banca).
 
 ---
 
@@ -1007,7 +1007,7 @@ Más profundidad si te la piden: [`kafka.md`](../../messaging-streaming/kafka.md
 
 **Quarkus:** `@Timeout`, `@Retry`, `@CircuitBreaker`, `@Bulkhead`, `@Fallback` (SmallRye Fault Tolerance). **Spring:** Resilience4j. **Trampa:** un timeout dispara el reintento y cuenta como fallo del circuit breaker.
 
-**Respuesta modelo (servicio lento satura mis hilos):** *timeout corto → bulkhead → circuit breaker con fallback → reintentos idempotentes con backoff y jitter → monitoreo de p99, tasa de fallos y estado del breaker.* Detalle: [sección 16](README.md#s16) y [24](README.md#s24).
+**Respuesta modelo (servicio lento satura mis hilos):** *timeout corto → bulkhead → circuit breaker con fallback → reintentos idempotentes con backoff y jitter → monitoreo de p99, tasa de fallos y estado del breaker.* Detalle: [sección 16](archivo/arkano-senior-java-developer/README.md#s16) y [24](archivo/arkano-senior-java-developer/README.md#s24).
 
 ---
 
@@ -1021,9 +1021,9 @@ Más profundidad si te la piden: [`kafka.md`](../../messaging-streaming/kafka.md
 4. "Como todo es *at-least-once*, el diseño era **idempotente**: id único por pago, estado condicional y consumidores que ignoran duplicados."
 5. "Si el banco no respondía, el pago quedaba **pendiente de confirmación** y se resolvía por consulta o conciliación; nunca se reintentaba a ciegas."
 
-**Segundo proyecto (transferencias asíncronas):** "Una orden de transferencia se ejecutaba por **evento**, no en la petición del usuario. Un consumidor con Spring Cloud Stream y Reactor **orquestaba** la ejecución llamando a varias APIs. Si algo fallaba, reintentaba con espera creciente; las órdenes con fecha futura usaban un **servicio de tareas programadas** que republicaba el evento al vencer. Todo con headers de trazabilidad. **Al revisarlo hoy** cambiaría los reintentos por tópicos escalonados y DLQ, añadiría idempotencia por ítem y `key = orderId`." Análisis: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
+**Segundo proyecto (transferencias asíncronas):** "Una orden de transferencia se ejecutaba por **evento**, no en la petición del usuario. Un consumidor con Spring Cloud Stream y Reactor **orquestaba** la ejecución llamando a varias APIs. Si algo fallaba, reintentaba con espera creciente; las órdenes con fecha futura usaban un **servicio de tareas programadas** que republicaba el evento al vencer. Todo con headers de trazabilidad. **Al revisarlo hoy** cambiaría los reintentos por tópicos escalonados y DLQ, añadiría idempotencia por ítem y `key = orderId`." Análisis: [`caso-transferencias-asincronas.md`](../system-design/caso-transferencias-asincronas.md).
 
-Sirve para: Kafka, idempotencia, resiliencia, transacciones, arquitectura, concurrencia y testing. Detalle y dibujo: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md) (🔎 contrasta con tu memoria lo que no recuerdes con certeza).
+Sirve para: Kafka, idempotencia, resiliencia, transacciones, arquitectura, concurrencia y testing. Detalle y dibujo: [`caso-pasarela-pagos.md`](../system-design/caso-pasarela-pagos.md) (🔎 contrasta con tu memoria lo que no recuerdes con certeza).
 
 ---
 
@@ -1041,13 +1041,13 @@ El job description menciona más cosas que la lista de Lourdes. Respuestas míni
 | REST | Verbos, códigos (201 con `Location`, 400, 401, 403, 404, 409, 429), idempotencia con `Idempotency-Key`, OpenAPI |
 | **Node.js** | Un hilo con event loop no bloqueante: ideal para I/O, no para CPU; `async/await`; NestJS parecido a Spring |
 | **GraphQL** | El cliente pide los campos que necesita; resuelve over/under-fetching; riesgos: N+1 (DataLoader) y consultas abusivas |
-| **Azure** | Functions (serverless), Service Bus (colas/topics), Event Hubs (compatible con Kafka), API Management (gateway), AKS (Kubernetes), DevOps (CI/CD), Key Vault, Entra ID. **Carpeta completa con manzanas:** [`cloud/azure/`](../../cloud/azure/README.md) · [mensajería (Event Hubs, Service Bus)](../../cloud/azure/mensajeria-event-hubs-service-bus.md) · [AKS](../../cloud/azure/aks-kubernetes.md) · [Redis](../../cloud/azure/redis-cache.md) · [datos, seguridad y DevOps](../../cloud/azure/datos-seguridad-y-devops.md) |
-| **Tu diseño en Azure hoy** | **Service Bus** para ejecutar órdenes (DLQ, programación, sesiones, duplicados) + **Event Hubs** para publicar hechos + **Container Apps/KEDA** + **Durable Functions** (orquestación por ítem) + **Managed Identity/Key Vault**. Event Hubs **no tiene DLQ nativa ni compactación**. Detalle y AWS/GCP: [`caso-transferencias-asincronas.md` §10](../../system-design/caso-transferencias-asincronas.md) |
+| **Azure** | Functions (serverless), Service Bus (colas/topics), Event Hubs (compatible con Kafka), API Management (gateway), AKS (Kubernetes), DevOps (CI/CD), Key Vault, Entra ID. **Carpeta completa con manzanas:** [`cloud/azure/`](../cloud/azure/README.md) · [mensajería (Event Hubs, Service Bus)](../cloud/azure/mensajeria-event-hubs-service-bus.md) · [AKS](../cloud/azure/aks-kubernetes.md) · [Redis](../cloud/azure/redis-cache.md) · [datos, seguridad y DevOps](../cloud/azure/datos-seguridad-y-devops.md) |
+| **Tu diseño en Azure hoy** | **Service Bus** para ejecutar órdenes (DLQ, programación, sesiones, duplicados) + **Event Hubs** para publicar hechos + **Container Apps/KEDA** + **Durable Functions** (orquestación por ítem) + **Managed Identity/Key Vault**. Event Hubs **no tiene DLQ nativa ni compactación**. Detalle y AWS/GCP: [`caso-transferencias-asincronas.md` §10](../system-design/caso-transferencias-asincronas.md) |
 | **Ágil** | Scrum (sprints, planning, daily, review, retro); ten un ejemplo de retro o de cambio de alcance |
 | **Legacy** | Adapter, Anti-Corruption Layer, Strangler Fig |
 | **Documentar APIs** | OpenAPI/Swagger |
 
-Detalle: secciones [07](README.md#s07), [08](README.md#s08), [09](README.md#s09), [11](README.md#s11), [12](README.md#s12).
+Detalle: secciones [07](archivo/arkano-senior-java-developer/README.md#s07), [08](archivo/arkano-senior-java-developer/README.md#s08), [09](archivo/arkano-senior-java-developer/README.md#s09), [11](archivo/arkano-senior-java-developer/README.md#s11), [12](archivo/arkano-senior-java-developer/README.md#s12).
 
 ---
 
@@ -1217,7 +1217,7 @@ Elige **tres con un caso real**: Strategy (métodos de pago), Adapter (integrar 
 
 <details><summary><b>27.</b> En tu servicio de transferencias, ¿qué mejorarías?</summary>
 
-🟢 Los reintentos: esperar con `Thread.sleep` bloquea el consumidor. 🟡 Usaría tópicos de reintento escalonados y una DLQ, y `key = orderId` para conservar el orden. 🔴 Lo más importante: **idempotencia por ítem** (un fallo parcial reejecutaba todo y podía duplicar transferencias) y confirmar el **offset al terminar** la cadena reactiva, no antes. Detalle: [`caso-transferencias-asincronas.md`](../../system-design/caso-transferencias-asincronas.md).
+🟢 Los reintentos: esperar con `Thread.sleep` bloquea el consumidor. 🟡 Usaría tópicos de reintento escalonados y una DLQ, y `key = orderId` para conservar el orden. 🔴 Lo más importante: **idempotencia por ítem** (un fallo parcial reejecutaba todo y podía duplicar transferencias) y confirmar el **offset al terminar** la cadena reactiva, no antes. Detalle: [`caso-transferencias-asincronas.md`](../system-design/caso-transferencias-asincronas.md).
 </details>
 
 <details><summary><b>28.</b> Cuéntame un proyecto del que estés orgulloso.</summary>
@@ -1308,7 +1308,7 @@ Formato: **término → qué es en una frase** (🟢) · *con manzanas*.
 | **`@Blocking` (Quarkus)** | Ejecutar en un worker thread porque el código bloquea (JDBC) |
 | **`@Version`** | Bloqueo optimista: si la versión cambió al guardar, falla |
 
-**Patrones GoF:** son **23** → 5 creacionales (Factory Method, Abstract Factory, Builder, Prototype, Singleton), 7 estructurales (Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy), 11 de comportamiento (Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor). Detalle: [sección 04](README.md#s04).
+**Patrones GoF:** son **23** → 5 creacionales (Factory Method, Abstract Factory, Builder, Prototype, Singleton), 7 estructurales (Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy), 11 de comportamiento (Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor). Detalle: [sección 04](archivo/arkano-senior-java-developer/README.md#s04).
 
 ---
 
@@ -1327,7 +1327,7 @@ flowchart TD
     GOF --> EST["Estructurales (7)<br/>Adapter, Bridge, Composite,<br/>Decorator, Facade, Flyweight, Proxy"]
     GOF --> COM["De comportamiento (11)<br/>Strategy, Observer, Command, State,<br/>Template Method, Chain of Responsibility…"]
 ```
-**Los 4 que más sirven:** **Strategy** (reemplaza `if/else` por tipo), **Adapter** (integrar legacy), **Proxy** (`@Transactional`), **Observer** (eventos). Tabla de dónde aplicarlos: [sección 04](README.md#s04).
+**Los 4 que más sirven:** **Strategy** (reemplaza `if/else` por tipo), **Adapter** (integrar legacy), **Proxy** (`@Transactional`), **Observer** (eventos). Tabla de dónde aplicarlos: [sección 04](archivo/arkano-senior-java-developer/README.md#s04).
 
 ### 14.2 · Arquitectura hexagonal
 
@@ -1527,4 +1527,4 @@ flowchart LR
     PROC --> DB
     K --> NOTI[Notificaciones]
 ```
-**Cuéntalo:** [sección 8](#c8). Detalle: [`caso-pasarela-pagos.md`](../../system-design/caso-pasarela-pagos.md).
+**Cuéntalo:** [sección 8](#c8). Detalle: [`caso-pasarela-pagos.md`](../system-design/caso-pasarela-pagos.md).

@@ -172,4 +172,5 @@ Una fila por entrevista o simulacro. **Plan** = qué quería mejorar; **Do** = c
 | Fecha | Tipo | Plan (foco) | Check (rúbrica /22) | Act (próxima mejora) |
 |---|---|---|---|---|
 | 2026-09 | Entrevista real (evaluación con IA) | — (sin protocolo) | 4 | Adoptar este protocolo; primeros 25 min sin IA; dibujar siempre. [Retrospectiva](retrospectiva-2026-09-evaluacion-con-ia.md) |
+| 2026-10 | Entrevista real (Arkano, técnica conversacional) | Aplicar la preparación con manzanas y el cheat sheet | Sin rúbrica (no fue ejercicio práctico); **pasó y recibió oferta** | Reforzar Kafka (reintentos, DLQ, Outbox) y NestJS. [Retrospectiva](../archivo/arkano-senior-java-developer/retro-entrevista-tecnica.md) |
 | | | | | |
