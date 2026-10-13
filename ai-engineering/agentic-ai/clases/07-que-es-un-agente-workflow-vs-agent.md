@@ -63,6 +63,24 @@ Entrada de blog de **Anthropic (2024)**, enlazada en los recursos del curso y ya
 
 Anthropic llama **"sistemas agénticos"** a **ambos**. Es una clasificación de estilos, **no una verdad absoluta**.
 
+![Diapositiva "Agentic Systems": Anthropic distingue dos tipos, workflows y agents](../assets/07-agentic-systems-workflows-vs-agents.png)
+
+**Las definiciones de la diapositiva** (palabra por palabra y en castellano):
+
+| | Definición original (inglés) | En castellano |
+|---|---|---|
+| 🟨 **Workflows** | *"Systems where LLMs and tools are orchestrated through **predefined code paths**."* | Sistemas donde los LLM y las herramientas se **orquestan por rutas de código predefinidas**. |
+| 🟧 **Agents** | *"Dynamic systems where LLMs **direct their own processes and tool usage**, maintaining control over how they accomplish tasks."* | Sistemas **dinámicos** donde los LLM **dirigen sus propios procesos y el uso de herramientas**, manteniendo el control de cómo cumplen las tareas. |
+
+```mermaid
+graph TB
+    AS["🧩 Sistemas agénticos<br/>(según Anthropic)"]
+    AS --> WF["🟨 Workflows<br/>rutas de código <b>predefinidas</b><br/>tú decides el camino"]
+    AS --> AG["🟧 Agents<br/>sistema <b>dinámico</b><br/>el LLM decide el camino"]
+```
+
+> 🍎 **Con manzanas:** el **workflow** es la **cadena de montaje**: tú pusiste las estaciones y el orden. El **agente** es el **empleado con libertad**: él decide qué estación usar, cuándo y cuántas veces, hasta cerrar el pedido. Las dos palabras clave de la diapositiva son **predefined** (camino fijo) y **dynamic** (camino que se decide sobre la marcha).
+
 | | **Workflow (flujo de trabajo)** | **Agente** |
 |---|---|---|
 | Camino | **Predefinido**: varias llamadas a LLM encadenadas por rutas fijas. | **Abierto**: el LLM decide cada paso siguiente. |
