@@ -1,9 +1,18 @@
 # AI Engineer — Production Track (curso)
 
-Apuntes del curso de Udemy **AI Engineer Production Track: Deploy LLMs & Agents at Scale** (curso 6 de 6 del currículo "The Complete AI Curriculum"). **Es el segundo curso a tomar**, complemento de producción del [Agentic Track](../agentic-track/README.md).
+Apuntes del curso de Udemy **AI Engineer Production Track: Deploy LLMs & Agents at Scale** (curso 6 de 6 del currículo "The Complete AI Curriculum"). **Es el segundo curso a tomar**, complemento de producción del [Agentic Track](../agentic-ai/README.md).
 
 > **Enlace del curso:** _pendiente de pegar cuando empieces el curso_.
 > **Dónde encaja:** profundiza la Fase 5 del roadmap [`ai-engineering/`](../README.md) (IA en producción) con Vercel, AWS/Bedrock, GCP, Azure y LangFuse.
+
+## 🧪 Dónde se practica (y dónde se documenta)
+
+| | Este repo (`software-engineering`) | Repo de práctica |
+|---|---|---|
+| **Qué contiene** | Solo **documentación**: clases explicadas "con manzanas", de junior a senior | Los **ejercicios y el código** del curso |
+| **Ruta / remoto** | `ai-engineering/llm-production/` | _pendiente: se define al empezar el curso (fork propio, como en [`agentic-ai`](../agentic-ai/README.md#-dónde-se-practica-y-dónde-se-documenta))_ |
+
+> 🔐 Las claves y credenciales de la nube (AWS, GCP, Azure) nunca se suben: `.env` y archivos de credenciales siempre en `.gitignore`.
 
 ## 🍎 Con manzanas (la idea completa)
 
@@ -25,7 +34,7 @@ Apuntes del curso de Udemy **AI Engineer Production Track: Deploy LLMs & Agents 
 
 ## 🔗 Relacionado
 
-- [Agentic Track](../agentic-track/README.md) — el curso previo: agentes y MCP.
+- [Agentic Track](../agentic-ai/README.md) — el curso previo: agentes y MCP.
 - [Roadmap AI Engineering](../README.md) — plan de 14 semanas / 7 fases.
 - [`cloud/`](../../cloud) y [`system-design/`](../../system-design) — conceptos de nube y escalado ya vistos en el repo.
 - [Glosario de la frutería](../../messaging-streaming/glosario.md) — la analogía base del repo.

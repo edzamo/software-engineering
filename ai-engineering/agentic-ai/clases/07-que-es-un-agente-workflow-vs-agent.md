@@ -53,7 +53,7 @@ graph LR
 | Quién actúa | Nadie: solo devuelve texto. | **Tu código**, siguiendo lo que dice el LLM. |
 | 🍎 | Una nota con una opinión | El empleado, el local y el bucle completo |
 
-Esto conecta con el [curso de Claude, clase 01](../../claude/clases/01-llm-vs-agente-harness.md): allí se llamaba *harness*; aquí, "tu código".
+En herramientas como Claude Code a ese código se le llama *harness*; aquí lo llamamos "tu código".
 
 ## 3 · Lectura recomendada: "Building Effective Agents"
 
@@ -62,6 +62,24 @@ Entrada de blog de **Anthropic (2024)**, enlazada en los recursos del curso y ya
 ## 4 · Workflow vs agente (según Anthropic)
 
 Anthropic llama **"sistemas agénticos"** a **ambos**. Es una clasificación de estilos, **no una verdad absoluta**.
+
+![Diapositiva "Agentic Systems": Anthropic distingue dos tipos, workflows y agents](../assets/07-agentic-systems-workflows-vs-agents.png)
+
+**Las definiciones de la diapositiva** (palabra por palabra y en castellano):
+
+| | Definición original (inglés) | En castellano |
+|---|---|---|
+| 🟨 **Workflows** | *"Systems where LLMs and tools are orchestrated through **predefined code paths**."* | Sistemas donde los LLM y las herramientas se **orquestan por rutas de código predefinidas**. |
+| 🟧 **Agents** | *"Dynamic systems where LLMs **direct their own processes and tool usage**, maintaining control over how they accomplish tasks."* | Sistemas **dinámicos** donde los LLM **dirigen sus propios procesos y el uso de herramientas**, manteniendo el control de cómo cumplen las tareas. |
+
+```mermaid
+graph TB
+    AS["🧩 Sistemas agénticos<br/>(según Anthropic)"]
+    AS --> WF["🟨 Workflows<br/>rutas de código <b>predefinidas</b><br/>tú decides el camino"]
+    AS --> AG["🟧 Agents<br/>sistema <b>dinámico</b><br/>el LLM decide el camino"]
+```
+
+> 🍎 **Con manzanas:** el **workflow** es la **cadena de montaje**: tú pusiste las estaciones y el orden. El **agente** es el **empleado con libertad**: él decide qué estación usar, cuándo y cuántas veces, hasta cerrar el pedido. Las dos palabras clave de la diapositiva son **predefined** (camino fijo) y **dynamic** (camino que se decide sobre la marcha).
 
 | | **Workflow (flujo de trabajo)** | **Agente** |
 |---|---|---|
@@ -101,6 +119,5 @@ Anthropic llama **"sistemas agénticos"** a **ambos**. Es una clasificación de 
 ## 🔗 Relacionado
 
 - [Clase 01](01-primer-agente-n8n.md) · [Clase 06](06-primeras-llamadas-openai-encadenar.md) · [Índice](../README.md)
-- [Curso Claude · clase 01](../../claude/clases/01-llm-vs-agente-harness.md) — LLM vs agente vs harness.
 - [Roadmap AI Engineering · Fases 3 y 4](../../README.md) — ReAct y orquestación.
-- [Production Track](../../production-track/README.md) — por qué producción prefiere flujos predecibles.
+- [Production Track](../../llm-production/README.md) — por qué producción prefiere flujos predecibles.

@@ -8,7 +8,7 @@
 
 ## 🍎 Con manzanas
 
-Imagina la **frutería** del repo ([glosario](../../../messaging-streaming/glosario.md)) y al **empleado brillante** de la [clase 01 del curso de Claude](../../claude/clases/01-llm-vs-agente-harness.md).
+Imagina la **frutería** del repo ([glosario](../../../messaging-streaming/glosario.md)) y al **empleado brillante** que solo piensa y habla.
 
 1. **Solo chat (sin herramientas):** le preguntas "cuéntame algo curioso" y te responde desde su cabeza. Es un empleado encerrado en un cuarto: opina, no hace.
 2. **Con una herramienta:** le das un teléfono para llamar a la bolsa. Preguntas "¿a cuánto está la manzana hoy?", **llama**, y te responde con el dato real.
@@ -30,7 +30,7 @@ graph LR
     L -- "ya terminé" --> R["✅ Respuesta final"]
 ```
 
-La flecha que **vuelve** de las herramientas al LLM es el bucle. Es la misma idea ReAct (razonar → actuar → observar) del [roadmap](../../README.md#6--glosario-de-términos-imprescindibles) y del [curso de Claude](../../claude/clases/01-llm-vs-agente-harness.md#1--por-qué-un-llm-no-es-lo-mismo-que-un-agente).
+La flecha que **vuelve** de las herramientas al LLM es el bucle. Es la misma idea ReAct (razonar → actuar → observar) del [roadmap](../../README.md#6--glosario-de-términos-imprescindibles).
 
 ## 2 · Las tres piezas que pide un agente (en n8n)
 
@@ -82,6 +82,5 @@ n8n es **arrastrar y soltar**. Este curso **no** lo usa para construir: la demo 
 
 ## 🔗 Relacionado
 
-- [Curso Claude · clase 01](../../claude/clases/01-llm-vs-agente-harness.md) — misma idea (LLM + herramientas + loop) vista desde Claude Code.
 - [Roadmap AI Engineering · Fase 3](../../README.md) — function calling y ReAct.
 - [`ia-agentes/`](../../../ia-agentes) — agentes aplicados a este repo.

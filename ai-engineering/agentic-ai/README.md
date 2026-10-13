@@ -10,7 +10,7 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 | | Este repo (`software-engineering`) | Repo de práctica (`agents`, fork propio) |
 |---|---|---|
 | **Qué contiene** | Solo **documentación**: las clases explicadas "con manzanas", de junior a senior | Los **ejercicios y el código** de cada semana |
-| **Ruta local** | `ai-engineering/agentic-track/` | `~/Documents/Personal/github/agents` |
+| **Ruta local** | `ai-engineering/agentic-ai/` | `~/Documents/Personal/github/agents` |
 | **Remoto** | Este repo | [`edzamo/agents`](https://github.com/edzamo/agents) (fork de [`ed-donner/agents`](https://github.com/ed-donner/agents)) |
 | **Cuándo se sube** | Al procesar cada clase | Al final de cada día de práctica |
 
@@ -21,11 +21,11 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 | # | Curso | Temas | Decisión |
 |---|---|---|---|
 | 1 | AI Builder | Agentes, voice agents, n8n, ElevenLabs | ⏭️ Ya dominado |
-| 2 | AI Coder | Claude Code, Copilot, Codex, Antigravity | ⏭️ Cubierto en [`claude/`](../claude/README.md) |
+| 2 | AI Coder | Claude Code, Copilot, Codex, Antigravity | ⏭️ Fuera de alcance de este repo |
 | 3 | AI Leader | AI delivery, transformación, negocio con IA | ⏭️ No es prioridad |
 | 4 | AI Engineer · Core Track | LLMs, open-source, RAG, LangChain, fine-tuning | ❌ Muy básico para el nivel actual; se pide reembolso |
 | **5** | **AI Engineer · Agentic Track** | Agent loops, OpenAI Agents SDK, CrewAI, LangGraph, MCP | ✅ **Este curso (1º)** |
-| 6 | AI Engineer · Production Track | Vercel, AWS/Bedrock, GCP, Azure, LangFuse | 🔜 2º curso → [`production-track/`](../production-track/README.md) |
+| 6 | AI Engineer · Production Track | Vercel, AWS/Bedrock, GCP, Azure, LangFuse | 🔜 2º curso → [`llm-production/`](../llm-production/README.md) |
 
 > 🔎 Si el Core Track se retoma, RAG y fine-tuning siguen cubiertos en la Fase 2 del [roadmap](../README.md#4--roadmap--7-fases-14-semanas).
 
@@ -90,6 +90,5 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 ## 🔗 Relacionado
 
 - [Roadmap AI Engineering](../README.md) — plan de 14 semanas / 7 fases.
-- [Curso Claude](../claude/README.md) — LLM vs agente, harness, MCP.
 - [`ia-agentes/`](../../ia-agentes) — subagentes aplicados a este repo.
 - [Glosario de la frutería](../../messaging-streaming/glosario.md) — la analogía base del repo.
