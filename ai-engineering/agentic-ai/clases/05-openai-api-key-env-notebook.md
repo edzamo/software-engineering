@@ -109,4 +109,4 @@ Cómo se elige: *Select Kernel* (arriba a la derecha) → *Python Environments* 
 
 - [Clase 03](03-configurar-entorno-costos-mentalidad.md) · [Clase 04](04-setup-windows-mac-guia-rapida.md) · [Índice del curso](../README.md)
 - [Roadmap AI Engineering · Fase 0](../../README.md) — `.env`/API keys, "nunca hardcodeada".
-- [Production Track](../../production-track/README.md) — secretos y costos a escala.
+- [Production Track](../../llm-production/README.md) — secretos y costos a escala.

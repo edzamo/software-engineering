@@ -122,4 +122,4 @@ El `README` del repo es lo primero que hay que leer: trae las instrucciones por 
 
 - [Índice del curso](../README.md) · [Clase 01 · Primer agente](01-primer-agente-n8n.md) · [Clase 02 · Mapa](02-mapa-del-curso-seis-semanas.md)
 - [Roadmap AI Engineering · Fase 0](../../README.md) — Python, `.env`, Git, APIs REST (esta clase es esa fase en práctica).
-- [Production Track](../../production-track/README.md) — controlar costos y evaluar a escala.
+- [Production Track](../../llm-production/README.md) — controlar costos y evaluar a escala.

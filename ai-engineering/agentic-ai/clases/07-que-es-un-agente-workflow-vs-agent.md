@@ -53,7 +53,7 @@ graph LR
 | Quién actúa | Nadie: solo devuelve texto. | **Tu código**, siguiendo lo que dice el LLM. |
 | 🍎 | Una nota con una opinión | El empleado, el local y el bucle completo |
 
-Esto conecta con el [curso de Claude, clase 01](../../claude/clases/01-llm-vs-agente-harness.md): allí se llamaba *harness*; aquí, "tu código".
+En herramientas como Claude Code a ese código se le llama *harness*; aquí lo llamamos "tu código".
 
 ## 3 · Lectura recomendada: "Building Effective Agents"
 
@@ -101,6 +101,5 @@ Anthropic llama **"sistemas agénticos"** a **ambos**. Es una clasificación de 
 ## 🔗 Relacionado
 
 - [Clase 01](01-primer-agente-n8n.md) · [Clase 06](06-primeras-llamadas-openai-encadenar.md) · [Índice](../README.md)
-- [Curso Claude · clase 01](../../claude/clases/01-llm-vs-agente-harness.md) — LLM vs agente vs harness.
 - [Roadmap AI Engineering · Fases 3 y 4](../../README.md) — ReAct y orquestación.
-- [Production Track](../../production-track/README.md) — por qué producción prefiere flujos predecibles.
+- [Production Track](../../llm-production/README.md) — por qué producción prefiere flujos predecibles.

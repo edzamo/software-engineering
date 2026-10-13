@@ -79,7 +79,7 @@ graph LR
 | **AI Leader** | Lado de negocio: entregar proyectos de IA y montar empresas de IA. | Vínculo con el cliente. |
 | **AI Engineer · Core Track** | LLMs, RAG, fine-tuning. | Base si el LLM es nuevo para ti; sus primeras semanas repasan fundamentos. |
 | **AI Engineer · Agentic Track** | **Este curso.** Construir agentes con código. | — |
-| **AI Engineer · Production Track** | Llevar LLMs/agentes a producción: escalable, resistente, observable. | El más avanzado. Es nuestro 2º curso: [`production-track/`](../../production-track/README.md). |
+| **AI Engineer · Production Track** | Llevar LLMs/agentes a producción: escalable, resistente, observable. | El más avanzado. Es nuestro 2º curso: [`llm-production/`](../../llm-production/README.md). |
 
 > 🍎 **Esta es la distinción clave del curso:** *este curso trata de **crear** agentes; AI Coder trata de **usar** agentes.* Escribes Python y ese código se convierte en el agente.
 
@@ -103,4 +103,4 @@ graph LR
 
 - [Índice del curso](../README.md) · [Clase 01](01-primer-agente-n8n.md)
 - [Roadmap AI Engineering · Fases 3 y 4](../../README.md)
-- [Production Track](../../production-track/README.md) — el segundo curso.
+- [Production Track](../../llm-production/README.md) — el segundo curso.
