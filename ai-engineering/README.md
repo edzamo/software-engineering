@@ -97,7 +97,16 @@ La progresión es deliberada: no se puede razonar sobre RAG (Fase 2) sin dominar
 - [`frameworks/`](../frameworks) — el microservicio de la Fase 5 (FastAPI) es Python, fuera del alcance actual de `frameworks/` (Spring Boot, NestJS) — evaluar más adelante si amerita su propia carpeta `frameworks/fastapi/` cuando se practique en profundidad.
 - [`system-design/`](../system-design) — cachear con Redis (Fase 5) conecta directo con los patrones de cache ya vistos en [`01-scale-from-zero-to-millions.md`](../system-design/01-scale-from-zero-to-millions.md).
 
-## 8 · Cómo se va a completar esta carpeta
+## 8 · Mapa: dónde vive cada cosa
+
+| Carpeta | Qué contiene |
+|---|---|
+| [`patrones/`](patrones/README.md) | **Catálogo reutilizable** de patrones agénticos: explicación + implementación de referencia en Python |
+| [`agentic-ai/`](agentic-ai/README.md) | Apuntes del curso *Agentic Track* (clases, de junior a senior) |
+| [`llm-production/`](llm-production/README.md) | Apuntes del curso *Production Track* |
+| [`../ia-agentes/`](../ia-agentes) | Kit de subagentes y pipelines de **Claude Code** (se instala en `~/.claude`; implementa los patrones con subagentes) |
+
+## 9 · Cómo se va a completar esta carpeta
 
 > 📚 **Curso en curso:** [`agentic-ai/`](agentic-ai) — apuntes clase a clase del curso *AI Engineer Agentic Track* (Udemy): agent loops, Agents SDK, CrewAI, LangGraph y MCP. Índice: [`agentic-ai/README.md`](agentic-ai/README.md).
 >

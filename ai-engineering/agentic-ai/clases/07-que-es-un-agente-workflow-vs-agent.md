@@ -1,6 +1,6 @@
 # Clase 07 · Semana 1, día 2 — ¿Qué es un agente? Definiciones y workflow vs agente
 
-> ⬅️ [06 · Primeras llamadas](06-primeras-llamadas-openai-encadenar.md) · ➡️ Siguiente: _pendiente_ (patrones de diseño agénticos)
+> ⬅️ [06 · Primeras llamadas](06-primeras-llamadas-openai-encadenar.md) · ➡️ [08 · Patrones de diseño agénticos](08-patrones-de-diseno-agenticos.md)
 > 🗓️ **Semana 1 · Día 2 — "Agents and Agentic Patterns"** · tipo: 🟠 teoría
 > **Qué vas a poder explicar al terminar:** las tres definiciones de agente, por qué el LLM solo genera tokens y **el agente es tu código**, y la diferencia workflow vs agente según Anthropic, con cuál conviene en producción.
 
@@ -118,6 +118,7 @@ graph TB
 
 ## 🔗 Relacionado
 
+- [Clase 08 · los 5 patrones de workflow](08-patrones-de-diseno-agenticos.md)
 - [Clase 01](01-primer-agente-n8n.md) · [Clase 06](06-primeras-llamadas-openai-encadenar.md) · [Índice](../README.md)
 - [Roadmap AI Engineering · Fases 3 y 4](../../README.md) — ReAct y orquestación.
 - [Production Track](../../llm-production/README.md) — por qué producción prefiere flujos predecibles.

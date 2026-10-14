@@ -39,7 +39,7 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 
 | Semana | Tema | Los 5 días | Clases | Estado |
 |---|---|---|---|---|
-| 1 | 🟠 Fundamentos | Agentic Workflow · Agents and Agentic Patterns · Orchestrating LLMs · Autonomy and Tools · 🟡 **P1** Personal career agent | [01 · Primer agente (n8n)](clases/01-primer-agente-n8n.md) · [02 · Mapa del curso](clases/02-mapa-del-curso-seis-semanas.md) · [03 · Configurar el entorno](clases/03-configurar-entorno-costos-mentalidad.md) · [04 · Setup Windows/Mac (guía rápida)](clases/04-setup-windows-mac-guia-rapida.md) · [05 · Clave OpenAI, `.env` y notebook](clases/05-openai-api-key-env-notebook.md) · [06 · Primeras llamadas a OpenAI](clases/06-primeras-llamadas-openai-encadenar.md) · [07 · ¿Qué es un agente? (día 2)](clases/07-que-es-un-agente-workflow-vs-agent.md) | 🟡 En curso (día 2) |
+| 1 | 🟠 Fundamentos | Agentic Workflow · Agents and Agentic Patterns · Orchestrating LLMs · Autonomy and Tools · 🟡 **P1** Personal career agent | [01 · Primer agente (n8n)](clases/01-primer-agente-n8n.md) · [02 · Mapa del curso](clases/02-mapa-del-curso-seis-semanas.md) · [03 · Configurar el entorno](clases/03-configurar-entorno-costos-mentalidad.md) · [04 · Setup Windows/Mac (guía rápida)](clases/04-setup-windows-mac-guia-rapida.md) · [05 · Clave OpenAI, `.env` y notebook](clases/05-openai-api-key-env-notebook.md) · [06 · Primeras llamadas a OpenAI](clases/06-primeras-llamadas-openai-encadenar.md) · [07 · ¿Qué es un agente? (día 2)](clases/07-que-es-un-agente-workflow-vs-agent.md) · [08 · Patrones de diseño agénticos](clases/08-patrones-de-diseno-agenticos.md) | 🟡 En curso (día 2) |
 | 2 | 🔵 OpenAI Agents SDK | Conceptos · 🟡 **P2** SDR · Tools vs Agents y Guardrails · 🟡 **P3** Deep Research (2 días) | _pendiente_ | ⏳ |
 | 3 | 🔵 CrewAI | Conceptos · Build a Crew agent · 🟡 **P4** Stock Picker · 🟡 **P5** Developer Agent y Engineering Team | | ⏳ |
 | 4 | 🔵 LangGraph | Conceptos · Build a LangGraph agent · Tools, memory, web searches · 🟡 **P6** Sidekick (2 días) | | ⏳ |
@@ -55,6 +55,7 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 | Concepto | Clases donde aparece |
 |---|---|
 | Agentes y agent loop | [01](clases/01-primer-agente-n8n.md) · [07](clases/07-que-es-un-agente-workflow-vs-agent.md) |
+| Patrones de workflow (chaining, routing, paralelización, orquestador, evaluador) | [08](clases/08-patrones-de-diseno-agenticos.md) · catálogo [`patrones/`](../patrones/README.md) |
 | Workflow vs agente | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#4--workflow-vs-agente-según-anthropic) |
 | Llamar a un LLM y encadenar llamadas | [06](clases/06-primeras-llamadas-openai-encadenar.md) |
 | Entorno, uv, API keys y `.env` | [03](clases/03-configurar-entorno-costos-mentalidad.md) · [04](clases/04-setup-windows-mac-guia-rapida.md) · [05](clases/05-openai-api-key-env-notebook.md) |
@@ -78,6 +79,11 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 | **API key / `.env`** | Clave de acceso al proveedor; se guarda en un archivo fuera del código. | La llave de la cuenta, en el cajón con llave | [03](clases/03-configurar-entorno-costos-mentalidad.md#4--tres-cosas-a-tener-presentes) |
 | **Mensaje (`messages`)** | Lista de diccionarios con `role` y `content` que se envía al LLM. | La libreta de pedidos | [06](clases/06-primeras-llamadas-openai-encadenar.md#1--la-forma-de-un-mensaje) |
 | **Encadenar llamadas** | La salida de una llamada es la entrada de la siguiente. | Cadena de montaje de frutas | [06](clases/06-primeras-llamadas-openai-encadenar.md#3--encadenar-tres-llamadas) |
+| **Prompt chaining** | Pasos fijos; la salida de uno alimenta al siguiente, con una puerta de validación. | Cadena de montaje | [patrón 1](../patrones/01-prompt-chaining/README.md) |
+| **Routing** | Un LLM clasifica la entrada y la manda a un especialista. | Recepcionista | [patrón 2](../patrones/02-routing/README.md) |
+| **Parallelization** | Subtareas independientes a la vez, luego se juntan. | Equipo en paralelo | [patrón 3](../patrones/03-parallelization/README.md) |
+| **Orchestrator-worker** | Un LLM decide las subtareas, otros las hacen, otro combina. | Jefe que reparte | [patrón 4](../patrones/04-orchestrator-worker/README.md) |
+| **Evaluator-optimizer** | Un LLM genera, otro evalúa y devuelve feedback hasta aprobar. | Control de calidad | [patrón 5](../patrones/05-evaluator-optimizer/README.md) |
 | **Workflow** | Llamadas a LLM por rutas predefinidas y probables de antemano. | Cadena de montaje con estaciones fijas | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#4--workflow-vs-agente-según-anthropic) |
 | **Agente (definición Willison)** | LLM que usa herramientas en bucle para lograr un objetivo; el LLM decide los pasos. | Empleado libre que resuelve el pedido | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#1--las-tres-definiciones-de-la-más-vieja-a-la-más-usada) |
 | **LLM = generador de tokens** | El LLM solo predice texto; el agente es el código que lo interpreta. | El empleado escribe notas, tu código las ejecuta | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#2--la-idea-que-más-pesa-el-llm-solo-genera-tokens) |
