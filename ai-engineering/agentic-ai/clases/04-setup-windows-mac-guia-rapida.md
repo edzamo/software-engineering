@@ -52,6 +52,18 @@ Terminal en el IDE: `Ctrl` + `` ` `` (tilde invertida). En Windows es **PowerShe
 
 Con uv tarda unos minutos; "a la antigua" tardaría 5 a 10 veces más. Si da error: **pregunta 11 de las FAQ** del instructor (por ejemplo, bloqueos de seguridad corporativa). Hay que resolverlo ahora, porque si no, fallará todo después.
 
+### 📊 Cómo queda la carpeta del curso
+
+```mermaid
+graph TB
+    R["📁 agents/  ← abre ESTA carpeta en el IDE"]
+    R --> W["📂 1_foundations … 6_mcp<br/>(una carpeta por semana)"]
+    R --> G["📂 guides/<br/>(guías de apoyo, la 9 = otros proveedores)"]
+    R --> V["📦 .venv/<br/>(lo crea uv sync)"]
+    R --> E["🔐 .env<br/>(tu clave; nunca a Git)"]
+    R --> CC["📂 community_contributions/<br/>(aportes por pull request)"]
+```
+
 ## 4 · Qué debe dominar cada nivel
 
 | Nivel | Debe poder... |

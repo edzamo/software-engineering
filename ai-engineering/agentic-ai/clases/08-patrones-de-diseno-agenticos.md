@@ -1,6 +1,6 @@
 # Clase 08 · Semana 1, día 2 — Los 5 patrones de workflow (y los agentes por contraste)
 
-> ⬅️ [07 · ¿Qué es un agente?](07-que-es-un-agente-workflow-vs-agent.md) · ➡️ Siguiente: _pendiente_
+> ⬅️ [07 · ¿Qué es un agente?](07-que-es-un-agente-workflow-vs-agent.md) · ➡️ [09 · Riesgos y trampas](09-riesgos-y-trampas-de-la-ia-agentica.md)
 > 🗓️ **Semana 1 · Día 2 — "Agents and Agentic Patterns"** · tipo: 🟠 teoría
 > **Qué vas a poder explicar al terminar:** los 5 patrones de diseño de workflows con LLM, en qué se diferencian, cómo elegir entre ellos y dónde empieza un agente.
 > ✅ Fuente: **diapositivas + explicación hablada** del instructor. Cada patrón vive en el [catálogo](../../patrones/README.md), con dibujo, caso de uso e implementación.

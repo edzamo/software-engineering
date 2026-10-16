@@ -32,6 +32,13 @@ Antes de abrir la **frutería** hay que **montar el local**: poner el mostrador,
 
 Las instrucciones paso a paso vienen en las **dos clases siguientes** (Windows y Mac). Linux: se siguen las del repo, o las de Mac, que son muy parecidas. Están enlazadas en el `README` del repo.
 
+### 📊 Los 5 pasos, dibujados
+
+```mermaid
+graph LR
+    s1["1 · IDE<br/>(Cursor)"] --> s2["2 · Clonar<br/>el repo"] --> s3["3 · uv sync<br/>(dependencias)"] --> s4["4 · Elegir<br/>proveedor de modelos"] --> s5["5 · Archivo .env<br/>con la clave"] --> ok["✅ Listo<br/>para el lab 1"]
+```
+
 ## 2 · Qué es **uv**
 
 Un **gestor de paquetes de Python** muy rápido y confiable. Facilita que el entorno quede igual en todas las máquinas, sin pelearse con versiones.

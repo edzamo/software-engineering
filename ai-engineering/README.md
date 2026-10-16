@@ -101,6 +101,7 @@ La progresión es deliberada: no se puede razonar sobre RAG (Fase 2) sin dominar
 
 | Carpeta | Qué contiene |
 |---|---|
+| [`conceptos/`](conceptos/ingenieria-de-contexto.md) | Conceptos reutilizables, independientes de cualquier curso (empieza con **ingeniería de contexto**) |
 | [`patrones/`](patrones/README.md) | **Catálogo reutilizable** de patrones agénticos: explicación + implementación de referencia en Python |
 | [`agentic-ai/`](agentic-ai/README.md) | Apuntes del curso *Agentic Track* (clases, de junior a senior) |
 | [`llm-production/`](llm-production/README.md) | Apuntes del curso *Production Track* |

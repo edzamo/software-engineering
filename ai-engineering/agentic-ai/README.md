@@ -16,6 +16,23 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 
 > 🔐 En el fork, el `.env` con la clave API está en el `.gitignore`: **nunca se sube**. Antes de cada push conviene revisar con `git status` que no aparezca. Detalle en la [clase 05](clases/05-openai-api-key-env-notebook.md#3--el-archivo-env-donde-más-gente-se-atora).
 
+## 🧹 Pendiente: depurar al cerrar la semana 1
+
+> Anotado a pedido del usuario: hay **demasiados `.md` para el contenido real**. Cuando termine la semana 1, se **depura** y se queda solo lo importante. Mientras tanto, las clases nuevas se escriben **más cortas**.
+
+Candidatos a revisar (decisión final con los videos de la semana completos):
+
+| Clase | Valor percibido | Propuesta provisional |
+|---|---|---|
+| 01 · Primer agente (n8n) | Bajo: es una demo de adelanto | Reducir a una sección de la clase de definición de agente |
+| 02 · Mapa del curso | Medio: solo orientación | Dejar solo el mapa en este README |
+| 03 · Entorno y costos | Medio | Fusionar con 04 y 05 en **una sola guía de preparación** |
+| 04 · Setup Windows/Mac | Bajo | Fusionar (ver arriba) |
+| 05 · Clave, `.env`, notebook | Medio | Fusionar (ver arriba) |
+| 06 · Primeras llamadas | Medio | Fusionar con 11 (labs) |
+| 07, 08, 09 · Agente, patrones, riesgos | **Alto** | Conservar; los patrones ya viven en el [catálogo](../patrones/README.md) |
+| 10 · Modelos y proveedores | Medio | Conservar condensado |
+
 ## 🗺️ El currículo completo (y dónde estamos)
 
 | # | Curso | Temas | Decisión |
@@ -39,7 +56,7 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 
 | Semana | Tema | Los 5 días | Clases | Estado |
 |---|---|---|---|---|
-| 1 | 🟠 Fundamentos | Agentic Workflow · Agents and Agentic Patterns · Orchestrating LLMs · Autonomy and Tools · 🟡 **P1** Personal career agent | [01 · Primer agente (n8n)](clases/01-primer-agente-n8n.md) · [02 · Mapa del curso](clases/02-mapa-del-curso-seis-semanas.md) · [03 · Configurar el entorno](clases/03-configurar-entorno-costos-mentalidad.md) · [04 · Setup Windows/Mac (guía rápida)](clases/04-setup-windows-mac-guia-rapida.md) · [05 · Clave OpenAI, `.env` y notebook](clases/05-openai-api-key-env-notebook.md) · [06 · Primeras llamadas a OpenAI](clases/06-primeras-llamadas-openai-encadenar.md) · [07 · ¿Qué es un agente? (día 2)](clases/07-que-es-un-agente-workflow-vs-agent.md) · [08 · Patrones de diseño agénticos](clases/08-patrones-de-diseno-agenticos.md) | 🟡 En curso (día 2) |
+| 1 | 🟠 Fundamentos | Agentic Workflow · Agents and Agentic Patterns · Orchestrating LLMs · Autonomy and Tools · 🟡 **P1** Personal career agent | [01 · Primer agente (n8n)](clases/01-primer-agente-n8n.md) · [02 · Mapa del curso](clases/02-mapa-del-curso-seis-semanas.md) · [03 · Configurar el entorno](clases/03-configurar-entorno-costos-mentalidad.md) · [04 · Setup Windows/Mac (guía rápida)](clases/04-setup-windows-mac-guia-rapida.md) · [05 · Clave OpenAI, `.env` y notebook](clases/05-openai-api-key-env-notebook.md) · [06 · Primeras llamadas a OpenAI](clases/06-primeras-llamadas-openai-encadenar.md) · [07 · ¿Qué es un agente? (día 2)](clases/07-que-es-un-agente-workflow-vs-agent.md) · [08 · Patrones de diseño agénticos](clases/08-patrones-de-diseno-agenticos.md) · [09 · Riesgos y trampas](clases/09-riesgos-y-trampas-de-la-ia-agentica.md) · [10 · Modelos y proveedores (día 3)](clases/10-modelos-y-proveedores-de-llm.md) · [11 · Lab 2: varios LLM](clases/11-lab2-preguntar-a-varios-llm.md) | 🟡 En curso (día 4) · notas ligeras en [`semana-01-notas.md`](semana-01-notas.md) |
 | 2 | 🔵 OpenAI Agents SDK | Conceptos · 🟡 **P2** SDR · Tools vs Agents y Guardrails · 🟡 **P3** Deep Research (2 días) | _pendiente_ | ⏳ |
 | 3 | 🔵 CrewAI | Conceptos · Build a Crew agent · 🟡 **P4** Stock Picker · 🟡 **P5** Developer Agent y Engineering Team | | ⏳ |
 | 4 | 🔵 LangGraph | Conceptos · Build a LangGraph agent · Tools, memory, web searches · 🟡 **P6** Sidekick (2 días) | | ⏳ |
@@ -56,6 +73,9 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 |---|---|
 | Agentes y agent loop | [01](clases/01-primer-agente-n8n.md) · [07](clases/07-que-es-un-agente-workflow-vs-agent.md) |
 | Patrones de workflow (chaining, routing, paralelización, orquestador, evaluador) | [08](clases/08-patrones-de-diseno-agenticos.md) · catálogo [`patrones/`](../patrones/README.md) |
+| Riesgos: impredecibilidad, observabilidad, evals, guardrails | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md) |
+| Trampas: solución sin problema y antropomorfizar | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md#3--trampa-1-enamorarse-de-la-solución) |
+| Modelos, tamaños y proveedores (OpenRouter, Ollama, Groq…) | [10](clases/10-modelos-y-proveedores-de-llm.md) |
 | Workflow vs agente | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#4--workflow-vs-agente-según-anthropic) |
 | Llamar a un LLM y encadenar llamadas | [06](clases/06-primeras-llamadas-openai-encadenar.md) |
 | Entorno, uv, API keys y `.env` | [03](clases/03-configurar-entorno-costos-mentalidad.md) · [04](clases/04-setup-windows-mac-guia-rapida.md) · [05](clases/05-openai-api-key-env-notebook.md) |
@@ -87,6 +107,15 @@ Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP
 | **Workflow** | Llamadas a LLM por rutas predefinidas y probables de antemano. | Cadena de montaje con estaciones fijas | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#4--workflow-vs-agente-según-anthropic) |
 | **Agente (definición Willison)** | LLM que usa herramientas en bucle para lograr un objetivo; el LLM decide los pasos. | Empleado libre que resuelve el pedido | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#1--las-tres-definiciones-de-la-más-vieja-a-la-más-usada) |
 | **LLM = generador de tokens** | El LLM solo predice texto; el agente es el código que lo interpreta. | El empleado escribe notas, tu código las ejecuta | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#2--la-idea-que-más-pesa-el-llm-solo-genera-tokens) |
+| **Observabilidad** | Ver trazas de qué pasó en cada llamada al LLM. | Cámaras y libro de registro | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md#21--monitorear-desarrollo-y-producción) |
+| **Eval de negocio** | Medir si el agente mueve la métrica real (clientes, ingresos). | ¿Subió la caja? | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md#21--monitorear-desarrollo-y-producción) |
+| **LLM como juez** | Un LLM evalúa la salida de otro (patrón evaluator-optimizer). | El encargado de calidad | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md#21--monitorear-desarrollo-y-producción) |
+| **Guardrails** | Código tuyo que revisa entradas y salidas del agente. | Candados en la caja | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md#22--guardrails-barreras-de-seguridad) |
+| **Antropomorfizar** | Tratar al LLM como persona en vez de generador de tokens. | Pedir "empleado estrella" sin problema | [09](clases/09-riesgos-y-trampas-de-la-ia-agentica.md#4--trampa-2-antropomorfizar-tratarlo-como-persona) |
+| **API compatible con OpenAI** | Muchos proveedores copian la API de OpenAI: cambias `base_url`, clave y modelo. | Cambiar de mayorista sin rehacer el local | [11](clases/11-lab2-preguntar-a-varios-llm.md#4--lo-que-realmente-enseña-lo-útil) |
+| **Proveedor de inferencia** | Plataforma que ejecuta modelos de otros (Groq). | Bodega de reparto | [10](clases/10-modelos-y-proveedores-de-llm.md#2--quién-fabrica-y-quién-ejecuta) |
+| **OpenRouter** | Pasarela: una cuenta para muchos proveedores. | Central de compras | [10](clases/10-modelos-y-proveedores-de-llm.md#2--quién-fabrica-y-quién-ejecuta) |
+| **Ollama** | Corre modelos pequeños en tu propia máquina. | Tu propia huerta | [10](clases/10-modelos-y-proveedores-de-llm.md#2--quién-fabrica-y-quién-ejecuta) |
 | **API de OpenAI vs ChatGPT** | La API es para programar y se cobra por uso; ChatGPT es el producto final. | Cuenta de proveedor mayorista vs. comprar en el mostrador | [05](clases/05-openai-api-key-env-notebook.md#1--api-de-openai--chatgpt) |
 | **Kernel** | Proceso de Python que ejecuta las celdas de un notebook. | El cocinero que sigue la receta | [05](clases/05-openai-api-key-env-notebook.md#4--primer-notebook-kernel-celdas-y-orden) |
 | **Entorno virtual (`.venv`)** | Carpeta aislada con las dependencias de un proyecto. | Caja cerrada de ingredientes por proyecto | [04](clases/04-setup-windows-mac-guia-rapida.md#3--uv-sync-el-comando-importante) |

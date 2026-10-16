@@ -50,6 +50,32 @@ La flecha que **vuelve** de las herramientas al LLM es el bucle. Es la misma ide
 
 > ⚠️ Matiz honesto de la clase: el agente **no compró** acciones, solo **anotó** en la hoja. Escribir en una hoja es una acción real; comprar en bolsa no. Esa frontera (qué le dejas hacer) es el tema de guardrails.
 
+### 📊 Los tres escalones, dibujados
+
+```mermaid
+graph TB
+    subgraph E1["❌ Escalón 1 · solo LLM + memoria (= ChatGPT)"]
+        direction LR
+        a1["👤 'Hola'"] --> a2["🧠 LLM"] --> a3["💬 Dato curioso"]
+    end
+    subgraph E2["🟡 Escalón 2 · + 1 herramienta (la pides tú)"]
+        direction LR
+        b1["👤 '¿Precio de Apple?'"] --> b2["🧠 LLM"]
+        b2 -- "pide" --> b3["🛠️ MarketStack"]
+        b3 -- "280 USD" --> b2
+        b2 --> b4["💬 Respuesta"]
+    end
+    subgraph E3["✅ Escalón 3 · + varias herramientas y un objetivo"]
+        direction LR
+        c1["👤 'Equilibra mi cartera'"] --> c2["🧠 LLM"]
+        c2 <--> c3["🛠️ Leer hoja"]
+        c2 <--> c4["🛠️ Precios"]
+        c2 <--> c5["🛠️ Escribir hoja"]
+        c2 --> c6["💬 'Añadí SPY y BND'"]
+    end
+    E1 --> E2 --> E3
+```
+
 ## 4 · Cómo se le da una herramienta a un LLM (sin magia todavía)
 
 En n8n se configura así, y el curso lo desarmará en código:

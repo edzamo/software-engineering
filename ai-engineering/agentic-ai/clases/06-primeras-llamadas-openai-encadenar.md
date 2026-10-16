@@ -52,6 +52,17 @@ print(response.choices[0].message.content)
 
 Resultado de la clase: "la miel nunca se estropea". **Es tu primera llamada a la API en la nube.**
 
+### 📊 Qué viaja en una llamada
+
+```mermaid
+sequenceDiagram
+    participant T as 🧑‍💻 Tu código
+    participant A as ☁️ API de OpenAI
+    T->>A: model + messages [{role: "user", content: "Cuéntame algo curioso"}]
+    Note over A: el modelo predice<br/>la respuesta
+    A-->>T: response (choices[0].message.content = "La miel nunca se estropea")
+```
+
 ## 3 · Encadenar tres llamadas
 
 ```mermaid

@@ -83,6 +83,20 @@ graph LR
 
 > 🍎 **Esta es la distinción clave del curso:** *este curso trata de **crear** agentes; AI Coder trata de **usar** agentes.* Escribes Python y ese código se convierte en el agente.
 
+### 📊 El mapa de cursos, dibujado
+
+```mermaid
+graph LR
+    B["1 · AI Builder<br/>agentes SIN código<br/>(n8n)"] --> C["2 · AI Coder<br/>USAR agentes<br/>(Claude Code)"]
+    C --> L["3 · AI Leader<br/>negocio y entrega"]
+    L --> CT["4 · Core Track<br/>LLMs, RAG, fine-tuning"]
+    CT --> AT["5 · Agentic Track ⭐<br/>CONSTRUIR agentes<br/>(este curso)"]
+    AT --> PT["6 · Production Track<br/>llevarlo a producción"]
+    style AT fill:#0d7d72,color:#fff
+```
+
+> El orden es una **sugerencia**: los cursos casi no se solapan y pueden tomarse en cualquier orden.
+
 ## 5 · Qué debe dominar cada nivel
 
 | Nivel | Debe poder... |

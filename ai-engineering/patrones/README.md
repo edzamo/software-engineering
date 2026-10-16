@@ -73,7 +73,7 @@ graph TB
 
 ## 🧭 ¿Cuál elijo? Guía de decisión
 
-> ⏳ **Pregunta pendiente del instructor:** *"¿cómo sé si debo dividir un problema o basta con una sola llamada al LLM?"* Dijo que la **responde al final de las clases de hoy**. La transcripción pegada se corta antes de esa respuesta; cuando pegues el final del día, la agrego aquí. Mientras tanto, la guía de abajo es **mía** (regla de oro: empezar simple).
+> ✅ **Respuesta del instructor** (a *"¿divido o basta una sola llamada?"*, [clase 09](../agentic-ai/clases/09-riesgos-y-trampas-de-la-ia-agentica.md#4--trampa-2-antropomorfizar-tratarlo-como-persona)): **empieza con un solo LLM, un prompt y un objetivo; mide contra la métrica de negocio y divide solo si mejora de forma cuantificable.** La guía de abajo sigue esa regla.
 
 ```mermaid
 graph TD

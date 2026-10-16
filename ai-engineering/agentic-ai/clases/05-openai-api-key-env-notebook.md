@@ -62,6 +62,18 @@ OPENAI_API_KEY=sk-proj-...tu clave...
 
 > ⚠️ **Lo que falta y conviene hacer siempre:** confirmar que `.env` está en `.gitignore` para que **nunca** se suba a GitHub. 🔎 No lo menciona el instructor en esta clase; es práctica estándar y el repo suele traerlo.
 
+### 📊 El viaje de la clave
+
+```mermaid
+graph LR
+    P["🌐 platform.openai.com<br/>creas la clave sk-proj-…"] --> E["🔐 .env<br/>OPENAI_API_KEY=…"]
+    E --> D["🐍 load_dotenv()<br/>→ True"]
+    D --> V["os.getenv('OPENAI_API_KEY')<br/>→ empieza por sk-proj-"]
+    V --> C["🔌 cliente OpenAI()"]
+    C --> API["☁️ API de OpenAI<br/>(te cobra por uso)"]
+    E -. "nunca" .-> GIT["❌ Git / GitHub"]
+```
+
 ## 4 · Primer notebook: kernel, celdas y orden
 
 **Jupyter notebook** = texto explicativo + bloques de código llamados **celdas**. `Shift + Enter` ejecuta una celda.
