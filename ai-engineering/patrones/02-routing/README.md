@@ -6,9 +6,9 @@
 
 ---
 
-## 🍎 Con manzanas
+## 🍳 Con la cocina
 
-La **recepcionista** de la frutería. Llega un cliente y ella **no atiende**: mira qué necesita y lo manda al **mostrador correcto**: *pedidos*, *reclamos* o *precios*. Cada mostrador sabe hacer **una sola cosa muy bien**.
+El **expedidor** de la cocina. Llega la comanda y él **no cocina**: lee de qué se trata y la manda a la **estación correcta** (*parrilla*, *ensaladas* o *postres*). Cada estación sabe hacer **una sola cosa muy bien**.
 
 > En palabras de la calle: **un clasificador decide a qué especialista le toca cada entrada.**
 
@@ -31,13 +31,13 @@ graph LR
 
 > 💬 **Del instructor:** "enviarlo a un LLM" solo significa **otra llamada** a un LLM que tiene toda la información para ese tipo de consulta (técnica, empresarial u otra). **No querrías meter toda esa información en una sola consulta**: sería demasiado. Mejor un router muy bueno **solo clasificando** y especialistas muy buenos **solo respondiendo lo suyo**.
 
-## 2 · Ejemplo: atención al cliente de la frutería
+## 2 · Ejemplo: atención al cliente del restaurante
 
 | Mensaje del cliente | El router decide | Especialista |
 |---|---|---|
-| "Quiero 3 cajas de fresa para el viernes" | `pedido` | LLM de pedidos (extrae, cotiza) |
-| "La fruta llegó golpeada" | `reclamo` | LLM de reclamos (empatía, política de reposición) |
-| "¿Cuánto cuesta el kilo de mango?" | `precios` | LLM de precios (consulta la lista) |
+| "Quiero 3 porciones de seco de pollo para el viernes" | `pedido` | LLM de pedidos (extrae, cotiza) |
+| "El plato llegó frío" | `reclamo` | LLM de reclamos (empatía, política de reposición) |
+| "¿Cuánto cuesta el seco de pollo?" | `precios` | LLM de precios (consulta la lista) |
 | "Hola" o algo fuera del negocio | `otro` | Respuesta genérica o escalar a una persona |
 
 ```python
@@ -84,4 +84,4 @@ El `.get(..., escalar_a_humano)` es clave: **siempre una ruta por defecto** si e
 
 ## 🔗 Relacionado
 
-[← Prompt chaining](../01-prompt-chaining/README.md) · [Parallelization →](../03-parallelization/README.md) · [Catálogo de patrones](../README.md) · [Clase 08](../../agentic-ai/clases/08-patrones-de-diseno-agenticos.md)
+[← Prompt chaining](../01-prompt-chaining/README.md) · [Parallelization →](../03-parallelization/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)

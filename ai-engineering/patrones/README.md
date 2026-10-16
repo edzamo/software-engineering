@@ -1,25 +1,25 @@
 # Catálogo de patrones agénticos
 
 > **Para qué sirve:** cuando en un proyecto piensas *"esto se parece a un patrón de IA"*, vienes aquí: eliges el patrón, lees cómo funciona, y copias la **implementación de referencia**. Es el equivalente, para LLM, a tu catálogo de arquitecturas (hexagonal, clean…).
-> **Origen:** los cinco patrones de workflow y el de agente de *Building Effective Agents* (Anthropic), explicados en la [clase 08](../agentic-ai/clases/08-patrones-de-diseno-agenticos.md) del Agentic Track. Pero este catálogo **no depende del curso**.
+> **Origen:** los cinco patrones de workflow y el de agente de *Building Effective Agents* (Anthropic), explicados en la [semana 1](../agentic-ai/semana-01.md) del Agentic Track. Pero este catálogo **no depende del curso**.
 > ⚠️ Son **ideas, no reglas**: en sistemas reales se mezclan. No memorices los nombres.
 
-## 🍎 Con manzanas
+## 🍳 Con la cocina
 
-Es el **recetario de la frutería**: cada receta dice cómo organizar a los empleados (los LLM). Cada receta trae su **explicación**, un **caso de uso** y, cuando está lista, la **receta ya cocinada** (código) para copiar.
+Es el **recetario de la cocina**: cada receta dice cómo organizar a los cocineros (los LLM). Cada receta trae su **explicación**, un **caso de uso** y, cuando está lista, la **receta ya cocinada** (código) para copiar.
 
 ## 📚 Índice
 
-| # | Patrón | 🍎 | Caso de uso | Doc | Python | Subagentes (Claude Code) |
+| # | Patrón | 🍳 | Caso de uso | Doc | Python | Subagentes (Claude Code) |
 |---|---|---|---|---|---|---|
-| 1 | Prompt chaining | Cadena de montaje | Procesar un pago | [📄](01-prompt-chaining/README.md) | ⏳ [spec](01-prompt-chaining/python/README.md) | [`/feature-implementation`](../../ia-agentes/.claude/commands/feature-implementation.md) |
-| 2 | Routing | Recepcionista | Fichaje y solicitudes | [📄](02-routing/README.md) | ⏳ [spec](02-routing/python/README.md) | — |
-| 3 | Parallelization | Equipo en paralelo | Revisar un cambio de código | [📄](03-parallelization/README.md) | ⏳ [spec](03-parallelization/python/README.md) | Fase 4 del mismo comando |
-| 4 | Orchestrator-worker | Jefe que reparte | Planificar una feature | [📄](04-orchestrator-worker/README.md) | ⏳ [spec](04-orchestrator-worker/python/README.md) | El orquestador del mismo comando |
-| 5 | Evaluator-optimizer | Control de calidad | Aviso de pago rechazado | [📄](05-evaluator-optimizer/README.md) | ⏳ [spec](05-evaluator-optimizer/python/README.md) | `arch-validator-agent` (≤ 3 ciclos) |
-| 6 | Agente (por contraste) | Empleado libre | Conciliación bancaria | [📄](06-agente/README.md) | ⏳ [spec](06-agente/python/README.md) | — |
+| 1 | Prompt chaining | Línea de cocina | Procesar un pago | [📄](01-prompt-chaining/README.md) | ⏳ [spec](01-prompt-chaining/python/README.md) | [`/feature-implementation`](../../ia-agentes/.claude/commands/feature-implementation.md) |
+| 2 | Routing | Expedidor | Fichaje y solicitudes | [📄](02-routing/README.md) | ⏳ [spec](02-routing/python/README.md) | — |
+| 3 | Parallelization | Cocineros en paralelo | Revisar un cambio de código | [📄](03-parallelization/README.md) | ⏳ [spec](03-parallelization/python/README.md) | Fase 4 del mismo comando |
+| 4 | Orchestrator-worker | Chef ejecutivo | Planificar una feature | [📄](04-orchestrator-worker/README.md) | ⏳ [spec](04-orchestrator-worker/python/README.md) | El orquestador del mismo comando |
+| 5 | Evaluator-optimizer | Chef que prueba | Aviso de pago rechazado | [📄](05-evaluator-optimizer/README.md) | ⏳ [spec](05-evaluator-optimizer/python/README.md) | `arch-validator-agent` (≤ 3 ciclos) |
+| 6 | Agente (por contraste) | Cocinero libre | Conciliación bancaria | [📄](06-agente/README.md) | ⏳ [spec](06-agente/python/README.md) | — |
 
-> **Orden sugerido para implementar:** 1 → 2 → 3 → 5 → 4 → 6 (de lo más predecible a lo más abierto). El 1 ya lo viste en el laboratorio de la [clase 06](../agentic-ai/clases/06-primeras-llamadas-openai-encadenar.md).
+> **Orden sugerido para implementar:** 1 → 2 → 3 → 5 → 4 → 6 (de lo más predecible a lo más abierto). El 1 ya lo viste en el laboratorio de la [semana 1](../agentic-ai/semana-01.md).
 
 ## 🖼️ Los dibujos juntos
 
@@ -73,7 +73,7 @@ graph TB
 
 ## 🧭 ¿Cuál elijo? Guía de decisión
 
-> ✅ **Respuesta del instructor** (a *"¿divido o basta una sola llamada?"*, [clase 09](../agentic-ai/clases/09-riesgos-y-trampas-de-la-ia-agentica.md#4--trampa-2-antropomorfizar-tratarlo-como-persona)): **empieza con un solo LLM, un prompt y un objetivo; mide contra la métrica de negocio y divide solo si mejora de forma cuantificable.** La guía de abajo sigue esa regla.
+> ✅ **Respuesta del instructor** (a *"¿divido o basta una sola llamada?"*, [semana 1](../agentic-ai/semana-01.md)): **empieza con un solo LLM, un prompt y un objetivo; mide contra la métrica de negocio y divide solo si mejora de forma cuantificable.** La guía de abajo sigue esa regla.
 
 ```mermaid
 graph TD
@@ -91,7 +91,7 @@ graph TD
     Q5 -- No --> R6["🤖 Agente abierto<br/>(con topes y permisos)"]
 ```
 
-> 🍎 La regla de oro: **empieza por lo más simple** (un prompt) y solo sube de nivel si lo necesitas. Cada patrón suma **costo, latencia y cosas que pueden fallar**. Y los patrones **se combinan**: por ejemplo, un router que manda a una cadena que termina en un evaluador.
+> 🍳 La regla de oro: **empieza por lo más simple** (un prompt) y solo sube de nivel si lo necesitas. Cada patrón suma **costo, latencia y cosas que pueden fallar**. Y los patrones **se combinan**: por ejemplo, un router que manda a una cadena que termina en un evaluador.
 
 
 ## 🗺️ Dónde vive cada cosa
@@ -100,7 +100,7 @@ graph TD
 |---|---|---|
 | **Este catálogo** | `ai-engineering/patrones/` | Explicación + implementaciones de referencia en Python |
 | **Subagentes y pipelines de Claude Code** | [`ia-agentes/`](../../ia-agentes) | Kit instalado en `~/.claude` (no se mueve: `install.sh` crea symlinks a esas rutas). Es la implementación de los patrones **con subagentes** |
-| **Apuntes del curso** | [`agentic-ai/`](../agentic-ai/README.md), [`llm-production/`](../llm-production/README.md) | Clases explicadas con manzanas |
+| **Apuntes del curso** | [`agentic-ai/`](../agentic-ai/README.md), [`llm-production/`](../llm-production/README.md) | Apuntes de cada curso, de junior a senior |
 | **Laboratorios del instructor** | Tu fork `edzamo/agents` | Ejercicios tal como los pide el curso |
 
 ## 🧱 Reglas del catálogo
@@ -113,4 +113,4 @@ graph TD
 
 ## 🔗 Relacionado
 
-[Clase 07 · workflow vs agente](../agentic-ai/clases/07-que-es-un-agente-workflow-vs-agent.md) · [Clase 08 · patrones (apuntes del curso)](../agentic-ai/clases/08-patrones-de-diseno-agenticos.md) · [Roadmap · Fases 3 y 4](../README.md) · [`ia-agentes/`](../../ia-agentes)
+[semana 1 · workflow vs agente](../agentic-ai/semana-01.md) · [semana 1 · patrones (apuntes del curso)](../agentic-ai/semana-01.md) · [Roadmap · Fases 3 y 4](../README.md) · [`ia-agentes/`](../../ia-agentes)

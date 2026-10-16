@@ -6,9 +6,9 @@
 
 ---
 
-## 🍎 Con manzanas
+## 🍳 Con la cocina
 
-El **jefe de la frutería** recibe un encargo grande: *"prepara la campaña de la temporada de mango"*. Él **no lo hace**: lo **lee, decide qué hace falta** (¿precios? ¿afiche? ¿mensaje a clientes? ¿proveedor?) y **reparte** cada pieza a un trabajador. Al final, **alguien junta todo** en un solo plan. Si el encargo fuera otro, **repartiría distinto**.
+El **chef ejecutivo** recibe un encargo grande: *"un banquete para 50 personas"*. No lo cocina: **decide en el momento qué hace falta** (¿entradas frías? ¿un menú vegetariano? ¿postre?) y **reparte** cada parte a un cocinero. Al final, el **sous-chef integra** todo en un solo servicio. Con otro encargo, **repartiría distinto**.
 
 > En palabras de la calle: **un LLM jefe decide en el momento qué subtareas hacen falta, se las da a otros LLM y luego se combinan.**
 
@@ -36,7 +36,7 @@ graph LR
 
 ## 2 · Ejemplo: campaña de temporada
 
-Encargo: *"Prepara la campaña de mango para este mes."*
+Encargo: *"Prepara la campaña del menú de temporada."*
 
 | Paso | Quién | Qué pasa |
 |---|---|---|
@@ -44,7 +44,7 @@ Encargo: *"Prepara la campaña de mango para este mes."*
 | 2 | 🟨 Workers | Cada uno hace su pieza (puede ser en paralelo). |
 | 3 | 🟨 Synthesizer | Junta las tres piezas en un plan coherente: mismo tono, mismas fechas, sin contradicciones. |
 
-Con otro encargo (*"Resuelve el exceso de banano"*), el orquestador sacaría **otras** subtareas (descuento, jugos, donación).
+Con otro encargo (*"Resuelve el exceso de pollo en la cocina"*), el orquestador sacaría **otras** subtareas (plato del día con descuento, menú ejecutivo, donación).
 
 ```python
 # boceto, no ejercicio
@@ -90,4 +90,4 @@ return llm("Combina estos resultados en un plan coherente", resultados)
 
 ## 🔗 Relacionado
 
-[← Parallelization](../03-parallelization/README.md) · [Evaluator-optimizer →](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [Clase 08](../../agentic-ai/clases/08-patrones-de-diseno-agenticos.md)
+[← Parallelization](../03-parallelization/README.md) · [Evaluator-optimizer →](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)

@@ -8,9 +8,9 @@
 
 > 💬 **Del instructor:** en la práctica se habla mucho más de **"LLM como juez"** (*LLM-as-a-judge*) que de "evaluator-optimizer". Es el **quinto y último** patrón de workflow de Anthropic. No hace falta memorizar el nombre: lo importante es la idea de que un LLM juzga la salida de otro.
 
-## 🍎 Con manzanas
+## 🍳 Con la cocina
 
-Un empleado **redacta la respuesta** a un cliente enojado. Antes de enviarla, la lee **el encargado de calidad**. Si el tono es malo, la **devuelve con una nota** ("suena a excusa; ofrece reponer"). El empleado **la reescribe** y se la vuelve a dar. Esto se repite hasta que el encargado dice **"aprobada"**. Solo entonces sale.
+El **chef prueba el plato** antes de que salga. Si le falta sal, lo **devuelve con una nota** (*"más sal, menos picante"*) y el cocinero **lo rehace**. Se repite hasta que el chef dice **"aprobado"**; con un **límite de intentos**: si no mejora, decide el chef.
 
 > En palabras de la calle: **uno escribe, otro revisa, y si no pasa vuelve con comentarios hasta que se acepte.**
 
@@ -26,7 +26,7 @@ graph LR
 
 - Hay un **ciclo**: la flecha roja (rechazo con comentarios) vuelve al generador.
 - **Dos LLM con roles distintos**: generar y evaluar. Pueden ser modelos diferentes (uno barato escribe, uno fuerte evalúa).
-- Este es el patrón que **ya viste en pequeño en la [clase 06](../../agentic-ai/clases/06-primeras-llamadas-openai-encadenar.md)**: un modelo respondió y otro dijo si estaba bien. Aquí falta **el regreso con feedback**.
+- Este es el patrón que **ya viste en pequeño en la [semana 1](../../agentic-ai/semana-01.md)**: un modelo respondió y otro dijo si estaba bien. Aquí falta **el regreso con feedback**.
 - Es el **más cercano a un agente**: tiene un bucle de retroalimentación. Pero el patrón sigue **definido de antemano** (generador y evaluador), por eso se cuenta como workflow.
 
 ## 2 · Ejemplo: respuesta a un reclamo
@@ -34,7 +34,7 @@ graph LR
 | Vuelta | Generador | Evaluador |
 |---|---|---|
 | 1 | "Lamentamos el inconveniente, revisaremos su caso." | ❌ "Genérico; no ofrece solución. Propón reposición." |
-| 2 | "Lamentamos que la fruta llegara golpeada. Le enviamos una caja nueva mañana sin costo." | ✅ Aceptada |
+| 2 | "Lamentamos que el plato llegara frío. Le enviamos uno nuevo hoy mismo sin costo." | ✅ Aceptada |
 
 Qué pide la rúbrica del evaluador: tono cordial, ofrece solución concreta, no promete lo que la política no permite, máximo 4 líneas.
 
@@ -88,4 +88,4 @@ return escalar_a_humano(reclamo)                  # si no mejora, que decida una
 
 ## 🔗 Relacionado
 
-[← Orchestrator-worker](../04-orchestrator-worker/README.md) · [Agentes por contraste →](../06-agente/README.md) · [Catálogo de patrones](../README.md) · [Clase 08](../../agentic-ai/clases/08-patrones-de-diseno-agenticos.md) · [Clase 06](../../agentic-ai/clases/06-primeras-llamadas-openai-encadenar.md)
+[← Orchestrator-worker](../04-orchestrator-worker/README.md) · [Agentes por contraste →](../06-agente/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md) · [semana 1](../../agentic-ai/semana-01.md)

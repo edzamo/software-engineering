@@ -6,9 +6,9 @@
 
 ---
 
-## 🍎 Con manzanas
+## 🍳 Con la cocina
 
-El cierre de semana de la frutería. En vez de que **una sola persona** revise ventas, luego inventario, luego quejas, ponen a **tres empleados a la vez**. Un **coordinador** reparte el trabajo y otro **junta los resultados** en un solo informe. Se termina en **un tercio del tiempo**.
+Un banquete. En vez de que **un solo cocinero** haga la entrada, el plato fuerte y el postre uno tras otro, ponen a **tres cocineros a la vez**. Un **jefe de partida** reparte las comandas y otro **junta todo en la mesa**. Terminan en **un tercio del tiempo**.
 
 > En palabras de la calle: **hacer varias cosas independientes al mismo tiempo y juntar los resultados.**
 
@@ -30,12 +30,12 @@ graph LR
 - Las subtareas son **independientes**: ninguna necesita el resultado de otra. Por eso pueden correr a la vez.
 - **Camino fijo:** siempre las mismas tres ramas. Es un workflow.
 
-## 2 · Ejemplo: informe semanal de la frutería
+## 2 · Ejemplo: informe semanal del restaurante
 
 | Rama (a la vez) | Entrada | Salida |
 |---|---|---|
 | 🟨 LLM1 | Ventas de la semana | "Lo más vendido y lo que bajó" |
-| 🟨 LLM2 | Inventario | "Qué se está por dañar y qué falta" |
+| 🟨 LLM2 | Inventario | "Qué ingredientes se van a dañar y qué falta" |
 | 🟨 LLM3 | Quejas de clientes | "Los 3 problemas repetidos" |
 | 🟦 Aggregator | Los tres textos | Un solo informe de una página |
 
@@ -57,7 +57,7 @@ return unir_en_informe(ventas, stock, quejas)
 |---|---|---|
 | Quién reparte | **Código** con ramas **fijas** | **Un LLM** decide las subtareas |
 | Número y tipo de ramas | Siempre las mismas | Cambian según la tarea |
-| 🍎 | Tres empleados con tareas de siempre | Un jefe que ve el pedido y decide a quién llamar |
+| 🍳 | Tres empleados con tareas de siempre | Un jefe que ve el pedido y decide a quién llamar |
 
 ## 4 · Cuándo usarlo y cuándo no
 
@@ -96,4 +96,4 @@ return unir_en_informe(ventas, stock, quejas)
 
 ## 🔗 Relacionado
 
-[← Routing](../02-routing/README.md) · [Orchestrator-worker →](../04-orchestrator-worker/README.md) · [Catálogo de patrones](../README.md) · [Clase 08](../../agentic-ai/clases/08-patrones-de-diseno-agenticos.md)
+[← Routing](../02-routing/README.md) · [Orchestrator-worker →](../04-orchestrator-worker/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)

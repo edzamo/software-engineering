@@ -6,9 +6,9 @@
 
 ---
 
-## 🍎 Con manzanas
+## 🍳 Con la cocina
 
-Una **cadena de montaje** de la frutería: **lavar → revisar → empacar**. Cada estación hace **una sola cosa** y le pasa la fruta a la siguiente. El orden **nunca cambia**. Entre dos estaciones hay un **inspector** que mira si la fruta va bien antes de dejarla pasar.
+Una **línea de cocina** para el seco de pollo: **picar → sofreír → cocer → emplatar**. Cada estación hace **una sola cosa** y le pasa el trabajo a la siguiente. El orden **no cambia**. Entre dos estaciones, el chef **prueba el sofrito** antes de dejar seguir: esa es la **puerta (Gate)**.
 
 > En palabras de la calle: **dividir un trabajo grande en pasos pequeños y fijos, donde la salida de un paso es la entrada del siguiente.**
 
@@ -35,13 +35,13 @@ graph LR
 
 ## 2 · Ejemplo: cotizar un pedido por mensaje
 
-El cliente escribe: *"Quiero dos cajas de mango y una de fresa para el viernes."*
+El cliente escribe: *"Quiero dos seco de pollo y un encebollado para el viernes."*
 
 | Paso | Quién | Qué hace |
 |---|---|---|
-| 1 | 🟨 LLM1 | Extrae del mensaje: producto, cantidad, día. |
-| Gate | 🟦 código | ¿Los productos existen en el catálogo? ¿Las cantidades son números? Si no, **para y pide aclarar**. |
-| 2 | 🟨 LLM2 | Redacta la cotización con los precios que le entrega el sistema. |
+| 1 | 🟨 LLM1 | Extrae del mensaje: plato, cantidad, día. |
+| Gate | 🟦 código | ¿Los platos existen en el menú? ¿Las cantidades son números? Si no, **para y pide aclarar**. |
+| 2 | 🟨 LLM2 | Redacta la cotización con los precios del menú que que le entrega el sistema. |
 | 3 | 🟨 LLM3 | Ajusta el tono (amable, corto) y lo deja listo para enviar. |
 
 Boceto (no es un ejercicio, solo para ver la forma):
@@ -54,7 +54,7 @@ borrador = llm("Redacta la cotización", datos, precios)
 return llm("Pule el tono, máximo 3 líneas", borrador)
 ```
 
-**Esto es lo que hiciste en la [clase 06](../../agentic-ai/clases/06-primeras-llamadas-openai-encadenar.md)** (pregunta → respuesta → evaluación), pero sin puerta entre pasos.
+**Esto es lo que hiciste en la [semana 1](../../agentic-ai/semana-01.md)** (pregunta → respuesta → evaluación), pero sin puerta entre pasos.
 
 ## 3 · Cuándo usarlo y cuándo no
 
@@ -94,4 +94,4 @@ return llm("Pule el tono, máximo 3 líneas", borrador)
 
 ## 🔗 Relacionado
 
-[Catálogo de patrones](../README.md) · [Clase 08](../../agentic-ai/clases/08-patrones-de-diseno-agenticos.md) · [Routing →](../02-routing/README.md) · [Clase 07 · workflow vs agente](../../agentic-ai/clases/07-que-es-un-agente-workflow-vs-agent.md)
+[Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md) · [Routing →](../02-routing/README.md) · [semana 1 · workflow vs agente](../../agentic-ai/semana-01.md)
