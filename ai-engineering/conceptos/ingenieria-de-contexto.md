@@ -1,7 +1,7 @@
 # Ingeniería de contexto: la *mise en place* del modelo
 
 > **Para qué sirve este documento:** entender, de cero y con un mapa mental, qué es el *context engineering*, qué piezas lo forman y cómo se aplica al trabajar con agentes (Claude Code, Copilot) y al diseñar sistemas con IA.
-> **Origen:** clase 22 del Agentic Track ([notas](../agentic-ai/semana-01.md)); el diagrama original es de Phil Schmid (Google), según el instructor. Las secciones marcadas con 🧩 son mías, no del curso.
+> **Origen:** clase 22 del Agentic Track ([01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md)); el diagrama original es de Phil Schmid (Google), según el instructor. Las secciones marcadas con 🧩 son mías, no del curso.
 
 ---
 
@@ -120,7 +120,7 @@ Estas técnicas son prácticas generales, no las enumeró el instructor tal cual
 | ❌ Error en la cocina | ✅ En cambio |
 |---|---|
 | "Más ingredientes siempre es mejor" | Lo **necesario** para el plato, y probar |
-| Reglas contradictorias ("sin sal" y "la casa sazona fuerte"; en el curso: "solo hablas de trabajo" + "odio el queso") | Revisar la receta como código: sin contradicciones ([semana 1](../agentic-ai/semana-01.md)) |
+| Reglas contradictorias ("sin sal" y "la casa sazona fuerte"; en el curso: "solo hablas de trabajo" + "odio el queso") | Revisar la receta como código: sin contradicciones ([01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md)) |
 | Obsesionarse con la redacción de la comanda | Pensar en **todo el mesón**: utensilios, fichas, formato |
 | Cambiar la receta "a ojo" y servir | **Probar la sazón** antes: conjunto de pruebas y criterio |
 | Rigidez ("esto va en la nota corta, esto en la ficha") | Tomarlo como **ideas**, no como fórmula |
@@ -137,7 +137,7 @@ graph LR
     Q --> E
 ```
 
-Variantes a probar: otro orden del mesón, otro tipo de memoria, otros utensilios, RAG o RAG agéntico, otras técnicas de prompt. **No hay una receta única correcta**; depende de tu caso. Es la regla de la [semana 1](../agentic-ai/semana-01.md) aplicada al contexto: **medir antes de complicar**.
+Variantes a probar: otro orden del mesón, otro tipo de memoria, otros utensilios, RAG o RAG agéntico, otras técnicas de prompt. **No hay una receta única correcta**; depende de tu caso. Es la regla de la [01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md) aplicada al contexto: **medir antes de complicar**.
 
 ## 7 · Tus herramientas de hoy son ingeniería de contexto 🧩
 
@@ -173,6 +173,10 @@ Variantes a probar: otro orden del mesón, otro tipo de memoria, otros utensilio
 
 - 🟢 "El prompt." → 🟡 "El contexto completo: qué recibe, qué le falta, qué le sobra." → 🔴 "Reproduzco el contexto exacto de esa llamada, busco contradicciones, ruido o ausencia de datos, y valido con un caso de prueba antes de cambiar nada."
 
+## 🛠️ Ejercicio
+
+Elige un caso de tu trabajo y **dibuja las 7 piezas del contexto**: ¿cuál falta? ¿cuál sobra? Cambia **una** y mide el efecto con 5 casos fijos (ver [10 · Evaluación](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) y el taller **W07**).
+
 ## 🔗 Relacionado
 
-[Semana 1](../agentic-ai/semana-01.md) · [semana 1 · riesgos y trampas](../agentic-ai/semana-01.md) · [Catálogo de patrones](../patrones/README.md) · [`ia-agentes/`](../../ia-agentes)
+[01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md) · [Catálogo de patrones](../patrones/README.md) · [`ia-agentes/`](../../ia-agentes)

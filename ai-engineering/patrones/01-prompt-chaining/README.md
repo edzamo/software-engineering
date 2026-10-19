@@ -31,7 +31,7 @@ graph LR
 
 > 💬 **Del instructor:** la puerta representa una decisión que *podrías* tomar en tu código, pero **no es obligatoria**: puedes simplemente tomar el resultado y pasarlo al siguiente LLM. Y el encadenamiento **suele ser parte de otros patrones más amplios**: es el más habitual de todos.
 
-> 🎨 **Código de colores del instructor:** 🟨 amarillo = llamada a un **LLM**; 🟦 azul = **nuestro código** (Python normal). Vale para todos los dibujos de los patrones.
+> 🎨 **Código de colores del instructor:** 🟨 amarillo = llamada a un **LLM**; 🟦 azul = **nuestro código** (código normal). Vale para todos los dibujos de los patrones.
 
 ## 2 · Ejemplo: cotizar un pedido por mensaje
 
@@ -54,7 +54,7 @@ borrador = llm("Redacta la cotización", datos, precios)
 return llm("Pule el tono, máximo 3 líneas", borrador)
 ```
 
-**Esto es lo que hiciste en la [semana 1](../../agentic-ai/semana-01.md)** (pregunta → respuesta → evaluación), pero sin puerta entre pasos.
+**Esto es lo que hiciste en la [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)** (pregunta → respuesta → evaluación), pero sin puerta entre pasos.
 
 ## 3 · Cuándo usarlo y cuándo no
 
@@ -89,9 +89,9 @@ return llm("Pule el tono, máximo 3 líneas", borrador)
 | **Caso** | Procesar un **pago** (con dinero ficticio, nunca se ejecuta un pago real). |
 | **Flujo** | Texto libre *"Paga 150 USD a Frutas del Valle, ref F-102"* → 🟨 LLM1 extrae `{beneficiario, monto, moneda, referencia}` → 🟦 **Gate**: monto > 0, moneda permitida, beneficiario en la lista aprobada, monto bajo el límite → 🟨 LLM2 redacta la confirmación. |
 | **Cómo se prueba** | El **Gate** se prueba **sin llamar al LLM** (datos falsos): rechaza monto negativo, moneda rara, beneficiario desconocido. |
-| **Implementación** | ⏳ Pendiente → [`python/`](python/README.md) |
+| **Implementación** | ⏳ Pendiente → [especificación](especificacion/README.md) · taller **W03** (Java/Spring AI primero; ver [talleres](../../talleres/README.md)) |
 | **Versión con subagentes** | Tu pipeline [`/feature-implementation`](../../../ia-agentes/.claude/commands/feature-implementation.md): fases en orden fijo y `tdd-gate.sh` como puerta (código, no LLM). |
 
 ## 🔗 Relacionado
 
-[Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md) · [Routing →](../02-routing/README.md) · [semana 1 · workflow vs agente](../../agentic-ai/semana-01.md)
+[Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md) · [Routing →](../02-routing/README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)

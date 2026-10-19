@@ -85,9 +85,9 @@ return llm("Combina estos resultados en un plan coherente", resultados)
 | **Caso** | **Planificar una feature** repartida en subtareas. |
 | **Flujo** | Descripción de la feature → 🟨 Orchestrator devuelve un **plan en JSON** (lista de subtareas, máximo N) → 🟨 workers hacen cada subtarea → 🟨 Synthesizer arma un plan coherente. |
 | **Cómo se prueba** | La **validación del plan** (formato, tope de subtareas) se prueba con planes falsos: vacío, demasiado largo, JSON roto. |
-| **Implementación** | ⏳ Pendiente → [`python/`](python/README.md) |
+| **Implementación** | ⏳ Pendiente → [especificación](especificacion/README.md) · taller **W04** (Java/Spring AI primero; ver [talleres](../../talleres/README.md)) |
 | **Versión con subagentes** | El **orquestador** de [`/feature-implementation`](../../../ia-agentes/.claude/commands/feature-implementation.md) repartiendo trabajo a los subagentes y **verificando sus reportes**. |
 
 ## 🔗 Relacionado
 
-[← Parallelization](../03-parallelization/README.md) · [Evaluator-optimizer →](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)
+[← Parallelization](../03-parallelization/README.md) · [Evaluator-optimizer →](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)

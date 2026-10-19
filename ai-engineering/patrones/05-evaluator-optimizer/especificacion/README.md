@@ -1,7 +1,7 @@
-# Evaluator-optimizer · implementación en Python
+# Evaluator-optimizer · especificación de la implementación
 
 > ⬅️ [Documentación del patrón](../README.md) · [Catálogo](../../README.md)
-> ⏳ **Estado:** pendiente. Esta carpeta es la **especificación** de lo que se va a construir; el código se agrega aquí al implementarlo.
+> ⏳ **Estado:** pendiente. Esta carpeta es la **especificación** (independiente del lenguaje) de lo que se va a construir; se implementa en el taller **W07** ([plan de talleres](../../../talleres/README.md)), primero en Java/Spring AI.
 
 ## Caso de uso
 
@@ -11,9 +11,9 @@ Redactar el **aviso de un pago rechazado**.
 
 🟨 Generator redacta → 🟨 Evaluator aplica una **rúbrica** (tono cordial, motivo claro, sin prometer lo que la política no permite, máximo 4 líneas) → si rechaza, vuelve con feedback → **máximo 3 intentos** → si no mejora, escalar a una persona.
 
-## Archivos previstos
+## Piezas previstas
 
-`aviso_rechazo.py` · `bucle.py` · `test_bucle.py`
+Orquestador · validaciones · pruebas (los nombres de archivo dependen del stack del taller).
 
 ## Cómo se prueba (TDD)
 
@@ -23,6 +23,6 @@ Regla del catálogo: **las pruebas no llaman al LLM real** (cuestan dinero y no 
 
 ## Reglas
 
-- Entorno compartido del catálogo (uv), definido en la raíz de [`patrones/`](../../README.md) cuando se implemente el primero.
+- Código en `ai-engineering/talleres/NN-nombre/<stack>/` ([plan](../../../talleres/README.md)); el stack inicial es **Java con Spring AI**.
 - Claves en `.env` (nunca en Git); se versiona solo `.env.example`.
 - Datos y dinero **ficticios**.

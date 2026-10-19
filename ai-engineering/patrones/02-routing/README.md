@@ -80,8 +80,8 @@ El `.get(..., escalar_a_humano)` es clave: **siempre una ruta por defecto** si e
 | **Caso** | **Fichaje y solicitudes** de empleados. |
 | **Flujo** | Mensaje → 🟨 Router devuelve **una palabra**: `marcar`, `permiso`, `consulta` u `otro` → especialista: registrar entrada/salida, pedir un permiso, responder cuántas horas lleva. `otro` → **escalar a una persona**. |
 | **Cómo se prueba** | El **despacho** (etiqueta → función) se prueba con etiquetas falsas, incluida una **inesperada** que debe caer en la ruta por defecto. |
-| **Implementación** | ⏳ Pendiente → [`python/`](python/README.md) |
+| **Implementación** | ⏳ Pendiente → [especificación](especificacion/README.md) · taller **W03** (Java/Spring AI primero; ver [talleres](../../talleres/README.md)) |
 
 ## 🔗 Relacionado
 
-[← Prompt chaining](../01-prompt-chaining/README.md) · [Parallelization →](../03-parallelization/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)
+[← Prompt chaining](../01-prompt-chaining/README.md) · [Parallelization →](../03-parallelization/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)

@@ -1,6 +1,6 @@
 # Agentes, por contraste con los workflows
 
-> ⬅️ [5 · Evaluator-optimizer](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)
+> ⬅️ [5 · Evaluator-optimizer](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
 > 🗓️ Semana 1 · Día 2 · **Diapositiva:** *"By contrast, Agents: 1. Open-ended · 2. Feedback loops · 3. No fixed path"*
 > ✅ Fuente: diapositivas + explicación hablada del instructor (semana 1, día 2).
 
@@ -38,7 +38,7 @@ graph LR
 | **Feedback** | El resultado vuelve al LLM. | "El proveedor dice que no hay pollo" |
 | **STOP** | El LLM decide que terminó. | "Pedido cerrado" |
 
-Es **el mismo bucle** de la [semana 1](../../agentic-ai/semana-01.md) y la [definición de la semana 1](../../agentic-ai/semana-01.md): *un LLM con herramientas en un bucle para lograr un objetivo.*
+Es **el mismo bucle** de la [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md) y la [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md): *un LLM con herramientas en un bucle para lograr un objetivo.*
 
 > 💬 **Del instructor:** este diagrama de Anthropic **anticipa casi exactamente** la definición del curso: *un LLM en un bucle con herramientas para alcanzar un objetivo*. Hay una persona que da el objetivo, el LLM interactúa con el entorno, recibe feedback y **sigue en bucle hasta que decide que cumplió su objetivo y se detiene**. Para Anthropic, eso es un agente.
 
@@ -100,8 +100,8 @@ Nadie programó "si faltan ingredientes, busca otro proveedor": **lo decidió el
 | **Caso** | **Conciliación bancaria** con herramientas (datos ficticios en un CSV). |
 | **Flujo** | Objetivo *"concilia este extracto"* → bucle: 🟨 LLM elige herramienta (`leer_extracto`, `buscar_pago`, `anotar_conciliacion`) → resultado vuelve al LLM → repite → **STOP** cuando decide que terminó. |
 | **Cómo se prueba** | Las **herramientas** se prueban solas (son funciones normales) y el **tope de iteraciones** con un LLM falso que nunca termina. |
-| **Implementación** | ⏳ Pendiente → [`python/`](python/README.md) |
+| **Implementación** | ⏳ Pendiente → [especificación](especificacion/README.md) · taller **W02** (Java/Spring AI primero; ver [talleres](../../talleres/README.md)) |
 
 ## 🔗 Relacionado
 
-[← Evaluator-optimizer](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md) · [semana 1](../../agentic-ai/semana-01.md) · [Roadmap · Fases 3 y 4](../../README.md)
+[← Evaluator-optimizer](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md) · [Roadmap · Fases 3 y 4](../../README.md)

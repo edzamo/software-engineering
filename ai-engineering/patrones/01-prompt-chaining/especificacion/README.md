@@ -1,7 +1,7 @@
-# Prompt chaining · implementación en Python
+# Prompt chaining · especificación de la implementación
 
 > ⬅️ [Documentación del patrón](../README.md) · [Catálogo](../../README.md)
-> ⏳ **Estado:** pendiente. Esta carpeta es la **especificación** de lo que se va a construir; el código se agrega aquí al implementarlo.
+> ⏳ **Estado:** pendiente. Esta carpeta es la **especificación** (independiente del lenguaje) de lo que se va a construir; se implementa en el taller **W03** ([plan de talleres](../../../talleres/README.md)), primero en Java/Spring AI.
 
 ## Caso de uso
 
@@ -11,9 +11,9 @@ Procesar un **pago** (con dinero ficticio, nunca se ejecuta un pago real).
 
 Texto libre *"Paga 150 USD a Frutas del Valle, ref F-102"* → 🟨 LLM1 extrae `{beneficiario, monto, moneda, referencia}` → 🟦 **Gate**: monto > 0, moneda permitida, beneficiario en la lista aprobada, monto bajo el límite → 🟨 LLM2 redacta la confirmación.
 
-## Archivos previstos
+## Piezas previstas
 
-`pago_chaining.py` (orquestador) · `gate.py` (validaciones) · `test_gate.py`
+Orquestador · validaciones · pruebas (los nombres de archivo dependen del stack del taller).
 
 ## Cómo se prueba (TDD)
 
@@ -23,6 +23,6 @@ Regla del catálogo: **las pruebas no llaman al LLM real** (cuestan dinero y no 
 
 ## Reglas
 
-- Entorno compartido del catálogo (uv), definido en la raíz de [`patrones/`](../../README.md) cuando se implemente el primero.
+- Código en `ai-engineering/talleres/NN-nombre/<stack>/` ([plan](../../../talleres/README.md)); el stack inicial es **Java con Spring AI**.
 - Claves en `.env` (nunca en Git); se versiona solo `.env.example`.
 - Datos y dinero **ficticios**.

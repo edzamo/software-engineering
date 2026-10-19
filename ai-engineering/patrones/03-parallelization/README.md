@@ -26,7 +26,7 @@ graph LR
     A --> OUT(("OUT"))
 ```
 
-- 🟦 **Coordinator y Aggregator son código normal** (azul), no LLM: es Python que reparte el trabajo y luego agrupa los resultados. Los 🟨 son las llamadas a LLM.
+- 🟦 **Coordinator y Aggregator son código normal** (azul), no LLM: es código normal que reparte el trabajo y luego agrupa los resultados. Los 🟨 son las llamadas a LLM.
 - Las subtareas son **independientes**: ninguna necesita el resultado de otra. Por eso pueden correr a la vez.
 - **Camino fijo:** siempre las mismas tres ramas. Es un workflow.
 
@@ -91,9 +91,9 @@ return unir_en_informe(ventas, stock, quejas)
 | **Caso** | **Revisar un cambio de código** (un diff de ejemplo). |
 | **Flujo** | 🟦 Coordinator reparte el diff → 🟨 revisor de **seguridad** + 🟨 revisor de **estilo** + 🟨 revisor de **pruebas** (a la vez) → 🟦 Aggregator junta y ordena por severidad. |
 | **Cómo se prueba** | El **agregador** se prueba con resultados falsos, incluido **una rama que falla** (el informe debe salir igual y avisar qué faltó). |
-| **Implementación** | ⏳ Pendiente → [`python/`](python/README.md) |
+| **Implementación** | ⏳ Pendiente → [especificación](especificacion/README.md) · taller **W03** (Java/Spring AI primero; ver [talleres](../../talleres/README.md)) |
 | **Versión con subagentes** | La **fase 4** de [`/feature-implementation`](../../../ia-agentes/.claude/commands/feature-implementation.md): `code-reviewer-agent` y `security-agent` en paralelo. |
 
 ## 🔗 Relacionado
 
-[← Routing](../02-routing/README.md) · [Orchestrator-worker →](../04-orchestrator-worker/README.md) · [Catálogo de patrones](../README.md) · [semana 1](../../agentic-ai/semana-01.md)
+[← Routing](../02-routing/README.md) · [Orchestrator-worker →](../04-orchestrator-worker/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
