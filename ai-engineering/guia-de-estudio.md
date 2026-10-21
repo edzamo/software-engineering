@@ -20,6 +20,15 @@ Un restaurante se aprende **alternando oficio y servicio**: un día **practicas 
 | **Qué es el Production Track** | Asumes que trata de "agentes MCP que despliegan el proyecto en AWS/Azure". **No lo sé todavía 🔎**: por lo que quedó anotado, cubre despliegue (Vercel, AWS/Bedrock, GCP, Azure), observabilidad (Langfuse), guardrails e inyección de prompt, y un caso multiagente financiero. Los **días ☁️ de abajo son provisionales** hasta el **Día 0** |
 | **Los tiempos** | Cada día es una sesión de ~2 h 🧩. Si estudias 3–4 días por semana, **los bloques 1 a 3 son ~8–10 semanas**. Es una estimación mía |
 
+## 🧱 Dos repositorios: teoría aquí, práctica allá
+
+| Repo | Para qué | Qué pasa en los días |
+|---|---|---|
+| 📚 **este** (`software-engineering/ai-engineering`) | **Solo teoría**: temas, escaleras, plan, guía | 🛠️ lees el tema · ☁️ tomas el curso y escribes la nota · 🔁 reorganizas |
+| 🛠️ **`ai-engineering-labs`** (nuevo, por crear) | **Solo código**: un proyecto por taller | 🛠️ aquí se escribe y prueba el código del taller |
+
+**Un día 🛠️ se ve así:** ventana 1 = este repo (tema + escalera); ventana 2 = laboratorios (`java-spring-ai/w02-herramientas/`). La nota de cierre (≤10 líneas) **vuelve a este repo**, al tema. Un día ☁️ **no necesita el repo de laboratorios**, salvo cuando la lección toque algo que desplegar de un taller ya hecho. Estructura completa en [talleres §1b](talleres/README.md#1b--dos-repositorios-teoría-aquí-práctica-allá).
+
 ## Día 0 · Triaje del Production Track (una sola vez, ~30 min)
 
 1. **Tú:** pegas el **índice de lecciones** del Production Track (títulos y duraciones) en [`llm-production/clases/_pegar-clase-aqui.md`](llm-production/clases/_pegar-clase-aqui.md).
@@ -27,6 +36,8 @@ Un restaurante se aprende **alternando oficio y servicio**: un día **practicas 
 3. **Resultado:** los días ☁️ quedan con **lecciones concretas** y se descarta lo que no sirve.
 
 ☐ Día 0 hecho
+
+☐ **Día 1 (antes de W00):** crear el repo `ai-engineering-labs` en GitHub, clonarlo en tu disco, añadir `.gitignore` (con `.env`, `target/`, `node_modules/`) y un `README.md` índice vacío
 
 ---
 
@@ -69,7 +80,7 @@ graph LR
 |:-:|:-:|---|---|---|:-:|
 | 1 | 🛠️ | **W00** Proyecto Spring Boot + Spring AI 1.1.x + **modelo falso** + clave de Gemini | [02](agentic-ai/02-modelos-y-proveedores.md) | `mvn test` verde **sin red** | ☐ |
 | 2 | ☁️ | **D1** ¿Qué cambia al desplegar un agente? Contenedores, secretos, entornos, costo | [09 §5](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) · [02](agentic-ai/02-modelos-y-proveedores.md) | Nota: 5 diferencias entre "mi portátil" y "producción" | ☐ |
-| 3 | 🛠️ | **W01** Primer agente: `ChatClient`, prompt y **salida estructurada** | [01](agentic-ai/01-agentes-y-workflows.md) · [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Test del esquema con modelo falso | ☐ |
+| 3 | 🛠️ | **W01** Primer agente: `ChatClient`, prompt y **salida estructurada** (+ **W01b** tokens y temperatura, ~45 min) | [01](agentic-ai/01-agentes-y-workflows.md) · [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Test del esquema con modelo falso | ☐ |
 | 4 | ☁️ | **D2** Una plataforma de despliegue sencilla (tipo Vercel 🔎) | por confirmar | Una app de ejemplo desplegada o descrita paso a paso | ☐ |
 | 5 | 🛠️ | **W02** Herramientas y bucle: `@Tool`, **lista blanca**, tope de iteraciones | [04](agentic-ai/04-herramientas-y-bucle-del-agente.md) | Un modelo falso que nunca termina corta en el tope | ☐ |
 | 6 | ☁️ | **D3** Trazas en producción (tipo Langfuse 🔎) | [10](agentic-ai/10-observabilidad-evaluacion-y-costos.md) | Sabes qué dato **no** debe salir en una traza | ☐ |
@@ -103,7 +114,7 @@ graph LR
 |:-:|:-:|---|---|---|:-:|
 | 25 | 🛠️ | **W12** Sandbox seguro (Docker, sin red, límites, no root) | [09](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | Un intento de salir del directorio **falla** | ☐ |
 | 26 | ☁️ | **D11** Desplegar el PoC en **una** nube | por confirmar | El PoC responde desde la nube con costos acotados | ☐ |
-| 27 | 🛠️ | **W11** RAG agéntico (pgvector o Qdrant) | [06](agentic-ai/06-memoria-busqueda-y-rag.md) | El agente guarda y recupera datos propios | ☐ |
+| 27 | 🛠️ | **W11a + W11b** embeddings, similitud, chunking y RAG clásico (~2 h), luego **W11** RAG agéntico (pgvector o Qdrant; puede pasar a otro día) | [06](agentic-ai/06-memoria-busqueda-y-rag.md) | El agente guarda y recupera datos propios | ☐ |
 | 28 | ☁️ | **D12** CI/CD, secretos y entornos del PoC | por confirmar | Pipeline que despliega con secretos fuera del repo | ☐ |
 | 29 | 🛠️ | **W13 · parte 1** Multiagente con tablero compartido | [07](agentic-ai/07-orquestacion-y-multiagente.md) | Dos trabajadores sin pisarse | ☐ |
 | 30 | 🛠️ | **W13 · parte 2** Orquestador y agente de pruebas | [07](agentic-ai/07-orquestacion-y-multiagente.md) · [12](agentic-ai/12-proyectos-del-curso.md) | Flujo completo en paralelo | ☐ |
@@ -146,6 +157,7 @@ graph LR
 | **Notas cortas** | Máximo 10 líneas por sesión; el resto va a los temas |
 | **Si te atrasas** | Se **salta un ☁️**, no un 🛠️; los talleres son lo que más se nota en una entrevista |
 | **Datos ficticios** | Siempre; el dominio es pagos y conciliación |
+| **Código solo en el repo de laboratorios** | Este repo no recibe código de talleres; solo notas y teoría |
 
 ## 5 · Qué debe dominar cada nivel al terminar
 

@@ -1,6 +1,6 @@
 # 02 · Modelos y proveedores — llamar a un LLM y cambiar de uno a otro
 
-> **Tema 2 de 12.** Fuentes: semanas 1, 2, 4 y 5.
+> **Tema 2 de 12.** Fuentes: semanas 1, 2, 4 y 5 del curso, **reforzado** con los fundamentos de la [hoja de ruta de 17 conceptos](../README.md#mapa-de-17-conceptos) (tokens, ventana, temperatura).
 > ⬅️ [01 · Agentes y workflows](01-agentes-y-workflows.md) · ➡️ [03 · Prompts, contexto y salidas estructuradas](03-prompts-contexto-y-salidas-estructuradas.md) · [Índice](README.md)
 
 ---
@@ -64,7 +64,46 @@ graph LR
 
 > 🧩 Es **desacoplar el agente del proveedor**: igual que **puertos y adaptadores**. En Java, una interfaz de modelo y un adaptador por proveedor.
 
-## 3 · Costo, velocidad y no determinismo
+## 3 · Cómo "piensa" un modelo: tokens, ventana y temperatura
+
+```mermaid
+graph LR
+    T["Texto de entrada"] --> K["Tokenizador<br/>(parte el texto en fichas)"]
+    K --> M["Modelo"]
+    M --> P["Probabilidad de cada<br/>posible siguiente ficha"]
+    P --> S{"Temperatura<br/>¿cuánto me arriesgo?"}
+    S --> O["Ficha elegida"]
+    O -- "se añade al texto y se repite" --> M
+```
+
+Un modelo **no escribe frases: escribe una ficha (token) a la vez**, eligiendo entre las que considera probables. De ahí salen tres conceptos que explican casi todo el comportamiento:
+
+| Concepto | Qué es | Por qué te importa |
+|---|---|---|
+| **Token** | Un trozo de texto (una palabra, parte de ella o un signo). En inglés, ~4 caracteres por token 🔎; en español suele salir **más caro** por palabra 🧩 | **Todo se cuenta en tokens**: límites, velocidad y precio (entrada **más** salida) |
+| **Ventana de contexto** | Cuántos tokens caben **en una sola llamada** (prompt + historial + documentos + respuesta) | El modelo **no tiene memoria**: reenvías el historial cada vez. Si no cabe, se **recorta o se resume** → [06](06-memoria-busqueda-y-rag.md) y [ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) |
+| **Temperatura** | Cuánto se **arriesga** al elegir la siguiente ficha | Controla **repetibilidad frente a creatividad** |
+
+**Ejemplo para ver la temperatura.** Tras *"El pago fue…"* el modelo ve algo así (cifras inventadas, solo para ilustrar):
+
+| Siguiente ficha | Probabilidad | Temperatura **baja** (≈0) | Temperatura **alta** |
+|---|---|---|---|
+| *aprobado* | ██████░░░░ 60 % | casi **siempre** esta | la elige menos veces |
+| *rechazado* | ██░░░░░░░░ 25 % | casi nunca | sale con más frecuencia |
+| *suspendido* | █░░░░░░░░░ 10 % | nunca | sale a veces |
+| *celestial* | ░░░░░░░░░░ 1 % | nunca | **puede salir** |
+
+| Usa temperatura… | Para |
+|---|---|
+| **Baja** (cerca de 0) | Clasificar, extraer datos, código, **salidas estructuradas** (como el W01) |
+| **Media o alta** | Lluvia de ideas, redacción creativa, variedad |
+
+- ⚠️ **Los rangos cambian por proveedor** (unos van de 0 a 1 y otros de 0 a 2 🔎): mira la documentación del tuyo.
+- ⚠️ **Temperatura 0 no es 100 % determinista**: reduce la variación, no la elimina. Por eso se mide con **varias ejecuciones** (§4).
+- 🔎 Algunos modelos de razonamiento **fijan o ignoran** la temperatura.
+- 🧩 **Java:** en Spring AI se pasa como *opciones* del modelo (`ChatOptions` tiene `temperature` y `maxTokens`; verificado que existen en 2.0.1). Ver taller **W01b**.
+
+## 4 · Costo, velocidad y no determinismo
 
 - **Velocidad ≠ calidad:** en una demo, Gemini Flash Lite tardó ~2 s; Kimi K2.6 ~77 s pero **su resultado fue el elegido**; GPT-OSS 120B < 1,5 s. Elegir modelo **por paso** es diseño.
 - **Costo observado (según el instructor):** búsquedas de Deep Research con un modelo mini ~5 ¢ frente a ~22 ¢ con uno grande y más búsquedas; el equipo de ingeniería de la semana 3 costó **~4 US$**. **Vigila los costos y usa claves con presupuesto fijo.**
@@ -72,7 +111,7 @@ graph LR
 - **Memoria = ilusión:** el modelo no tiene estado; **reenvías el historial** en cada llamada y pagas esos tokens.
 - **Cada ejecución es distinta:** se mide con **muchas ejecuciones**, no con una.
 
-## 4 · Qué debe dominar cada nivel
+## 5 · Qué debe dominar cada nivel
 
 | Nivel | Debe poder... |
 |---|---|
@@ -80,7 +119,7 @@ graph LR
 | 🟡 **Mid** | Pasar un modelo de otro proveedor como **objeto** al agente; prever modelo de respaldo; estimar costo. |
 | 🔴 **Senior** | **Desacoplar** agente y proveedor; saber qué lo ata (herramientas alojadas, trazas); probar **sin llamar al modelo real**; fijar presupuesto y reducir de modelo con métrica. |
 
-## 5 · Escalera de entrevista
+## 6 · Escalera de entrevista
 
 **"¿Cómo cambias de proveedor de modelos en un framework de agentes?"**
 - 🟢 "Cambio la URL, la clave y el nombre del modelo."
@@ -92,12 +131,18 @@ graph LR
 - 🟡 "Clave con presupuesto, tope de iteraciones y modelo según la tarea."
 - 🔴 "Modelo grande para ajustar el prompt y luego reducir con una métrica; costo por ejecución como métrica; respaldo y reintentos."
 
+**"¿Qué es la temperatura y cuándo la bajas?"**
+- 🟢 "Cuánto se arriesga el modelo; la bajo para respuestas precisas."
+- 🟡 "Controla cómo se elige la siguiente ficha entre las probables; la bajo en clasificación y salidas estructuradas."
+- 🔴 "Además sé que 0 no garantiza determinismo, que los rangos cambian por proveedor y que por eso evalúo con varias ejecuciones."
+
 ## 🛠️ Ejercicios (taller)
 
 | Taller | Qué haces |
 |---|---|
 | **W00** | Proyecto Spring Boot + Spring AI + **modelo falso** para pruebas + clave de Gemini |
 | **W01** | Primer agente; cambia entre el modelo falso y Gemini **sin tocar el agente** |
+| **W01b** 🧩 | **Tokens y temperatura** (~45 min): contar tokens de un texto en inglés y en español; pasar `temperature` y `maxTokens` como opciones y comprobar con el modelo falso que **llegaron** 🔎 |
 | **Reflexión escrita** | Lista qué de tu diseño te ataría a un proveedor |
 
 ## 🔗 Relacionado

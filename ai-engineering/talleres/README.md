@@ -3,6 +3,7 @@
 > **Qué es esto:** el plan de **práctica** que sale de los [12 temas](../agentic-ai/README.md) del curso *AI Engineer Agentic Track*. Cada taller es **una sesión guiada**: yo explico y reviso como profesor, **tú escribes el código** y lo probamos.
 > **Orden de herramientas (decisión tuya):** primero lo que dominas → **Java con Spring AI**, luego **Quarkus**, luego **TypeScript (NestJS)** y al final **Python (FastAPI)**.
 > 📅 **Cuándo se hace cada taller:** [guía de estudio día a día](../guia-de-estudio.md).
+> 🧱 **El código de los talleres vive en otro repo** ([§1b](#1b--dos-repositorios-teoría-aquí-práctica-allá)); aquí solo está el plan.
 > ⬅️ [Índice de AI Engineering](../README.md) · [Los 12 temas](../agentic-ai/README.md) · [Catálogo de patrones](../patrones/README.md) · [Diagramas UML](../agentic-ai/diagramas-uml.md)
 
 ---
@@ -23,12 +24,12 @@ Ya leíste los **recetarios** (las semanas). Ahora **se cocina**. Primero en **t
 | **Modelo** | **Gemini** (clave gratuita de AI Studio) para las ejecuciones reales | No necesitas tarjeta; Spring AI trae starter de Google GenAI 🔎 |
 | **Pruebas** | **TDD sin llamar al modelo real** (modelo falso) | Rápido, determinista, gratis |
 | **Datos** | Siempre **ficticios**; dominio de **pagos y conciliación** | Tu experiencia, sin riesgo |
-| **Dónde vive el código** | `ai-engineering/talleres/NN-nombre/<stack>/` en **este repo** | Centralizado (no en forks) |
+| **Dónde vive el código** | En **otro repositorio**: `ai-engineering-labs` (nombre propuesto 🧩); ver [§1b](#1b--dos-repositorios-teoría-aquí-práctica-allá) | Este repo es **solo teoría**; la práctica tiene su propio ciclo (build, CI, dependencias) |
 | **Claves** | `.env` fuera de git; `.env.example` dentro | Seguridad básica |
 | **Trazas** | Locales (sin subir prompts) | Sin datos reales en plataformas |
 | **Docker** | Solo para el taller de **sandbox** | Aislar código generado |
 
-> 🧩 **Esto reemplaza** las carpetas `patrones/*/python/` (especificaciones): al implementarse aquí, esas carpetas se **enlazan** a los talleres. No se tocan hasta que tengamos código.
+> 🧩 **Esto reemplaza** las carpetas `patrones/*/python/` (ahora `especificacion/`): cuando exista el código en el repo de laboratorios, esas carpetas lo **enlazan**. Este repo **no recibe código de talleres**.
 
 ### Versiones y ecosistema (verificado el 2026-10; 🔎 volver a mirar al empezar cada ruta)
 
@@ -39,6 +40,47 @@ Ya leíste los **recetarios** (las semanas). Ahora **se cocina**. Primero en **t
 | **Quarkus** | `quarkus-langchain4j`: servicios de IA con `@RegisterAiService`, herramientas, guardrails de entrada/salida de herramientas y **cliente MCP** (`quarkus-langchain4j-mcp`); el **servidor MCP** es otra extensión (`quarkus-mcp-server`) ([blog](https://quarkus.io/blog/quarkus-langchain4j-mcp/)). Versión exacta: confirmar en Maven Central |
 | **TypeScript / NestJS** | **No hay capa de agentes oficial de NestJS**. Se usa **Vercel AI SDK** (herramientas con Zod, cliente MCP) y el **SDK oficial de MCP** envueltos en proveedores/servicios de Nest 🧩 |
 | **Python** | FastAPI + un marco a elegir entonces (**Google ADK** para Gemini nativo, o Agents SDK/Pydantic AI) |
+
+---
+
+## 1b · Dos repositorios: teoría aquí, práctica allá
+
+```mermaid
+graph LR
+    T["📚 software-engineering<br/>(este repo · solo teoría)<br/>temas · guía · escaleras · talleres/README"] -- "enlaza cada taller" --> L
+    L["🛠️ ai-engineering-labs<br/>(repo nuevo · solo código)<br/>un proyecto por taller"] -- "cada README apunta<br/>al tema y a la definición de hecho" --> T
+```
+
+| | 📚 Teoría (este repo) | 🛠️ Laboratorios (repo nuevo) |
+|---|---|---|
+| **Contiene** | Temas, diagramas, escaleras, plan y guía | Código, pruebas, `pom.xml`/`package.json`, Docker |
+| **Cambia cuando** | Aprendes o corriges un concepto | Terminas o rompes un taller |
+| **Nunca lleva** | Código ejecutable de talleres | Explicaciones largas (solo un README corto que **enlaza** al tema) |
+
+**Estructura propuesta del repo de laboratorios** 🧩 (un proyecto independiente por taller, así cada uno compila solo):
+
+```text
+ai-engineering-labs/
+├── README.md                  # índice: taller → tema de teoría → estado ☐/✅
+├── .gitignore                 # incluye .env, target/, node_modules/
+├── java-spring-ai/            # Ruta 1
+│   ├── w00-modelo-falso/      #   pom.xml, src/, README.md, .env.example
+│   ├── w01-primer-agente/
+│   └── …
+├── java-quarkus/              # Ruta 2 (q1-…)
+├── ts-nestjs/                 # Ruta 3 (n1-…)
+├── python-fastapi/            # Ruta 4 (p1-…)
+└── capstone-sala-conciliacion/
+```
+
+**README de cada taller (máx. 15 líneas):** tema de teoría (enlace), qué construyes, **criterio de aceptación** (el de la tabla de abajo), cómo correr `test` sin red, y 3 líneas de "qué aprendí / qué falló".
+
+**Cómo se trabaja una sesión:**
+1. Abres **dos ventanas**: este repo (para leer el tema y la escalera) y el de laboratorios (para escribir código).
+2. Lees el tema aquí, practicas allá, y la **nota de cierre (≤10 líneas)** vuelve **aquí**, al tema correspondiente.
+3. Al terminar, marcas ☐ → ✅ en [la guía](../guia-de-estudio.md) y en el índice del repo de laboratorios.
+
+> Los enlaces entre repos son **URLs absolutas** (no relativas). El repo de laboratorios aún **no existe** 🔎: se crea en el **día 1**, antes de W00. Si lo haces **público**, revisa que no haya claves ni datos reales.
 
 ---
 
@@ -61,6 +103,7 @@ graph LR
 |---|---|---|---|---|
 | **W00** ⭐ | [02](../agentic-ai/02-modelos-y-proveedores.md) | Proyecto Spring Boot + Spring AI; clave de Gemini; **modelo falso** para pruebas | `mvn test` verde **sin red**; una llamada real opcional | — |
 | **W01** ⭐ | [01](../agentic-ai/01-agentes-y-workflows.md), [02](../agentic-ai/02-modelos-y-proveedores.md), [03](../agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Primer agente: `ChatClient`, prompt de sistema y **salida estructurada** (record) | El test valida el esquema con modelo falso | — |
+| **W01b** 🧩 | [02](../agentic-ai/02-modelos-y-proveedores.md) | **Tokens y temperatura** (~45 min): contar tokens (inglés frente a español) y pasar `temperature` / `maxTokens` como opciones 🔎 | El modelo falso **recibe** las opciones que enviaste | — |
 | **W02** ⭐ | [04](../agentic-ai/04-herramientas-y-bucle-del-agente.md) | **Herramientas**: bucle a mano y con `@Tool`; **allowlist**, validación y **tope de iteraciones** | Un modelo falso que nunca termina corta en el tope; un nombre desconocido se rechaza | 6 · Agente |
 | **W03** ⭐ | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Chaining + gate** (procesar un pago), **routing** y **paralelización** | Cada rama probada con modelos falsos; fallo parcial manejado | 1, 2, 3 |
 | **W04** ⭐ (×2) | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Gerente con agentes-herramienta**: reunión → funcionalidades → tareas (**tu PoC3**) | El plan se valida (formato, tope de subtareas); el sintetizador no pierde datos | 4 · Orquestador |
@@ -70,10 +113,12 @@ graph LR
 | **W08** ⭐ | [05](../agentic-ai/05-mcp.md) | **Cliente MCP**: usar un servidor ya hecho (filesystem/fetch) con **filtro de herramientas** | Solo las herramientas permitidas llegan al modelo | — |
 | **W09** | [05](../agentic-ai/05-mcp.md) | **Servidor MCP propio** (cuentas/pagos ficticios) | Otro cliente (el de W08) lo consume | — |
 | **W10** | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) | **Observabilidad** local: Micrometer/OpenTelemetry + registro propio de llamadas | Se reconstruye qué herramienta se llamó y con qué argumentos | — |
+| **W11a** 🧩 | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **Embeddings y similitud** (~1 h): `EmbeddingModel` falso con vectores a mano y búsqueda de los k más cercanos 🔎 | *Reembolso* queda junto a *devolución*; un texto ajeno queda lejos | — |
+| **W11b** 🧩 | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **Chunking y RAG clásico** (~1 h): `TokenTextSplitter`, indexar, consultar y evaluar la recuperación 🔎 | Para 5 preguntas fijas, recupera el trozo esperado | — |
 | **W11** | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **RAG agéntico**: búsqueda vectorial (pgvector o Qdrant) como herramienta | El agente guarda y recupera datos propios | — |
 | **W12** | [09](../agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | **Sandbox seguro**: ejecutar código generado en Docker (sin red, límites, no root) | Intento de salir del directorio o usar red **falla** | — |
 | **W13** (×2) | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Multiagente con tablero compartido** (la idea de la semana 5) | Dos trabajadores toman tareas sin pisarse | — |
-| **W14** | 🧩 extra | **API REST** de agentes + despliegue ligero | Contrato OpenAPI probado | — |
+| **W14** | 🧩 extra | **API REST** de agentes + despliegue ligero + **reintentos con espera creciente e idempotencia** en el pago | Contrato OpenAPI probado; un modelo que falla 2 veces acierta a la 3.ª sin duplicar el pago | — |
 | **W15** | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) | **Evaluación sistemática**: casos fijos, regresión, costo por ejecución | Un cambio de prompt se acepta o se rechaza **por una métrica** | — |
 
 ### Dependencias entre talleres

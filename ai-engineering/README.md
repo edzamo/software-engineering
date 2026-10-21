@@ -44,6 +44,22 @@ graph LR
 
 > 🧩 Los tiempos son **estimaciones mías** de lectura y práctica, no medidas.
 
+### Mapa de 17 conceptos
+
+Además del recorrido de arriba, usamos como **lista de verificación** una hoja de ruta de **17 conceptos** en 5 fases publicada por **Amigoscode** (la imagen no se copia aquí; es suya). Sirve para detectar **qué nos falta**. Estado honesto:
+
+| Fase | Concepto | Dónde está | Taller |
+|---|---|---|---|
+| **1 · Fundamentos** | Tokens · ventana de contexto · temperatura | [02 · §3](agentic-ai/02-modelos-y-proveedores.md) | W01b |
+| | Prompt engineering · salidas estructuradas | [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | W01 ✅ |
+| **2 · Significado y recuperación** | Embeddings · similitud · bases vectoriales · chunking · RAG | [06 · §3](agentic-ai/06-memoria-busqueda-y-rag.md) | W11a, W11b, W11 |
+| **3 · Acción** | Tool calling · agentes · MCP | [04](agentic-ai/04-herramientas-y-bucle-del-agente.md), [01](agentic-ai/01-agentes-y-workflows.md), [07](agentic-ai/07-orquestacion-y-multiagente.md), [05](agentic-ai/05-mcp.md) | W02–W04, W08, W09 |
+| **4 · Calidad** | Evals · guardrails | [10](agentic-ai/10-observabilidad-evaluacion-y-costos.md), [09](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | W06, W07, W15 |
+| **5 · Producción** | Ajuste fino o RAG | [06 · §4](agentic-ai/06-memoria-busqueda-y-rag.md) | — (decisión, no práctica) |
+| | Operar en producción (costo, velocidad, errores) | [10 · producción](agentic-ai/10-observabilidad-evaluacion-y-costos.md) + Production Track | W14 |
+
+**Lo que tiene este repo y esa hoja no:** orquestación y multiagente, patrones, humano en el bucle, seguridad de herramientas y MCP, frameworks, y talleres con pruebas sin llamar al modelo real. La **base** de varios documentos viene de un curso; la lista de **qué reforzar** viene de esta hoja y de la práctica.
+
 ## 3 · Cómo está hecho cada documento
 
 Todos los temas siguen el mismo molde, para que se estudien igual:
@@ -79,7 +95,7 @@ Esto no reemplaza la ingeniería de software clásica (SOLID, hexagonal, TDD —
 | [`conceptos/`](conceptos/ingenieria-de-contexto.md) | Conceptos reutilizables (empieza con **ingeniería de contexto**) |
 | [`patrones/`](patrones/README.md) | Catálogo de patrones agénticos: explicación, caso de uso y especificación |
 | [`guia-de-estudio.md`](guia-de-estudio.md) | **Calendario día a día:** taller → despliegue → repaso |
-| [`talleres/`](talleres/README.md) | **Plan de práctica:** Java/Spring AI → Quarkus → TypeScript/NestJS → Python/FastAPI |
+| [`talleres/`](talleres/README.md) | **Plan de práctica** (el código vive en un repo aparte, `ai-engineering-labs`): Java/Spring AI → Quarkus → TypeScript/NestJS → Python/FastAPI |
 | [`llm-production/`](llm-production/README.md) | Producción: despliegue en la nube (**en preparación**) |
 | [`../ia-agentes/`](../ia-agentes) | Subagentes y pipelines de Claude Code (usar agentes, no construirlos) |
 
