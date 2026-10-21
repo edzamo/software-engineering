@@ -3,6 +3,7 @@
 > **Qué es esto:** el plan de **práctica** que sale de los [12 temas](../agentic-ai/README.md) del curso *AI Engineer Agentic Track*. Cada taller es **una sesión guiada**: yo explico y reviso como profesor, **tú escribes el código** y lo probamos.
 > **Orden de herramientas (decisión tuya):** primero lo que dominas → **Java con Spring AI**, luego **Quarkus**, luego **TypeScript (NestJS)** y al final **Python (FastAPI)**.
 > 📅 **Cuándo se hace cada taller:** [guía de estudio día a día](../guia-de-estudio.md).
+> 🧱 **El código de los talleres vive en otro repo** ([§1b](#1b--dos-repositorios-teoría-aquí-práctica-allá)); aquí solo está el plan.
 > ⬅️ [Índice de AI Engineering](../README.md) · [Los 12 temas](../agentic-ai/README.md) · [Catálogo de patrones](../patrones/README.md) · [Diagramas UML](../agentic-ai/diagramas-uml.md)
 
 ---
@@ -23,12 +24,12 @@ Ya leíste los **recetarios** (las semanas). Ahora **se cocina**. Primero en **t
 | **Modelo** | **Gemini** (clave gratuita de AI Studio) para las ejecuciones reales | No necesitas tarjeta; Spring AI trae starter de Google GenAI 🔎 |
 | **Pruebas** | **TDD sin llamar al modelo real** (modelo falso) | Rápido, determinista, gratis |
 | **Datos** | Siempre **ficticios**; dominio de **pagos y conciliación** | Tu experiencia, sin riesgo |
-| **Dónde vive el código** | `ai-engineering/talleres/NN-nombre/<stack>/` en **este repo** | Centralizado (no en forks) |
+| **Dónde vive el código** | En **otro repositorio**: `ai-engineering-labs` (nombre propuesto 🧩); ver [§1b](#1b--dos-repositorios-teoría-aquí-práctica-allá) | Este repo es **solo teoría**; la práctica tiene su propio ciclo (build, CI, dependencias) |
 | **Claves** | `.env` fuera de git; `.env.example` dentro | Seguridad básica |
 | **Trazas** | Locales (sin subir prompts) | Sin datos reales en plataformas |
 | **Docker** | Solo para el taller de **sandbox** | Aislar código generado |
 
-> 🧩 **Esto reemplaza** las carpetas `patrones/*/python/` (especificaciones): al implementarse aquí, esas carpetas se **enlazan** a los talleres. No se tocan hasta que tengamos código.
+> 🧩 **Esto reemplaza** las carpetas `patrones/*/python/` (ahora `especificacion/`): cuando exista el código en el repo de laboratorios, esas carpetas lo **enlazan**. Este repo **no recibe código de talleres**.
 
 ### Versiones y ecosistema (verificado el 2026-10; 🔎 volver a mirar al empezar cada ruta)
 
@@ -39,6 +40,47 @@ Ya leíste los **recetarios** (las semanas). Ahora **se cocina**. Primero en **t
 | **Quarkus** | `quarkus-langchain4j`: servicios de IA con `@RegisterAiService`, herramientas, guardrails de entrada/salida de herramientas y **cliente MCP** (`quarkus-langchain4j-mcp`); el **servidor MCP** es otra extensión (`quarkus-mcp-server`) ([blog](https://quarkus.io/blog/quarkus-langchain4j-mcp/)). Versión exacta: confirmar en Maven Central |
 | **TypeScript / NestJS** | **No hay capa de agentes oficial de NestJS**. Se usa **Vercel AI SDK** (herramientas con Zod, cliente MCP) y el **SDK oficial de MCP** envueltos en proveedores/servicios de Nest 🧩 |
 | **Python** | FastAPI + un marco a elegir entonces (**Google ADK** para Gemini nativo, o Agents SDK/Pydantic AI) |
+
+---
+
+## 1b · Dos repositorios: teoría aquí, práctica allá
+
+```mermaid
+graph LR
+    T["📚 software-engineering<br/>(este repo · solo teoría)<br/>temas · guía · escaleras · talleres/README"] -- "enlaza cada taller" --> L
+    L["🛠️ ai-engineering-labs<br/>(repo nuevo · solo código)<br/>un proyecto por taller"] -- "cada README apunta<br/>al tema y a la definición de hecho" --> T
+```
+
+| | 📚 Teoría (este repo) | 🛠️ Laboratorios (repo nuevo) |
+|---|---|---|
+| **Contiene** | Temas, diagramas, escaleras, plan y guía | Código, pruebas, `pom.xml`/`package.json`, Docker |
+| **Cambia cuando** | Aprendes o corriges un concepto | Terminas o rompes un taller |
+| **Nunca lleva** | Código ejecutable de talleres | Explicaciones largas (solo un README corto que **enlaza** al tema) |
+
+**Estructura propuesta del repo de laboratorios** 🧩 (un proyecto independiente por taller, así cada uno compila solo):
+
+```text
+ai-engineering-labs/
+├── README.md                  # índice: taller → tema de teoría → estado ☐/✅
+├── .gitignore                 # incluye .env, target/, node_modules/
+├── java-spring-ai/            # Ruta 1
+│   ├── w00-modelo-falso/      #   pom.xml, src/, README.md, .env.example
+│   ├── w01-primer-agente/
+│   └── …
+├── java-quarkus/              # Ruta 2 (q1-…)
+├── ts-nestjs/                 # Ruta 3 (n1-…)
+├── python-fastapi/            # Ruta 4 (p1-…)
+└── capstone-sala-conciliacion/
+```
+
+**README de cada taller (máx. 15 líneas):** tema de teoría (enlace), qué construyes, **criterio de aceptación** (el de la tabla de abajo), cómo correr `test` sin red, y 3 líneas de "qué aprendí / qué falló".
+
+**Cómo se trabaja una sesión:**
+1. Abres **dos ventanas**: este repo (para leer el tema y la escalera) y el de laboratorios (para escribir código).
+2. Lees el tema aquí, practicas allá, y la **nota de cierre (≤10 líneas)** vuelve **aquí**, al tema correspondiente.
+3. Al terminar, marcas ☐ → ✅ en [la guía](../guia-de-estudio.md) y en el índice del repo de laboratorios.
+
+> Los enlaces entre repos son **URLs absolutas** (no relativas). El repo de laboratorios aún **no existe** 🔎: se crea en el **día 1**, antes de W00. Si lo haces **público**, revisa que no haya claves ni datos reales.
 
 ---
 

@@ -23,6 +23,6 @@ Regla del catálogo: **las pruebas no llaman al LLM real** (cuestan dinero y no 
 
 ## Reglas
 
-- Código en `ai-engineering/talleres/NN-nombre/<stack>/` ([plan](../../../talleres/README.md)); el stack inicial es **Java con Spring AI**.
+- Código en el repo de laboratorios `ai-engineering-labs` (carpeta del taller correspondiente; [plan y estructura](../../../talleres/README.md#1b--dos-repositorios-teoría-aquí-práctica-allá)); el stack inicial es **Java con Spring AI**.
 - Claves en `.env` (nunca en Git); se versiona solo `.env.example`.
 - Datos y dinero **ficticios**.

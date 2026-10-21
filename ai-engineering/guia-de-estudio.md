@@ -20,6 +20,15 @@ Un restaurante se aprende **alternando oficio y servicio**: un día **practicas 
 | **Qué es el Production Track** | Asumes que trata de "agentes MCP que despliegan el proyecto en AWS/Azure". **No lo sé todavía 🔎**: por lo que quedó anotado, cubre despliegue (Vercel, AWS/Bedrock, GCP, Azure), observabilidad (Langfuse), guardrails e inyección de prompt, y un caso multiagente financiero. Los **días ☁️ de abajo son provisionales** hasta el **Día 0** |
 | **Los tiempos** | Cada día es una sesión de ~2 h 🧩. Si estudias 3–4 días por semana, **los bloques 1 a 3 son ~8–10 semanas**. Es una estimación mía |
 
+## 🧱 Dos repositorios: teoría aquí, práctica allá
+
+| Repo | Para qué | Qué pasa en los días |
+|---|---|---|
+| 📚 **este** (`software-engineering/ai-engineering`) | **Solo teoría**: temas, escaleras, plan, guía | 🛠️ lees el tema · ☁️ tomas el curso y escribes la nota · 🔁 reorganizas |
+| 🛠️ **`ai-engineering-labs`** (nuevo, por crear) | **Solo código**: un proyecto por taller | 🛠️ aquí se escribe y prueba el código del taller |
+
+**Un día 🛠️ se ve así:** ventana 1 = este repo (tema + escalera); ventana 2 = laboratorios (`java-spring-ai/w02-herramientas/`). La nota de cierre (≤10 líneas) **vuelve a este repo**, al tema. Un día ☁️ **no necesita el repo de laboratorios**, salvo cuando la lección toque algo que desplegar de un taller ya hecho. Estructura completa en [talleres §1b](talleres/README.md#1b--dos-repositorios-teoría-aquí-práctica-allá).
+
 ## Día 0 · Triaje del Production Track (una sola vez, ~30 min)
 
 1. **Tú:** pegas el **índice de lecciones** del Production Track (títulos y duraciones) en [`llm-production/clases/_pegar-clase-aqui.md`](llm-production/clases/_pegar-clase-aqui.md).
@@ -27,6 +36,8 @@ Un restaurante se aprende **alternando oficio y servicio**: un día **practicas 
 3. **Resultado:** los días ☁️ quedan con **lecciones concretas** y se descarta lo que no sirve.
 
 ☐ Día 0 hecho
+
+☐ **Día 1 (antes de W00):** crear el repo `ai-engineering-labs` en GitHub, clonarlo en tu disco, añadir `.gitignore` (con `.env`, `target/`, `node_modules/`) y un `README.md` índice vacío
 
 ---
 
@@ -146,6 +157,7 @@ graph LR
 | **Notas cortas** | Máximo 10 líneas por sesión; el resto va a los temas |
 | **Si te atrasas** | Se **salta un ☁️**, no un 🛠️; los talleres son lo que más se nota en una entrevista |
 | **Datos ficticios** | Siempre; el dominio es pagos y conciliación |
+| **Código solo en el repo de laboratorios** | Este repo no recibe código de talleres; solo notas y teoría |
 
 ## 5 · Qué debe dominar cada nivel al terminar
 

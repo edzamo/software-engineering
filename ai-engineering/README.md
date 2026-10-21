@@ -79,7 +79,7 @@ Esto no reemplaza la ingeniería de software clásica (SOLID, hexagonal, TDD —
 | [`conceptos/`](conceptos/ingenieria-de-contexto.md) | Conceptos reutilizables (empieza con **ingeniería de contexto**) |
 | [`patrones/`](patrones/README.md) | Catálogo de patrones agénticos: explicación, caso de uso y especificación |
 | [`guia-de-estudio.md`](guia-de-estudio.md) | **Calendario día a día:** taller → despliegue → repaso |
-| [`talleres/`](talleres/README.md) | **Plan de práctica:** Java/Spring AI → Quarkus → TypeScript/NestJS → Python/FastAPI |
+| [`talleres/`](talleres/README.md) | **Plan de práctica** (el código vive en un repo aparte, `ai-engineering-labs`): Java/Spring AI → Quarkus → TypeScript/NestJS → Python/FastAPI |
 | [`llm-production/`](llm-production/README.md) | Producción: despliegue en la nube (**en preparación**) |
 | [`../ia-agentes/`](../ia-agentes) | Subagentes y pipelines de Claude Code (usar agentes, no construirlos) |
 
