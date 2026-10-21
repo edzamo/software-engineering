@@ -1,18 +1,66 @@
-# AI Engineering — hoja de ruta para Desarrollador de Agentes / AI Engineer
+# AI Engineering — guía de estudio: de "uso un chat" a "construyo agentes"
 
-Plan de capacitación formal para pasar de "sé usar Claude/ChatGPT" a **diseñar, construir, evaluar y desplegar** sistemas basados en LLMs y arquitecturas multi-agente. Roadmap práctico de 14 semanas (7 fases), estructurado a partir de una hoja de ruta pública (fuente: *@aiseekhobhai*) y adaptado al criterio de este repo: cada fase suma su propia píldora con ejemplos trabajados, no solo teoría.
+Una **ruta de estudio abierta** para quien quiere pasar de **usar** la IA a **diseñar, construir, evaluar y desplegar** sistemas con LLM y agentes. Está escrita desde la práctica de un desarrollador backend (Java/TypeScript), con la analogía de **una cocina profesional**, diagramas, niveles **junior → mid → senior**, escaleras de entrevista y ejercicios.
 
-> **Esta carpeta no es lo mismo que [`ia-agentes/`](../ia-agentes).** `ia-agentes/` documenta cómo **usar** subagentes de Claude Code como herramienta para escribir software más rápido — es tooling aplicado al desarrollo. `ai-engineering/` documenta cómo **construir** los sistemas de IA en sí (APIs de LLMs, RAG, orquestación de agentes, evaluación, producción) — es la disciplina de ingeniería detrás de esas herramientas. Son complementarias: dominar esta carpeta es lo que permite, más adelante, escribir un agente de Claude Code propio desde cero en vez de solo consumir uno ya armado.
+> **Esta carpeta no es [`ia-agentes/`](../ia-agentes).** Aquella enseña a **usar** subagentes de Claude Code para escribir software más rápido; esta enseña a **construir** los sistemas de IA en sí (LLM, herramientas, MCP, memoria, orquestación, evaluación, producción). Son complementarias.
 
-## 1 · Resumen ejecutivo
+> 🍳 **La analogía de toda la guía:** el modelo es **un cocinero muy hábil que solo escribe notas y olvida todo al salir**; tú eres **el jefe de cocina**: lees sus notas, abres la despensa, enciendes el fuego y le devuelves el resultado. Un agente es ese ciclo repetido hasta que dice "listo".
 
-La forma de construir software cambió de escribir reglas fijas (`if`/`else`) a **orquestar modelos que razonan**: reciben una intención en lenguaje natural, deciden qué herramientas usar, y producen un resultado sin que cada paso esté codificado a mano. Esta transición ("Software 2.0/3.0", ver sección 2) ya no es experimental — es lo que se espera de un perfil de **AI Engineer** en 2025 en adelante: no alcanza con saber usar un chat de IA por interfaz, hace falta dominar APIs de LLMs, ingeniería de prompts, salidas estructuradas, RAG, orquestación de agentes y evaluación/gobernanza de esos sistemas antes de llevarlos a producción.
+## 1 · ¿Para quién es?
 
-Este documento fija el porqué, el objetivo profesional, el vocabulario base, y la hoja de ruta de 7 fases (14 semanas) que se va a ir completando módulo por módulo — mismo criterio incremental que [`system-design/`](../system-design): cada fase suma su archivo cuando se estudia en la práctica, no antes.
+| Perfil | Cómo aprovecharla |
+|---|---|
+| 🟢 **Junior** | Sigue la ruta en orden; haz los ejercicios; usa las analogías |
+| 🟡 **Mid (backend)** | Salta a las etapas 2 a 5; céntrate en seguridad y evaluación; practica en tu stack |
+| 🔴 **Senior** | Ve a los ⭐ de cada tema, las escaleras de entrevista y las secciones 🧩 (criterio y riesgos) |
 
-## 2 · Por qué aprender esto ahora
+**Requisitos:** programar en algún lenguaje, Git, consumir APIs REST y manejar JSON. **No** hace falta saber Python (la guía practica primero en **Java**).
 
-### 2.1 · De software basado en reglas a software basado en intenciones
+## 2 · La ruta de estudio
+
+> 📅 **¿Cómo repartirlo en el tiempo?** → [**Guía de estudio día a día**](guia-de-estudio.md): un día de taller, el siguiente de despliegue, y repasos cada pocos días.
+
+```mermaid
+graph LR
+    E0["Etapa 0<br/>Fundamentos y glosario"] --> E1["Etapa 1<br/>Qué es un agente<br/>01 · 02 · 03 · 04"]
+    E1 --> E2["Etapa 2<br/>Capacidades<br/>05 MCP · 06 Memoria"]
+    E2 --> E3["Etapa 3<br/>Coordinar<br/>07 · 08"]
+    E3 --> E4["Etapa 4<br/>Confiar<br/>09 Seguridad · 10 Evaluación"]
+    E4 --> E5["Etapa 5<br/>Elegir y ver casos<br/>11 · 12"]
+    E5 --> E6["Etapa 6<br/>Practicar<br/>Patrones + Talleres"]
+    E6 --> E7["Etapa 7<br/>Producción<br/>(en preparación)"]
+```
+
+| Etapa | Qué aprendes | Dónde | Tiempo 🧩 | Sabes que lo entendiste cuando… |
+|---|---|---|---|---|
+| **0 · Fundamentos** | Vocabulario y por qué importa | [Glosario](#8--glosario-de-términos-imprescindibles) · [Ingeniería de contexto](conceptos/ingenieria-de-contexto.md) | 1–2 h | Explicas LLM, token, prompt y embedding en una frase |
+| **1 · Qué es un agente** | Agente vs. workflow, modelos, contexto, herramientas y bucle | [01](agentic-ai/01-agentes-y-workflows.md) · [02](agentic-ai/02-modelos-y-proveedores.md) · [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) · [04](agentic-ai/04-herramientas-y-bucle-del-agente.md) | 4–6 h | Escribes (en papel) el bucle de un agente con lista blanca y tope |
+| **2 · Capacidades** | MCP; memoria, búsqueda y RAG | [05](agentic-ai/05-mcp.md) · [06](agentic-ai/06-memoria-busqueda-y-rag.md) | 3–4 h | Distingues host, cliente y servidor MCP y las 3 memorias |
+| **3 · Coordinar** | Patrones, multiagente, estado y grafos | [07](agentic-ai/07-orquestacion-y-multiagente.md) · [08](agentic-ai/08-langchain-langgraph-y-deep-agents.md) · [Catálogo de patrones](patrones/README.md) | 4–6 h | Decides qué va en código y qué en el LLM |
+| **4 · Confiar** | Seguridad, guardrails, humano en el bucle, trazas, evaluación, costos | [09](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) · [10](agentic-ai/10-observabilidad-evaluacion-y-costos.md) | 3–5 h | Completas la lista de verificación de seguridad para un caso real |
+| **5 · Elegir y ver casos** | Frameworks, criterios y 6 proyectos | [11](agentic-ai/11-frameworks-y-como-elegir.md) · [12](agentic-ai/12-proyectos-del-curso.md) · [Diagramas UML](agentic-ai/diagramas-uml.md) | 2–3 h | Defiendes una elección de framework con criterios |
+| **6 · Practicar** | Los mismos oficios en **Java, Quarkus, TypeScript y Python** | [Talleres](talleres/README.md) | 30–50 h | Tienes agentes funcionando, probados **sin llamar al modelo real** |
+| **7 · Producción** | Nube, despliegue, observabilidad y gobernanza a escala | [Production Track](llm-production/README.md) | _en preparación_ | — |
+
+> 🧩 Los tiempos son **estimaciones mías** de lectura y práctica, no medidas.
+
+## 3 · Cómo está hecho cada documento
+
+Todos los temas siguen el mismo molde, para que se estudien igual:
+
+| Sección | Para qué |
+|---|---|
+| **🍳 Con la cocina** | La idea en una imagen, más una frase "en palabras de la calle" |
+| **Contenido + diagramas** | UML/Mermaid: clases, secuencias, estados y componentes |
+| **Qué debe dominar cada nivel** | 🟢 junior · 🟡 mid · 🔴 senior |
+| **Escaleras de entrevista** | La respuesta de un junior, la capa de un mid y el cierre de un senior |
+| **🛠️ Ejercicios** | Qué taller practica ese tema |
+
+**Marcas de honestidad:** 🔎 *por verificar* · 🧩 *aporte mío, no del curso* · ⚠️ *riesgo* · ⭐ *lo que más rinde*.
+
+## 4 · Por qué importa
+
+### De software basado en reglas a software basado en intenciones
 
 | | Software tradicional | Software basado en intenciones (LLM-powered) |
 |---|---|---|
@@ -22,58 +70,44 @@ Este documento fija el porqué, el objetivo profesional, el vocabulario base, y 
 
 Esto no reemplaza la ingeniería de software clásica (SOLID, hexagonal, TDD — el resto de este repo) — la **envuelve**: un agente sigue necesitando arquitectura, testing y buenas prácticas; lo nuevo es que una de sus piezas centrales (la decisión de qué hacer) ya no es código determinista, sino un modelo probabilístico invocado vía API.
 
-### 2.2 · Por qué no alcanza con usar un chat de IA por interfaz (Production-Ready AI)
 
-Usar ChatGPT/Claude desde el navegador demuestra que sabés **pedir** algo bien. Ser AI Engineer exige poder **integrarlo** en un sistema real:
+## 5 · Mapa de carpetas
 
-- **APIs, no interfaz** — invocar el modelo programáticamente (Fase 1), con control total sobre parámetros (temperature, max tokens, streaming) que la UI no expone.
-- **Salidas estructuradas (JSON/Structured Outputs)** — un sistema no puede parsear "más o menos JSON" que a veces el modelo devuelve mal formado; hace falta forzar un schema (Fase 1).
-- **RAG (Retrieval-Augmented Generation)** — el modelo no sabe nada de tus datos privados/actualizados; hay que dárselos en el momento correcto (Fase 2).
-- **Evaluación y gobernanza** — un sistema en producción necesita métricas de calidad y límites de seguridad, no solo "probé unos prompts y andaba bien" (Fase 5).
+| Carpeta | Qué contiene |
+|---|---|
+| [`agentic-ai/`](agentic-ai/README.md) | **12 temas** (agentes, MCP, memoria, orquestación, seguridad, evaluación…), proyectos y [diagramas UML](agentic-ai/diagramas-uml.md) |
+| [`conceptos/`](conceptos/ingenieria-de-contexto.md) | Conceptos reutilizables (empieza con **ingeniería de contexto**) |
+| [`patrones/`](patrones/README.md) | Catálogo de patrones agénticos: explicación, caso de uso y especificación |
+| [`guia-de-estudio.md`](guia-de-estudio.md) | **Calendario día a día:** taller → despliegue → repaso |
+| [`talleres/`](talleres/README.md) | **Plan de práctica:** Java/Spring AI → Quarkus → TypeScript/NestJS → Python/FastAPI |
+| [`llm-production/`](llm-production/README.md) | Producción: despliegue en la nube (**en preparación**) |
+| [`../ia-agentes/`](../ia-agentes) | Subagentes y pipelines de Claude Code (usar agentes, no construirlos) |
 
-### 2.3 · Autonomía y eficiencia operativa
+## 6 · Estado (honesto)
 
-El valor de negocio real de un agente no es "responder una pregunta" sino **ejecutar un flujo completo sin intervención humana constante**: un agente de soporte que resuelve un ticket de punta a punta, uno de ventas que califica un lead y agenda una llamada, un asistente de código que abre un PR, uno de análisis que arma un reporte — el mismo tipo de autonomía que la Fase 6 (portafolio) pide demostrar con casos reales.
+| Pieza | Estado |
+|---|---|
+| Teoría: 12 temas + diagramas | ✅ Escrita (notas depuradas de un curso de pago) |
+| Catálogo de patrones: explicación | ✅ · especificaciones ⏳ · implementaciones ⏳ |
+| Talleres (Java/Spring AI primero) | ⏳ Plan hecho; **sin código todavía** |
+| Producción (nube, despliegue) | ⏳ Por empezar |
+| Verificación de versiones y APIs | 🔎 Cada taller empieza leyendo la documentación vigente |
 
-## 3 · Objetivos profesionales de este plan
+## 7 · Equivalencia con el roadmap original de 14 semanas
 
-1. Pasar de **consumidor** de IA (usar un chat) a **constructor** de sistemas de IA (diseñar, integrar, evaluar, desplegar).
-2. Dominar el ciclo completo de un agente: entender el modelo (prompting), darle conocimiento (RAG), darle herramientas (function calling/MCP), darle autonomía (orquestación multi-agente), y hacerlo confiable en producción (evals + guardrails).
-3. Construir un **portafolio de 5 proyectos reales** (Fase 6) que demuestre este ciclo completo, no ejercicios de juguete — el mismo criterio "sin caso concreto detrás no es documentación válida" que rige el resto de este repo.
-4. Conectar esta disciplina con lo ya dominado en `ia-agentes/`: un desarrollador que entiende **cómo se construye** un agente (esta carpeta) puede además **extender y depurar** sus propios subagentes de Claude Code (esa carpeta), en vez de tratarlos como una caja negra.
+La guía partió de una hoja de ruta pública de 7 fases (fuente: *@aiseekhobhai*); estos son sus equivalentes:
 
-## 4 · Roadmap — 7 fases, 14 semanas
+| Fase del roadmap | Equivalente en esta guía |
+|---|---|
+| 0 · Fundamentos de IA | Etapa 0 y [02](agentic-ai/02-modelos-y-proveedores.md) |
+| 1 · Interacción con LLMs (prompting, salidas estructuradas) | [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) |
+| 2 · Gestión del conocimiento (RAG) | [06](agentic-ai/06-memoria-busqueda-y-rag.md) (superficial) |
+| 3 · Herramientas (function calling, MCP, ReAct) | [04](agentic-ai/04-herramientas-y-bucle-del-agente.md) · [05](agentic-ai/05-mcp.md) |
+| 4 · Agentes autónomos (LangGraph, multiagente) | [07](agentic-ai/07-orquestacion-y-multiagente.md) · [08](agentic-ai/08-langchain-langgraph-y-deep-agents.md) |
+| 5 · IA en producción (guardrails, evals, despliegue) | [09](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) · [10](agentic-ai/10-observabilidad-evaluacion-y-costos.md) · [Production Track](llm-production/README.md) |
+| 6 · Portafolio (5 proyectos) | [Talleres](talleres/README.md) (capstone) |
 
-```mermaid
-graph TB
-    F0["Fase 0 · Semanas 1-2<br/>Fundamentos de IA<br/>Python, .env, Git, APIs REST, JSON"]
-    F1["Fase 1 · Semanas 3-4<br/>Interacción con LLMs<br/>Prompting, APIs OpenAI/Anthropic/Gemini,<br/>Structured Outputs"]
-    F2["Fase 2 · Semanas 5-6<br/>Gestión del conocimiento<br/>Embeddings, Vector DBs, RAG, Chunking"]
-    F3["Fase 3 · Semanas 7-8<br/>Herramientas extendidas<br/>Function Calling, MCP, memoria, ReAct"]
-    F4["Fase 4 · Semanas 9-10<br/>Agentes autónomos<br/>LangGraph, multi-agente, planificación"]
-    F5["Fase 5 · Semanas 11-12<br/>IA en producción<br/>FastAPI, Docker, Redis, Guardrails, AI Evals"]
-    F6["Fase 6 · Semanas 13-14<br/>Portafolio real<br/>5 proyectos production-ready"]
-
-    F0 --> F1 --> F2 --> F3 --> F4 --> F5 --> F6
-
-    style F0 fill:#0d7d72,color:#fff
-```
-
-La progresión es deliberada: no se puede razonar sobre RAG (Fase 2) sin dominar la API base (Fase 1); no se puede orquestar un multi-agente (Fase 4) sin haber usado function calling/herramientas (Fase 3); y ningún agente va a producción (Fase 5) sin haber demostrado que funciona en un caso real primero.
-
-## 5 · Matriz de fases vs. entregables prácticos
-
-| Fase | Semanas | Conceptos clave | Entregable práctico que demuestra dominio |
-|---|---|---|---|
-| **0 · Fundamentos de IA** | 1-2 | Python, entornos virtuales, `.env`/API keys, Git, consumo de APIs REST, parsing JSON. | Un script que consume una API REST externa, maneja su API key vía `.env` (nunca hardcodeada), y parsea la respuesta JSON a un modelo tipado. |
-| **1 · Interacción con LLMs** | 3-4 | Prompt Engineering (Few-Shot, Chain-of-Thought), APIs de OpenAI/Anthropic/Gemini, Structured Outputs (JSON Schema). | Un cliente que llama a un LLM con un prompt Few-Shot y **fuerza** una salida validable contra un JSON Schema (no un parseo manual de texto libre). |
-| **2 · Gestión del conocimiento** | 5-6 | Embeddings, bases de datos vectoriales, RAG, chunking, estrategias de retrieval. | Un pipeline RAG end-to-end: documentos propios → chunking → embeddings → vector DB → retrieval → respuesta del LLM citando la fuente real. |
-| **3 · Herramientas extendidas** | 7-8 | Function Calling, Model Context Protocol (MCP), memoria conversacional, patrón ReAct. | Un agente que decide **cuándo** invocar una herramienta propia (function calling) vía el patrón ReAct (Reason → Act → Observe), con memoria de turnos previos. |
-| **4 · Agentes autónomos** | 9-10 | Orquestación con LangGraph, arquitecturas multi-agente, planificación, reflexión, flujos de control. | Un grafo de al menos 2 agentes especializados (LangGraph) que se coordinan para resolver una tarea que ninguno resuelve solo, con un paso de reflexión/auto-corrección. |
-| **5 · IA en producción** | 11-12 | FastAPI (microservicio), Docker, Redis (caching), Guardrails, AI Evals. | El agente de la Fase 4 empaquetado como microservicio FastAPI + Docker, con caché de respuestas repetidas, al menos un guardrail activo (ej. filtro de contenido/input) y una suite de evals midiendo calidad de respuesta. |
-| **6 · Portafolio real** | 13-14 | Integración de todo lo anterior en productos completos. | 5 proyectos production-ready: agente de soporte, agente de ventas, asistente de código, asistente de reuniones, creador de contenido. |
-
-## 6 · Glosario de términos imprescindibles
+## 8 · Glosario de términos imprescindibles
 
 | Término | Definición corta |
 |---|---|
@@ -90,30 +124,20 @@ La progresión es deliberada: no se puede razonar sobre RAG (Fase 2) sin dominar
 | **Guardrails** | Controles (de input y de output) que limitan lo que un sistema de IA puede recibir o producir — filtros de contenido, validación de que la respuesta no se sale del dominio permitido, límites de costo/tokens, detección de prompt injection. |
 | **AI Evals** (Evaluación de IA) | Métricas y procesos sistemáticos para medir la calidad de las respuestas de un sistema de IA (precisión, relevancia, alucinación, latencia, costo) — el equivalente de una suite de tests automatizados, pero para un sistema cuyo output no es 100% determinista. |
 
-## 7 · Relación con el resto del repo
+## 9 · Relación con el resto del repo
 
 - [`ia-agentes/`](../ia-agentes) — una vez completada la Fase 3-4 (Function Calling, MCP, orquestación de agentes), tiene sentido volver a `ia-agentes/compiler/` y entender/extender esa capa de compilación con criterio propio, no solo copiarla.
 - [`ddd/`](../ddd) y [`software-architectures/`](../software-architectures) — un agente en producción (Fase 5) sigue siendo una aplicación de software: necesita capas claras (¿dónde vive la lógica de orquestación vs. el adaptador HTTP del microservicio FastAPI?), no una excepción a las reglas del resto del repo.
 - [`frameworks/`](../frameworks) — el microservicio de la Fase 5 (FastAPI) es Python, fuera del alcance actual de `frameworks/` (Spring Boot, NestJS) — evaluar más adelante si amerita su propia carpeta `frameworks/fastapi/` cuando se practique en profundidad.
 - [`system-design/`](../system-design) — cachear con Redis (Fase 5) conecta directo con los patrones de cache ya vistos en [`01-scale-from-zero-to-millions.md`](../system-design/01-scale-from-zero-to-millions.md).
 
-## 8 · Cómo se va a completar esta carpeta
 
-> 📚 **Curso en curso:** [`agentic-ai/`](agentic-ai) — apuntes clase a clase del curso *AI Engineer Agentic Track* (Udemy): agent loops, Agents SDK, CrewAI, LangGraph y MCP. Índice: [`agentic-ai/README.md`](agentic-ai/README.md).
->
-> 🚀 **Siguiente curso:** [`llm-production/`](llm-production) — *AI Engineer Production Track: Deploy LLMs & Agents at Scale* (Vercel, AWS/Bedrock, GCP, Azure, LangFuse). Índice: [`llm-production/README.md`](llm-production/README.md).
+## 10 · Fuentes, atribución y aviso
 
-Mismo criterio incremental que [`system-design/`](../system-design): cada fase suma su propio archivo (`00-fundamentos.md`, `01-llms-y-prompting.md`, etc.) a medida que se estudia y se practica con un caso concreto — no se documenta teoría sin haberla ejercitado. Este `README.md` es el índice y la justificación formal del plan; se actualiza la tabla de la sección 5 con el estado real (⏳ pendiente / ✅ hecho) a medida que cada fase se completa.
-
-| Fase | Estado |
-|---|---|
-| 0 · Fundamentos de IA | ⏳ Pendiente |
-| 1 · Interacción con LLMs | ⏳ Pendiente |
-| 2 · Gestión del conocimiento (RAG) | ⏳ Pendiente |
-| 3 · Herramientas extendidas (Function Calling, MCP) | ⏳ Pendiente |
-| 4 · Agentes autónomos (LangGraph) | ⏳ Pendiente |
-| 5 · IA en producción | ⏳ Pendiente |
-| 6 · Portafolio real | ⏳ Pendiente |
+- **Las notas de [`agentic-ai/`](agentic-ai/README.md)** son un **estudio propio** (resumen, reordenación, diagramas y criterio) del curso *AI Engineer Agentic Track* de **Ed Donner** en Udemy. **No son el curso ni su transcripción**: para el material original, el código y las explicaciones completas, cursa el original y consulta [su repositorio](https://github.com/ed-donner/agents).
+- Lo que el instructor afirma (fechas, precios, comparaciones) se trata como **su opinión**; la guía marca 🔎 lo no verificado.
+- Las ideas de patrones provienen de [*Building Effective Agents*](https://www.anthropic.com/research/building-effective-agents) (Anthropic).
+- **No es consejo financiero**: los ejemplos de trading son educativos y con datos ficticios.
 
 ## Referencias
 

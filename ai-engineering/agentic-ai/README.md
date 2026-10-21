@@ -1,94 +1,118 @@
-# AI Engineer — Agentic Track (curso)
+# AI Engineer — Agentic Track (curso reordenado por temas)
 
-Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP Course** (curso 5 de 6 del currículo "The Complete AI Curriculum"). **Es el primer curso a tomar.** Cada clase se convierte en un documento de esta carpeta, escrito **de junior a senior** y vinculado al resto del repo.
+Apuntes del curso de Udemy **AI Engineer Agentic Track: The Complete Agent & MCP Course** (Ed Donner), **reorganizados por oficio** y no por el orden de las semanas del curso: un framework es una marca de cocina; un tema es un oficio. Cada documento trae la analogía de la **cocina**, diagramas, niveles junior/mid/senior, escaleras de entrevista y **ejercicios** (los [talleres](../talleres/README.md)).
 
-> **Repo del curso:** <https://github.com/ed-donner/agents> · **Instructor:** Ed Donner.
-> **Dónde encaja:** profundiza las Fases 3 y 4 del roadmap [`ai-engineering/`](../README.md) (herramientas, MCP, agentes autónomos, multi-agente).
+> **Repo del curso:** <https://github.com/ed-donner/agents> · **Tu fork de práctica:** [`edzamo/agents`](https://github.com/edzamo/agents)
+> ⚠️ Los documentos son **notas depuradas**, no una transcripción; las marcas 🔎 (por verificar) y 🧩 (aporte mío) distinguen lo que **no** viene del curso.
 
-## 🧪 Dónde se practica (y dónde se documenta)
+## 🗂️ Los 12 temas
 
-| | Este repo (`software-engineering`) | Repo de práctica (`agents`, fork propio) |
+| # | Tema | Qué responde | Bloque |
+|---|---|---|---|
+| **01** | [Agentes y workflows](01-agentes-y-workflows.md) | ¿Qué es un agente y cuándo conviene? | Fundamentos |
+| **02** | [Modelos y proveedores](02-modelos-y-proveedores.md) | ¿Cómo llamo a un LLM y cambio de proveedor (Gemini incluido)? | Fundamentos |
+| **03** | [Prompts, contexto y salidas estructuradas](03-prompts-contexto-y-salidas-estructuradas.md) | ¿Qué le pongo sobre la mesa y cómo leo su respuesta? | Fundamentos |
+| **04** | [Herramientas y bucle del agente](04-herramientas-y-bucle-del-agente.md) ⭐ | ¿Cómo actúa un agente de verdad? | Capacidades |
+| **05** | [MCP](05-mcp.md) ⭐ | ¿Cómo enchufo herramientas de otros? | Capacidades |
+| **06** | [Memoria, búsqueda y RAG](06-memoria-busqueda-y-rag.md) | ¿Cómo recuerda y cómo consulta datos? | Capacidades |
+| **07** | [Orquestación y multiagente](07-orquestacion-y-multiagente.md) | ¿Cómo reparto el trabajo entre agentes? | Orquestación |
+| **08** | [LangChain, LangGraph y Deep Agents](08-langchain-langgraph-y-deep-agents.md) | ¿Qué hay debajo (estado, grafos, capas)? | Orquestación |
+| **09** | [Seguridad, guardrails y humano en el bucle](09-seguridad-guardrails-y-humano-en-el-bucle.md) ⭐ | ¿Cómo evito que haga daño? | Calidad y operación |
+| **10** | [Observabilidad, evaluación y costos](10-observabilidad-evaluacion-y-costos.md) ⭐ | ¿Cómo sé que funciona y cuánto cuesta? | Calidad y operación |
+| **11** | [Frameworks y cómo elegir](11-frameworks-y-como-elegir.md) | ¿Qué marco uso y por qué? | Criterio |
+| **12** | [Proyectos del curso](12-proyectos-del-curso.md) | ¿Qué se construyó y qué copiar? | Práctica |
+| — | [Diagramas UML](diagramas-uml.md) | Clases, secuencia, estados, componentes y despliegue | Apoyo |
+
+```mermaid
+graph TD
+    subgraph F["Fundamentos"]
+        T1["01 Agentes y workflows"] --> T2["02 Modelos"] --> T3["03 Prompts y contexto"]
+    end
+    subgraph C["Capacidades"]
+        T4["04 Herramientas y bucle"] --> T5["05 MCP"] --> T6["06 Memoria y RAG"]
+    end
+    subgraph O["Orquestación"]
+        T7["07 Multiagente"] --> T8["08 LangGraph y capas"]
+    end
+    subgraph Q["Calidad y operación"]
+        T9["09 Seguridad"] --> T10["10 Observabilidad y evaluación"]
+    end
+    F --> C --> O --> Q --> T11["11 Frameworks"] --> T12["12 Proyectos"]
+```
+
+**Cómo estudiarlo (🧩):** el orden 01 → 12 sigue la dependencia (primero qué es, luego capacidades, luego coordinar, luego cuidar). Los **⭐** son los que más rinden. Para **entrevista** basta con los ⭐ + 01 + 07.
+
+## 🧪 Dónde se practica y dónde se documenta
+
+| | Este repo (`software-engineering`) | Fork de práctica (`agents`) |
 |---|---|---|
-| **Qué contiene** | Solo **documentación**: las clases explicadas "con manzanas", de junior a senior | Los **ejercicios y el código** de cada semana |
-| **Ruta local** | `ai-engineering/agentic-ai/` | `~/Documents/Personal/github/agents` |
-| **Remoto** | Este repo | [`edzamo/agents`](https://github.com/edzamo/agents) (fork de [`ed-donner/agents`](https://github.com/ed-donner/agents)) |
-| **Cuándo se sube** | Al procesar cada clase | Al final de cada día de práctica |
+| **Qué contiene** | Estos apuntes, [catálogo de patrones](../patrones/README.md), [conceptos](../conceptos/ingenieria-de-contexto.md), [**talleres**](../talleres/README.md) | Los laboratorios originales del curso (Python) |
+| **Ruta local** | `ai-engineering/` | `~/Documents/Personal/github/agents` |
+| **Proveedor de modelos** | Gemini gratis en los talleres | **Gemini** vía API compatible con OpenAI |
 
-> 🔐 En el fork, el `.env` con la clave API está en el `.gitignore`: **nunca se sube**. Antes de cada push conviene revisar con `git status` que no aparezca. Detalle en la [clase 05](clases/05-openai-api-key-env-notebook.md#3--el-archivo-env-donde-más-gente-se-atora).
+> 🔐 El `.env` está en el `.gitignore` del fork: nunca se sube. No subas tu `linkedin.pdf` ni `summary.txt`.
 
-## 🗺️ El currículo completo (y dónde estamos)
+## 🔁 De dónde sale cada tema (trazabilidad con las semanas del curso)
 
-| # | Curso | Temas | Decisión |
+| Semana del curso | Tema en el instructor | Dónde está ahora |
+|---|---|---|
+| **1** · Fundamentos | Agente, tool calling, gemelo digital | [01](01-agentes-y-workflows.md), [02](02-modelos-y-proveedores.md), [04](04-herramientas-y-bucle-del-agente.md), [12](12-proyectos-del-curso.md) |
+| **2** · OpenAI Agents SDK | Piezas del SDK, orquestación, Gemini, guardrails, Deep Research | [03](03-prompts-contexto-y-salidas-estructuradas.md), [07](07-orquestacion-y-multiagente.md), [09](09-seguridad-guardrails-y-humano-en-el-bucle.md), [12](12-proyectos-del-curso.md) |
+| **3** · CrewAI | Agentes, tareas, sandbox con Docker | [07](07-orquestacion-y-multiagente.md), [09](09-seguridad-guardrails-y-humano-en-el-bucle.md), [11](11-frameworks-y-como-elegir.md) |
+| **4** · LangChain + LangGraph | Capas, estado, middleware, Sidekick | [06](06-memoria-busqueda-y-rag.md), [08](08-langchain-langgraph-y-deep-agents.md), [09](09-seguridad-guardrails-y-humano-en-el-bucle.md) |
+| **5** · Marcos de agentes | Seis marcos, A2A, bucle de agentes | [11](11-frameworks-y-como-elegir.md), [12](12-proyectos-del-curso.md) |
+| **6** · MCP | Arquitectura, servidor propio, sala de operaciones, 10 cosas | [05](05-mcp.md), [06](06-memoria-busqueda-y-rag.md), [10](10-observabilidad-evaluacion-y-costos.md), [12](12-proyectos-del-curso.md) |
+
+## 🎓 Siguiente fase: practicar
+
+Los **ejercicios** de cada tema están al final de cada documento y se agrupan en el [**plan de talleres**](../talleres/README.md): **Java con Spring AI → Quarkus → TypeScript (NestJS) → Python (FastAPI)**.
+
+## ⚖️ Veredicto final del curso (mi opinión, tras estudiar las 6 semanas)
+
+> 🧩 Es **mi lectura** de lo que quedó en las notas, no una medición. 🔎 Las horas son una estimación por las duraciones de las clases (2–11 min cada una, 132 lecciones).
+
+**En una frase:** **un buen curso práctico de introducción a la ingeniería de agentes, con mucha repetición y poca profundidad; vale la pena si vienes de cero en agentes, y solo a ratos si ya construyes sistemas.**
+
+| Semana | Aporte | Repetición | Valor para un senior backend sin experiencia en agentes |
 |---|---|---|---|
-| 1 | AI Builder | Agentes, voice agents, n8n, ElevenLabs | ⏭️ Ya dominado |
-| 2 | AI Coder | Claude Code, Copilot, Codex, Antigravity | ⏭️ Fuera de alcance de este repo |
-| 3 | AI Leader | AI delivery, transformación, negocio con IA | ⏭️ No es prioridad |
-| 4 | AI Engineer · Core Track | LLMs, open-source, RAG, LangChain, fine-tuning | ❌ Muy básico para el nivel actual; se pide reembolso |
-| **5** | **AI Engineer · Agentic Track** | Agent loops, OpenAI Agents SDK, CrewAI, LangGraph, MCP | ✅ **Este curso (1º)** |
-| 6 | AI Engineer · Production Track | Vercel, AWS/Bedrock, GCP, Azure, LangFuse | 🔜 2º curso → [`llm-production/`](../llm-production/README.md) |
+| 1 · Fundamentos | Definición, workflow vs agente, bucle de herramientas | Media | 🟡 El mapa y el bucle |
+| 2 · OpenAI Agents SDK | Piezas de un framework, salida estructurada, guardrails | Media | 🟢 Orquestación y modelos no OpenAI |
+| 3 · CrewAI | Framework opinionado, **sandbox con Docker** | **Alta** | 🟡 Solo la "magia" oculta y el sandbox |
+| 4 · LangChain + LangGraph | Capas, **estado, checkpoints, middleware, aprobación humana** | Baja | 🟢 **La más valiosa** |
+| 5 · Marcos de agentes | Nueve marcos en una tabla | **Muy alta** | 🔴 Una tabla basta |
+| 6 · MCP + proyecto | **Arquitectura de MCP**, cuándo usarlo, **las 10 cosas** | Media | 🟢 **Muy valiosa** |
 
-> 🔎 Si el Core Track se retoma, RAG y fine-tuning siguen cubiertos en la Fase 2 del [roadmap](../README.md#4--roadmap--7-fases-14-semanas).
+**Qué hace bien**
+- **Honestidad sobre el bombo:** reconoce que A2A está sobrevalorado hoy, que MCP **no** es para tus propias herramientas, que el marco "no importa tanto" y que en producción casi siempre gana el **workflow**.
+- **Método:** mira las trazas, mide con una métrica de negocio, empieza simple, prompts como el primer arreglo.
+- **Hacer, no solo oír:** cada concepto se prueba en un lab con código.
+- **Un hilo que se cierra:** el mismo módulo de cuentas viaja de la semana 3 a la 6.
 
-## 🍎 Con manzanas (la idea completa)
+**Qué le falta**
+- **Repetición:** seis marcos con el mismo ejercicio; la semana 5 cabe en una página.
+- **Todo es Python y OpenAI-céntrico:** **nada de Java/Kotlin/.NET** (Microsoft Agent Framework se menciona de pasada) y varios laboratorios dependen de claves de pago.
+- **Producción y seguridad, superficiales:** sin pruebas sistemáticas, sin evals rigurosas, sin amenazas (inyección de prompt, permisos de herramientas, cadena de suministro de servidores MCP). Lo remite al curso de producción.
+- **Evidencia débil:** comparaciones con **una sola prueba** (n = 1) presentadas con confianza.
+- **Marketing:** pide reseñas y promociona otros cursos al final.
+- **Obsolescencia:** nombres y versiones cambian a diario; el curso fija versiones.
 
-> _Se completa con la primera clase: aquí va la analogía de la frutería que resume el curso en 4 líneas._
+**¿Para quién?**
 
-## 📚 Índice de clases (por semana, como lo organiza el instructor)
+| Perfil | ¿Vale la pena? | Cómo aprovecharlo |
+|---|---|---|
+| **Junior / sin experiencia en agentes (con Python)** | ✅ **Sí** | Hacer los labs de las semanas 1, 2, 4 y 6; la 3 y la 5 en diagonal |
+| **Mid con experiencia en backend** | 🟡 **Sí, selectivo** | Semanas 4 y 6 completas; el resto con estas notas |
+| **Senior con experiencia previa en agentes/LLM** | 🔴 **Poco** | Unas **~15–20 %** de las horas aportan algo nuevo: MCP (arquitectura y criterio), middleware y checkpoints de LangGraph, y las 10 cosas |
+| **Senior backend, nuevo en IA (tu caso)** | 🟡 **Útil como mapa**, no como formación profunda | Estas notas **sustituyen** ~70 % del vídeo; aprovecha para implementar PoC en **tu stack** |
 
-> **6 semanas · 5 días por semana · 8 proyectos.** 🟠 teoría · 🔵 framework · 🟡 proyecto. Las clases se numeran seguidas (01, 02…) y cada una indica su semana y día. Detalle completo en la [clase 02](clases/02-mapa-del-curso-seis-semanas.md).
+**Comentario sugerido para Udemy** (edítalo a tu experiencia):
 
-| Semana | Tema | Los 5 días | Clases | Estado |
-|---|---|---|---|---|
-| 1 | 🟠 Fundamentos | Agentic Workflow · Agents and Agentic Patterns · Orchestrating LLMs · Autonomy and Tools · 🟡 **P1** Personal career agent | [01 · Primer agente (n8n)](clases/01-primer-agente-n8n.md) · [02 · Mapa del curso](clases/02-mapa-del-curso-seis-semanas.md) · [03 · Configurar el entorno](clases/03-configurar-entorno-costos-mentalidad.md) · [04 · Setup Windows/Mac (guía rápida)](clases/04-setup-windows-mac-guia-rapida.md) · [05 · Clave OpenAI, `.env` y notebook](clases/05-openai-api-key-env-notebook.md) · [06 · Primeras llamadas a OpenAI](clases/06-primeras-llamadas-openai-encadenar.md) · [07 · ¿Qué es un agente? (día 2)](clases/07-que-es-un-agente-workflow-vs-agent.md) | 🟡 En curso (día 2) |
-| 2 | 🔵 OpenAI Agents SDK | Conceptos · 🟡 **P2** SDR · Tools vs Agents y Guardrails · 🟡 **P3** Deep Research (2 días) | _pendiente_ | ⏳ |
-| 3 | 🔵 CrewAI | Conceptos · Build a Crew agent · 🟡 **P4** Stock Picker · 🟡 **P5** Developer Agent y Engineering Team | | ⏳ |
-| 4 | 🔵 LangGraph | Conceptos · Build a LangGraph agent · Tools, memory, web searches · 🟡 **P6** Sidekick (2 días) | | ⏳ |
-| 5 | 🔵 Otros frameworks | Google ADK + A2A · AWS Strands · Otros Python · JS/TS · 🟡 **P7** Agent Loop | | ⏳ |
-| 6 | 🟠 MCP | Arquitectura y MCP · Server y Client · Servers locales y remotos · 🟡 **P8** AI Equity Traders (2 días) | | ⏳ |
+> *Curso muy práctico para entender el ciclo completo de un agente (herramientas, bucle, memoria, MCP) y el proyecto final integra bien las ideas. Lo más valioso: la arquitectura de MCP, LangGraph/middleware y las "10 cosas que importan" del cierre. Mejorable: la semana 5 (seis frameworks con el mismo ejercicio) y la 3 son muy repetitivas, todo gira en torno a Python y OpenAI, y producción/seguridad/evals quedan en la superficie. Para quien empieza en agentes es excelente; para desarrolladores senior conviene saltar contenido repetido y completarlo con prácticas de producción.*
 
-> Tabla completa día por día en la [clase 02](clases/02-mapa-del-curso-seis-semanas.md#21--día-por-día-temario-oficial-de-las-capturas-del-curso).
+## 🗺️ El currículo del instructor (resumen)
 
-> ➕ **Para agregar una clase:** pega la transcripción en [`clases/_pegar-clase-aqui.md`](clases/_pegar-clase-aqui.md), indica semana y número, y pide "procesa la clase".
-
-## 🧭 Vista por concepto (independiente de la semana)
-
-| Concepto | Clases donde aparece |
-|---|---|
-| Agentes y agent loop | [01](clases/01-primer-agente-n8n.md) · [07](clases/07-que-es-un-agente-workflow-vs-agent.md) |
-| Workflow vs agente | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#4--workflow-vs-agente-según-anthropic) |
-| Llamar a un LLM y encadenar llamadas | [06](clases/06-primeras-llamadas-openai-encadenar.md) |
-| Entorno, uv, API keys y `.env` | [03](clases/03-configurar-entorno-costos-mentalidad.md) · [04](clases/04-setup-windows-mac-guia-rapida.md) · [05](clases/05-openai-api-key-env-notebook.md) |
-| Manejo de secretos y claves | [05](clases/05-openai-api-key-env-notebook.md#3--el-archivo-env-donde-más-gente-se-atora) |
-| Notebooks, celdas y kernel | [05](clases/05-openai-api-key-env-notebook.md#4--primer-notebook-kernel-celdas-y-orden) |
-| Costos de APIs y modelos gratuitos/locales | [03](clases/03-configurar-entorno-costos-mentalidad.md#3--costos-de-las-apis-cuánto-cuesta-de-verdad) |
-| Naturaleza no determinista de los LLM | [03](clases/03-configurar-entorno-costos-mentalidad.md#5--la-idea-que-más-importa-pensar-como-científico-de-datos) |
-| Herramientas / function calling | [01](clases/01-primer-agente-n8n.md) (versión low-code) |
-| MCP | [02](clases/02-mapa-del-curso-seis-semanas.md) (plan; se introduce poco a poco) |
-| Multi-agente y orquestación | [02](clases/02-mapa-del-curso-seis-semanas.md) (plan: CrewAI, LangGraph) |
-
-## 📖 Glosario rápido
-
-| Término | En una frase | 🍎 Con manzanas | Clase |
-|---|---|---|---|
-| **Agente de IA** | LLM en un bucle con herramientas para lograr un objetivo. | Empleado con objetivo, teléfono, cuaderno y lápiz | [01](clases/01-primer-agente-n8n.md#1--la-definición-que-usa-todo-el-curso) |
-| **Herramienta (tool)** | Acción que el LLM pide y el sistema ejecuta. | El teléfono / el lápiz | [01](clases/01-primer-agente-n8n.md#4--cómo-se-le-da-una-herramienta-a-un-llm-sin-magia-todavía) |
-| **Memoria** | Recordar lo dicho antes en la conversación. | Cuaderno de la charla | [01](clases/01-primer-agente-n8n.md#2--las-tres-piezas-que-pide-un-agente-en-n8n) |
-| **Autonomía** | Que el agente decida qué herramientas usar y en qué orden. | Equilibra el inventario sin que le dictes los pasos | [01](clases/01-primer-agente-n8n.md#3--la-demo-en-tres-escalones) |
-| **uv** | Gestor de paquetes de Python, rápido y confiable. | El repartidor que trae los ingredientes | [03](clases/03-configurar-entorno-costos-mentalidad.md#2--qué-es-uv) |
-| **API key / `.env`** | Clave de acceso al proveedor; se guarda en un archivo fuera del código. | La llave de la cuenta, en el cajón con llave | [03](clases/03-configurar-entorno-costos-mentalidad.md#4--tres-cosas-a-tener-presentes) |
-| **Mensaje (`messages`)** | Lista de diccionarios con `role` y `content` que se envía al LLM. | La libreta de pedidos | [06](clases/06-primeras-llamadas-openai-encadenar.md#1--la-forma-de-un-mensaje) |
-| **Encadenar llamadas** | La salida de una llamada es la entrada de la siguiente. | Cadena de montaje de frutas | [06](clases/06-primeras-llamadas-openai-encadenar.md#3--encadenar-tres-llamadas) |
-| **Workflow** | Llamadas a LLM por rutas predefinidas y probables de antemano. | Cadena de montaje con estaciones fijas | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#4--workflow-vs-agente-según-anthropic) |
-| **Agente (definición Willison)** | LLM que usa herramientas en bucle para lograr un objetivo; el LLM decide los pasos. | Empleado libre que resuelve el pedido | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#1--las-tres-definiciones-de-la-más-vieja-a-la-más-usada) |
-| **LLM = generador de tokens** | El LLM solo predice texto; el agente es el código que lo interpreta. | El empleado escribe notas, tu código las ejecuta | [07](clases/07-que-es-un-agente-workflow-vs-agent.md#2--la-idea-que-más-pesa-el-llm-solo-genera-tokens) |
-| **API de OpenAI vs ChatGPT** | La API es para programar y se cobra por uso; ChatGPT es el producto final. | Cuenta de proveedor mayorista vs. comprar en el mostrador | [05](clases/05-openai-api-key-env-notebook.md#1--api-de-openai--chatgpt) |
-| **Kernel** | Proceso de Python que ejecuta las celdas de un notebook. | El cocinero que sigue la receta | [05](clases/05-openai-api-key-env-notebook.md#4--primer-notebook-kernel-celdas-y-orden) |
-| **Entorno virtual (`.venv`)** | Carpeta aislada con las dependencias de un proyecto. | Caja cerrada de ingredientes por proyecto | [04](clases/04-setup-windows-mac-guia-rapida.md#3--uv-sync-el-comando-importante) |
-| **No determinismo** | El LLM puede responder distinto cada vez. | Empleado brillante de humor variable | [03](clases/03-configurar-entorno-costos-mentalidad.md#5--la-idea-que-más-importa-pensar-como-científico-de-datos) |
-| **Low-code / no-code** | Armar flujos arrastrando y soltando (n8n). | Armar el local con piezas prefabricadas | [01](clases/01-primer-agente-n8n.md#7--low-code-vs-código) |
+1 AI Builder (n8n) · 2 AI Coder (**usar** agentes: Claude Code, Codex…) · 3 AI Leader (negocio) · 4 Core Track (LLMs, RAG) · **5 Agentic Track (este: construir agentes)** · 6 [Production Track](../llm-production/README.md) (desplegar). Para **usar** agentes en tu trabajo, el curso 2 es el relacionado; este enseña a **construirlos**.
 
 ## 🔗 Relacionado
 
-- [Roadmap AI Engineering](../README.md) — plan de 14 semanas / 7 fases.
-- [`ia-agentes/`](../../ia-agentes) — subagentes aplicados a este repo.
-- [Glosario de la frutería](../../messaging-streaming/glosario.md) — la analogía base del repo.
+[Roadmap AI Engineering](../README.md) · [Talleres](../talleres/README.md) · [Catálogo de patrones](../patrones/README.md) · [Ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) · [`ia-agentes/`](../../ia-agentes)
