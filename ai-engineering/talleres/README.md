@@ -103,6 +103,7 @@ graph LR
 |---|---|---|---|---|
 | **W00** ⭐ | [02](../agentic-ai/02-modelos-y-proveedores.md) | Proyecto Spring Boot + Spring AI; clave de Gemini; **modelo falso** para pruebas | `mvn test` verde **sin red**; una llamada real opcional | — |
 | **W01** ⭐ | [01](../agentic-ai/01-agentes-y-workflows.md), [02](../agentic-ai/02-modelos-y-proveedores.md), [03](../agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Primer agente: `ChatClient`, prompt de sistema y **salida estructurada** (record) | El test valida el esquema con modelo falso | — |
+| **W01b** 🧩 | [02](../agentic-ai/02-modelos-y-proveedores.md) | **Tokens y temperatura** (~45 min): contar tokens (inglés frente a español) y pasar `temperature` / `maxTokens` como opciones 🔎 | El modelo falso **recibe** las opciones que enviaste | — |
 | **W02** ⭐ | [04](../agentic-ai/04-herramientas-y-bucle-del-agente.md) | **Herramientas**: bucle a mano y con `@Tool`; **allowlist**, validación y **tope de iteraciones** | Un modelo falso que nunca termina corta en el tope; un nombre desconocido se rechaza | 6 · Agente |
 | **W03** ⭐ | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Chaining + gate** (procesar un pago), **routing** y **paralelización** | Cada rama probada con modelos falsos; fallo parcial manejado | 1, 2, 3 |
 | **W04** ⭐ (×2) | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Gerente con agentes-herramienta**: reunión → funcionalidades → tareas (**tu PoC3**) | El plan se valida (formato, tope de subtareas); el sintetizador no pierde datos | 4 · Orquestador |
@@ -112,10 +113,12 @@ graph LR
 | **W08** ⭐ | [05](../agentic-ai/05-mcp.md) | **Cliente MCP**: usar un servidor ya hecho (filesystem/fetch) con **filtro de herramientas** | Solo las herramientas permitidas llegan al modelo | — |
 | **W09** | [05](../agentic-ai/05-mcp.md) | **Servidor MCP propio** (cuentas/pagos ficticios) | Otro cliente (el de W08) lo consume | — |
 | **W10** | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) | **Observabilidad** local: Micrometer/OpenTelemetry + registro propio de llamadas | Se reconstruye qué herramienta se llamó y con qué argumentos | — |
+| **W11a** 🧩 | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **Embeddings y similitud** (~1 h): `EmbeddingModel` falso con vectores a mano y búsqueda de los k más cercanos 🔎 | *Reembolso* queda junto a *devolución*; un texto ajeno queda lejos | — |
+| **W11b** 🧩 | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **Chunking y RAG clásico** (~1 h): `TokenTextSplitter`, indexar, consultar y evaluar la recuperación 🔎 | Para 5 preguntas fijas, recupera el trozo esperado | — |
 | **W11** | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **RAG agéntico**: búsqueda vectorial (pgvector o Qdrant) como herramienta | El agente guarda y recupera datos propios | — |
 | **W12** | [09](../agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | **Sandbox seguro**: ejecutar código generado en Docker (sin red, límites, no root) | Intento de salir del directorio o usar red **falla** | — |
 | **W13** (×2) | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Multiagente con tablero compartido** (la idea de la semana 5) | Dos trabajadores toman tareas sin pisarse | — |
-| **W14** | 🧩 extra | **API REST** de agentes + despliegue ligero | Contrato OpenAPI probado | — |
+| **W14** | 🧩 extra | **API REST** de agentes + despliegue ligero + **reintentos con espera creciente e idempotencia** en el pago | Contrato OpenAPI probado; un modelo que falla 2 veces acierta a la 3.ª sin duplicar el pago | — |
 | **W15** | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) | **Evaluación sistemática**: casos fijos, regresión, costo por ejecución | Un cambio de prompt se acepta o se rechaza **por una métrica** | — |
 
 ### Dependencias entre talleres

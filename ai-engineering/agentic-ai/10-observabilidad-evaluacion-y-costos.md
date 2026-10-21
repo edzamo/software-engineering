@@ -91,6 +91,29 @@ Una llamada **aparte**, sin herramientas, con **salida estructurada** (`Evaluato
 | **Herramientas** | Filtrar las expuestas; evitar las alojadas de pago |
 | **Mide** | Costo **por ejecución** como métrica, no solo la factura mensual |
 
+### Operar en producción: costo, velocidad y errores
+
+```mermaid
+graph TD
+    R["Llamada al modelo"] --> OK{"¿Respondió bien?"}
+    OK -- "sí" --> F["Registrar tokens, costo y tiempo"]
+    OK -- "429 o 5xx" --> W["Esperar (backoff exponencial + azar)"]
+    W --> N{"¿Quedan intentos?"}
+    N -- "sí" --> R
+    N -- "no" --> FB["Modelo de respaldo o error claro"]
+    OK -- "tardó demasiado" --> TO["Corte por tiempo (timeout)"] --> N
+```
+
+| Eje | Qué vigilar | Palancas |
+|---|---|---|
+| **Costo** | Tokens de entrada **más** salida, por ejecución | Cachear prompts largos y estables, **topar la salida**, modelo pequeño donde la métrica lo permita |
+| **Velocidad** | **Tiempo hasta la primera ficha** (lo que siente el usuario) y la cola lenta (**p95**: el tiempo que el 95 % de las llamadas no supera) | *Streaming*, prompts cortos, modelo más rápido en los pasos simples |
+| **Errores** | Límite de uso (**429**), fallos del proveedor (**5xx**), cortes por tiempo | Reintentos con **espera creciente y azar**, tope de intentos, **modelo de respaldo**, **registrar todo** |
+
+> ⚠️ **Caso de pagos ⭐ (mío 🧩):** reintentar una llamada **que ya ejecutó una herramienta con efectos** puede **duplicar un pago**. Las herramientas con efectos llevan **clave de idempotencia**: repetir la petición no repite la operación. Los reintentos automáticos se aplican a lo que se puede repetir sin riesgo. → [04](04-herramientas-y-bucle-del-agente.md) y [09](09-seguridad-guardrails-y-humano-en-el-bucle.md).
+
+Lo que cubre el **Production Track** (despliegue, nube, Langfuse) se integra aquí al terminarlo.
+
 ## 6 · Las 10 cosas que importan (cierre del curso) ⭐
 
 Es la parte más valiosa del cierre del curso (lección 130). Mi versión, con tres matices míos:
@@ -144,6 +167,7 @@ Sobre el **marco**: *"no importa tanto; elige el que encaje con tu equipo"* (su 
 |---|---|
 | **W07** ⭐ | **Evaluador** (LLM juez) con reintentos y tope; primer **conjunto de pruebas**; rechaza N veces y escala a humano |
 | **W10** | **Observabilidad local** (Micrometer/OpenTelemetry + registro propio): reconstruir qué herramienta se llamó y con qué argumentos |
+| **W14** 🧩 | **API REST** con **reintentos con espera creciente, tope por tiempo e idempotencia** en la herramienta de pago; un modelo falso que falla 2 veces y acierta a la 3.ª |
 | **W15** | **Evaluación sistemática**: casos fijos, regresión y **costo por ejecución**; un cambio de prompt se acepta o se rechaza **por una métrica** |
 | **P4** | Evaluación y trazas en Python |
 

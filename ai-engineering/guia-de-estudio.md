@@ -80,7 +80,7 @@ graph LR
 |:-:|:-:|---|---|---|:-:|
 | 1 | 🛠️ | **W00** Proyecto Spring Boot + Spring AI 1.1.x + **modelo falso** + clave de Gemini | [02](agentic-ai/02-modelos-y-proveedores.md) | `mvn test` verde **sin red** | ☐ |
 | 2 | ☁️ | **D1** ¿Qué cambia al desplegar un agente? Contenedores, secretos, entornos, costo | [09 §5](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) · [02](agentic-ai/02-modelos-y-proveedores.md) | Nota: 5 diferencias entre "mi portátil" y "producción" | ☐ |
-| 3 | 🛠️ | **W01** Primer agente: `ChatClient`, prompt y **salida estructurada** | [01](agentic-ai/01-agentes-y-workflows.md) · [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Test del esquema con modelo falso | ☐ |
+| 3 | 🛠️ | **W01** Primer agente: `ChatClient`, prompt y **salida estructurada** (+ **W01b** tokens y temperatura, ~45 min) | [01](agentic-ai/01-agentes-y-workflows.md) · [03](agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Test del esquema con modelo falso | ☐ |
 | 4 | ☁️ | **D2** Una plataforma de despliegue sencilla (tipo Vercel 🔎) | por confirmar | Una app de ejemplo desplegada o descrita paso a paso | ☐ |
 | 5 | 🛠️ | **W02** Herramientas y bucle: `@Tool`, **lista blanca**, tope de iteraciones | [04](agentic-ai/04-herramientas-y-bucle-del-agente.md) | Un modelo falso que nunca termina corta en el tope | ☐ |
 | 6 | ☁️ | **D3** Trazas en producción (tipo Langfuse 🔎) | [10](agentic-ai/10-observabilidad-evaluacion-y-costos.md) | Sabes qué dato **no** debe salir en una traza | ☐ |
@@ -114,7 +114,7 @@ graph LR
 |:-:|:-:|---|---|---|:-:|
 | 25 | 🛠️ | **W12** Sandbox seguro (Docker, sin red, límites, no root) | [09](agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | Un intento de salir del directorio **falla** | ☐ |
 | 26 | ☁️ | **D11** Desplegar el PoC en **una** nube | por confirmar | El PoC responde desde la nube con costos acotados | ☐ |
-| 27 | 🛠️ | **W11** RAG agéntico (pgvector o Qdrant) | [06](agentic-ai/06-memoria-busqueda-y-rag.md) | El agente guarda y recupera datos propios | ☐ |
+| 27 | 🛠️ | **W11a + W11b** embeddings, similitud, chunking y RAG clásico (~2 h), luego **W11** RAG agéntico (pgvector o Qdrant; puede pasar a otro día) | [06](agentic-ai/06-memoria-busqueda-y-rag.md) | El agente guarda y recupera datos propios | ☐ |
 | 28 | ☁️ | **D12** CI/CD, secretos y entornos del PoC | por confirmar | Pipeline que despliega con secretos fuera del repo | ☐ |
 | 29 | 🛠️ | **W13 · parte 1** Multiagente con tablero compartido | [07](agentic-ai/07-orquestacion-y-multiagente.md) | Dos trabajadores sin pisarse | ☐ |
 | 30 | 🛠️ | **W13 · parte 2** Orquestador y agente de pruebas | [07](agentic-ai/07-orquestacion-y-multiagente.md) · [12](agentic-ai/12-proyectos-del-curso.md) | Flujo completo en paralelo | ☐ |
