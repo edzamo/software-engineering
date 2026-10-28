@@ -55,7 +55,7 @@ Preparate un ejemplo concreto de tu experiencia para cada fila (2-3 frases, form
 
 - **Modalidad:** 100% remota, full time, contrato de prestación de servicios indefinido.
 - **Horario:** lunes a viernes 8:00–18:00 hora Colombia (UTC-5) — ajustar a tu zona horaria real.
-- **Honorarios:** USD 3.000–3.100/mes, pago vía OnTop.
+- **Honorarios:** rango acordado en el proceso (no se publica); pago por una plataforma de pagos internacional.
 - **Despliegues nocturnos:** 1-2 veces por semana, ~21:00 hs Colombia.
 - **Guardia rotativa semanal:** sin compensación adicional automática; horas extraordinarias (ej. fines de semana) se evalúan caso a caso (pago extra, tiempo libre, o combinación).
 - **Stack de trabajo actual:** Bitbucket (experiencia en GitHub/Azure DevOps es transferible).

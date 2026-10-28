@@ -20,7 +20,7 @@ Dos usos: **(1) durante la entrevista**, busca con `Ctrl+F` (o `Cmd+F`) una pala
 
 > **Orden del documento:** va de lo **básico a lo avanzado**. Primero Java y programación orientada a objetos (lo que se pregunta al inicio de casi toda entrevista), luego el framework y los datos, después arquitectura y mensajería. Términos como CQRS, Outbox o Saga están al final como referencia, porque no suelen ser lo primero que preguntan.
 
-**Contexto del proceso:** más de 100 personas aplicaron a la vacante, así que lo que te diferencia no es recitar definiciones, sino **explicar con claridad y respaldar con un proyecto real** (tu pasarela de pagos en un banco). Glassdoor no trae preguntas técnicas de Arkano (solo 3 reseñas, sin detalle), así que esta preparación sigue la lista de Lourdes y el job description.
+**Contexto del proceso:** más de 100 personas aplicaron a la vacante, así que lo que te diferencia no es recitar definiciones, sino **explicar con claridad y respaldar con un proyecto real** (tu pasarela de pagos en un banco). Glassdoor no trae preguntas técnicas de Arkano (solo 3 reseñas, sin detalle), así que esta preparación sigue la lista de Talent Acquisition y el job description.
 
 ---
 
@@ -1031,7 +1031,7 @@ Sirve para: Kafka, idempotencia, resiliencia, transacciones, arquitectura, concu
 
 ## 9 · Extras del job description
 
-El job description menciona más cosas que la lista de Lourdes. Respuestas mínimas por si salen:
+El job description menciona más cosas que la lista de Talent Acquisition. Respuestas mínimas por si salen:
 
 | Tema | Respuesta mínima |
 |---|---|
