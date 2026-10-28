@@ -1,7 +1,7 @@
 # 10 · Observabilidad, evaluación y costos
 
-> **Tema 10 de 12.** Fuentes: semanas 1 a 6 (el tema aparece en **todas**: trazas, LLM juez, evaluador, costo). **Aviso honesto:** la **evaluación sistemática** (conjuntos fijos, regresión, calibración del juez) **casi no se enseña**: ahí los talleres W07 y W15 **añaden** lo que falta.
-> ⬅️ [09 · Seguridad](09-seguridad-guardrails-y-humano-en-el-bucle.md) · ➡️ [11 · Frameworks y cómo elegir](11-frameworks-y-como-elegir.md) · [Índice](README.md)
+> **Tema 10 de 10.** Fuentes: semanas 1 a 6 (el tema aparece en **todas**: trazas, LLM juez, evaluador, costo). **Aviso honesto:** la **evaluación sistemática** (conjuntos fijos, regresión, calibración del juez) **casi no se enseña**: ahí los talleres W07 y W15 **añaden** lo que falta.
+> ⬅️ [09 · Seguridad](09-seguridad-guardrails-y-humano-en-el-bucle.md) · [Índice](README.md)
 
 ---
 
@@ -52,7 +52,7 @@ graph TB
 | **Trazas propias** (`TracingProcessor` → SQL) | Agents SDK | **No** |
 | Micrometer + OpenTelemetry 🧩 | **Java** 🔎 | Tú decides |
 
-⚠️ **Las plataformas remotas suben prompts y respuestas**: no las uses con datos reales de Arkano.
+⚠️ **Las plataformas remotas suben prompts y respuestas**: no las uses con datos reales del cliente.
 
 **Qué buscar en una traza:** el **prompt de sistema real** (los marcos añaden texto propio), si el agente **usó** las herramientas o **inventó**, los **argumentos**, los **tokens y costo**, las **vueltas** innecesarias (el agente de Playwright dio muchos rodeos) y **qué contexto recibió** cada tarea.
 
@@ -112,7 +112,6 @@ graph TD
 
 > ⚠️ **Caso de pagos ⭐ (mío 🧩):** reintentar una llamada **que ya ejecutó una herramienta con efectos** puede **duplicar un pago**. Las herramientas con efectos llevan **clave de idempotencia**: repetir la petición no repite la operación. Los reintentos automáticos se aplican a lo que se puede repetir sin riesgo. → [04](04-herramientas-y-bucle-del-agente.md) y [09](09-seguridad-guardrails-y-humano-en-el-bucle.md).
 
-Lo que cubre el **Production Track** (despliegue, nube, Langfuse) se integra aquí al terminarlo.
 
 ## 6 · Las 10 cosas que importan (cierre del curso) ⭐
 
@@ -126,7 +125,7 @@ Es la parte más valiosa del cierre del curso (lección 130). Mi versión, con t
 | 4 | **De lo pequeño a lo grande**, no un diagrama enorme de entrada | — |
 | 5 | **Empieza con una sola llamada al LLM**; divide solo si las métricas lo justifican | — |
 | 6 | **Empieza con un modelo grande**; luego baja de tamaño para ahorrar | 🧩 Y mide la caída de calidad |
-| 7 | **Piensa en todo el contexto**, no solo en la memoria | [Ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) |
+| 7 | **Piensa en todo el contexto**, no solo en la memoria | [03 · Prompts y contexto](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md) |
 | 8 | **Muchos problemas se arreglan mejorando el prompt** | Primero esto |
 | 9 | **Mira las trazas** hasta que sea un hábito (si no, el modelo "inventa" que usó la herramienta) | Crítico |
 | 10 | **Sé ingeniero y científico:** I+D, no hay atajos | — |

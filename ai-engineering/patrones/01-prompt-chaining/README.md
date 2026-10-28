@@ -54,7 +54,7 @@ borrador = llm("Redacta la cotización", datos, precios)
 return llm("Pule el tono, máximo 3 líneas", borrador)
 ```
 
-**Esto es lo que hiciste en la [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)** (pregunta → respuesta → evaluación), pero sin puerta entre pasos.
+**Esto es lo que hiciste en la [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)** (pregunta → respuesta → evaluación), pero sin puerta entre pasos.
 
 ## 3 · Cuándo usarlo y cuándo no
 
@@ -94,4 +94,4 @@ return llm("Pule el tono, máximo 3 líneas", borrador)
 
 ## 🔗 Relacionado
 
-[Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md) · [Routing →](../02-routing/README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
+[Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md) · [Routing →](../02-routing/README.md) · [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)

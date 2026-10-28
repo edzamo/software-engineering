@@ -1,6 +1,6 @@
 # 01 · Agentes y workflows — qué es un agente y cuándo usarlo
 
-> **Tema 1 de 12** del Agentic Track, reordenado por oficio (no por semana). Fuentes: semanas 1, 5 y 6 del curso de Ed Donner.
+> **Tema 1 de 10** del Agentic Track, reordenado por oficio (no por semana). Fuentes: semanas 1, 5 y 6 del curso de Ed Donner.
 > ⬅️ [Índice](README.md) · ➡️ [02 · Modelos y proveedores](02-modelos-y-proveedores.md) · [Catálogo de patrones](../patrones/README.md) · [Diagramas UML](diagramas-uml.md)
 
 ---
@@ -10,6 +10,33 @@
 Un **cocinero muy hábil que solo sabe escribir notas** y **olvida todo cuando sales del cuarto**. Tú, el jefe de cocina, **lees sus notas, abres la despensa, enciendes el fuego y le devuelves el resultado**. Un **agente** es ese cocinero repitiendo *"pido algo → tú lo haces → miro el resultado → decido lo siguiente"* hasta decir *"listo"*. Un **workflow**, en cambio, es **la receta con los pasos escritos**: no hay decisiones, solo orden.
 
 > En palabras de la calle: **el agente no es el modelo, es tu programa que lee lo que dice el modelo y actúa. Y casi siempre conviene la receta, no el cocinero libre.**
+
+---
+
+## 📌 Chuleta: las 5 piezas (tenla siempre a mano)
+
+```mermaid
+graph LR
+    TK["① TOKEN<br/>la ficha de texto"] --> LLM["② LLM<br/>escribe fichas,<br/>sin memoria"]
+    LLM --> WF["③ WORKFLOW<br/>LLM dentro de pasos<br/>que escribes TÚ"]
+    LLM --> AG["④ AGENTE<br/>LLM + herramientas en un bucle<br/>hacia un objetivo: ÉL decide"]
+    H["⑤ HARNESS<br/>el código alrededor:<br/>bucle, herramientas, controles, trazas"] -.-> WF
+    H -.-> AG
+```
+
+| Pieza | En una frase | 🍳 Cocina | ¿Quién decide el camino? | Ejemplo en pagos 🧩 |
+|---|---|---|---|---|
+| **① Token** | La unidad de texto del modelo (palabra, trozo o signo). **Todo se cuenta en tokens**: límite, velocidad y precio | Una sílaba de la nota | — | Un recibo largo cuesta más tokens que uno corto |
+| **② LLM** | Modelo que **predice el siguiente token**. No ejecuta nada y **no recuerda** | El cocinero que solo escribe notas | — | Gemini, Claude, GPT |
+| **③ Workflow** | **Pasos fijos que escribes tú**, con el LLM en uno o varios | La receta con pasos escritos | **Tú** (el código) | Clasificar el pago → si el riesgo es alto, revisión humana |
+| **④ Agente** | **LLM + herramientas en un bucle** hasta cumplir un objetivo | El cocinero libre | **El LLM** (con tope) | Investigar una disputa consultando varias APIs |
+| **⑤ Harness** | **Todo el código alrededor del modelo**: bucle, herramientas, controles (lista blanca, topes, aprobación), memoria y trazas | El jefe de cocina y su cocina | **Tú**: pones las reglas | Lo que decide si el agente puede ejecutar un pago |
+
+**Cómo se relacionan (la idea que une todo):** el LLM solo genera tokens. El **harness** (tu código) lee esos tokens y actúa. Si **tú** fijas los pasos, es un **workflow**; si **el LLM** decide los pasos, es un **agente**. **Los dos viven dentro de un harness.**
+
+**Regla para decidir:** ¿puedes escribir los pasos de antemano? → **workflow**. ¿No, y vale la pena el costo y el riesgo? → **agente, con tope de iteraciones**. En duda, empieza con **una sola llamada**.
+
+> 🔎 *Harness* lo usa el instructor del curso (semana 6) y también el marco de Deep Agents ([08](08-frameworks-y-grafos.md)); **otros autores lo definen distinto**. Aquí lo usamos así: el código que rodea al modelo.
 
 ---
 
@@ -50,7 +77,16 @@ classDiagram
 
 ## 2 · Workflow vs. agente
 
-![Diapositiva "Agentic Systems": workflows y agents](assets/07-agentic-systems-workflows-vs-agents.png)
+```mermaid
+graph LR
+    subgraph W["Workflow: el camino lo escribes tú"]
+        W1["Paso 1 (LLM)"] --> W2["Paso 2 (código)"] --> W3["Paso 3 (LLM)"]
+    end
+    subgraph A["Agente: el camino lo decide el LLM"]
+        A1["LLM"] -- "elige herramienta" --> A2["Herramienta"]
+        A2 -- "resultado" --> A1
+    end
+```
 
 | | **Workflow** | **Agente** |
 |---|---|---|
@@ -100,7 +136,7 @@ El detalle de cada uno (con caso de uso y cómo se prueba) está en el [catálog
 
 ## 4 · Las "10 cosas que importan" (cierre del curso)
 
-El resumen de criterio profesional del curso, en una línea cada una: 1) problema antes que solución · 2) métrica de negocio · 3) código antes que autonomía · 4) de lo pequeño a lo grande · 5) empezar con una llamada · 6) modelo grande primero · 7) contexto completo · 8) mejorar el prompt primero · 9) **mirar las trazas** · 10) ser ingeniero y científico (I+D). Detalle y matices en [10 · Observabilidad y evaluación](10-observabilidad-evaluacion-y-costos.md) y [11 · Frameworks](11-frameworks-y-como-elegir.md).
+El resumen de criterio profesional del curso, en una línea cada una: 1) problema antes que solución · 2) métrica de negocio · 3) código antes que autonomía · 4) de lo pequeño a lo grande · 5) empezar con una llamada · 6) modelo grande primero · 7) contexto completo · 8) mejorar el prompt primero · 9) **mirar las trazas** · 10) ser ingeniero y científico (I+D). Detalle y matices en [10 · Observabilidad y evaluación](10-observabilidad-evaluacion-y-costos.md) y [08 · Frameworks y grafos](08-frameworks-y-grafos.md).
 
 ## 5 · Qué debe dominar cada nivel
 
@@ -134,4 +170,4 @@ El resumen de criterio profesional del curso, en una línea cada una: 1) problem
 
 ## 🔗 Relacionado
 
-[Catálogo de patrones](../patrones/README.md) · [Ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) · [04 · Herramientas y bucle](04-herramientas-y-bucle-del-agente.md) · [07 · Orquestación](07-orquestacion-y-multiagente.md) · [`ia-agentes/`](../../ia-agentes)
+[Catálogo de patrones](../patrones/README.md) · [03 · Prompts y contexto](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md) · [04 · Herramientas y bucle](04-herramientas-y-bucle-del-agente.md) · [07 · Orquestación](07-orquestacion-y-multiagente.md) · [`ia-agentes/`](../../ia-agentes)

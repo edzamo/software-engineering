@@ -1,7 +1,7 @@
-# Diagramas UML del Agentic Track
+# Diagramas UML de AI Engineering
 
 > Una sola página con **los diagramas que vale la pena tener** del curso: clases, secuencia, estados, componentes y despliegue. Están hechos con Mermaid (se ven en GitHub y en el IDE).
-> ⬅️ [Índice del curso](README.md) · Temas: [01 Agentes](01-agentes-y-workflows.md) · [04 Herramientas](04-herramientas-y-bucle-del-agente.md) · [05 MCP](05-mcp.md) · [07 Orquestación](07-orquestacion-y-multiagente.md) · [08 LangGraph](08-langchain-langgraph-y-deep-agents.md) · [09 Seguridad](09-seguridad-guardrails-y-humano-en-el-bucle.md) · [12 Proyectos](12-proyectos-del-curso.md)
+> ⬅️ [Índice del curso](README.md) · Temas: [01 Agentes](01-agentes-y-workflows.md) · [04 Herramientas](04-herramientas-y-bucle-del-agente.md) · [05 MCP](05-mcp.md) · [07 Orquestación](07-orquestacion-y-multiagente.md) · [08 LangGraph](08-frameworks-y-grafos.md) · [09 Seguridad](09-seguridad-guardrails-y-humano-en-el-bucle.md) · [12 Proyectos](../talleres/README.md#11b--lecciones-de-los-proyectos-del-curso-qué-copiar-y-qué-dejar)
 
 ## 🍳 Con la cocina
 
@@ -426,4 +426,4 @@ Redibuja en papel (sin mirar) los diagramas §2, §4 y §5 para **un flujo de tu
 
 ## 🔗 Relacionado
 
-[Catálogo de patrones](../patrones/README.md) · [Ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) · [05 · MCP](05-mcp.md) · [08 · LangChain, LangGraph y Deep Agents](08-langchain-langgraph-y-deep-agents.md)
+[Catálogo de patrones](../patrones/README.md) · [03 · Prompts y contexto](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md) · [05 · MCP](05-mcp.md) · [08 · Frameworks y grafos](08-frameworks-y-grafos.md)

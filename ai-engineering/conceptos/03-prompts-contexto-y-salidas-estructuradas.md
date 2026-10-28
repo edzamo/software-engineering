@@ -1,6 +1,6 @@
 # 03 · Prompts, contexto y salidas estructuradas
 
-> **Tema 3 de 12.** Fuentes: semanas 1, 2, 3, 4 y 6. El concepto largo vive en [ingeniería de contexto](../conceptos/ingenieria-de-contexto.md); aquí está la **práctica**.
+> **Tema 3 de 10.** Incluye la **ingeniería de contexto** (decidir qué entra en la ventana, cuándo y cuánto). Origen del esquema de contexto: Phil Schmid (Google), según el instructor del curso.
 > ⬅️ [02 · Modelos](02-modelos-y-proveedores.md) · ➡️ [04 · Herramientas y bucle](04-herramientas-y-bucle-del-agente.md) · [Índice](README.md)
 
 ---
@@ -85,7 +85,35 @@ classDiagram
 - Un servidor MCP de datos de mercado pasó de **10–20 herramientas a meta-herramientas** para explorar su API. En el proyecto final: **17 herramientas en 6 servidores** (antes ~40). → [05 · MCP](05-mcp.md).
 - **Memoria corta:** el historial, con **resumen** si es largo (middleware de resumen). **Memoria larga y RAG:** → [06 · Memoria, búsqueda y RAG](06-memoria-busqueda-y-rag.md).
 
-## 5 · Qué debe dominar cada nivel
+## 5 · Ingeniería de contexto: el mesón es limitado 🧩
+
+> En palabras de la calle: **no es "cómo le pido el plato", es "qué le dejo listo para que le salga bien".** Un buen cocinero con un mal mesón cocina mal. Todo es **texto dentro del mismo mesón**: las 7 piezas son una forma de **pensar**, no compartimentos, y **tu código** decide qué se prepara antes de cada llamada.
+
+| Problema | Qué pasa | Qué se hace |
+|---|---|---|
+| **Historial que crece** | Cada vuelta suma tokens: cuesta más y el contexto se llena | Resumir o descartar lo viejo |
+| **Ruido** | Ingredientes que el plato no usa estorban | Poner **solo lo que la tarea usa** |
+| **Toda la documentación "por si acaso"** | Contexto lleno de lo irrelevante | **Traer bajo demanda** (RAG o búsqueda; RAG agéntico) |
+| **Un solo agente para todo** | Se mezclan tareas | **Una estación por cocinero**: subagentes con contexto limpio |
+| **Lo que debe recordarse mañana** | El modelo olvida entre sesiones | Memoria larga con herramientas o archivos |
+
+**Errores típicos:** creer que más contexto siempre es mejor · reglas contradictorias · obsesionarse con la redacción del prompt en vez de mirar **todo** el contexto · cambiar el prompt "a ojo" sin casos de prueba.
+
+**El método (lo más valioso):** define qué es "buen resultado" (casos y métrica) → prueba **una** variante → compara contra la métrica → quédate con ella solo si mejora. Es la regla de [01](01-agentes-y-workflows.md): **medir antes de complicar**.
+
+**Tus herramientas de hoy ya son ingeniería de contexto:**
+
+| Lo que usas | Qué pieza es | Cuándo entra |
+|---|---|---|
+| `CLAUDE.md` / `AGENTS.md` / instrucciones de Copilot | Prompt de sistema | Siempre |
+| Skills, documentación del proyecto | RAG | **Bajo demanda** |
+| Subagentes | Una estación por cocinero | Por tarea |
+| Memoria del proyecto | Memoria larga | Al iniciar |
+| `/clear`, "una tarea por chat" | Limpiar el mesón | Tú decides |
+
+Cuando un agente "se equivoca", pregúntate **qué le faltó o le sobró** antes de culpar al modelo.
+
+## 6 · Qué debe dominar cada nivel
 
 | Nivel | Debe poder... |
 |---|---|
@@ -93,12 +121,17 @@ classDiagram
 | 🟡 **Mid** | Diseñar el contexto completo (las 7 piezas); poner el razonamiento antes de la respuesta; separar prompts del código. |
 | 🔴 **Senior** | **Medir** el efecto de cada cambio de prompt con un conjunto de casos; controlar el tamaño del contexto (divulgación progresiva, resumen); validar igualmente la salida. |
 
-## 6 · Escaleras de entrevista
+## 7 · Escaleras de entrevista
 
 **"¿Cómo mejoras la calidad de una salida estructurada?"**
 - 🟢 "Describo cada campo."
 - 🟡 "Pongo el razonamiento antes de la respuesta, porque se genera en ese orden."
 - 🔴 "Además mantengo el esquema simple, valido igual y mido el efecto de cada cambio con un conjunto de pruebas."
+
+**"¿Qué es la ingeniería de contexto?"**
+- 🟢 "Decidir qué información le damos al modelo, no solo cómo le pedimos las cosas."
+- 🟡 "Incluye instrucciones, historial, herramientas, formato de salida, RAG y memoria; se decide qué entra y cuándo."
+- 🔴 "Diseñar y medir lo que entra en la ventana: pruebo variantes contra una métrica, cargo conocimiento bajo demanda, aíslo contexto con subagentes y recorto lo que no aporta, porque más contexto no siempre rinde más y cuesta más."
 
 **"El modelo no hace lo que quiero. ¿Qué haces?"**
 - 🟢 "Cambio el prompt."
@@ -115,4 +148,4 @@ classDiagram
 
 ## 🔗 Relacionado
 
-[Ingeniería de contexto (concepto)](../conceptos/ingenieria-de-contexto.md) · [04 · Herramientas](04-herramientas-y-bucle-del-agente.md) · [06 · Memoria y RAG](06-memoria-busqueda-y-rag.md) · [10 · Evaluación](10-observabilidad-evaluacion-y-costos.md)
+[04 · Herramientas](04-herramientas-y-bucle-del-agente.md) · [06 · Memoria y RAG](06-memoria-busqueda-y-rag.md) · [10 · Evaluación](10-observabilidad-evaluacion-y-costos.md)

@@ -1,7 +1,7 @@
 # 09 · Seguridad, guardrails y humano en el bucle
 
-> **Tema 9 de 12.** **El curso lo trata de pasada, y es lo que más pesa en banca**: por eso este documento reúne todo lo disperso (semanas 1, 2, 3, 4 y 6) y añade una **lista de amenazas** (🧩 mía). Nada aquí es "garantía": es **criterio de diseño**.
-> ⬅️ [08 · LangChain y LangGraph](08-langchain-langgraph-y-deep-agents.md) · ➡️ [10 · Observabilidad, evaluación y costos](10-observabilidad-evaluacion-y-costos.md) · [Índice](README.md)
+> **Tema 9 de 10.** **El curso lo trata de pasada, y es lo que más pesa en banca**: por eso este documento reúne todo lo disperso (semanas 1, 2, 3, 4 y 6) y añade una **lista de amenazas** (🧩 mía). Nada aquí es "garantía": es **criterio de diseño**.
+> ⬅️ [08 · Frameworks y grafos](08-frameworks-y-grafos.md) · ➡️ [10 · Observabilidad, evaluación y costos](10-observabilidad-evaluacion-y-costos.md) · [Índice](README.md)
 
 ---
 

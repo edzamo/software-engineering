@@ -1,6 +1,6 @@
 # 04 · Herramientas y bucle del agente
 
-> **Tema 4 de 12** — el corazón técnico. Fuentes: semanas 1, 2, 3, 4 y 5 (el mismo bucle en nueve marcos).
+> **Tema 4 de 10** — el corazón técnico. Fuentes: semanas 1, 2, 3, 4 y 5 (el mismo bucle en nueve marcos).
 > ⬅️ [03 · Prompts y contexto](03-prompts-contexto-y-salidas-estructuradas.md) · ➡️ [05 · MCP](05-mcp.md) · [Índice](README.md) · [Diagramas UML](diagramas-uml.md)
 
 ---
@@ -99,7 +99,7 @@ graph LR
 
 ## 5 · "Magia" de los frameworks: caché de herramientas
 
-CrewAI **recuerda** el resultado de una herramienta si la llamas dos veces con **los mismos argumentos** y no la vuelve a ejecutar. Para un `list_files` **sin parámetros** devolvía siempre el estado inicial aunque se hubiera escrito un archivo. Se arregla asignando a cada herramienta una función de caché que **siempre devuelve falso**. Moraleja: **al primer comportamiento raro, abre la traza antes de tocar el código.** → [11 · Frameworks](11-frameworks-y-como-elegir.md).
+CrewAI **recuerda** el resultado de una herramienta si la llamas dos veces con **los mismos argumentos** y no la vuelve a ejecutar. Para un `list_files` **sin parámetros** devolvía siempre el estado inicial aunque se hubiera escrito un archivo. Se arregla asignando a cada herramienta una función de caché que **siempre devuelve falso**. Moraleja: **al primer comportamiento raro, abre la traza antes de tocar el código.** → [08 · Frameworks y grafos](08-frameworks-y-grafos.md).
 
 ## 6 · ¿Herramienta propia o servidor MCP?
 

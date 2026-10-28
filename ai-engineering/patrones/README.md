@@ -1,7 +1,7 @@
 # Catálogo de patrones agénticos
 
 > **Para qué sirve:** cuando en un proyecto piensas *"esto se parece a un patrón de IA"*, vienes aquí: eliges el patrón, lees cómo funciona, y copias la **implementación de referencia**. Es el equivalente, para LLM, a tu catálogo de arquitecturas (hexagonal, clean…).
-> **Origen:** los cinco patrones de workflow y el de agente de *Building Effective Agents* (Anthropic), explicados en la [01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md) del Agentic Track. Pero este catálogo **no depende del curso**.
+> **Origen:** los cinco patrones de workflow y el de agente de *Building Effective Agents* (Anthropic), explicados en la [01 · Agentes y workflows](../conceptos/01-agentes-y-workflows.md) del Agentic Track. Pero este catálogo **no depende del curso**.
 > ⚠️ Son **ideas, no reglas**: en sistemas reales se mezclan. No memorices los nombres.
 
 ## 🍳 Con la cocina
@@ -19,7 +19,7 @@ Es el **recetario de la cocina**: cada receta dice cómo organizar a los cociner
 | 5 | Evaluator-optimizer | Chef que prueba | Aviso de pago rechazado | [📄](05-evaluator-optimizer/README.md) | ⏳ [spec](05-evaluator-optimizer/especificacion/README.md) · **W07** | `arch-validator-agent` (≤ 3 ciclos) |
 | 6 | Agente (por contraste) | Cocinero libre | Conciliación bancaria | [📄](06-agente/README.md) | ⏳ [spec](06-agente/especificacion/README.md) · **W02** | — |
 
-> **Orden sugerido para implementar:** 1 → 2 → 3 → 5 → 4 → 6 (de lo más predecible a lo más abierto). El 1 ya lo viste en el laboratorio de la [01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md).
+> **Orden sugerido para implementar:** 1 → 2 → 3 → 5 → 4 → 6 (de lo más predecible a lo más abierto). El 1 ya lo viste en el laboratorio de la [01 · Agentes y workflows](../conceptos/01-agentes-y-workflows.md).
 
 ## 🖼️ Los dibujos juntos
 
@@ -73,7 +73,7 @@ graph TB
 
 ## 🧭 ¿Cuál elijo? Guía de decisión
 
-> ✅ **Respuesta del instructor** (a *"¿divido o basta una sola llamada?"*, [01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md)): **empieza con un solo LLM, un prompt y un objetivo; mide contra la métrica de negocio y divide solo si mejora de forma cuantificable.** La guía de abajo sigue esa regla.
+> ✅ **Respuesta del instructor** (a *"¿divido o basta una sola llamada?"*, [01 · Agentes y workflows](../conceptos/01-agentes-y-workflows.md)): **empieza con un solo LLM, un prompt y un objetivo; mide contra la métrica de negocio y divide solo si mejora de forma cuantificable.** La guía de abajo sigue esa regla.
 
 ```mermaid
 graph TD
@@ -100,7 +100,7 @@ graph TD
 |---|---|---|
 | **Este catálogo** | `ai-engineering/patrones/` | Explicación + especificación + implementaciones de referencia (Java primero, en los [talleres](../talleres/README.md)) |
 | **Subagentes y pipelines de Claude Code** | [`ia-agentes/`](../../ia-agentes) | Kit instalado en `~/.claude` (no se mueve: `install.sh` crea symlinks a esas rutas). Es la implementación de los patrones **con subagentes** |
-| **Apuntes del curso** | [`agentic-ai/`](../agentic-ai/README.md), [`llm-production/`](../llm-production/README.md) | Apuntes de cada curso, de junior a senior |
+| **Apuntes del curso** | [`conceptos/`](../conceptos/README.md) | Apuntes de cada curso, de junior a senior |
 | **Laboratorios del curso** | Fork de práctica del autor (`edzamo/agents`) | Los ejercicios originales del curso (Python) |
 
 ## 🧱 Reglas del catálogo
@@ -113,4 +113,4 @@ graph TD
 
 ## 🔗 Relacionado
 
-[01 · Agentes y workflows](../agentic-ai/01-agentes-y-workflows.md) · [Roadmap · Fases 3 y 4](../README.md) · [`ia-agentes/`](../../ia-agentes)
+[01 · Agentes y workflows](../conceptos/01-agentes-y-workflows.md) · [Roadmap · Fases 3 y 4](../README.md) · [`ia-agentes/`](../../ia-agentes)

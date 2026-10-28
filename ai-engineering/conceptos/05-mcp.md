@@ -1,6 +1,6 @@
 # 05 · MCP — conectar herramientas de otros a tu agente
 
-> **Tema 5 de 12.** Fuente principal: semana 6 del curso (con adelantos de las semanas 2 a 5). MCP **no es un framework ni un agente: es un estándar de conexión**.
+> **Tema 5 de 10.** Fuente principal: semana 6 del curso (con adelantos de las semanas 2 a 5). MCP **no es un framework ni un agente: es un estándar de conexión**.
 > ⬅️ [04 · Herramientas y bucle](04-herramientas-y-bucle-del-agente.md) · ➡️ [06 · Memoria, búsqueda y RAG](06-memoria-busqueda-y-rag.md) · [Índice](README.md) · [Diagramas UML](diagramas-uml.md)
 
 ---
@@ -159,7 +159,7 @@ if __name__ == "__main__":
 | Integrar de forma **coherente** muchas herramientas en una empresa | Añade **complejidad** (un límite de proceso, entrada/salida) sin necesidad |
 | **Aprender** cómo funciona por dentro | — |
 
-> 🧩 **Para ti en Arkano:** un servidor MCP **encaja** si varios equipos/lenguajes (Java, TS) tienen que **consumir las mismas herramientas** del banco; **no** para una función que solo usa un agente. (Quarkus tiene extensiones para MCP 🔎; no cubierto en el curso.)
+> 🧩 **Para ti en tu proyecto:** un servidor MCP **encaja** si varios equipos/lenguajes (Java, TS) tienen que **consumir las mismas herramientas** del banco; **no** para una función que solo usa un agente. (Quarkus tiene extensiones para MCP 🔎; no cubierto en el curso.)
 
 Directorios de servidores: **Glama**, **Smithery** (descargas, parámetros listos).
 
@@ -250,4 +250,4 @@ El **mismo `stdio` + `uvx`/`npx`** funciona en todos; cambia el nombre de la cla
 
 ## 🔗 Relacionado
 
-[04 · Herramientas](04-herramientas-y-bucle-del-agente.md) · [06 · Memoria y RAG](06-memoria-busqueda-y-rag.md) · [09 · Seguridad](09-seguridad-guardrails-y-humano-en-el-bucle.md) · [11 · Frameworks](11-frameworks-y-como-elegir.md) · [Diagramas UML §3](diagramas-uml.md) · [Plan de talleres](../talleres/README.md)
+[04 · Herramientas](04-herramientas-y-bucle-del-agente.md) · [06 · Memoria y RAG](06-memoria-busqueda-y-rag.md) · [09 · Seguridad](09-seguridad-guardrails-y-humano-en-el-bucle.md) · [08 · Frameworks y grafos](08-frameworks-y-grafos.md) · [Diagramas UML §3](diagramas-uml.md) · [Plan de talleres](../talleres/README.md)

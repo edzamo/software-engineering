@@ -96,4 +96,4 @@ return unir_en_informe(ventas, stock, quejas)
 
 ## 🔗 Relacionado
 
-[← Routing](../02-routing/README.md) · [Orchestrator-worker →](../04-orchestrator-worker/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
+[← Routing](../02-routing/README.md) · [Orchestrator-worker →](../04-orchestrator-worker/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)

@@ -84,4 +84,4 @@ El `.get(..., escalar_a_humano)` es clave: **siempre una ruta por defecto** si e
 
 ## 🔗 Relacionado
 
-[← Prompt chaining](../01-prompt-chaining/README.md) · [Parallelization →](../03-parallelization/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
+[← Prompt chaining](../01-prompt-chaining/README.md) · [Parallelization →](../03-parallelization/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)
