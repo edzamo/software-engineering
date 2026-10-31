@@ -10,11 +10,11 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 | Etapa | Con quién | Foco | Estado |
 |---|---|---|---|
-| 1 · Competencias | Lourdes Moreno (Talent Acquisition) | Experiencia, habilidades, alineación con el rol | Hecha, avanzas |
-| 2 · Evaluación técnica | Por confirmar: Lourdes no dijo quién (según lo que entendiste, un Tech Lead o Principal Engineer) | **Conversacional.** Temas confirmados por WhatsApp: Java 17+ con Quarkus/Spring Boot, Kafka con SmallRye Reactive Messaging, PostgreSQL con JPA/Hibernate, hexagonal, resiliencia, JUnit 5 y Mockito | Hecha el 7-oct con el Tech Lead |
+| 1 · Competencias | Talent Acquisition | Experiencia, habilidades, alineación con el rol | Hecha, avanzas |
+| 2 · Evaluación técnica | Por confirmar: Talent Acquisition no dijo quién (según lo que entendiste, un Tech Lead o Principal Engineer) | **Conversacional.** Temas confirmados por WhatsApp: Java 17+ con Quarkus/Spring Boot, Kafka con SmallRye Reactive Messaging, PostgreSQL con JPA/Hibernate, hexagonal, resiliencia, JUnit 5 y Mockito | Hecha el 7-oct con el Tech Lead |
 | 3 · Fit cultural | Delivery Manager | Valores, forma de trabajo | Hecha |
 | 4 · Test de integridad | Plataforma externa | Aprobarlo cierra el proceso | Hecha |
-| Oferta | Lourdes Moreno (Talent Acquisition) | USD 3,200 mensual bruto, pago por OnTop con factura, 3 meses de prueba | **Recibida el 9-oct-2026** |
+| Oferta | Talent Acquisition | Condiciones de la oferta (no se publican) | **Recibida el 9-oct-2026** |
 
 **Requisitos al final (excluyentes):** certificado de antecedentes financieros (score superior a 550 puntos, con informe), penales y judiciales sin registros. Conviene empezar a gestionarlos ya; no esperes a la etapa 4.
 
@@ -26,7 +26,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 > ⚡ **Para consultar en vivo y entrenar rápido:** [`cheat-sheet.md`](../../cheat-sheet.md): **Java y POO primero** (clases, modificadores, pilares, SOLID), luego framework, datos, arquitectura y Kafka; tus proyectos del banco; un **simulacro de 26 preguntas** ordenado de lo básico a lo avanzado, y al final el glosario A-Z y los dibujos. Esta guía es la profunda; el cheat sheet es la de bolsillo.
 
-**Lista oficial de Lourdes:** Java 17+ con Quarkus o Spring Boot · Kafka con SmallRye Reactive Messaging o equivalente · PostgreSQL con JPA/Hibernate · Arquitectura hexagonal · Resiliencia · Testing con JUnit 5 y Mockito.
+**Lista oficial de Talent Acquisition:** Java 17+ con Quarkus o Spring Boot · Kafka con SmallRye Reactive Messaging o equivalente · PostgreSQL con JPA/Hibernate · Arquitectura hexagonal · Resiliencia · Testing con JUnit 5 y Mockito.
 
 | # | Tema que evaluarán | Aquí (resumen y preguntas) | Detalle |
 |---|---|---|---|
@@ -43,7 +43,7 @@ Java 17+ con **Quarkus** o Spring Boot, **Kafka con SmallRye Reactive Messaging*
 
 **Sobre lo que NO conoces ("SmallRye"):** no lo has usado y está bien. La lista dice **"o equivalente"**: tu experiencia con `spring-kafka` cuenta. Dilo así: *"Con Spring usé `@KafkaListener` y `KafkaTemplate`; SmallRye es el equivalente en Quarkus con `@Incoming` y `Emitter`, y los conceptos (grupos, offsets, DLQ, idempotencia) son los mismos."* (solo si es verdad).
 
-**Qué se sabe del proceso de Arkano (Glassdoor):** hay solo **3 reseñas** públicas, 67% con experiencia positiva y dificultad promedio **2,3 sobre 5**; **ninguna trae preguntas técnicas**. No hay un banco de preguntas reales de Arkano; lo más fiable es la lista de Lourdes. Para ese tipo de rol, una entrevista de ese estilo suele combinar fundamentos de Java, el framework, base de datos, pruebas y diseño, y pedirte ejemplos de tu experiencia.
+**Qué se sabe del proceso de Arkano (Glassdoor):** hay solo **3 reseñas** públicas, 67% con experiencia positiva y dificultad promedio **2,3 sobre 5**; **ninguna trae preguntas técnicas**. No hay un banco de preguntas reales de Arkano; lo más fiable es la lista de Talent Acquisition. Para ese tipo de rol, una entrevista de ese estilo suele combinar fundamentos de Java, el framework, base de datos, pruebas y diseño, y pedirte ejemplos de tu experiencia.
 
 ### Plan para hoy (con el tiempo que haya antes de las 14:00)
 

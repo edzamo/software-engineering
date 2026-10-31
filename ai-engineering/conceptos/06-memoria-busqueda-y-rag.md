@@ -1,6 +1,6 @@
 # 06 · Memoria, búsqueda y RAG agéntico
 
-> **Tema 6 de 12.** Fuentes: semana 2 (sesiones), semana 4 (checkpointer) y semana 6 (memoria, Tavily, Qdrant), **reforzado** con los conceptos de recuperación de la [hoja de ruta de 17](../README.md#mapa-de-17-conceptos) (embeddings, similitud, chunking, RAG clásico, ajuste fino). **Aviso honesto:** el RAG del curso es **superficial**; para rigor, el curso *Core Track* (que descartaste) o el *Production Track*.
+> **Tema 6 de 10.** Fuentes: semana 2 (sesiones), semana 4 (checkpointer) y semana 6 (memoria, Tavily, Qdrant), **reforzado** con los conceptos de recuperación de la [hoja de ruta de 17](../README.md#mapa-de-17-conceptos) (embeddings, similitud, chunking, RAG clásico, ajuste fino). **Aviso honesto:** el RAG del curso es **superficial**; para rigor, el curso *Core Track* (que descartaste) o el *Production Track*.
 > ⬅️ [05 · MCP](05-mcp.md) · ➡️ [07 · Orquestación y multiagente](07-orquestacion-y-multiagente.md) · [Índice](README.md)
 
 ---
@@ -54,7 +54,7 @@ graph LR
 
 ## 2 · Memoria larga, búsqueda web y RAG agéntico (con servidores MCP)
 
-Las siete piezas ya están en [ingeniería de contexto](../conceptos/ingenieria-de-contexto.md); aquí se ven **con servidores reales**:
+Las siete piezas ya están en [ingeniería de contexto](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md); aquí se ven **con servidores reales**:
 
 | Pieza | Servidor MCP | Qué hace |
 |---|---|---|
@@ -66,7 +66,7 @@ Las siete piezas ya están en [ingeniería de contexto](../conceptos/ingenieria-
 
 **Filtro estático de herramientas:** `create_static_tool_filter(allowed_tool_names=["tavily-search"])` — de las 5 herramientas de Tavily solo se expone **una**. 🧩 Principio del mínimo privilegio aplicado a herramientas.
 
-**Divulgación progresiva de herramientas ⭐ (la idea nueva):** Massive pasó de **10–20 herramientas** (una por endpoint) a **meta-herramientas** para **explorar su propia API** (buscar qué hay, consultar, llamar), inspirándose en las *skills* de la [08 · LangChain, LangGraph y Deep Agents](08-langchain-langgraph-y-deep-agents.md): **no llenar el contexto de lo que no se usa** y dar al agente **un único camino coherente**. Resultado en el proyecto: **17 herramientas en 6 servidores** (el año anterior ~40).
+**Divulgación progresiva de herramientas ⭐ (la idea nueva):** Massive pasó de **10–20 herramientas** (una por endpoint) a **meta-herramientas** para **explorar su propia API** (buscar qué hay, consultar, llamar), inspirándose en las *skills* de la [08 · Frameworks y grafos](08-frameworks-y-grafos.md): **no llenar el contexto de lo que no se usa** y dar al agente **un único camino coherente**. Resultado en el proyecto: **17 herramientas en 6 servidores** (el año anterior ~40).
 
 **RAG en una frase del instructor:** montar un RAG a mano es **difícil y largo** (le dedicó una semana en otro curso); con un servidor MCP de Qdrant **solo hay que conocer los parámetros**. 🧩 Matiz: es **cómodo para empezar**; para un caso real hay que decidir *chunking*, embeddings, evaluación y datos sensibles.
 
@@ -195,4 +195,4 @@ graph TD
 
 ## 🔗 Relacionado
 
-[03 · Contexto](03-prompts-contexto-y-salidas-estructuradas.md) · [05 · MCP](05-mcp.md) · [08 · LangGraph y checkpoints](08-langchain-langgraph-y-deep-agents.md) · [Ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) · [Plan de talleres](../talleres/README.md)
+[03 · Contexto](03-prompts-contexto-y-salidas-estructuradas.md) · [05 · MCP](05-mcp.md) · [08 · LangGraph y checkpoints](08-frameworks-y-grafos.md) · [03 · Prompts y contexto](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md) · [Plan de talleres](../talleres/README.md)

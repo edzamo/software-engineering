@@ -1,7 +1,7 @@
 # 07 · Orquestación y multiagente
 
-> **Tema 7 de 12.** Fuentes: semanas 1 (patrones), 2 (código vs agentes), 3 (CrewAI), 5 (orquestador + trabajadores) y 6 (trader + investigador). Los casos completos están en [12 · Proyectos](12-proyectos-del-curso.md).
-> ⬅️ [06 · Memoria y RAG](06-memoria-busqueda-y-rag.md) · ➡️ [08 · LangChain, LangGraph y Deep Agents](08-langchain-langgraph-y-deep-agents.md) · [Índice](README.md) · [Catálogo de patrones](../patrones/README.md)
+> **Tema 7 de 10.** Fuentes: semanas 1 (patrones), 2 (código vs agentes), 3 (CrewAI), 5 (orquestador + trabajadores) y 6 (trader + investigador). Los casos completos están en [Lecciones de los proyectos del curso](../talleres/README.md#11b--lecciones-de-los-proyectos-del-curso-qué-copiar-y-qué-dejar).
+> ⬅️ [06 · Memoria y RAG](06-memoria-busqueda-y-rag.md) · ➡️ [08 · Frameworks y grafos](08-frameworks-y-grafos.md) · [Índice](README.md) · [Catálogo de patrones](../patrones/README.md)
 
 ---
 
@@ -80,7 +80,7 @@ graph TD
 ```
 
 - **CrewAI:** el modo **jerárquico** es la orquestación por LLM; el secuencial, la orquestación por código. El gestor reparte, pero **sube costo e impredecibilidad** (mismo riesgo del patrón 4).
-- **Contexto entre agentes:** en CrewAI, sin `context:` cada tarea recibe **todas** las salidas anteriores; con `context:`, solo las listadas. Es **magia que conviene saber** ([11](11-frameworks-y-como-elegir.md)).
+- **Contexto entre agentes:** en CrewAI, sin `context:` cada tarea recibe **todas** las salidas anteriores; con `context:`, solo las listadas. Es **magia que conviene saber** ([11](08-frameworks-y-grafos.md)).
 
 ## 4 · Dos casos reales del curso (resumen)
 
@@ -89,7 +89,7 @@ graph TD
 | **Trader + investigador** (semana 6) | **Código** llama a los 4 traders (`asyncio.gather`) | El trader decide **cuándo** investigar (`as_tool`) | Orden fijo → código; incertidumbre → LLM |
 | **Orquestador + 5 trabajadores** (semana 5) | **Un LLM (ADK)** lanza trabajadores | El orden y la corrección de errores | Inestable: el instructor admite que un **flujo de código sería más seguro** |
 
-Más detalle en [12 · Proyectos](12-proyectos-del-curso.md). El **tablero compartido de tareas** (SQLite con objetivos y pasos) es el único canal entre agentes.
+Más detalle en [Lecciones de los proyectos del curso](../talleres/README.md#11b--lecciones-de-los-proyectos-del-curso-qué-copiar-y-qué-dejar). El **tablero compartido de tareas** (SQLite con objetivos y pasos) es el único canal entre agentes.
 
 ### ⚠️ Cuando el orquestador es un LLM (advertencia del propio instructor)
 
@@ -141,4 +141,4 @@ Más detalle en [12 · Proyectos](12-proyectos-del-curso.md). El **tablero compa
 
 ## 🔗 Relacionado
 
-[01 · Agentes](01-agentes-y-workflows.md) · [Catálogo de patrones](../patrones/README.md) · [12 · Proyectos](12-proyectos-del-curso.md) · [Diagramas UML §6–7](diagramas-uml.md) · [`ia-agentes/`](../../ia-agentes) · [Plan de talleres](../talleres/README.md)
+[01 · Agentes](01-agentes-y-workflows.md) · [Catálogo de patrones](../patrones/README.md) · [Lecciones de los proyectos del curso](../talleres/README.md#11b--lecciones-de-los-proyectos-del-curso-qué-copiar-y-qué-dejar) · [Diagramas UML §6–7](diagramas-uml.md) · [`ia-agentes/`](../../ia-agentes) · [Plan de talleres](../talleres/README.md)

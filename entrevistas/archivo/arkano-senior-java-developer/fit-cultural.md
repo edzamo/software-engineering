@@ -91,7 +91,7 @@ Detalle completo en [`../../agile/README.md`](../../../agile/README.md). Resumen
 
 ## 7. Después de la entrevista
 
-- [ ] Mensaje corto de agradecimiento a Lourdes y a la Delivery Manager
+- [ ] Mensaje corto de agradecimiento a Talent Acquisition y a la Delivery Manager
 - [ ] Anotar las preguntas que te hicieron en [`retro-entrevista-tecnica.md`](retro-entrevista-tecnica.md)
 - [ ] Adelantar los papeles: score financiero (>550), antecedentes penales y judiciales
 - [ ] Prepararte para el Test de Integridad (plataforma externa)

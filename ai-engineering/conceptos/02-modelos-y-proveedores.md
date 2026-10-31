@@ -1,6 +1,6 @@
 # 02 · Modelos y proveedores — llamar a un LLM y cambiar de uno a otro
 
-> **Tema 2 de 12.** Fuentes: semanas 1, 2, 4 y 5 del curso, **reforzado** con los fundamentos de la [hoja de ruta de 17 conceptos](../README.md#mapa-de-17-conceptos) (tokens, ventana, temperatura).
+> **Tema 2 de 10.** Fuentes: semanas 1, 2, 4 y 5 del curso, **reforzado** con los fundamentos de la [hoja de ruta de 17 conceptos](../README.md#mapa-de-17-conceptos) (tokens, ventana, temperatura).
 > ⬅️ [01 · Agentes y workflows](01-agentes-y-workflows.md) · ➡️ [03 · Prompts, contexto y salidas estructuradas](03-prompts-contexto-y-salidas-estructuradas.md) · [Índice](README.md)
 
 ---
@@ -81,7 +81,7 @@ Un modelo **no escribe frases: escribe una ficha (token) a la vez**, eligiendo e
 | Concepto | Qué es | Por qué te importa |
 |---|---|---|
 | **Token** | Un trozo de texto (una palabra, parte de ella o un signo). En inglés, ~4 caracteres por token 🔎; en español suele salir **más caro** por palabra 🧩 | **Todo se cuenta en tokens**: límites, velocidad y precio (entrada **más** salida) |
-| **Ventana de contexto** | Cuántos tokens caben **en una sola llamada** (prompt + historial + documentos + respuesta) | El modelo **no tiene memoria**: reenvías el historial cada vez. Si no cabe, se **recorta o se resume** → [06](06-memoria-busqueda-y-rag.md) y [ingeniería de contexto](../conceptos/ingenieria-de-contexto.md) |
+| **Ventana de contexto** | Cuántos tokens caben **en una sola llamada** (prompt + historial + documentos + respuesta) | El modelo **no tiene memoria**: reenvías el historial cada vez. Si no cabe, se **recorta o se resume** → [06](06-memoria-busqueda-y-rag.md) y [ingeniería de contexto](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md) |
 | **Temperatura** | Cuánto se **arriesga** al elegir la siguiente ficha | Controla **repetibilidad frente a creatividad** |
 
 **Ejemplo para ver la temperatura.** Tras *"El pago fue…"* el modelo ve algo así (cifras inventadas, solo para ilustrar):
@@ -147,4 +147,4 @@ Un modelo **no escribe frases: escribe una ficha (token) a la vez**, eligiendo e
 
 ## 🔗 Relacionado
 
-[01 · Agentes](01-agentes-y-workflows.md) · [10 · Observabilidad y costos](10-observabilidad-evaluacion-y-costos.md) · [11 · Frameworks](11-frameworks-y-como-elegir.md) · [Plan de talleres](../talleres/README.md)
+[01 · Agentes](01-agentes-y-workflows.md) · [10 · Observabilidad y costos](10-observabilidad-evaluacion-y-costos.md) · [08 · Frameworks y grafos](08-frameworks-y-grafos.md) · [Plan de talleres](../talleres/README.md)

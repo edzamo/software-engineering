@@ -90,4 +90,4 @@ return llm("Combina estos resultados en un plan coherente", resultados)
 
 ## 🔗 Relacionado
 
-[← Parallelization](../03-parallelization/README.md) · [Evaluator-optimizer →](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
+[← Parallelization](../03-parallelization/README.md) · [Evaluator-optimizer →](../05-evaluator-optimizer/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)

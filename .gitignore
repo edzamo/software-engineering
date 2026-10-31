@@ -70,3 +70,14 @@ Thumbs.db
 !**/.claude/.tdd-state/.gitkeep
 **/.claude/settings.local.json
 
+
+### Privado: ruta de crecimiento personal (nunca se sube) ###
+mi-ruta/
+ai-engineering/copilot/_pegar-aqui.md
+ai-engineering/copilot/transcripciones/
+_privado/
+
+### Claves y entornos ###
+.env
+.env.*
+!.env.example

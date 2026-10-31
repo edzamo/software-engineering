@@ -26,7 +26,7 @@ graph LR
 
 - Hay un **ciclo**: la flecha roja (rechazo con comentarios) vuelve al generador.
 - **Dos LLM con roles distintos**: generar y evaluar. Pueden ser modelos diferentes (uno barato escribe, uno fuerte evalúa).
-- Este es el patrón que **ya viste en pequeño en la [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)**: un modelo respondió y otro dijo si estaba bien. Aquí falta **el regreso con feedback**.
+- Este es el patrón que **ya viste en pequeño en la [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)**: un modelo respondió y otro dijo si estaba bien. Aquí falta **el regreso con feedback**.
 - Es el **más cercano a un agente**: tiene un bucle de retroalimentación. Pero el patrón sigue **definido de antemano** (generador y evaluador), por eso se cuenta como workflow.
 
 ## 2 · Ejemplo: respuesta a un reclamo
@@ -88,4 +88,4 @@ return escalar_a_humano(reclamo)                  # si no mejora, que decida una
 
 ## 🔗 Relacionado
 
-[← Orchestrator-worker](../04-orchestrator-worker/README.md) · [Agentes por contraste →](../06-agente/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../agentic-ai/01-agentes-y-workflows.md)
+[← Orchestrator-worker](../04-orchestrator-worker/README.md) · [Agentes por contraste →](../06-agente/README.md) · [Catálogo de patrones](../README.md) · [01 · Agentes y workflows](../../conceptos/01-agentes-y-workflows.md)

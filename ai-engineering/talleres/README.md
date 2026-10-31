@@ -1,10 +1,10 @@
 # Talleres de AI Engineering — de Java a Python
 
-> **Qué es esto:** el plan de **práctica** que sale de los [12 temas](../agentic-ai/README.md) del curso *AI Engineer Agentic Track*. Cada taller es **una sesión guiada**: yo explico y reviso como profesor, **tú escribes el código** y lo probamos.
+> **Qué es esto:** el plan de **práctica** que sale de los [10 temas](../conceptos/README.md) del curso *AI Engineer Agentic Track*. Cada taller es **una sesión guiada**: yo explico y reviso como profesor, **tú escribes el código** y lo probamos.
 > **Orden de herramientas (decisión tuya):** primero lo que dominas → **Java con Spring AI**, luego **Quarkus**, luego **TypeScript (NestJS)** y al final **Python (FastAPI)**.
 > 📅 **Cuándo se hace cada taller:** [guía de estudio día a día](../guia-de-estudio.md).
 > 🧱 **El código de los talleres vive en otro repo** ([§1b](#1b--dos-repositorios-teoría-aquí-práctica-allá)); aquí solo está el plan.
-> ⬅️ [Índice de AI Engineering](../README.md) · [Los 12 temas](../agentic-ai/README.md) · [Catálogo de patrones](../patrones/README.md) · [Diagramas UML](../agentic-ai/diagramas-uml.md)
+> ⬅️ [Índice de AI Engineering](../README.md) · [Los 10 temas](../conceptos/README.md) · [Catálogo de patrones](../patrones/README.md) · [Diagramas UML](../conceptos/diagramas-uml.md)
 
 ---
 
@@ -101,25 +101,25 @@ graph LR
 
 | ID | Tema | Qué construyes | Criterio de aceptación | Patrón |
 |---|---|---|---|---|
-| **W00** ⭐ | [02](../agentic-ai/02-modelos-y-proveedores.md) | Proyecto Spring Boot + Spring AI; clave de Gemini; **modelo falso** para pruebas | `mvn test` verde **sin red**; una llamada real opcional | — |
-| **W01** ⭐ | [01](../agentic-ai/01-agentes-y-workflows.md), [02](../agentic-ai/02-modelos-y-proveedores.md), [03](../agentic-ai/03-prompts-contexto-y-salidas-estructuradas.md) | Primer agente: `ChatClient`, prompt de sistema y **salida estructurada** (record) | El test valida el esquema con modelo falso | — |
-| **W01b** 🧩 | [02](../agentic-ai/02-modelos-y-proveedores.md) | **Tokens y temperatura** (~45 min): contar tokens (inglés frente a español) y pasar `temperature` / `maxTokens` como opciones 🔎 | El modelo falso **recibe** las opciones que enviaste | — |
-| **W02** ⭐ | [04](../agentic-ai/04-herramientas-y-bucle-del-agente.md) | **Herramientas**: bucle a mano y con `@Tool`; **allowlist**, validación y **tope de iteraciones** | Un modelo falso que nunca termina corta en el tope; un nombre desconocido se rechaza | 6 · Agente |
-| **W03** ⭐ | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Chaining + gate** (procesar un pago), **routing** y **paralelización** | Cada rama probada con modelos falsos; fallo parcial manejado | 1, 2, 3 |
-| **W04** ⭐ (×2) | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Gerente con agentes-herramienta**: reunión → funcionalidades → tareas (**tu PoC3**) | El plan se valida (formato, tope de subtareas); el sintetizador no pierde datos | 4 · Orquestador |
-| **W05** | [06](../agentic-ai/06-memoria-busqueda-y-rag.md), [08](../agentic-ai/08-langchain-langgraph-y-deep-agents.md) | **Memoria y estado**: historial por `conversationId`, repositorio JDBC, **reanudar** un proceso | Cerrar la app y continuar la misma conversación | — |
-| **W06** ⭐ | [09](../agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | **Aprobación humana** + *advisors* (PII, registro, tope de llamadas) | Un pago **no se ejecuta** sin `approve`; `reject` vuelve al modelo con motivo | — |
-| **W07** ⭐ | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md), [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Evaluador (LLM juez)** + reintentos con tope + primer **conjunto de pruebas** | Rechaza N veces y escala a humano; métrica reproducible | 5 · Evaluator |
-| **W08** ⭐ | [05](../agentic-ai/05-mcp.md) | **Cliente MCP**: usar un servidor ya hecho (filesystem/fetch) con **filtro de herramientas** | Solo las herramientas permitidas llegan al modelo | — |
-| **W09** | [05](../agentic-ai/05-mcp.md) | **Servidor MCP propio** (cuentas/pagos ficticios) | Otro cliente (el de W08) lo consume | — |
-| **W10** | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) | **Observabilidad** local: Micrometer/OpenTelemetry + registro propio de llamadas | Se reconstruye qué herramienta se llamó y con qué argumentos | — |
-| **W11a** 🧩 | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **Embeddings y similitud** (~1 h): `EmbeddingModel` falso con vectores a mano y búsqueda de los k más cercanos 🔎 | *Reembolso* queda junto a *devolución*; un texto ajeno queda lejos | — |
-| **W11b** 🧩 | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **Chunking y RAG clásico** (~1 h): `TokenTextSplitter`, indexar, consultar y evaluar la recuperación 🔎 | Para 5 preguntas fijas, recupera el trozo esperado | — |
-| **W11** | [06](../agentic-ai/06-memoria-busqueda-y-rag.md) | **RAG agéntico**: búsqueda vectorial (pgvector o Qdrant) como herramienta | El agente guarda y recupera datos propios | — |
-| **W12** | [09](../agentic-ai/09-seguridad-guardrails-y-humano-en-el-bucle.md) | **Sandbox seguro**: ejecutar código generado en Docker (sin red, límites, no root) | Intento de salir del directorio o usar red **falla** | — |
-| **W13** (×2) | [07](../agentic-ai/07-orquestacion-y-multiagente.md) | **Multiagente con tablero compartido** (la idea de la semana 5) | Dos trabajadores toman tareas sin pisarse | — |
+| **W00** ⭐ | [02](../conceptos/02-modelos-y-proveedores.md) | Proyecto Spring Boot + Spring AI; clave de Gemini; **modelo falso** para pruebas | `mvn test` verde **sin red**; una llamada real opcional | — |
+| **W01** ⭐ | [01](../conceptos/01-agentes-y-workflows.md), [02](../conceptos/02-modelos-y-proveedores.md), [03](../conceptos/03-prompts-contexto-y-salidas-estructuradas.md) | Primer agente: `ChatClient`, prompt de sistema y **salida estructurada** (record) | El test valida el esquema con modelo falso | — |
+| **W01b** 🧩 | [02](../conceptos/02-modelos-y-proveedores.md) | **Tokens y temperatura** (~45 min): contar tokens (inglés frente a español) y pasar `temperature` / `maxTokens` como opciones 🔎 | El modelo falso **recibe** las opciones que enviaste | — |
+| **W02** ⭐ | [04](../conceptos/04-herramientas-y-bucle-del-agente.md) | **Herramientas**: bucle a mano y con `@Tool`; **allowlist**, validación y **tope de iteraciones** | Un modelo falso que nunca termina corta en el tope; un nombre desconocido se rechaza | 6 · Agente |
+| **W03** ⭐ | [07](../conceptos/07-orquestacion-y-multiagente.md) | **Chaining + gate** (procesar un pago), **routing** y **paralelización** | Cada rama probada con modelos falsos; fallo parcial manejado | 1, 2, 3 |
+| **W04** ⭐ (×2) | [07](../conceptos/07-orquestacion-y-multiagente.md) | **Gerente con agentes-herramienta**: reunión → funcionalidades → tareas (**tu PoC3**) | El plan se valida (formato, tope de subtareas); el sintetizador no pierde datos | 4 · Orquestador |
+| **W05** | [06](../conceptos/06-memoria-busqueda-y-rag.md), [08](../conceptos/08-frameworks-y-grafos.md) | **Memoria y estado**: historial por `conversationId`, repositorio JDBC, **reanudar** un proceso | Cerrar la app y continuar la misma conversación | — |
+| **W06** ⭐ | [09](../conceptos/09-seguridad-guardrails-y-humano-en-el-bucle.md) | **Aprobación humana** + *advisors* (PII, registro, tope de llamadas) | Un pago **no se ejecuta** sin `approve`; `reject` vuelve al modelo con motivo | — |
+| **W07** ⭐ | [10](../conceptos/10-observabilidad-evaluacion-y-costos.md), [07](../conceptos/07-orquestacion-y-multiagente.md) | **Evaluador (LLM juez)** + reintentos con tope + primer **conjunto de pruebas** | Rechaza N veces y escala a humano; métrica reproducible | 5 · Evaluator |
+| **W08** ⭐ | [05](../conceptos/05-mcp.md) | **Cliente MCP**: usar un servidor ya hecho (filesystem/fetch) con **filtro de herramientas** | Solo las herramientas permitidas llegan al modelo | — |
+| **W09** | [05](../conceptos/05-mcp.md) | **Servidor MCP propio** (cuentas/pagos ficticios) | Otro cliente (el de W08) lo consume | — |
+| **W10** | [10](../conceptos/10-observabilidad-evaluacion-y-costos.md) | **Observabilidad** local: Micrometer/OpenTelemetry + registro propio de llamadas | Se reconstruye qué herramienta se llamó y con qué argumentos | — |
+| **W11a** 🧩 | [06](../conceptos/06-memoria-busqueda-y-rag.md) | **Embeddings y similitud** (~1 h): `EmbeddingModel` falso con vectores a mano y búsqueda de los k más cercanos 🔎 | *Reembolso* queda junto a *devolución*; un texto ajeno queda lejos | — |
+| **W11b** 🧩 | [06](../conceptos/06-memoria-busqueda-y-rag.md) | **Chunking y RAG clásico** (~1 h): `TokenTextSplitter`, indexar, consultar y evaluar la recuperación 🔎 | Para 5 preguntas fijas, recupera el trozo esperado | — |
+| **W11** | [06](../conceptos/06-memoria-busqueda-y-rag.md) | **RAG agéntico**: búsqueda vectorial (pgvector o Qdrant) como herramienta | El agente guarda y recupera datos propios | — |
+| **W12** | [09](../conceptos/09-seguridad-guardrails-y-humano-en-el-bucle.md) | **Sandbox seguro**: ejecutar código generado en Docker (sin red, límites, no root) | Intento de salir del directorio o usar red **falla** | — |
+| **W13** (×2) | [07](../conceptos/07-orquestacion-y-multiagente.md) | **Multiagente con tablero compartido** (la idea de la semana 5) | Dos trabajadores toman tareas sin pisarse | — |
 | **W14** | 🧩 extra | **API REST** de agentes + despliegue ligero + **reintentos con espera creciente e idempotencia** en el pago | Contrato OpenAPI probado; un modelo que falla 2 veces acierta a la 3.ª sin duplicar el pago | — |
-| **W15** | [10](../agentic-ai/10-observabilidad-evaluacion-y-costos.md) | **Evaluación sistemática**: casos fijos, regresión, costo por ejecución | Un cambio de prompt se acepta o se rechaza **por una métrica** | — |
+| **W15** | [10](../conceptos/10-observabilidad-evaluacion-y-costos.md) | **Evaluación sistemática**: casos fijos, regresión, costo por ejecución | Un cambio de prompt se acepta o se rechaza **por una métrica** | — |
 
 ### Dependencias entre talleres
 
@@ -150,7 +150,7 @@ Quarkus **sí sirve** para este curso: `@RegisterAiService`, herramientas, guard
 | **Q3** | W08 + W09 | `quarkus-langchain4j-mcp` (cliente) y `quarkus-mcp-server` (servidor) | Un servidor MCP consumido desde Spring **y** Quarkus |
 | **Q4** | W04 | Orquestación con servicios de IA; arranque nativo/memoria | PoC3 en Quarkus |
 
-**Cierre de la ruta:** matriz de decisión Spring AI vs. Quarkus (madurez, ecosistema, arranque, memoria, pruebas, MCP, equipo) — 🔎 **primero confirmar qué usa Arkano**.
+**Cierre de la ruta:** matriz de decisión Spring AI vs. Quarkus (madurez, ecosistema, arranque, memoria, pruebas, MCP, equipo) — 🔎 **primero confirmar qué usa tu equipo**.
 
 ## 5 · Ruta 3 — TypeScript con NestJS
 
@@ -226,9 +226,27 @@ graph TD
 | Descartado | Motivo |
 |---|---|
 | Replicar **todos** los talleres en los cuatro stacks | Demasiado; se replican los esenciales (Q, N, P) |
-| Frameworks de Python uno por uno (semana 5) | Una tabla basta ([11 · Frameworks y cómo elegir](../agentic-ai/11-frameworks-y-como-elegir.md)) |
+| Frameworks de Python uno por uno (semana 5) | Una tabla basta ([08 · Frameworks y grafos](../conceptos/08-frameworks-y-grafos.md)) |
 | Entrenamiento y *fine-tuning* | Fuera del curso (Core Track) |
-| Despliegue en la nube a gran escala | Fuera del curso (Production Track) |
+| Despliegue en la nube a gran escala | Fuera del alcance de esta guía |
+
+## 11b · Lecciones de los proyectos del curso (qué copiar y qué dejar)
+
+El curso construyó seis proyectos (gemelo digital, Deep Research, equipo de ingeniería con CrewAI, Sidekick, bucle de agentes y sala de operaciones con MCP). No se aprende de copiarlos, sino de **ver qué oficio ensaya cada uno** y qué se les olvidó (casi siempre **seguridad y evaluación**). El código está en el [fork `agents`](https://github.com/edzamo/agents).
+
+| Proyecto | ✅ Copia | ❌ Deja |
+|---|---|---|
+| Gemelo digital | La herramienta que registra preguntas desconocidas (ciclo de mejora con datos reales) | Desplegar con datos personales |
+| Deep Research | Planificar → buscar en paralelo → redactar | La búsqueda alojada de OpenAI |
+| Equipo de ingeniería | **El sandbox con Docker** (y endurecerlo) | Confiar en la caché de herramientas |
+| Sidekick | **Middleware + aprobación humana + evaluador con tope** | 41 herramientas a la vez |
+| Bucle de agentes | Tablero compartido; agente QA | **Orquestador LLM** para un orden fijo |
+| Sala de operaciones | **Código para lo fijo, agente-herramienta para lo incierto**; trazas propias | Decisiones reales de inversión (⚠️ solo educativo) |
+
+**"Cuéntame un proyecto de agentes que hayas construido o estudiado."**
+- 🟢 "Un asistente que investiga en la web y escribe un informe."
+- 🟡 "Un trabajador con herramientas y un evaluador que reintenta hasta cumplir criterios, con pausa para aprobación humana."
+- 🔴 "Una sala de agentes coordinada por **código** (orden fijo) donde cada uno delega en un investigador **como herramienta** (incertidumbre), con trazas propias y métrica de negocio; y sé qué le faltaba de seguridad y evaluación."
 
 ## ✅ Siguiente paso
 
@@ -236,6 +254,6 @@ Empezar por **W00 (preparar el proyecto Java + modelo falso + clave de Gemini)**
 
 ## 🔗 Relacionado
 
-[Índice de AI Engineering](../README.md) · [Los 12 temas](../agentic-ai/README.md) · [Catálogo de patrones](../patrones/README.md) · [08 · LangChain, LangGraph y Deep Agents](../agentic-ai/08-langchain-langgraph-y-deep-agents.md) · [05 · MCP](../agentic-ai/05-mcp.md) · [`ia-agentes/`](../../ia-agentes) · [`frameworks/`](../../frameworks) (ya hay material de Spring Boot, Quarkus y NestJS) · [`tdd/`](../../tdd) · [`uml/`](../../uml)
+[Índice de AI Engineering](../README.md) · [Los 10 temas](../conceptos/README.md) · [Catálogo de patrones](../patrones/README.md) · [08 · Frameworks y grafos](../conceptos/08-frameworks-y-grafos.md) · [05 · MCP](../conceptos/05-mcp.md) · [`ia-agentes/`](../../ia-agentes) · [`frameworks/`](../../frameworks) (ya hay material de Spring Boot, Quarkus y NestJS) · [`tdd/`](../../tdd) · [`uml/`](../../uml)
 
 Fuentes consultadas para versiones: [Spring AI 1.1.8 / 1.0.9](https://spring.io/blog/2026/06/12/spring-ai-1-1-8-1-0-9-avaialble-now/), [Spring AI 2.0.0-RC2](https://spring.io/blog/2026/06/09/spring-ai-2-0-0-RC2-available-now/), [Google GenAI en Spring AI](https://docs.spring.io/spring-ai/reference/2.1/api/chat/google-genai-chat.html), [MCP con Quarkus + LangChain4j](https://quarkus.io/blog/quarkus-langchain4j-mcp/).
