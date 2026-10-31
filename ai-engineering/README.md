@@ -14,6 +14,7 @@ Una **ruta de estudio abierta** para pasar de **usar** la IA a **diseñar, const
 | [`patrones/`](patrones/README.md) | Catálogo de patrones agénticos: explicación, caso de uso y especificación |
 | [`talleres/`](talleres/README.md) | **Plan de práctica**: Java/Spring AI → Quarkus → TypeScript/NestJS → Python/FastAPI. El código vive en el [repo de ejercicios](https://github.com/edzamo/ai-engineering-labs) |
 | [`guia-de-estudio.md`](guia-de-estudio.md) | **Calendario día a día**: taller, curso de Copilot o Azure, y repasos |
+| [`copilot/`](copilot/README.md) | **Apuntes del curso de Copilot** (clase por clase, de junior a senior) y cómo simularlo con Claude Code |
 
 **Para quién:** 🟢 **junior** sigue el orden y hace los ejercicios · 🟡 **mid (backend)** salta a los temas 04–10 y practica en su stack · 🔴 **senior** va a los ⭐, las escaleras de entrevista y las secciones 🧩. **Requisitos:** programar, Git, APIs REST y JSON; no hace falta Python.
 
