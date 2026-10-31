@@ -6,7 +6,7 @@ set -u
 fail=0
 
 # 1) Nada de la ruta privada puede entrar.
-if git diff --cached --name-only | grep -E '^(mi-ruta|_privado)/' >/dev/null; then
+if git diff --cached --name-only | grep -E '^(mi-ruta|_privado)/|^ai-engineering/copilot/(_pegar-aqui\.md|transcripciones/)' >/dev/null; then
   echo "❌ Hay archivos de mi-ruta/ o _privado/ en el commit (son privados)."; fail=1
 fi
 
